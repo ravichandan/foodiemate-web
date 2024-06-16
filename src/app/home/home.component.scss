@@ -1,0 +1,55 @@
+.pop-img-top {
+  width: 100%;
+  height: 100%;
+}
+.pop-item {
+  height: 97%;
+}
+.pop-item-wrapper {
+  cursor: pointer;
+  &:hover {
+    .card-img-top {
+      opacity: 0.85;
+    }
+  }
+}
+@media screen and (min-width: 1400px) {
+  .pop-img-top {
+    max-width: 13.5vw;
+    max-height: 19.5vh;
+  }
+}
+
+@media screen and ((min-width: 1400px)  and (max-width: 1661px)) {
+  .card-title {
+    font-size: smaller;
+  }
+}
+
+.pop-item .card-title {
+  height: 2rem;
+  @media screen and (max-width: 566px) {
+    height: 1rem;
+  }
+}
+
+.pop-item {
+  //position:relative;
+  //display:inline-block;
+}
+.pop-item .card-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 30%;
+  opacity: 0.85;
+  border-radius: 0.8em;
+}
+.card-icon i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+}

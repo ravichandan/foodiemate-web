@@ -1,1 +1,304 @@
 /* You can add global styles to this file, and also import other style files */
+//@import "primeng/resources/themes/tailwind-light/theme.css";
+//@import "primeng/resources/primeng.css";
+@import "styles/variables";
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/mixins/breakpoints';
+
+@import "styles/checkbox";
+@import "styles/range_input";
+@import 'ngx-sharebuttons/themes/default';
+
+
+//320px
+//480px
+//600px
+//768px
+//900px
+//1024px
+//1200px
+
+//[16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048, 3840]
+
+
+html {
+  //background-color: $input-border-color;
+}
+
+
+/* Add application styles & imports to this file! */
+//@import 'primeng/resources/themes/lara-dark-blue/theme.css';
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  //background-color: var(--surface-card);
+}
+
+h1 {
+  margin-top: 0;
+}
+
+
+.nav-item div:hover {
+  a {
+    color: black !important;
+    font-weight: bold;
+  }
+
+  background-color: ghostwhite;
+
+}
+
+.title-font {
+  font-family: "Baskerville";
+}
+
+.title {
+  font-family: "Baskerville";
+  font-size: 4rem; // xxx-large;
+  @media screen and (max-width: 600px) {
+    font-size: 3rem;
+  }
+
+  //font: strong;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+.pop-item {
+  //width: 13rem;
+  //height: 14rem;
+}
+
+.fs-smaller {
+  @media screen and ((min-width: 1400px)  and (max-width: 1661px)) {
+    font-size: smaller;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    font-size: smaller;
+  }
+
+  @media screen and (max-width: 420px) {
+    font-size: smaller;
+  }
+}
+
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: lightgray;
+  opacity: 1; /* Firefox */
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: lightgray;
+}
+
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+  color: lightgray;
+}
+
+.btn-group-sm > .btn, .btn-sm {
+  @media screen and (max-width: 600px) {
+    --bs-btn-padding-y: 0.125rem;
+    --bs-btn-font-size: 0.750rem;
+  }
+}
+
+.row {
+  //--bs-gutter-x: 0rem;
+}
+
+.carousel-item {
+  opacity: 0;
+  visibility: hidden;
+  //transition: opacity 0.2s ease !important;
+  //z-index: -1;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  transition: opacity 1s ease !important;
+  visibility: visible;
+  //z-index: 10;
+}
+
+.carousel-control-prev {
+  //z-index: 20;
+}
+
+.carousel-control-next {
+  //z-index: 20;
+}
+
+.carousel-indicators {
+  //z-index: 20;
+}
+
+.carousel-text {
+  user-select: none
+}
+
+.dropdown-menu li a {
+  &:hover {
+    //background-color: $dark-bg-subtle;
+    //font-weight: bolder;
+  }
+}
+
+.card-title {
+  //font-family: Arvo, serif;
+}
+
+.text-truncate-container {
+  //width: 250px;
+}
+
+.text-truncate-2 {
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-truncate-3 {
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.progress-container {
+  height: 1.5em;
+}
+
+.progress-bar {
+  background-color: #BDAE64;
+}
+
+.text-justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+  max-width: unset !important;
+}
+
+.customer-pic-wrapper {
+  width: 3rem;
+  height: 3rem;
+}
+
+.rating-info-row ngb-rating span {
+  color: $orange-700;
+}
+
+pre {
+  font-family: var(--bs-body-font-family);
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
+  line-height: var(--bs-body-line-height);
+  color: var(--bs-body-color);
+  text-align: var(--bs-body-text-align);
+  white-space: pre-line;
+}
+
+.img-thumbnail {
+//max-height: 18em;
+//  height: 100%;
+  width: 16rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+ngb-typeahead-window{
+  width: 100%;
+}
+
+.input-group .form-floating > input {
+  border-left: none;
+}
+
+.input-group-text{
+  background: none;
+}
+.review-form{
+  max-width: 40rem;
+}
+
+.place-detail-container, .content-container {
+  max-width: 60rem;
+  .place-name-text{
+    font-size: $h4-font-size;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .place-name-text{
+    font-size: $h5-font-size !important;
+  }
+}
+
+input [type="range"] {
+  width: 17rem;
+}
+
+//.form-control.is-valid, .was-validated .form-control:valid { }
+.was-validated .form-control:valid, .form-control.is-valid{
+  background-image: inherit !important;
+  border-color: inherit !important;
+}
+.sb-icon {
+  width: 2rem;
+  min-height: 2rem;
+  background: inherit !important;
+  box-shadow: none !important;
+}
+
+.ng-fa-icon {
+  font-size: $h3-font-size;
+}
+
+.login-buttons{
+  width: 12rem;
+}
+
+// SEPARATOR WITH TEXT
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid $dark-bg-subtle;
+}
+
+.separator:not(:empty)::before {
+  margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: .25em;
+}
+
+//SEPARATOR WITH TEXT ENDS

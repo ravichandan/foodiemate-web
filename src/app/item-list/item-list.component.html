@@ -1,0 +1,44 @@
+<ng-container *ngIf="items$ | async as items">
+  <div class="item-list-container flex-grow-1">
+    <div class="item-list-header ps-md-1 d-flex justify-content-between align-items-end">
+      <div class="d-flex align-items-center">
+        <span class="fs-5">Items in their menu:</span>
+      </div>
+      <div class="filter-container d-flex">
+        <div class="items-filter-wrapper col-12 col-lg-5 me-md-2 my-2">
+          <ng-multiselect-dropdown
+            class=""
+            [placeholder]="'Filter Allergens'"
+            [settings]="dropdownSettings"
+            [data]="config.itemDetailFilterByAllergens"
+            [(ngModel)]="selectedAllergensFilter"
+            (onSelect)="onReviewFilterChange($event)">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="sort-wrapper d-flex mx-2 align-items-center col-12 col-lg-5">
+          <span class="d-none d-lg-inline mx-1">Sort by</span>
+          <button class="btn btn-light h-100 mx-1 rounded fs-4" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-sort-down"></i>
+            <ul class="dropdown-menu">
+              <li class="mx-3" *ngFor="let option of config.sortBy">
+                <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
+              </li>
+            </ul>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-list-wrapper row gap-3">
+      <!--            <div ngbScrollSpy #spy="ngbScrollSpy" (activeChange)="fetchItems($event)">-->
+      <ng-container *ngFor="let item of items; trackBy: trackByItemId; index as i; first as first">
+        <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">
+          <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
+          <app-item-list-unit [item]="item"></app-item-list-unit>
+        </div>
+      </ng-container>
+      <!--            </div>-->
+    </div>
+  </div>
+</ng-container>

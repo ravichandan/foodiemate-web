@@ -1,0 +1,236 @@
+<ng-container *ngIf="place$ | async as place">
+  <ng-container *ngIf="!!item">
+    <!--        <div class="m-2 m-md-4 ">-->
+    <div class="row gap-4 item-detail-container mobile-item-detail-container">
+      <div class="item-title-container col-12 row justify-content-between align-items-baseline">
+        <div class="col-12 col-md-9">
+          <div class="row my-1">
+            <span class="place-name-text d-flex align-items-center fw-bolder text-secondary-emphasis"
+              ><span class="material-symbols-outlined fs-3 me-2">local_dining</span>{{ item.name }}</span
+            >
+          </div>
+          <div class="row my-1">
+            <span class="place-suburb-text text-secondary-emphasis"
+              ><i
+                class="bi bi-shop fs-5 me-3"
+                placement="start"
+                [ngbTooltip]="place.name + ', @' + place.address?.suburb"></i
+              >{{ place.name }}, {{ place.address?.suburb }}</span
+            >
+          </div>
+          <!--          <div class="row my-1"><span class="place-suburb-text  fs-6 text-secondary-emphasis"><i-->
+          <!--            class="bi bi-geo-alt fs-5 me-3"></i>{{ place.address?.suburb }}</span></div>-->
+        </div>
+
+        <div class="item-rating-container d-flex flex-column fw-bold col-5 col-md-3">
+          <div class="ambience-container mobile-ambience-container">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <span class="taste-text me-2">Taste: </span
+              ><span class=""
+                ><span class="fs-6">{{ item.taste | number: '1.1-1' }}&nbsp;/</span
+                ><span class="fw-normal">&nbsp;5</span></span
+              >
+            </div>
+          </div>
+          <div class="presentation-container mobile-presentation-container">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <span class="presentation-text">Presentation: </span>
+              <span class=""
+                ><span class="fs-6">{{ item.presentation | number: '1.1-1' }}&nbsp;/</span
+                ><span class="fw-normal">&nbsp;5</span></span
+              >
+            </div>
+            <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
+            <!--                                            class="item-price-text fs-5">Price: </span><span-->
+            <!--                                            class="fw-bold fs-5 ms-1">${{place.price}}</span></div>-->
+          </div>
+          <small class="no-of-reviews-text fw-normal text-secondary-emphasis fs-smaller"
+            >(Out of {{ item.noOfReviews }} reviews)</small
+          >
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card border-secondary">
+          <div class="row mx-0">
+            <div class="col-12 col-lg-7 image-container px-0">
+              <!--             <div class="card-body d-lg-none d-flex justify-content-between">
+                             <div class="item-rating-container d-flex flex-column fw-bold ">
+                               <div class="d-flex justify-content-between"><span class="presentation-text me-2">Presentation: </span><span>{{ item.presentation| number : '1.1-1' }}</span>
+                               </div>
+                               <div class="d-flex justify-content-between"><span class="taste-text">Taste: </span>
+                                 <span>{{ item.taste| number : '1.1-1' }}</span></div>
+                               <div class="d-flex justify-content-between mt-auto"><span
+                                 class="item-price-text fs-5">Price: </span><span
+                                 class="fw-bold fs-5 ms-1">${{ item.price }}</span></div>
+
+                             </div>
+                           </div>-->
+              <ngb-carousel
+                [showNavigationArrows]="config.carousel.showNavigationArrows"
+                [showNavigationIndicators]="config.carousel.showNavigationIndicators"
+                [pauseOnHover]="config.carousel.pauseOnHover"
+                [pauseOnFocus]="config.carousel.pauseOnFocus"
+                [interval]="0"
+                #reviewImgCarousel>
+                <ng-container *ngFor="let review of item?.reviews">
+                  <ng-container *ngFor="let media of review?.medias">
+                    <ng-template ngbSlide>
+                      <div class="picsum-img-wrapper">
+                        <img
+                          [src]="media.url"
+                          alt="Loading mage of the dish"
+                          class="card-img-top place-list-img w-100 img-fluid rounded-0" />
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </ng-container>
+              </ngb-carousel>
+            </div>
+            <div class="col-12 col-lg-5 detail-container">
+              <div class="row gap-2 h-100">
+                <!--                <div class="col-12 d-none d-lg-flex row gap-1 flex-column "><span
+                                  class="item-name-text fs-4 fw-bold my-1">{{ item.name }}</span>
+                                  <div class="row my-1"><span class="place-name-text fs-5 fw-bolder text-secondary"><i
+                                    class="bi bi-shop fw-bolder fs-4
+                                                             me-2"></i>{{ place.name }}</span></div>
+                                  <div class="row my-1"><span class="place-suburb-text fs-5 fw-bolder text-secondary"><i
+                                    class="bi bi-geo-alt fs-4 me-2"></i>{{ place.address?.suburb }}</span></div>
+                                </div>-->
+                <div class="row">
+                  <span class="item-price-text fs-5"
+                    >Price: <span class="fw-bold ms-1">${{ item.price }}</span></span
+                  >
+                </div>
+                <div class="row py-3 py-lg-0">
+                  <span class="item-description-text text-justify">{{ item.description }}</span>
+                </div>
+
+                <div class="allergens-container row py-3 py-lg-0">
+                  <span
+                    ><span class="fw-bolder">Contains: </span
+                    ><span class="text-body-secondary"> &nbsp; {{ item.allergens?.join(', ') | titlecase }}</span></span
+                  >
+                </div>
+                <div class="ingredients-container row py-3 py-lg-0">
+                  <span
+                    ><span class="fw-bolder">Ingredients: </span
+                    ><span class="text-body-secondary">{{ item.ingredients?.join(', ') }}</span></span
+                  >
+                </div>
+
+                <div class="calories-container row py-3 py-lg-0">
+                  <span
+                    ><span class="fw-bolder">Calorie Info: </span
+                    ><span class="text-body-secondary"
+                      ><span class="fs-5"> {{ item.calorieInfo?.count }}</span>
+                      <span class=""> {{ item.calorieInfo?.unit }}</span>
+                    </span>
+                  </span>
+                </div>
+
+                <div class="give-review-container">
+                  <button (click)="onGiveAReviewClick()" class="btn btn-dark w-100">
+                    {{ config.giveAReviewLabel }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="my-3">
+        <!--                <app-item-detail [place]="place" [item]="item"></app-item-detail>-->
+        <ng-container *ngIf="reviews$ | async as reviews">
+          <div class="review-container row gap-3 g-0">
+            <div class="review-title fs-5 fw-bold">Reviews</div>
+            <div class="review-search-container">
+              <form class="row gap-3 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7">
+                <div class="col-12 col-md-8">
+                  <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
+                  <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search" />
+                </div>
+                <div class="col-12 col-md d-flex justify-content-center">
+                  <button type="submit" class="col-12 col-md-11 btn btn-dark focus-ring">Search</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="filter-container d-flex flex-column">
+              <div class="filter-buttons-container d-flex flex-grow-1 align-self-end">
+                <div class="sort-wrapper d-flex mx-2 align-items-center">
+                  <span class="d-none d-lg-inline mx-1">Sort by</span>
+                  <button class="btn btn-light h-100 mx-1 rounded fs-4" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-sort-down"></i>
+                    <ul class="dropdown-menu">
+                      <li class="mx-3" *ngFor="let option of config.itemDetailSortBy">
+                        <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
+                      </li>
+                    </ul>
+                  </button>
+                </div>
+                <div class="filter-by-wrapper d-flex mx-2 align-items-center">
+                  <span class="d-none d-lg-inline mx-1">Filter by</span>
+                  <button
+                    class="btn btn-light h-100 mx-1 rounded fs-4"
+                    aria-expanded="false"
+                    (click)="
+                      itemDetailFilterBlock.classList.toggle('d-none');
+                      itemDetailFilterBlock.classList.toggle('item-detail-filter')
+                    ">
+                    <i class="bi bi-filter"></i>
+                    <ul class="dropdown-menu">
+                      <li class="mx-3" *ngFor="let option of config.itemDetailFilterBy">
+                        <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
+                      </li>
+                    </ul>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="d-flex d-none item-detail-filter row justify-content-center my-2 my-sm-3"
+                #itemDetailFilterBlock>
+                <div class="flex-grow-1 col-12 col-md-5 col-lg-4 me-md-2 my-2">
+                  <ng-multiselect-dropdown
+                    class=""
+                    [placeholder]="'Filter'"
+                    [settings]="dropdownSettings"
+                    [data]="config.itemDetailFilterBy"
+                    [(ngModel)]="selectedReviewFilter"
+                    (onSelect)="onReviewFilterChange($event)">
+                  </ng-multiselect-dropdown>
+                </div>
+                <div class="flex-grow-1 col-12 col-md-5 col-lg-4 ms-md-2 my-2">
+                  <ng-multiselect-dropdown
+                    class=" "
+                    [placeholder]="'Stars'"
+                    [settings]="dropdownSettings"
+                    [data]="config.itemDetailFilterByStars"
+                    [(ngModel)]="selectedStarFilter"
+                    (onSelect)="onStarFilterChange($event)">
+                  </ng-multiselect-dropdown>
+                </div>
+
+                <div class="checkbox-container d-none">
+                  <!--                <h1>{{config.itemDetailShowOnlyImagesLabel}}</h1>-->
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" data-ng-model="showReviewsWithImages" />
+                      <span class="box"></span>
+                      {{ config.itemDetailShowOnlyImagesLabel }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ng-container *ngFor="let review of reviews">
+              <div class="row cols-auto">
+                <app-review-unit [review]="review"></app-review-unit>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

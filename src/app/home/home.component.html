@@ -1,0 +1,45 @@
+<div class="search-container m-1 m-md-5 py-2 py-md-3 col-md-10">
+  <div class="mt-2 mt-md-5">
+    <span class="text-lg-center fs-5 fw-medium text-body-secondary">{{ config.search_main_label }}</span>
+  </div>
+  <div class="p-1">
+    <span class="text-sm-center fw-light text-body-secondary">{{ config.search_sub_label }}</span>
+  </div>
+  <form class="row g-3 pt-2 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7">
+    <div class="col-12 col-md-8">
+      <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
+      <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search" />
+    </div>
+    <div class="col-12 col-md">
+      <button type="submit" class="col-12 btn btn-dark mb-1 mb-sm-3 focus-ring">Search</button>
+    </div>
+  </form>
+  <div class="suggestions-container">
+    <span class="text-body-tertiary fs-smaller">{{ config.suggestionsLabel }}</span>
+    <div class="d-block d-md-inline mx-1 suggestion" *ngFor="let suggestion of randomSuggestions">
+      <button type="button" class="btn btn-outline-secondary rounded-5 btn-sm m-1">{{ suggestion.label }}</button>
+    </div>
+  </div>
+</div>
+<div class="pop-container m-1 m-md-5 col-md-10">
+  <div class="pop-title lead text-body-secondary">{{ config.popular_title }}</div>
+  <div class="pop-wrapper" *ngIf="popularSearches$ | async as resp">
+    <div class="pop-items row">
+      <div class="pop-item-wrapper col-6 col-md-3 col-xxl-2 px-0" *ngFor="let element of resp">
+        <div class="pop-item card m-1 m-lg-2" hover-classes="text-bg-dark" (click)="popularItemSelected(element)">
+          <img [src]="element.medias[0].url" class="card-img-top pop-img-top" [alt]="element.name" />
+          <div class="card-body text-center d-flex justify-content-center p-sm-1 p-lg-1">
+            <p
+              class="card-title fw-medium d-flex align-items-center my-sm-1"
+              [ngClass]="{ 'fs-smaller': element.name.length > 16 }">
+              {{ element.name }}
+            </p>
+          </div>
+          <div class="card-icon text-bg-dark" *ngIf="element.type === 'place'">
+            <i class="bi bi-shop fw-bolder fs-2 fs-md-3"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

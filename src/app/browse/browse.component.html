@@ -1,0 +1,118 @@
+<ng-template #filters>
+  <div class="d-flex flex-column flex-md-row m-1 my-md-3">
+    <ng-container *ngIf="cuisines$ | async as cuisines">
+      <ng-multiselect-dropdown
+        class="flex-grow-1 m-1 m-md-2"
+        [placeholder]="'Cuisines'"
+        [settings]="dropdownSettings"
+        [data]="cuisines"
+        [(ngModel)]="selectedCuisines"
+        (onSelect)="onItemSelect($event)"
+        (onSelectAll)="onSelectAll($event)">
+      </ng-multiselect-dropdown>
+    </ng-container>
+
+    <!--  <ng-container *ngIf="dietaries$ | async as dietaries">-->
+    <ng-multiselect-dropdown
+      class="flex-grow-1 m-1 m-md-2"
+      [placeholder]="'Dietary'"
+      [settings]="dropdownSettings"
+      [data]="dietaries"
+      [(ngModel)]="selectedDiets"
+      (onSelect)="onItemSelect($event)"
+      (onSelectAll)="onSelectAll($event)">
+    </ng-multiselect-dropdown>
+
+    <div class="flex-grow-1 d-flex justify-content-center justify-content-lg-start m-1 m-md-2">
+      <button class="filter-button btn btn-outline-dark flex-grow-1 flex-md-grow-0 w-75">Filter</button>
+    </div>
+  </div>
+  <!--  </ng-container>-->
+</ng-template>
+
+<ng-template #browseContent>
+  <div *ngIf="cuisinesItems$ | async as cuisinesItems">
+    {{ cuisinesItems.data }}
+    <!--    <div class="row">-->
+    <div class="" *ngFor="let ci of cuisinesItems">
+      <div class="m-1 mt-3 mx-md-3 my-md-2">
+        <span class="lead text-body-secondary"
+          >Dishes in <span class="fw-bold">{{ ci.cuisine | titlecase }}</span> cuisine:</span
+        >
+      </div>
+
+      <div class="row d-flex flex-row justify-content-start m-1">
+        <div class="col-6 col-md-3 col-xxl-2" *ngFor="let item of ci.items.slice(0, 12)">
+          <div
+            class="browse-item card m-1 m-lg-2 border-secondary"
+            hover-classes="text-bg-dark"
+            (click)="openItem(item)">
+            <img [src]="item.medias[0].url" class="card-img-top browse-img-top" [alt]="item.name" />
+            <div class="card-body text-center d-flex justify-content-center p-1 p-lg-1">
+              <p
+                class="card-title fw-medium d-flex align-items-center my-1"
+                [ngClass]="{ 'fs-smaller': item.name.length > 16 }">
+                {{ item.name }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="d-block m-1 m-md-2" *ngIf="ci?.items?.length > 12 && !ci.showMore">
+          <p>
+            <a
+              (click)="ci.showMore = true"
+              class="fw-bolder fs-6 link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+              >Show more</a
+            >
+          </p>
+        </div>
+        <ng-container *ngIf="ci.showMore">
+          <div class="col-6 col-md-3 col-xxl-2" *ngFor="let item of ci.items.slice(12)">
+            <div class="browse-item card m-1 m-lg-2" hover-classes="text-bg-dark">
+              <img [src]="item.medias[0].url" class="card-img-top browse-img-top" [alt]="item.name" />
+              <div class="card-body text-center d-flex justify-content-center p-sm-1 p-lg-1">
+                <p
+                  class="card-title fw-medium d-flex align-items-center my-sm-1"
+                  [ngClass]="{ 'fs-smaller': item.name.length > 16 }">
+                  {{ item.name }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <!--  </div>-->
+
+  <!--  <div class=" browse-wrapper m-1 m-md-5 col-md-10">-->
+  <!--    <div class="browse-title lead text-body-secondary">{{config.popular_title}}</div>-->
+  <!--    <div class="browse-wrapper" *ngIf="popularSearches$ | async as resp">-->
+  <!--      <div class="pop-items row">-->
+
+  <!--        <div class="pop-item-wrapper  col-6 col-md-3 col-xxl-2 px-0" *ngFor="let item of resp">-->
+  <!--          <div class="pop-item card m-1 m-lg-2 " hover-classes="text-bg-dark">-->
+  <!--            <img [src]="item.medias[0].url" class="card-img-top pop-img-top" [alt]="item.name">-->
+  <!--            <div class="card-body text-center d-flex justify-content-center  p-sm-1 p-lg-1">-->
+  <!--              <p class="card-title fw-medium d-flex align-items-center my-sm-1"-->
+  <!--                 [ngClass]="{'fs-smaller': (item.name.length > 16)}" >{{item.name}}</p>-->
+  <!--            </div>-->
+  <!--            <div class="card-icon text-bg-dark" *ngIf="item.type === 'place'">-->
+  <!--              <i class="bi bi-shop fw-bolder fs-2 fs-md-3"></i>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
+
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+</ng-template>
+
+<div class="browse-container">
+  <div class="filter-container">
+    <ng-container *ngTemplateOutlet="filters"></ng-container>
+  </div>
+  <div class="browse-content-container row">
+    <ng-container *ngTemplateOutlet="browseContent"></ng-container>
+  </div>
+</div>

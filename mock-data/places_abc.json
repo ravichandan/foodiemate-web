@@ -1,0 +1,206 @@
+{
+  "places": [
+    {
+      "address": {
+        "suburb": "The Ponds",
+        "postcode": 2000,
+        "_id": 2
+      },
+      "ambience": 3.962962962962963,
+      "id": 3,
+      "items": [
+        {
+          "name": "Dosa",
+          "id": 2,
+          "reviews": [
+            {
+              "description": "This is a review content",
+              "id": "59",
+              "taste": 3.1,
+              "presentation": 4.1,
+              "ambience": 3,
+              "medias": [
+                {
+                  "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png",
+                  "id": "2"
+                }
+              ],
+              "service": 3.7,
+              "placeName": "3",
+              "itemName": "1"
+            },
+            {
+              "description": "This is a review content",
+              "id": "58",
+              "taste": 3.1,
+              "presentation": 4.1,
+              "ambience": 3,
+              "medias": [
+                {
+                  "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png",
+                  "id": "2"
+                }
+              ],
+              "service": 3.7,
+              "placeName": "3",
+              "itemName": "1"
+            },
+            {
+              "description": "This is a review content",
+              "id": "57",
+              "taste": 4.1,
+              "presentation": 4.1,
+              "ambience": 4,
+              "medias": [
+                {
+                  "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png",
+                  "id": "2"
+                }
+              ],
+              "service": 3.7,
+              "placeName": "3",
+              "itemName": "1"
+            },
+            {
+              "description": "This is a review content",
+              "id": "47",
+              "taste": 4.9,
+              "presentation": 4.7,
+              "ambience": 1,
+              "medias": [
+                {
+                  "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png",
+                  "id": "2"
+                }
+              ],
+              "service": 3.5,
+              "placeName": "3",
+              "itemName": "1"
+            },
+            {
+              "description": "This is a review content",
+              "id": "46",
+              "taste": 4.9,
+              "presentation": 4.7,
+              "ambience": 2,
+              "medias": [
+                {
+                  "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png",
+                  "id": "2"
+                }
+              ],
+              "service": 3.5,
+              "placeName": "3",
+              "itemName": "1"
+            }
+          ],
+          "category": "MAINS",
+          "cuisine": "INDIAN"
+        },
+        {
+          "name": "butter",
+          "reviews": [
+            {
+              "description": "This is a review content",
+              "id": "56",
+              "taste": 4.1,
+              "presentation": 4.1,
+              "ambience": 4,
+              "medias": [
+                {
+                  "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png",
+                  "id": "2"
+                }
+              ],
+              "service": 3.7,
+              "placeName": "3",
+              "itemName": "2"
+            },
+            {
+              "description": "This is a review content",
+              "id": "55",
+              "taste": 4.9,
+              "presentation": 4.7,
+              "ambience": 4,
+              "medias": [
+                {
+                  "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png",
+                  "id": "2"
+                }
+              ],
+              "service": 3.7,
+              "placeName": "3",
+              "itemName": "2"
+            },
+            {
+              "description": "This is a review content",
+              "id": "54",
+              "taste": 4.9,
+              "presentation": 4.7,
+              "ambience": 4,
+              "medias": [
+                {
+                  "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png",
+                  "id": "2"
+                }
+              ],
+              "service": 3.5,
+              "placeName": "3",
+              "itemName": "2"
+            },
+            {
+              "description": "This is a review content",
+              "id": "53",
+              "taste": 4.9,
+              "presentation": 4.7,
+              "ambience": 4,
+              "medias": [
+                {
+                  "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png",
+                  "id": "2"
+                }
+              ],
+              "service": 3.5,
+              "placeName": "3",
+              "itemName": "2"
+            }
+          ],
+          "category": "MAINS",
+          "taste": 4.7,
+          "cuisine": "INDIAN",
+          "presentation": 4.55
+        }
+      ],
+      "name": "ABC Restaurant",
+      "reviews": [],
+      "service": 3.144444444444444,
+      "openingTimes": {
+        "SUNDAY": {"open": 9,"close": 17,"mayDiffer": false},"TUESDAY": {"open": 9,"close": 17,"mayDiffer": false},"WEDNESDAY": {"open": 9,"close": 17,"mayDiffer": false},"THURSDAY": {"open": 9,"close": 17,"mayDiffer": false},"FRIDAY": {"open": 9,"close": 17,"mayDiffer": false},"SATURDAY": {"open": 9,"close": 17,"mayDiffer": false},"MONDAY": {
+          "open": 9,
+          "close": 17,
+          "mayDiffer": false
+        }
+      }
+    },
+    {
+      "address": {
+        "suburb": "The Ponds",
+        "postcode": 2000,
+        "_id": 3
+      },
+      "id": 4,
+      "openingTimes": {
+        "SUNDAY": {"open": 9,"close": 17,"mayDiffer": false},"TUESDAY": {"open": 9,"close": 17,"mayDiffer": false},"WEDNESDAY": {"open": 9,"close": 17,"mayDiffer": false},"THURSDAY": {"open": 9,"close": 17,"mayDiffer": false},"FRIDAY": {"open": 9,"close": 17,"mayDiffer": false},"SATURDAY": {"open": 9,"close": 17,"mayDiffer": false},"MONDAY": {
+          "open": 9,
+          "close": 17,
+          "mayDiffer": false
+        }
+      },
+      "items": [],
+      "name": "ABC Restaurant",
+      "reviews": []
+    }
+  ],
+  "size": 2,
+  "page": 1
+}

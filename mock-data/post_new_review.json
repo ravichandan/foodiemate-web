@@ -1,0 +1,21 @@
+{
+  "_id": 59,
+  "correlationId": "2134",
+  "place": 3,
+  "item": 1,
+  "customer": 1,
+  "description": "This is a review content",
+  "taste": 3.1,
+  "presentation": 4.1,
+  "service": 3.7,
+  "ambience": 3,
+  "createdAt": "2024-05-01T23:14:57.602Z",
+  "modifiedAt": "2024-05-01T23:14:57.602Z",
+  "medias": [
+    {
+      "_id": 2,
+      "url": "/Users/ravisithiraju/Downloads/personal-projects/foodie-service/public/uploads/1709275864694-file.png"
+    }
+  ],
+  "__v": 0
+}

@@ -1,0 +1,51 @@
+<div class="d-none d-lg-flex position-relative">
+  <div class="d-flex flex-row justify-content-center bg-dark pt-2 flex-grow-1">
+    <!--    <div class="nav-block mr-auto d-block d-lg-none ">-->
+    <!--      &lt;!&ndash;<a class="btn btn-primary d-none d-lg-block" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">&ndash;&gt;-->
+    <!--      &lt;!&ndash;  Link with href&ndash;&gt;-->
+    <!--      &lt;!&ndash;</a>&ndash;&gt;-->
+
+    <!--      <span class="w-100 h-100 rounded d-flex align-items-center justify-content-center nav-block px-2 text-light"-->
+    <!--            data-bs-toggle="offcanvas" href="#offcanvasMenu" role="button" aria-controls="offcanvasMenu"-->
+    <!--            hover-classes="bg-body-secondary text-dark rounded-bottom-0"><i-->
+    <!--        class="bi bi-list nav-icon "></i></span>-->
+    <!--    </div>-->
+    <div
+      class="d-flex flex-column justify-content-center align-items-center nav-block py-3 px-3 rounded-top text-bg-dark"
+      [ngClass]="{ 'bg-dark-subtle': submenu === item }"
+      [hover-classes]="submenu !== item ? ' text-bg-dark' : ''"
+      *ngFor="let item of navigation_menu"
+      (click)="submenu = item">
+      <img class="nav-image" [ngSrc]="item.image" [alt]="item.label" width="100" height="50" />
+      <span class="nav-label pt-2">{{ item.label }}</span>
+    </div>
+    <div class="nav-block mb-2">
+      <span
+        class="w-100 h-100 rounded d-flex align-items-center justify-content-center nav-block pr-2 pb-3 text-bg-dark"
+        hover-classes="text-bg-secondary rounded-bottom-0"
+        ><i class="bi bi-grid nav-icon"></i
+      ></span>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="!!submenu"
+  class="container submenu-container row d-flex flex-wrap nav-content position-absolute border border-top-0 rounded-bottom bg-dark-subtle py-5 z-1"
+  (mouseleave)="submenu = undefined">
+  <div
+    class="col d-flex flex-column justify-content-center align-items-center rounded pt-3 nav-block"
+    *ngFor="let sub of submenu.items"
+    hover-classes="bg-light-subtle">
+    <img class="nav-image" [ngSrc]="sub.image" [alt]="sub.label" width="100" height="50" />
+    <span class="nav-label">{{ sub.label }}</span>
+  </div>
+  <div
+    class="col d-flex flex-column justify-content-center align-items-center rounded nav-block"
+    hover-classes="bg-light-subtle">
+    <span class="w-100 h-100 border rounded d-flex justify-content-center text-center pt-3 nav-block"
+      ><i class="bi bi-grid nav-icon"></i
+    ></span>
+    <span class="nav-label text-center">More {{ submenu.label }} cuisines</span>
+  </div>
+</div>

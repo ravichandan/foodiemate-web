@@ -1,0 +1,194 @@
+{
+  "address": {
+    "suburb": "The Ponds",
+    "postcode": 2000,
+    "_id": 2
+  },
+  "ambience": 3.962962962962963,
+  "service": 3.144444444444444,
+  "noOfReviews": 21,
+  "id": 10,
+  "openingTimes": {
+    "SUNDAY": {"open": 9,"close": 17,"mayDiffer": false},"TUESDAY": {"open": 9,"close": 17,"mayDiffer": false},"WEDNESDAY": {"open": 9,"close": 17,"mayDiffer": false},"THURSDAY": {"open": 9,"close": 17,"mayDiffer": false},"FRIDAY": {"open": 9,"close": 17,"mayDiffer": false},"SATURDAY": {"open": 9,"close": 17,"mayDiffer": false},"MONDAY": {
+      "open": 9,
+      "close": 17,
+      "mayDiffer": false
+    }
+  },
+  "items": {
+    "1": {
+      "name": "Noodle Soup Bowl",
+      "id": 1,
+      "reviews": [
+        {
+          "description": "I experienced a delicious main course and caring staff—but pity about the French fries.\n\nI visited for lunch with a friend. We were delighted by the authentic South Indian main course. The spices and flavors were extremely impressive for a vegetarian restaurant.\n\nThe service was above average, but the French fries were too unpalatable to finish.\n\nWhen we arrived at 2:00 p.m., we were told to wait for 10 minutes while they prepared the table. We hadn't made a reservation, but the restaurant was only half full. There was no good reason to make us wait.\n\nWe ordered French fries as a side dish. They looked tasty, but we discovered they were undercooked and too oily. We left most of them untouched. For $15, the quality should have been much higher.\n\nWhen the waiter visited our table and asked if something was wrong, we explained that we didn’t like the French fries. He was apologetic and said, “We’re sorry for your experience with the French fries; we hope you liked the main course.\" We said yes we had. He was sympathetic and offered us a discount on the price of the French fries.\n\nWe left a tip on the table and exited the restaurant with a smile.\n\nOverall, I enjoyed our experience. They did take the time to make the table ready, the main course was good, the staff was caring, but the French fries were awful.\n\nI’d love to visit again. I'd recommend it as a nice place to go with friends, family, or a partner. Do try their famous masala dosa.",
+          "id": "32",
+          "taste": 1.7,
+          "presentation": 4.24,
+          "ambience": 4.2,
+          "customer": {
+            "id": "chan123",
+            "name": "Bruce Lee",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            },
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00"
+          },
+          "medias": [
+            {
+              "url": "assets/images/general food bowl.jpg",
+              "id": "2"
+            },
+            {
+              "url": "assets/images/italian nav image.jpg",
+              "id": "3"
+            }
+          ],
+          "service": 2.2,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 45,
+          "likedBy": [
+            {
+              "id": "chan123",
+              "name": "Bruce Lee"
+            },
+            {
+              "id": "crz123",
+              "name": "Jackie Chan"
+            },
+            {
+              "id": "Rev132",
+              "name": "VK"
+            }
+          ]
+        },
+        {
+          "description": "I experienced a delicious main course and caring staff—but pity about the French fries.\n\nI visited for lunch with a friend. We were delighted by the authentic South Indian main course. The spices and flavors were extremely impressive for a vegetarian restaurant.\n\nThe service was above average, but the French fries were too unpalatable to finish.\n\nWhen we arrived at 2:00 p.m., we were told to wait for 10 minutes while they prepared the table. We hadn't made a reservation, but the restaurant was only half full. There was no good reason to make us wait.\n\nWe ordered French fries as a side dish. They looked tasty, but we discovered they were undercooked and too oily. We left most of them untouched. For $15, the quality should have been much higher.\n\nWhen the waiter visited our table and asked if something was wrong, we explained that we didn’t like the French fries. He was apologetic and said, “We’re sorry for your experience with the French fries; we hope you liked the main course.\" We said yes we had. He was sympathetic and offered us a discount on the price of the French fries.\n\nWe left a tip on the table and exited the restaurant with a smile.\n\nOverall, I enjoyed our experience. They did take the time to make the table ready, the main course was good, the staff was caring, but the French fries were awful.\n\nI’d love to visit again. I'd recommend it as a nice place to go with friends, family, or a partner. Do try their famous masala dosa.",
+          "id": "58",
+          "taste": 3.1,
+          "presentation": 4.1,
+          "ambience": 3,
+          "customer": {
+            "id": "chan123",
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00",
+            "name": "Jameson",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            }
+          },
+          "medias": [
+            {
+              "url": "assets/images/italian nav image.jpg",
+              "id": "2"
+            }
+          ],
+          "service": 3.7,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 23
+        },
+        {
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
+          "id": "57",
+          "taste": 4.1,
+          "presentation": 4.1,
+          "ambience": 4,
+          "customer": {
+            "id": "chan123",
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00",
+            "name": "Jackie Chan",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            }
+          },
+          "medias": [
+            {
+              "url": "assets/images/mexican nav image.jpg",
+              "id": "2"
+            }
+          ],
+          "service": 3.7,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 2
+        },
+        {
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
+          "id": "47",
+          "taste": 4.9,
+          "presentation": 4.7,
+          "ambience": 1,
+          "customer": {
+            "id": "chan123",
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00",
+            "name": "Iron man",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            }
+          },
+          "medias": [
+            {
+              "url": "assets/images/italian nav image.jpg",
+              "id": "2"
+            }
+          ],
+          "service": 3.5,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 33
+        },
+        {
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
+          "id": "46",
+          "taste": 4.9,
+          "presentation": 4.7,
+          "ambience": 2,
+          "customer": {
+            "id": "chan123",
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00",
+            "name": "Brad Pitt",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            }
+          },
+          "medias": [
+            {
+              "url": "assets/images/middle east nav image.png",
+              "id": "2"
+            }
+          ],
+          "service": 3.5,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 45
+        }
+      ],
+      "category": "MAINS",
+      "cuisine": "INDIAN",
+      "description": "Tender pieces of vegetables lightly cooked in the tandoor and finished with prepared sauce.",
+      "taste": 4.142857142857143,
+      "presentation": 2.365714285714286,
+
+      "noOfReviews": 454,
+      "allergens": ["Milk", "Nuts"],
+      "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
+      "calorieInfo": {
+        "count": 800,
+        "unit": "kJ"
+      },
+      "price": 18.50
+    }
+  },
+  "name": "Dosahouse Indian Restaurant"
+}

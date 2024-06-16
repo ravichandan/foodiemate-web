@@ -1,0 +1,419 @@
+{
+  "title": "tangypeel",
+  "search_main_label": "Search for a dish and see where it tastes best.",
+  "search_sub_label": "or, look for a food place and find the best tasting dishes there.",
+  "search_placeholder": "Dish or Restaurant or Cuisine",
+  "popular_title": "Popular Searches:",
+  "host": "http://127.0.0.1:3000",
+  "urlPrefix": "/api",
+  "popularSearchesEndpoint": "http://127.0.0.1:3000/api/popular-searches",
+  "allCuisinesEndpoint": "http://127.0.0.1:3000/api/all-cuisines",
+  "cuisinesItemsEndpoint": "http://127.0.0.1:3000/api/cuisines-items",
+  "itemEndpoint": "http://127.0.0.1:3000/api/items/:itemId",
+  "placeEndpoint": "http://127.0.0.1:3000/api/places/:placeId",
+  "itemOfAPlaceEndpoint": "http://127.0.0.1:3000/api/places/:placeId/items/:itemId",
+  "reviewsOfAnItemOfAPlaceEndpoint": "http://127.0.0.1:3000/api/places/:placeId/items/:itemId/reviews",
+  "feedbackAReviewEndpoint": "http://127.0.0.1:3000/api/reviews/:reviewId",
+  "postAReviewEndpoint": "http://127.0.0.1:3000/api/reviews/",
+  "searchForPlaceEndpoint": "http://127.0.0.1:3000/api/places/search",
+  "uploadMediaEndpoint": "http://127.0.0.1:3000/api/medias/upload",
+  "loginOidcCustomerEndpoint": "http://127.0.0.1:3000/api/customers/oidc-login",
+  "logoutCustomerEndpoint": "http://127.0.0.1:3000/api/customers/:customerId/logout",
+  "customerByIdEndpoint": "http://127.0.0.1:3000/api/customers/:customerId",
+  "pageSize": 1,
+  "suggestionsLabel": "Suggestions: ",
+  "allReviewPhotosLabel": "View all review photos",
+  "placeListHeaderLabel": "Showing x results for",
+  "placeReviewItemsLabel": "Items we had there: ",
+  "placeReviewPhotosWrapperLabel": "Pics of the place overall: ",
+  "giveAReviewLabel": "Review this place",
+  "postReviewLabels": {
+    "place": {
+      "label": "Where did you have food?",
+      "placeholder": "Search for restaurant"
+    },
+    "ambience": {
+      "label": "How was the Ambience there?",
+      "placeholder": "Search Place",
+      "error": "Please tell how is the ambience"
+    },
+    "service": {
+      "label": "And their Service?",
+      "placeholder": "Search Place",
+      "error": "Please tell how is the service"
+    },
+    "items": {
+      "mainLabel": "What did you have there?",
+      "label": "Item",
+      "placeholder": "Search a dish"
+    },
+    "taste": {
+      "label": "How is its taste?",
+      "placeholder": "Search Place",
+      "error": "Please tell how is the taste"
+    },
+    "presentation": {
+      "label": "And its Presentation?",
+      "placeholder": "Search Place",
+      "error": "Please tell how is the presentation"
+    },
+    "upload": {
+      "label": "Add any image or video",
+      "placeholder": "Search Place"
+    },
+    "itemDescription": {
+      "label": "Tell us anything else like quantity, cold/hot, etc",
+      "placeholder": "Tell us something like temperature, quantity, etc"
+    },
+    "description": {
+      "label": "Tell us your overall experience",
+      "placeholder": "Tell us your overall experience"
+    },
+    "verifyEmail": "You need to verify your email before doing submitting"
+  },
+  "carousel": {
+    "interval": 10000,
+    "showNavigationArrows": true,
+    "showNavigationIndicators": false,
+    "pauseOnHover": true,
+    "pauseOnFocus": true
+  },
+  "dietaries": [
+    {
+      "id": 1,
+      "name": "Vegan"
+    },
+    {
+      "id": 2,
+      "name": "Vegetarian"
+    },
+    {
+      "id": 3,
+      "name": "Eggitarian (only egg)"
+    },
+    {
+      "id": 4,
+      "name": "Pollotarian (only chicken)"
+    },
+    {
+      "id": 5,
+      "name": "Pescatarian (only seafood)"
+    },
+    {
+      "id": 6,
+      "name": "All meats"
+    }
+  ],
+  "filters": [
+    {
+      "label": "Taste"
+    },
+    {
+      "label": "Presentation"
+    },
+    {
+      "label": "Service"
+    },
+    {
+      "label": "Ambience"
+    }
+  ],
+  "sortBy": [
+    {
+      "label": "Taste"
+    },
+    {
+      "label": "Presentation"
+    },
+    {
+      "label": "Service"
+    },
+    {
+      "label": "Ambience"
+    }
+  ],
+  "itemDetailSortBy": [
+    {
+      "label": "Recent Reviews"
+    },
+    {
+      "label": "Most useful"
+    }
+  ],
+  "itemDetailFilterByAllergens": [
+    {
+      "label": "Milk"
+    },
+    {
+      "label": "Eggs"
+    },
+    {
+      "label": "Fish"
+    },
+    {
+      "label": "Shellfish"
+    },
+    {
+      "label": "Tree nuts"
+    },
+    {
+      "label": "Peanuts"
+    },
+    {
+      "label": "Wheat"
+    },
+    {
+      "label": "Soybeans"
+    }
+  ],
+  "itemDetailFilterBy": [
+    {
+      "label": "All Reviews"
+    },
+    {
+      "label": "Verified only"
+    }
+  ],
+  "itemDetailFilterByStars": [
+    {
+      "label": "All"
+    },
+    {
+      "label": "5 Stars"
+    },
+    {
+      "label": "4 Stars"
+    },
+    {
+      "label": "3 Stars"
+    },
+    {
+      "label": "2 Stars"
+    },
+    {
+      "label": "1 Stars"
+    }
+  ],
+  "itemDetailShowOnlyImagesLabel": "Show only those reviews with images or videos",
+  "navigation_menu": [
+    {
+      "label": "Indian",
+      "route": "/indian",
+      "image": "assets/images/indian nav image.jpg",
+      "items": [
+        {
+          "label": "Biryani",
+          "value": "biryani",
+          "image": "assets/images/indian nav image.jpg"
+        },
+        {
+          "label": "Dosas",
+          "value": "dosas",
+          "image": "assets/images/mexican nav image.jpg"
+        },
+        {
+          "label": "Chats",
+          "value": "chats",
+          "image": "assets/images/italian nav image.jpg"
+        },
+        {
+          "label": "South Indian",
+          "value": "south_indian",
+          "image": "assets/images/japanese nav image.png"
+        },
+        {
+          "label": "North Indian",
+          "value": "north_indian",
+          "image": "assets/images/chinese nav image.png"
+        }
+      ]
+    },
+    {
+      "label": "Mexican",
+      "route": "/mexican",
+      "image": "assets/images/mexican nav image.jpg",
+      "items": [
+        {
+          "label": "Burritos",
+          "value": "burritos",
+          "image": "assets/images/chinese nav image.png"
+        },
+        {
+          "label": "Quesadillas",
+          "value": "quesadillas",
+          "image": "assets/images/indian nav image.jpg"
+        },
+        {
+          "label": "Nachos",
+          "value": "nachos",
+          "image": "assets/images/italian nav image.jpg"
+        },
+        {
+          "label": "Bowls",
+          "value": "bowls",
+          "image": "assets/images/greek nav image.png"
+        }
+      ]
+    },
+    {
+      "label": "Italian",
+      "route": "/italian",
+      "image": "assets/images/italian nav image.jpg",
+      "items": [
+        {
+          "label": "Pizzas",
+          "value": "pizzas",
+          "image": "assets/images/indian nav image.jpg"
+        },
+        {
+          "label": "Pastas",
+          "value": "pastas",
+          "image": "assets/images/japanese nav image.png"
+        },
+        {
+          "label": "Antipastos",
+          "value": "antipastos",
+          "image": "assets/images/mexican nav image.jpg"
+        },
+        {
+          "label": "Cheese",
+          "value": "cheese",
+          "image": "assets/images/chinese nav image.png"
+        }
+      ]
+    },
+    {
+      "label": "Japanese",
+      "route": "/japanese",
+      "image": "assets/images/japanese nav image.png",
+      "items": [
+        {
+          "label": "Bento Box",
+          "value": "bento_box",
+          "image": "assets/images/mexican nav image.jpg"
+        },
+        {
+          "label": "Wagyus",
+          "value": "wagyus",
+          "image": "assets/images/indian nav image.jpg"
+        },
+        {
+          "label": "Karaages",
+          "value": "karaages",
+          "image": "assets/images/chinese nav image.png"
+        },
+        {
+          "label": "Ramens",
+          "value": "ramens",
+          "image": "assets/images/italian nav image.jpg"
+        }
+      ]
+    },
+    {
+      "label": "Chinese",
+      "route": "/chinese",
+      "image": "assets/images/chinese nav image.png",
+      "items": [
+        {
+          "label": "Noodle Soups",
+          "value": "noodle_soups",
+          "image": "assets/images/japanese nav image.png"
+        },
+        {
+          "label": "Laksas",
+          "value": "laksas",
+          "image": "assets/images/mexican nav image.jpg"
+        },
+        {
+          "label": "Noodles",
+          "value": "noodles",
+          "image": "assets/images/greek nav image.png"
+        },
+        {
+          "label": "Manchurian",
+          "value": "manchurian",
+          "image": "assets/images/indian nav image.jpg"
+        }
+      ]
+    },
+    {
+      "label": "Middle East",
+      "route": "/middle_east",
+      "image": "assets/images/middle east nav image.png",
+      "items": [
+        {
+          "label": "Adanos",
+          "value": "adanos",
+          "image": "assets/images/indian nav image.jpg"
+        },
+        {
+          "label": "Kebabs",
+          "value": "kebabs",
+          "image": "assets/images/italian nav image.jpg"
+        },
+        {
+          "label": "Skewers",
+          "value": "skewers",
+          "image": "assets/images/japanese nav image.png"
+        }
+      ]
+    },
+    {
+      "label": "Greek",
+      "route": "/greek",
+      "image": "assets/images/greek nav image.png",
+      "items": [
+        {
+          "label": "Soulakis",
+          "value": "soulakis",
+          "image": "assets/images/middle east nav image.png"
+        },
+        {
+          "label": "Salads",
+          "value": "salads",
+          "image": "assets/images/chinese nav image.png"
+        },
+        {
+          "label": "Sweets",
+          "value": "sweets",
+          "image": "assets/images/italian nav image.jpg"
+        }
+      ]
+    }
+  ],
+  "suggestions": [
+    {
+      "label": "Best mutton biryani"
+    },
+    {
+      "label": "Yummy Cheese Burger"
+    },
+    {
+      "label": "Spicy Beef Nachos"
+    },
+    {
+      "label": "Best Pork Ramen in town"
+    },
+    {
+      "label": "Nice Vegetable Laksa"
+    },
+    {
+      "label": "South Indian Thali"
+    },
+    {
+      "label": "Jawa Nasi Goreng"
+    }
+  ],
+  "noOfSuggestions": 3,
+  "profileLabels": {
+    "email": "Email Address",
+    "name": "Name"
+  },
+  "temp": {
+    "label": "All",
+    "route": "/all",
+    "image": "assets/images/general food bowl.jpg",
+    "items": [
+    ]
+  }
+}

@@ -1,0 +1,120 @@
+<ng-container *ngIf="review">
+  <div class="review-unit-container row gap-3 my-2">
+    <div class="row gap-1 customer-info-row">
+      <div class="customer-pic-wrapper col-auto rounded-5 bg-dark-subtle d-flex justify-content-center">
+        <i class="bi bi-person-fill text-light fs-2"></i>
+      </div>
+      <div
+        class="customer-name-wrapper col-auto d-flex flex-column justify-content-center fw-bold text-secondary-emphasis fs-5">
+        {{ review.customer.name }}
+      </div>
+    </div>
+    <div class="row gap-1 review-date-row">
+      <span class="fw-bold text-secondary">Reviewed on {{ review.customer.reviewedOn | date: 'd MMMM, y' }}</span>
+    </div>
+    <div class="row gap-1 rating-info-row">
+      <div class="row row-cols-1 row-cols-md-2 gap-2 mx-2 px-0">
+        <div class="col d-flex justify-content-between align-items-center rating-element-small fw-bolder">
+          <span>Service: </span>
+          <ngb-rating
+            [(rate)]="review.service"
+            class="fs-5"
+            [readonly]="true"
+            [max]="5"
+            [ariaValueText]="ariaValueText" />
+        </div>
+        <div class="col d-flex justify-content-between align-items-center rating-element fw-bolder">
+          <span>Ambience: </span>
+          <ngb-rating
+            [(rate)]="review.ambience"
+            class="fs-5"
+            [readonly]="true"
+            [max]="5"
+            [ariaValueText]="ariaValueText" />
+        </div>
+      </div>
+    </div>
+    <div class="row gap-1 review-description-row text-justify">
+      <pre>
+                {{ review.description }}
+            </pre
+      >
+    </div>
+    <div class="row gap-1 review-items-row">
+      <div class="review-items-label fs-6 fw-bold text-dark">
+        <span>{{ config.placeReviewItemsLabel }}</span>
+      </div>
+      <div class="review-items-wrapper row gap-3 mx-0 px-0">
+        <ng-container *ngFor="let ir of review.children; let index = index">
+          <div class="row gap-2 review-header-row d-flex justify-content-between mx-0 px-0">
+            <div class="col-12 review-items-item-label d-flex">
+              <span class="review-items-item-index fs-6 fw-bold text-secondary">{{ index + 1 }}.</span>
+              &nbsp;
+              <span class="review-items-item-name fs-6 fw-bold text-body-secondary">{{
+                place.items[ir.item.id].name
+              }}</span>
+            </div>
+            <div class="col-12 review-items-item-rating-wrapper row justify-content-end">
+              <div class="row rating-info-row gap-2 my-2">
+                <div
+                  class="col d-flex justify-content-between justify-content-lg-evenly align-items-center rating-element">
+                  <span class="fw-bolder">Taste: </span>
+                  <ngb-rating
+                    [(rate)]="review.taste"
+                    class="fs-5"
+                    [readonly]="true"
+                    [max]="5"
+                    [ariaValueText]="ariaValueText" />
+                </div>
+                <div
+                  class="col d-flex justify-content-between justify-content-lg-evenly align-items-center rating-element">
+                  <span class="fw-bolder">Presentation: </span>
+                  <ngb-rating
+                    [(rate)]="review.presentation"
+                    class="fs-5"
+                    [readonly]="true"
+                    [max]="5"
+                    [ariaValueText]="ariaValueText" />
+                </div>
+              </div>
+              <div class="col-12 row gap-1 review-items-item-description-row text-justify px-0">
+                <pre class="text-justify">
+                                    {{ review.description }}
+                                </pre
+                >
+              </div>
+              <div class="review-photos-wrapper-holder col">
+                <ng-container *ngFor="let media of review.medias">
+                  <img [src]="media.url" class="img-thumbnail" alt="Image" />
+                  <img [src]="media.url" class="img-thumbnail" alt="Image" />
+                  <img [src]="media.url" class="img-thumbnail" alt="Image" />
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="row gap-2 review-photos-row">
+      <div class="review-photos-wrapper-label">
+        <span class="fw-bold">{{ config.placeReviewPhotosWrapperLabel }}</span>
+      </div>
+      <div class="review-photos-wrapper-holder">
+        <ng-container *ngFor="let media of review.medias">
+          <img [src]="media.url" class="img-thumbnail" alt="Image" />
+          <img [src]="media.url" class="img-thumbnail" alt="Image" />
+          <img [src]="media.url" class="img-thumbnail" alt="Image" />
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="row gap-1 review-feedback-row">
+      <div class="review-feedback-wrapper d-flex flex-column">
+        <app-review-feedback [review]="review"></app-review-feedback>
+        <div class="review-feedback-text fw-bold text-secondary">
+          <span> {{ review.helpful }} people found it helpful</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

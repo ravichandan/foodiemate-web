@@ -1,0 +1,167 @@
+{
+  "address": {
+    "suburb": "The Ponds",
+    "postcode": 2000,
+    "_id": 2
+  },
+  "ambience": 3.962962962962963,
+  "service": 3.144444444444444,
+  "id": 10,
+  "openingTimes": {
+    "SUNDAY": {"open": 9,"close": 17,"mayDiffer": false},"TUESDAY": {"open": 9,"close": 17,"mayDiffer": false},"WEDNESDAY": {"open": 9,"close": 17,"mayDiffer": false},"THURSDAY": {"open": 9,"close": 17,"mayDiffer": false},"FRIDAY": {"open": 9,"close": 17,"mayDiffer": false},"SATURDAY": {"open": 9,"close": 17,"mayDiffer": false},"MONDAY": {
+      "open": 9,
+      "close": 17,
+      "mayDiffer": false
+    }
+  },
+  "items": {
+    "1": {
+      "name": "Noodle Soup Bowl",
+      "id": 1,
+      "reviews": [
+        {
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
+          "id": "59",
+          "taste": 4.1,
+          "presentation": 4.1,
+          "ambience": 4,
+          "customer": {
+            "id": "chan123",
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00",
+            "name": "Donald Trump",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            }
+          },
+          "medias": [
+            {
+              "url": "assets/images/mexican nav image.jpg",
+              "id": "2"
+            }
+          ],
+          "service": 3.7,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 109
+        },
+        {
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
+          "id": "60",
+          "taste": 3.1,
+          "presentation": 4.1,
+          "ambience": 3,
+          "customer": {
+            "id": "chan123",
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00",
+            "name": "Spiderman",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            }
+          },
+          "medias": [
+            {
+              "url": "assets/images/italian nav image.jpg",
+              "id": "2"
+            }
+          ],
+          "service": 3.7,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 56
+        },
+        {
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
+          "id": "61",
+          "taste": 4.1,
+          "presentation": 4.1,
+          "ambience": 4,
+          "customer": {
+            "id": "chan123",
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00",
+            "name": "Abdul Kalam",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            }
+          },
+          "medias": [
+            {
+              "url": "assets/images/mexican nav image.jpg",
+              "id": "2"
+            }
+          ],
+          "service": 3.7,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 87
+        },
+        {
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
+          "id": "62",
+          "taste": 4.9,
+          "presentation": 4.7,
+          "ambience": 1,
+          "customer": {
+            "id": "chan123",
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00",
+            "name": "Shah Rukh Khan",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            }
+          },
+          "medias": [
+            {
+              "url": "assets/images/italian nav image.jpg",
+              "id": "2"
+            }
+          ],
+          "service": 3.5,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 23
+        },
+        {
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
+          "id": "63",
+          "taste": 4.9,
+          "presentation": 4.7,
+          "ambience": 2,
+          "customer": {
+            "id": "chan123",
+            "reviewedOn": "2024-02-13T00:00:00.000+00:00",
+            "name": "Rajnikanth",
+            "media": {
+              "url": "assets/images/profile pic.jpg",
+              "id": "2"
+            }
+          },
+          "medias": [
+            {
+              "url": "assets/images/middle east nav image.png",
+              "id": "2"
+            }
+          ],
+          "service": 3.5,
+          "placeId": "3",
+          "itemId": "1",
+          "notHelpful": 14,
+          "helpful": 9
+        }
+      ],
+      "category": "MAINS",
+      "cuisine": "INDIAN",
+      "description": "Tender pieces of vegetables lightly cooked in the tandoor and finished with prepared sauce.",
+      "taste": 4.142857142857143,
+      "presentation": 2.365714285714286,
+      "price": 18.50
+    }
+  },
+  "name": "Dosahouse Indian Restaurant"
+}

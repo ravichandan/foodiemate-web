@@ -1,0 +1,125 @@
+{
+  "page": 1,
+  "size": 10,
+  "places": [
+    {
+      "id": 10,
+      "name": "ABC Tasty Foods",
+      "description": "string",
+      "service": 4.5,
+      "ambience": 4.3,
+      "medias": [
+        {
+          "id": 1,
+          "name": "picture 1",
+          "type": "image|video",
+          "url": "assets/images/popular/Dosahut_Harrispark_popular_image.jpeg"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": 10,
+      "name": "Cheese Burger",
+      "category": "MAINS",
+      "cuisine": "INDIAN",
+      "description": "string",
+      "taste": 4.5,
+      "presentation": 4.3,
+      "medias": [
+        {
+          "id": 1,
+          "name": "picture 1",
+          "type": "image|video",
+          "url": "assets/images/chinese nav image.png"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Chicken Dum Biryani",
+      "category": "MAINS",
+      "cuisine": "INDIAN",
+      "description": "string",
+      "taste": 4.5,
+      "presentation": 4.3,
+      "medias": [
+        {
+          "id": 1,
+          "name": "picture 1",
+          "type": "image|video",
+          "url": "assets/images/japanese nav image.png"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Bento box",
+      "category": "MAINS",
+      "cuisine": "INDIAN",
+      "description": "string",
+      "taste": 4.5,
+      "presentation": 4.3,
+      "medias": [
+        {
+          "id": 1,
+          "name": "picture 1",
+          "type": "image|video",
+          "url": "assets/images/mexican nav image.jpg"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Vegetable laksa",
+      "category": "MAINS",
+      "cuisine": "INDIAN",
+      "description": "string",
+      "taste": 4.5,
+      "presentation": 4.3,
+      "medias": [
+        {
+          "id": 1,
+          "name": "picture 1",
+          "type": "image|video",
+          "url": "assets/images/middle east nav image.png"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Spicy Chicken Pizza",
+      "category": "MAINS",
+      "cuisine": "INDIAN",
+      "description": "string",
+      "taste": 4.5,
+      "presentation": 4.3,
+      "medias": [
+        {
+          "id": 1,
+          "name": "picture 1",
+          "type": "image|video",
+          "url": "assets/images/greek nav image.png"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Pork Ribs",
+      "category": "MAINS",
+      "cuisine": "INDIAN",
+      "description": "string",
+      "taste": 4.5,
+      "presentation": 4.3,
+      "medias": [
+        {
+          "id": 1,
+          "name": "picture 1",
+          "type": "image|video",
+          "url": "assets/images/chinese nav image.png"
+        }
+      ]
+    }
+  ]
+}
