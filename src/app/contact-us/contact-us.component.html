@@ -1,0 +1,45 @@
+@if (fg) {
+  <div class="container">
+    <span class="text-center mb-5 h3">Send us an email and we will respond asap</span>
+    <form
+      [formGroup]="fg"
+      #contactUsForm
+      (ngSubmit)="onSubmit(fg.value)"
+      class="row gap-4 py-4 needs-validation"
+      novalidate
+      target="_self"
+      action="https://formsubmit.co/03bb2783ebab3119a119bedb3fa63f12"
+      method="POST">
+      <!--      <div class="row gap-4 py-4">-->
+      <!--      <div class=" col-12">-->
+
+      <div class="form-group col-12 col-md-8">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          aria-describedby="emailHelp"
+          placeholder="Enter email"
+          formControlName="email"
+          id="email"
+          required />
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <div class="invalid-feedback">we need your email to contact you back.</div>
+      </div>
+      <div class="form-group col-12 col-md-8">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name" formControlName="name" />
+      </div>
+      <div class="form-group col-12 col-md-8">
+        <label for="comment">What you want to tell us?</label>
+        <textarea class="form-control" id="comment" formControlName="comment" name="comment" required></textarea>
+        <div class="invalid-feedback">This field is required</div>
+      </div>
+      <div class="form-group col-12 col-md-8 d-flex">
+        <button type="submit" class="btn btn-primary flex-grow-1">Send</button>
+      </div>
+    </form>
+    <!--    </div>-->
+  </div>
+}

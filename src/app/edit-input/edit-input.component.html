@@ -1,0 +1,22 @@
+<label [for]="'id'+(name ?? stripSpace(label))" class="form-label">{{ label }}</label>
+@if (!readonly && editMode) {
+  <input
+    (focusout)="onFocusOut()"
+    (keydown.enter)="onKeyDown($event)"
+    [(ngModel)]="data"
+    [attr.aria-describedby]="ariaDescribedby"
+    class="cellInput"
+    appAutofocus
+    [type]="type"
+    [readonly]="readonly"
+    [id]="'id'+(name ?? stripSpace(label))"
+  />
+} @else {
+  <div (click)="editMode = true" class="cell d-flex align-items-center justify-content-between" >
+    <span>{{ type==='number' ? (data | number: '' : 'en') : data }}</span>
+    @if (!readonly) {
+      <fa-icon [icon]="faPencil"></fa-icon>
+    }
+
+  </div>
+}

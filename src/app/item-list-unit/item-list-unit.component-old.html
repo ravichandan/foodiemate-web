@@ -1,0 +1,126 @@
+<ng-template #itemListing let-item>
+  <div class="card m-lg-4 border-secondary">
+    <div class="row g-0">
+      <div class="col-lg-8">
+        <div class="card-body d-lg-none d-flex justify-content-between">
+          <div class="d-flex flex-column align-items-start align-content-start">
+            <span class="card-title fs-5 fw-bolder">{{item.name}}</span>
+            <p class="card-text text-body-secondary text-truncate-3">{{item.description}}</p>
+          </div>
+        </div>
+
+        <!--        new-->
+        <ngb-carousel
+          [showNavigationArrows]="config.carousel.showNavigationArrows"
+          [showNavigationIndicators]="config.carousel.showNavigationIndicators"
+          [pauseOnHover]="config.carousel.pauseOnHover"
+          [pauseOnFocus]="config.carousel.pauseOnFocus"
+          [interval]="+config.carousel.interval"
+          (mouseenter)="canPause($event, true)"
+          (mouseleave)="canPause($event, false)"
+          (slide)="changeCarouselSlide($event)"
+          #reviewImgCarousel>
+          <ng-container *ngFor="let review of item.reviews;">
+            <ng-container *ngFor="let media of review?.medias;">
+              <ng-template ngbSlide>
+                <div class="picsum-img-wrapper">
+                  <img
+                    [src]="media.url"
+                    alt="Loading mage of the dish"
+                    class="card-img-top item-list-img w-100 img-fluid rounded-0" />
+                </div>
+              </ng-template>
+            </ng-container>
+          </ng-container>
+        </ngb-carousel>
+      </div>
+
+      <div class="col-lg-4 card-body d-flex flex-column justify-content-center">
+        <div class="card-body d-none d-lg-flex flex-column align-items-center align-content-center p-0">
+          <h5 class="card-title h4">{{item.name}}</h5>
+          <p class="card-text text-body-secondary">{{item.description}}</p>
+        </div>
+
+        <!--        View all for mobile container-->
+        <div class="card-body view-photos-container d-block d-lg-none pt-0 px-0 fs-5">
+          <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+            >{{config.allReviewPhotosLabel}}</a
+          >
+        </div>
+        <div class="card-body taste-container px-0">
+          <span class="d-flex flex-row card-text text-body-secondary">Taste</span>
+          <div class="d-flex flex-row align-items-center justify-content-between progress-container">
+            <div
+              class="progress rounded-0 w-100 h-100 me-1"
+              role="progressbar"
+              [attr.aria-label]="'Taste is rated at '+(item.taste| number : '1.1')"
+              aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar" [style]="'width: '+(item.taste*20)+'%'"></div>
+            </div>
+            <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{item.taste| number : '1.1-1'}}</span>
+          </div>
+        </div>
+
+        <div class="card-body presentation-container px-0">
+          <span class="d-flex flex-row card-text text-body-secondary">Presentation</span>
+          <div class="d-flex flex-row align-items-center justify-content-between progress-container">
+            <div
+              class="progress rounded-0 w-100 h-100 me-1"
+              role="progressbar"
+              [attr.aria-label]="'Presentation is rated at '+(item.presentation| number : '1.1')"
+              aria-valuemin="0"
+              aria-valuemax="100">
+              <div class="progress-bar" [style]="'width: '+(item.presentation*20)+'%'"></div>
+            </div>
+            <span class="ms-1 card-text text-body-secondary text-dark fw-bolder"
+              >{{item.presentation| number : '1.1-1'}}</span
+            >
+          </div>
+        </div>
+        <!--        dont display this in mobile view-->
+        <div class="card-body view-photos-container d-none d-lg-block">
+          <a href="#" c lass="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+            >{{config.allReviewPhotosLabel}}</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row g-0">
+      <hr class="dropdown-divider bg-secondary-subtle" />
+      <div class="col">
+        <div class="card-body text-truncate-container">
+          <ngb-carousel
+            [showNavigationArrows]="false"
+            [showNavigationIndicators]="false"
+            [pauseOnHover]="config.carousel.pauseOnHover"
+            [pauseOnFocus]="config.carousel.pauseOnFocus"
+            [interval]="+config.carousel.interval"
+            (mouseenter)="canPause($event, true)"
+            (mouseleave)="canPause($event, false)"
+            #reviewTextCarousel>
+            <ng-container *ngFor="let review of item.reviews;">
+              <ng-container *ngFor="let _ of review?.medias; let firstMedia=first">
+                <ng-template ngbSlide>
+                  <div class="picsum-img-wrapper">
+                    <p class="card-text carousel-text text-truncate-3">{{review?.description}}</p>
+                  </div>
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </ngb-carousel>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="item">
+  <ng-container *ngTemplateOutlet="itemListing; context: { $implicit: item }"></ng-container>
+</ng-container>
+<!-- ng-image-fullscreen-view  -->
+<!--<ng-image-fullscreen-view-->
+<!--  [images]="imageObject"-->
+<!--  [imageIndex]="currentIndex"-->
+<!--  [show]="showFlag"-->
+<!--  (close)="closeEventHandler()"></ng-image-fullscreen-view>-->
