@@ -104,41 +104,30 @@ export const loginCustomer = createAction(
   // props<{  }>(),
 );
 
-export const loginCustomerSuccess = createAction(
-  ACTION_CUSTOMER_LOGIN_SUCCESS,
-  props<{ customer: CustomerInfo }>()
-);
+export const loginCustomerSuccess = createAction(ACTION_CUSTOMER_LOGIN_SUCCESS, props<{ customer: CustomerInfo }>());
 
 export const updateCustomer = createAction(
   ACTION_UPDATE_CUSTOMER,
   // props<{  }>(),
 );
 
-export const updateCustomerSuccess = createAction(
-  ACTION_UPDATE_CUSTOMER_SUCCESS,
-  props<{ customer: CustomerInfo }>()
-);
+export const updateCustomerSuccess = createAction(ACTION_UPDATE_CUSTOMER_SUCCESS, props<{ customer: CustomerInfo }>());
 
 export const loginOidcCustomer = createAction(
   ACTION_LOGIN_OIDC_CUSTOMER,
-  props<{ email: string, token: string, expiry: string }>()
+  props<{ email: string; token: string; expiry: string }>(),
 );
 
 export const loginOidcCustomerSuccess = createAction(
   ACTION_LOGIN_OIDC_CUSTOMER_SUCCESS,
-  props<{ customer: CustomerInfo }>()
+  props<{ customer: CustomerInfo }>(),
 );
 
-export const logoutCustomer = createAction(
-  ACTION_CUSTOMER_LOGOUT,
-);
+export const logoutCustomer = createAction(ACTION_CUSTOMER_LOGOUT);
 
 export const logoutCustomerSuccess = createAction(ACTION_CUSTOMER_LOGOUT_SUCCESS);
 
-export const askForVerification = createAction(
-  ACTION_ASK_FOR_VERIFICATION,
-  props<{ customer: CustomerInfo }>()
-);
+export const askForVerification = createAction(ACTION_ASK_FOR_VERIFICATION, props<{ customer: CustomerInfo }>());
 export const fetchItemOfAPlace = createAction(
   ACTION_FETCH_ITEM_OF_A_PLACE,
   props<{ placeId: string; itemId: string; pageSize?: number; pageNum?: number }>(),

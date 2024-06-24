@@ -178,11 +178,17 @@
       </ng-template>
 
       <div class="col-12">
-        <button class="btn btn-primary" id="reviewSubmitButton" type="submit"
-                [disabled]="customer?.status !== 'verified'">Submit form
+        <button
+          class="btn btn-primary"
+          id="reviewSubmitButton"
+          type="submit"
+          [disabled]="customer?.status !== 'verified'">
+          Submit form
         </button>
         @if (customer?.status !== 'verified') {
-          <label for="reviewSubmitButton" class="d-block text-danger fst-italic fs-smaller">{{ config.postReviewLabels?.verifyEmail }}</label>
+          <label for="reviewSubmitButton" class="d-block text-danger fst-italic fs-smaller">{{
+            config.postReviewLabels?.verifyEmail
+          }}</label>
         }
       </div>
     </form>

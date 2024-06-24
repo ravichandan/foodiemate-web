@@ -12,7 +12,7 @@ export interface CustomerInfo {
   name: string;
   media?: Media;
   email?: string;
-  interestedIn: Cuisine[],
+  interestedIn: Cuisine[];
   allergens: FoodAllergens[];
   reviewedOn?: Date;
   totalPointsEarned: number;

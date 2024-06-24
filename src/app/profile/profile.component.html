@@ -1,52 +1,48 @@
 <form accept-charset="UTF-8">
-
-
   <div class="form-fields row gap-3 profile-form-content">
-
     @if (customer) {
       <!--    email -->
       <div class="mb-3 col-12">
-        <app-edit-input [data]="customer.email"
-                        (focusOut)="customer.email=$event; saveProfile()"
-                        [aria-describedby]="'emailHelp'"
-                        [type]="'email'"
-                        [readonly]="true"
-                        [name]="'email'"
-                        [label]="config.profileLabels.email"
-        ></app-edit-input>
-        <div id="emailHelp" class="form-text ">We'll never share your email with anyone else.</div>
+        <app-edit-input
+          [data]="customer.email"
+          (focusOut)="customer.email = $event; saveProfile()"
+          [aria-describedby]="'emailHelp'"
+          [type]="'email'"
+          [readonly]="true"
+          [name]="'email'"
+          [label]="config.profileLabels.email"></app-edit-input>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
       </div>
 
       <!--    name -->
       <div class="mb-3 col-12">
-        <app-edit-input [data]="customer.name"
-                        (focusOut)="customer.name=$event; saveProfile()"
-                        [aria-describedby]="'nameHelp'"
-                        [type]="'text'"
-                        [readonly]="false"
-                        [name]="'name'"
-                        [label]="config.profileLabels.name"
-        ></app-edit-input>
+        <app-edit-input
+          [data]="customer.name"
+          (focusOut)="customer.name = $event; saveProfile()"
+          [aria-describedby]="'nameHelp'"
+          [type]="'text'"
+          [readonly]="false"
+          [name]="'name'"
+          [label]="config.profileLabels.name"></app-edit-input>
       </div>
     }
     <!--    cuisines  -->
     <div class="container">
-      <div class="row ">
+      <div class="row">
         @for (icn of allCuisines; track icn; let idx = $index) {
           <span class="col-6 col-md-6 col-lg-4 col-xl-3 p-2 d-flex">
-            <span class="form-check cuisine-checkbox bg-secondary-subtle flex-grow-1 d-flex justify-content-between align-items-center px-4 py-3">
-              <label class="form-check-label" [for]="'flexCheck'+idx">
+            <span
+              class="form-check cuisine-checkbox bg-secondary-subtle flex-grow-1 d-flex justify-content-between align-items-center px-4 py-3">
+              <label class="form-check-label" [for]="'flexCheck' + idx">
                 {{ icn.name }}
               </label>
-              <input class="form-check-input" type="checkbox" value="" [id]="'flexCheck'+idx" checked>
+              <input class="form-check-input" type="checkbox" value="" [id]="'flexCheck' + idx" checked />
               <span></span>
             </span>
           </span>
         }
       </div>
     </div>
-<!--    <button type="submit" class="btn btn-dark rounded-pill form-control" disabled>Login / Signup</button>-->
+    <!--    <button type="submit" class="btn btn-dark rounded-pill form-control" disabled>Login / Signup</button>-->
   </div>
-
 </form>
-

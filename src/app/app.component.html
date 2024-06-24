@@ -20,38 +20,38 @@
           role="button"
           aria-controls="offcanvasMenu"
           hover-classes="bg-body-secondary text-dark "
-        ><i class="bi bi-list nav-icon"></i
+          ><i class="bi bi-list nav-icon"></i
         ></span>
       </div>
       <!--      <div class="flex-grow-1 d-flex justify-content-center align-self-center">-->
       <div class="row flex-grow-1">
-        <div class="col d-none d-md-flex">
-
-        </div>
+        <div class="col d-none d-md-flex"></div>
         <div class="col d-flex justify-content-center align-self-center">
           <span class="title"
-          ><strong>{{ config.title }}</strong></span
+            ><strong>{{ config.title }}</strong></span
           >
         </div>
         <div class="col d-none d-md-flex justify-content-center align-self-center row">
           <div class="col"></div>
           @if (!isLoggedIn) {
-            <div class="col d-flex justify-content-end ">
+            <div class="col d-flex justify-content-end">
               <button class="btn btn-light rounded-pill login-buttons fs-5" routerLink="/login">Login</button>
             </div>
             <div class="col">
-              <button class="btn btn-outline-light rounded-pill login-buttons fs-5" (click)="logoutClicked()">Sign up</button>
+              <button class="btn btn-outline-light rounded-pill login-buttons fs-5" (click)="logoutClicked()">
+                Sign up
+              </button>
             </div>
           } @else {
             <div class="col">
-              <button class="btn btn-outline-light rounded-pill login-buttons fs-5" (click)="logoutClicked()">Logout</button>
+              <button class="btn btn-outline-light rounded-pill login-buttons fs-5" (click)="logoutClicked()">
+                Logout
+              </button>
             </div>
           }
 
           <div class="col"></div>
         </div>
-
-
       </div>
       <div
         class="nav-block mr-auto d-block d-lg-none align-self-center mt-1"
@@ -59,7 +59,7 @@
         <span
           class="w-100 h-100 rounded d-flex align-items-center justify-content-center nav-block px-2 fs-1"
           hover-classes="bg-body-secondary text-dark nav-icon"
-        ><i class="bi bi-search fw-bold"></i
+          ><i class="bi bi-search fw-bold"></i
         ></span>
       </div>
     </div>
@@ -90,7 +90,7 @@
     </div>
     <div
       class="content-container col-11 col-lg-10 d-flex flex-lg-column justify-content-center justify-content-lg-start px-lg-5">
-      <div class=" d-flex flex-column">
+      <div class="d-flex flex-column">
         <app-sharing-buttons class="align-self-end py-2"></app-sharing-buttons>
         <ng-container *ngTemplateOutlet="content"></ng-container>
       </div>

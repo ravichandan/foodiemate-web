@@ -22,14 +22,16 @@ export const popularsSelector = createSelector(
   },
 );
 
-export const cuisinesSelector = ()=> createSelector(
-  (state: State) => state.cuisines,
-  (cuisines) => cuisines,
-);
-export const cuisinesItemsSelector = ()=> createSelector(
-  (state: State) => state.cuisinesItems,
-  (cuisinesItems) => cuisinesItems,
-);
+export const cuisinesSelector = () =>
+  createSelector(
+    (state: State) => state.cuisines,
+    (cuisines) => cuisines,
+  );
+export const cuisinesItemsSelector = () =>
+  createSelector(
+    (state: State) => state.cuisinesItems,
+    (cuisinesItems) => cuisinesItems,
+  );
 export const itemSelector = (id: string) =>
   createSelector(
     (state: State) => state.itemsData,
@@ -68,12 +70,14 @@ export const postReviewResultSelector = () =>
 
 export const customerSelector = () =>
   createSelector(
-    (state: State) => state.customer, customer => customer,
+    (state: State) => state.customer,
+    (customer) => customer,
   );
 
 export const loginSelector = () =>
   createSelector(
-    (state: State) => state.loggedIn, loggedIn => loggedIn,
+    (state: State) => state.loggedIn,
+    (loggedIn) => loggedIn,
   );
 
 // export const verifiedCustomerSelector = () =>

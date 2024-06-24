@@ -176,12 +176,7 @@ export class FoodieEffects {
     this.actions$.pipe(
       ofType(FoodieActions.newPostReview),
       tap((x) => console.log('in postReview$ effect', x)),
-      switchMap((_) =>
-        this.store.select(preloadReviewDataSelector()).pipe(
-          filter(Boolean),
-          take(1),
-        ),
-      ),
+      switchMap((_) => this.store.select(preloadReviewDataSelector()).pipe(filter(Boolean), take(1))),
       mergeMap((review) =>
         this.appService.postReview(review).pipe(
           map((review: any) => FoodieActions.newPostReviewSuccess({ review })),
@@ -205,9 +200,11 @@ export class FoodieEffects {
           //   FoodieActions.loginOidcCustomerSuccess({ customer }):
           //   FoodieActions.loginOidcCustomerSuccess({ customer: response.body as unknown as CustomerInfo }):
           // ),
-          tap(customer => console.log('in tap, customer:: ', customer)),
-          map((customer: CustomerInfo) => //customer.status === 'verified' ?
-              FoodieActions.loginOidcCustomerSuccess({ customer }),
+          tap((customer) => console.log('in tap, customer:: ', customer)),
+          map(
+            (
+              customer: CustomerInfo, //customer.status === 'verified' ?
+            ) => FoodieActions.loginOidcCustomerSuccess({ customer }),
             // : FoodieActions.askForVerification({ customer })
           ),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
@@ -219,15 +216,10 @@ export class FoodieEffects {
     this.actions$.pipe(
       ofType(FoodieActions.logoutCustomer),
       tap((x) => console.log('in logoutCustomer$ effect', x)),
-      switchMap((_) =>
-        this.store.select(customerSelector()).pipe(
-          filter(Boolean),
-          take(1),
-        ),
-      ),
+      switchMap((_) => this.store.select(customerSelector()).pipe(filter(Boolean), take(1))),
       switchMap((customer) =>
         this.appService.logoutCustomer(customer?.id).pipe(
-          map(_ => FoodieActions.logoutCustomerSuccess()),
+          map((_) => FoodieActions.logoutCustomerSuccess()),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
       ),
@@ -238,21 +230,20 @@ export class FoodieEffects {
     this.actions$.pipe(
       ofType(FoodieActions.updateCustomer),
       tap((x) => console.log('in updateCustomer$ effect', x)),
-      switchMap((_) =>
-        this.store.select(customerSelector()).pipe(filter(Boolean), take(1)),
-      ),
+      switchMap((_) => this.store.select(customerSelector()).pipe(filter(Boolean), take(1))),
       mergeMap((customer) =>
-        !!customer ? this.appService.updateCustomer(customer).pipe(
-          map((review: any) => FoodieActions.newPostReviewSuccess({ review })),
-          catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
-        ) : of(FoodieActions.failed({ error: new Error('Customer is not found') })),
+        !!customer
+          ? this.appService.updateCustomer(customer).pipe(
+              map((review: any) => FoodieActions.newPostReviewSuccess({ review })),
+              catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
+            )
+          : of(FoodieActions.failed({ error: new Error('Customer is not found') })),
       ),
-    )
+    ),
   );
 
   constructor(
     private store: Store<State>,
     private appService: AppService,
-  ) {
-  }
+  ) {}
 }

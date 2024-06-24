@@ -14,15 +14,15 @@ import { State } from '../reducers';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGoogleService {
-
   private oa: OAuthService = inject(OAuthService);
   private router: Router = inject(Router);
-  private store:Store<State> = inject(Store);
+  private store: Store<State> = inject(Store);
 
-  constructor(private http: HttpClient,
-              @Inject(PLATFORM_ID) platformId: Object) {
-
-    if(isPlatformBrowser(platformId)){
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object,
+  ) {
+    if (isPlatformBrowser(platformId)) {
       this.initConfig({ customHashFragment: window.location.search });
     }
   }
@@ -31,14 +31,14 @@ export class AuthGoogleService {
     return config;
   }
 
-  public initConfig(options: any= {}, redirectUrl: string = 'http://localhost:4300/index.html') {
+  public initConfig(options: any = {}, redirectUrl: string = 'http://localhost:4300/index.html') {
     const authCodeFlowConfig: AuthConfig = {
       // Url of the Identity Provider
       issuer: 'https://accounts.google.com',
 
       // URL of the SPA to redirect the user to after login
       // redirectUri: window.location.origin + '/index.html',
-      redirectUri:  redirectUrl,
+      redirectUri: redirectUrl,
       // redirectUri: 'http://localhost:4300/index.html',
 
       // The SPA's id. The SPA is registerd with this id at the auth-server
@@ -51,7 +51,7 @@ export class AuthGoogleService {
       // such applications.
       dummyClientSecret: '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',
       // dummyClientSecret: 'secret',
-      userinfoEndpoint: "https://openidconnect.googleapis.com/v1/userinfo",
+      userinfoEndpoint: 'https://openidconnect.googleapis.com/v1/userinfo',
 
       responseType: 'code',
       useSilentRefresh: true, // Needed for Code Flow to suggest using iframe-based refreshes
@@ -73,27 +73,26 @@ export class AuthGoogleService {
       // timeoutFactor: 0.25,
     };
 
-
     this.oa.configure(authCodeFlowConfig);
 
-    this.oa.events
-      .subscribe(e => {
-        if(['token_received'].includes(e.type)) {
-          this.oa.loadUserProfile().then((userInfo: any) => {
-            this.store.dispatch(FoodieActions.loginOidcCustomer({
+    this.oa.events.subscribe((e) => {
+      if (['token_received'].includes(e.type)) {
+        this.oa.loadUserProfile().then((userInfo: any) => {
+          this.store.dispatch(
+            FoodieActions.loginOidcCustomer({
               email: userInfo.info.email,
               token: this.getToken(),
               expiry: userInfo.info.exp,
-            }));
-          });
-        } else if(['session_error', 'session_terminated'].includes(e.type)){
-          this.store.dispatch(FoodieActions.logoutCustomer());
-        }
-      });
+            }),
+          );
+        });
+      } else if (['session_error', 'session_terminated'].includes(e.type)) {
+        this.store.dispatch(FoodieActions.logoutCustomer());
+      }
+    });
     // this.oa.setupAutomaticSilentRefresh();
     // this.oa.loadDiscoveryDocument();//AndTryLogin();
     this.oa.loadDiscoveryDocumentAndTryLogin(options).then();
-
 
     /* 3
     this.oa.events.subscribe(e => {
@@ -174,8 +173,8 @@ export class AuthGoogleService {
     // this.initConfig(redirectUrl);
     // this.oa.redirectUri = redirectUrl;
     // setTimeout(()=> {
-      this.oa.initCodeFlow();
-      // }, 10)
+    this.oa.initCodeFlow();
+    // }, 10)
 
     console.log('end in auth-google.service, state:: ', state);
   }
@@ -183,9 +182,10 @@ export class AuthGoogleService {
   public logout() {
     // this.oa.revokeTokenAndLogout();
     this.store.dispatch(FoodieActions.logoutCustomer());
-    this.oa.revokeTokenAndLogout().then((val) =>
-        console.log('revokeTokenAndLogout():: val :: ', val))
-        .catch(err => console.error('revokeTokenAndLogout(), error', err));
+    this.oa
+      .revokeTokenAndLogout()
+      .then((val) => console.log('revokeTokenAndLogout():: val :: ', val))
+      .catch((err) => console.error('revokeTokenAndLogout(), error', err));
     this.oa.logOut();
   }
 
@@ -206,5 +206,4 @@ export class AuthGoogleService {
   public getUserInfo() {
     return this.oa.loadUserProfile();
   }
-
 }

@@ -188,7 +188,6 @@ export class AppService {
   }
 
   updateCustomer(customer: CustomerInfo): Observable<any> {
-
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'Access-Control-Allow-Origin': '*',
@@ -201,7 +200,6 @@ export class AppService {
     return this.http.post(url, customer);
   }
 
-
   loginCustomer(params: { expiry: string; email: string; token: string }): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -213,17 +211,19 @@ export class AppService {
 
     console.log('in loginCustomer url: ', url);
     console.log('in loginCustomer ', params);
-    return this.http.post(url, {
-      email: params.email,
-      token: params.token,
-      expiry: params.expiry,
-    },
+    return this.http.post(
+      url,
+      {
+        email: params.email,
+        token: params.token,
+        expiry: params.expiry,
+      },
       // {observe: 'response'}
     );
   }
 
   logoutCustomer(id: string | undefined): Observable<any> {
-    if(!id) return of(undefined);
+    if (!id) return of(undefined);
     console.log('in logoutCustomer, id: ', id);
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -234,6 +234,6 @@ export class AppService {
     const url = this.getConfig().logoutCustomerEndpoint.replace(':customerId', id);
 
     console.log('in logoutCustomer url: ', url);
-    return this.http.post(url,{});
+    return this.http.post(url, {});
   }
 }

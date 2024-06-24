@@ -74,20 +74,22 @@ export class AppComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private authService: AppService,
     private store: Store<State>,
-    @Inject(PLATFORM_ID) platformId: Object
+    @Inject(PLATFORM_ID) platformId: Object,
   ) {
-    this.isBrowser = isPlatformBrowser(platformId)
-    if(this.isBrowser) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    if (this.isBrowser) {
       console.log('in app.component.ts constructor, window.location.href:: ', window.location.href);
     }
     this.config = this.appService.getConfig();
     this.destroy$ = new Subject<any>();
-    this.store.select(loginSelector()).pipe(takeUntil(this.destroy$))
-      .subscribe(val => this.isLoggedIn = val);
+    this.store
+      .select(loginSelector())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((val) => (this.isLoggedIn = val));
   }
 
   ngOnInit(): void {
-    if(this.isBrowser) {
+    if (this.isBrowser) {
       console.log('in app.component.ts ngOnInit, window.location.href:: ', window.location.href);
     }
     this.items = this.config.navigation_menu;
@@ -110,7 +112,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   logoutClicked() {
-    console.log('in app.component.onLogoutClicked, this.oauthService.hasValidAccessToken();:: ', this.authGoogleService.hasValidAccessToken())
+    console.log(
+      'in app.component.onLogoutClicked, this.oauthService.hasValidAccessToken();:: ',
+      this.authGoogleService.hasValidAccessToken(),
+    );
     this.authGoogleService.logout();
   }
 }

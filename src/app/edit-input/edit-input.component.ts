@@ -26,7 +26,7 @@ export class EditInputComponent implements OnInit {
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
 
   editMode = false;
-  config: any
+  config: any;
   constructor() {
     this.config = configJson;
   }
@@ -45,7 +45,5 @@ export class EditInputComponent implements OnInit {
 
   stripSpace(str: string) {
     return str.replace(/\s/g, '');
-
   }
-
 }

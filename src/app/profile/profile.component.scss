@@ -1,10 +1,10 @@
 .cuisine-checkbox {
   //width: 15rem;
-  .form-check-input{
+  .form-check-input {
     width: 15rem !important;
   }
 
-  input[type=checkbox] {
+  input[type='checkbox'] {
     cursor: pointer;
     height: 30px;
     margin: 4px 0 0;
@@ -14,7 +14,7 @@
     z-index: 2;
   }
 
-  input[type=checkbox] + span {
+  input[type='checkbox'] + span {
     background: #fff;
     border-radius: 50%;
     //box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1);
@@ -23,19 +23,20 @@
     margin: 4px 0 0;
     position: relative;
     width: 30px;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
   }
 
-  input[type=checkbox] + span::before, input[type=checkbox] + span::after {
+  input[type='checkbox'] + span::before,
+  input[type='checkbox'] + span::after {
     background: #fff;
     content: '';
     display: block;
     position: absolute;
     width: 4px;
-    transition: all .2s ease;
+    transition: all 0.2s ease;
   }
 
-  input[type=checkbox] + span::before {
+  input[type='checkbox'] + span::before {
     height: 16px;
     left: 13px;
     top: 7px;
@@ -43,7 +44,7 @@
     transform: rotate(-45deg);
   }
 
-  input[type=checkbox] + span::after {
+  input[type='checkbox'] + span::after {
     height: 16px;
     right: 13px;
     top: 7px;
@@ -51,11 +52,11 @@
     transform: rotate(45deg);
   }
 
-  input[type=checkbox]:checked + span {
+  input[type='checkbox']:checked + span {
     background: #2ecc71;
   }
 
-  input[type=checkbox]:checked + span::before {
+  input[type='checkbox']:checked + span::before {
     height: 9px;
     left: 9px;
     top: 13px;
@@ -63,17 +64,17 @@
     transform: rotate(-47deg);
   }
 
-  input[type=checkbox]:checked + span::after {
+  input[type='checkbox']:checked + span::after {
     height: 15px;
     right: 11px;
     top: 8px;
   }
 
-  input[type=submit] {
+  input[type='submit'] {
     background-color: #2ecc71;
     border: 0;
     border-radius: 4px;
-    color: #FFF;
+    color: #fff;
     cursor: pointer;
     display: inline-block;
     font-size: 16px;

@@ -6,23 +6,25 @@ import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuardService {
+  constructor(
+    private store: Store<State>,
+    private router: Router,
+  ) {}
 
-  constructor(private store: Store<State>, private router : Router) { }
-
-  canActivate(){
+  canActivate() {
     return this.store.select(loginSelector()).pipe(
       take(1),
       map((loggedIn: boolean) => {
-        if(loggedIn){
+        if (loggedIn) {
           return true;
         }
         console.log('User not authenticated, redirecting to login');
         this.router.navigate(['login']);
         return false;
-      })
+      }),
     );
   }
 }

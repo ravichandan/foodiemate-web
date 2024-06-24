@@ -14,7 +14,8 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',
-  },{
+  },
+  {
     path: 'index.html',
     redirectTo: '/home',
     pathMatch: 'full',
@@ -38,7 +39,7 @@ export const routes: Routes = [
   {
     path: 'new_review',
     component: PostReviewComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
   {
     path: 'contact-us',

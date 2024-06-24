@@ -217,7 +217,6 @@ export const correlationIdReducer = createReducer(
   on(FoodieActions.storeCorrelationId, (oldState: string | undefined, { correlationId }) => correlationId),
 );
 
-
 export const loginReducer = createReducer(
   initialState.loggedIn,
   on(FoodieActions.loginCustomerSuccess, FoodieActions.loginOidcCustomerSuccess, (_: boolean) => true),

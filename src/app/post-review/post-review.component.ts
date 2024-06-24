@@ -109,8 +109,6 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
     },
   };
 
-
-
   constructor(
     public route: ActivatedRoute,
     private store: Store<State>,
@@ -144,8 +142,6 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
         tap((x) => this.itemGroup?.controls['presentation' + this.ctrlSuffix].addValidators(Validators.min(1))),
       )
       .subscribe();
-
-
   }
 
   ngOnDestroy() {
@@ -346,8 +342,10 @@ export class PostReviewComponent implements OnInit, OnDestroy {
         tap((x) => console.log('Navigating to previous page: ', this.previousPage)),
       )
       .subscribe((x) => this.router.navigate(['' + this.previousPage?.trim()]));
-    this.store.select(customerSelector()).pipe(takeUntil(this.destroy$)).subscribe(cust => this.customer =cust);
-
+    this.store
+      .select(customerSelector())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((cust) => (this.customer = cust));
   }
 
   ngOnDestroy() {

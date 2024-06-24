@@ -14,9 +14,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { OAuthModule, provideOAuthClient } from 'angular-oauth2-oidc';
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import {
-  GoogleLoginProvider,
-} from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 export function initializeMockData(mockService: MockDataService) {
   createServer({
@@ -39,14 +37,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideOAuthClient({
       resourceServer: {
-        allowedUrls: [
-          'http://www.angular.at/api',
-          'http://localhost:3000/',
-          'http://127.0.0.1:3000/',
-
-        ],
-        sendAccessToken: true
-      }
+        allowedUrls: ['http://www.angular.at/api', 'http://localhost:3000/', 'http://127.0.0.1:3000/'],
+        sendAccessToken: true,
+      },
     }),
     // withFetch()
     // importProvidersFrom(    NgMultiSelectDropDownModule.forRoot()),
@@ -77,15 +70,13 @@ export const appConfig: ApplicationConfig = {
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '7360139281-qbgics3laaps2sapu417fhkfmgcc4bja.apps.googleusercontent.com'
-            )
-          }
+            provider: new GoogleLoginProvider('7360139281-qbgics3laaps2sapu417fhkfmgcc4bja.apps.googleusercontent.com'),
+          },
         ],
         onError: (error: any) => {
           console.error(error);
-        }
+        },
       } as SocialAuthServiceConfig,
-    }
+    },
   ],
 };

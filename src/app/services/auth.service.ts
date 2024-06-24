@@ -24,5 +24,4 @@ export class AppService {
       .get(this.getConfig().popularSearchesEndpoint, { headers })
       .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));
   }
-
 }

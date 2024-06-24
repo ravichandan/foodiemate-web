@@ -12,18 +12,11 @@ import { SocialAuthService, GoogleSigninButtonModule } from '@abacritt/angularx-
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    RouterLink,
-    AsyncPipe,
-    ReactiveFormsModule,
-    FormsModule,
-    GoogleSigninButtonModule
-
-  ],
+  imports: [RouterLink, AsyncPipe, ReactiveFormsModule, FormsModule, GoogleSigninButtonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnDestroy, OnInit{
+export class LoginComponent implements OnDestroy, OnInit {
   private readonly destroy$: Subject<any>;
 
   config: any;
@@ -41,7 +34,7 @@ export class LoginComponent implements OnDestroy, OnInit{
   //     //perform further logics
   //   });
   // }
-  constructor(private authService:SocialAuthService) {
+  constructor(private authService: SocialAuthService) {
     this.destroy$ = new Subject<any>();
     this.config = configJson;
     this.loginFG = this.fb.group({});
@@ -49,7 +42,7 @@ export class LoginComponent implements OnDestroy, OnInit{
 
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
-      console.log('in this.authService.authState.subscribe, user:: ', user)
+      console.log('in this.authService.authState.subscribe, user:: ', user);
       //perform further logics
     });
   }

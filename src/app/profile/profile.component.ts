@@ -13,10 +13,7 @@ import { CustomerInfo } from '../models/CustomerInfo';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [
-    FormsModule,
-    EditInputComponent,
-  ],
+  imports: [FormsModule, EditInputComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -34,29 +31,32 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.config = configJson;
   }
 
-
   ngOnInit() {
-    const custInterests=[{
-      name: 'ITALIAN',
-      id: 1
-    },
+    const custInterests = [
+      {
+        name: 'ITALIAN',
+        id: 1,
+      },
       {
         name: 'INDIAN',
-        id: 2
-      }
-      ]
-    this.store.select(customerSelector()).pipe(
-      takeUntil(this.destroy$), filter(Boolean))
-      .subscribe(cust => this.customer = cust);
-    this.store.select(cuisinesSelector()).pipe(
-      takeUntil(this.destroy$), filter(Boolean))
-      .subscribe(cuisines => this.allCuisines = cuisines?.filter(Boolean).map(
-        cuisine => ({
-          id: cuisine.id,
-          name: cuisine.name,
-          selected: this.customer?.interestedIn.includes(cuisine) || custInterests.includes(cuisine)
-        }),
-      ));
+        id: 2,
+      },
+    ];
+    this.store
+      .select(customerSelector())
+      .pipe(takeUntil(this.destroy$), filter(Boolean))
+      .subscribe((cust) => (this.customer = cust));
+    this.store
+      .select(cuisinesSelector())
+      .pipe(takeUntil(this.destroy$), filter(Boolean))
+      .subscribe(
+        (cuisines) =>
+          (this.allCuisines = cuisines?.filter(Boolean).map((cuisine) => ({
+            id: cuisine.id,
+            name: cuisine.name,
+            selected: this.customer?.interestedIn.includes(cuisine) || custInterests.includes(cuisine),
+          }))),
+      );
   }
 
   ngOnDestroy() {
@@ -66,5 +66,4 @@ export class ProfileComponent implements OnInit, OnDestroy {
   saveProfile() {
     this.store.dispatch(FoodieActions.updateCustomer());
   }
-
 }
