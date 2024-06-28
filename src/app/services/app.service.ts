@@ -23,7 +23,7 @@ export class AppService {
 
   public getPopularSearches(args: { city?: string; postcode?: string; suburb?: string }) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    const url = this.getConfig().popularSearchesEndpoint;
+    const url = this.getConfig().host + this.getConfig().popularSearchesEndpoint;
     let params = new HttpParams();
     !!args?.city && (params =  params.append('city', args.city));
     !!args?.postcode && (params =  params.append('postcode', args.postcode));

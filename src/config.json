@@ -4,10 +4,9 @@
   "search_sub_label": "or, look for a food place and find the best tasting dishes there.",
   "search_placeholder": "Dish or Restaurant or Cuisine",
   "popular_title": "Popular Searches:",
-  "host": "http://127.0.0.1:3000",
-
+  "host": "https://sea-lion-app-zmkac.ondigitalocean.app/foodie-service2",
   "urlPrefix": "/api",
-  "popularSearchesEndpoint": "http://127.0.0.1:3000/popular-searches",
+  "popularSearchesEndpoint": "/popular-searches",
   "allCuisinesEndpoint": "http://127.0.0.1:3000/api/all-cuisines",
   "cuisinesItemsEndpoint": "http://127.0.0.1:3000/api/cuisines-items",
   "itemEndpoint": "http://127.0.0.1:3000/api/items/:itemId",
