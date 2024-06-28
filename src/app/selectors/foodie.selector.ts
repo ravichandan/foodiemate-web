@@ -2,6 +2,7 @@ import { createSelector } from '@ngrx/store';
 import { State } from '../reducers';
 import { Item } from '../models/Item';
 import { Place } from '../models/Place';
+import { Address } from '../models/Address';
 
 /**
  * Selector that selects the popular items&places
@@ -50,6 +51,17 @@ export const placeSelector = (id: string) =>
       // console.log('in selector:: ,id:: ', id);
       // console.log('in selector:: ,itemData[id]:: ', itemData[id]);
       return placesData[id];
+    },
+  );
+
+export const addressSelector = () =>
+  createSelector(
+    (state: State) => state.address,
+    (address: Address) => {
+      // console.log('in selector:: ,itemData:: ', itemData);
+      // console.log('in selector:: ,id:: ', id);
+      // console.log('in selector:: ,itemData[id]:: ', itemData[id]);
+      return address;
     },
   );
 

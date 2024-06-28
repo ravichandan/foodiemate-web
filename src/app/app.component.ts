@@ -20,6 +20,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { BrowserModule } from '@angular/platform-browser';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -89,6 +90,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('environment.production::', environment.production);
     if (this.isBrowser) {
       console.log('in app.component.ts ngOnInit, window.location.href:: ', window.location.href);
     }

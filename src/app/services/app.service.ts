@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import config from '../../config.json';
 import { finalize, map, Observable, of, tap } from 'rxjs';
@@ -6,10 +6,13 @@ import { Place } from '../models/Place';
 import { NewReview } from '../models/Review';
 import { CustomerInfo } from '../models/CustomerInfo';
 
+// static data
+import { StaticDataService } from './static-data.service';
 // import {generateCorrelationId} from "./Utils";
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
+  sds=inject(StaticDataService);
   private correlationId: string | undefined;
 
   constructor(private http: HttpClient) {}
@@ -18,20 +21,26 @@ export class AppService {
     return config;
   }
 
-  public getPopularSearches() {
+  public getPopularSearches(args: { city?: string; postcode?: string; suburb?: string }) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-
+    const url = this.getConfig().popularSearchesEndpoint;
+    let params = new HttpParams();
+    !!args?.city && (params =  params.append('city', args.city));
+    !!args?.postcode && (params =  params.append('postcode', args.postcode));
+    !!args?.suburb && (params =  params.append('suburb', args.suburb));
+    console.log('in app.service, getPopularSearches() -> params',params);
     return this.http
-      .get(this.getConfig().popularSearchesEndpoint, { headers })
+      .get(url , { headers , params})
       .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));
   }
 
   public getAllCuisines() {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    return this.http
-      .get(this.getConfig().allCuisinesEndpoint, { headers })
-      .pipe(tap((t: any) => console.log('getAllCuisines response:: ', t)));
+    return of(this.sds.getCuisines())
+    // return this.http
+    //   .get(this.getConfig().allCuisinesEndpoint, { headers })
+      .pipe();
   }
 
   public getCuisinesItems() {

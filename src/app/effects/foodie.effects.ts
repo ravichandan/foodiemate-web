@@ -11,8 +11,10 @@ import { CuisinesResponse } from '../models/CuisinesResponse';
 import { CuisinesItemsResponse } from '../models/CuisinesItemsResponse';
 import { Item } from '../models/Item';
 import { Place } from '../models/Place';
-import { customerSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
+import { addressSelector, customerSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
 import { CustomerInfo } from '../models/CustomerInfo';
+import { Address } from '../models/Address';
+import { add } from 'lodash';
 
 @Injectable({ providedIn: 'root' })
 export class FoodieEffects {
@@ -21,8 +23,9 @@ export class FoodieEffects {
   loadPopulars$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FoodieActions.fetchPopular),
-      mergeMap(() =>
-        this.appService.getPopularSearches().pipe(
+      switchMap((_) => this.store.select(addressSelector()).pipe(filter(Boolean), take(1))),
+      mergeMap((address: Address) =>
+        this.appService.getPopularSearches({city: address.city, suburb: address.suburb, postcode: address.postcode}).pipe(
           map((popular: PopularResponse) => FoodieActions.fetchPopularSuccess({ popular })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),

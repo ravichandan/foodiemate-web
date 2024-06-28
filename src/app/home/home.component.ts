@@ -37,8 +37,9 @@ export class HomeComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
+    // consol
     this.setRandomSuggestions();
-    // this.store.dispatch(FoodieActions.fetchPopular());
+    this.store.dispatch(FoodieActions.fetchPopular());
   }
 
   public setRandomSuggestions() {

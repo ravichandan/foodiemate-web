@@ -15,13 +15,16 @@ import { routes } from './app.routes';
 import { OAuthModule, provideOAuthClient } from 'angular-oauth2-oidc';
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { environment } from '../environments/environment';
 
 export function initializeMockData(mockService: MockDataService) {
-  createServer({
-    routes(): void {
-      mockService.setRouteHandlers(this);
-    },
-  });
+  if(environment.production) {
+    createServer({
+      routes(): void {
+        mockService.setRouteHandlers(this);
+      },
+    });
+  }
   return () => {
     return new Promise((resolve) => {
       resolve(true);

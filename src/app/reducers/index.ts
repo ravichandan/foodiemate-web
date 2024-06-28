@@ -9,8 +9,10 @@ import { isArray, mergeWith, unionBy, uniqWith } from 'lodash';
 import { NewReview, Review } from '../models/Review';
 import { Media } from '../models/Media';
 import { CustomerInfo } from '../models/CustomerInfo';
+import { Address } from '../models/Address';
 
 export interface State {
+  address: Address;
   customer: CustomerInfo | undefined;
   popularItems: Item[] | undefined;
   popularPlaces: Place[] | undefined;
@@ -26,6 +28,9 @@ export interface State {
 }
 
 export const initialState: State = {
+  address: {
+    city: 'sydney'
+  } as Address,
   customer: undefined,
   popularItems: undefined,
   popularPlaces: undefined,
@@ -49,13 +54,13 @@ export const customerReducer = createReducer(
 export const popularItemsReducer = createReducer(
   initialState.popularItems,
   on(FoodieActions.fetchPopularSuccess, (oldState, { popular }) =>
-    popular.items.map((item: Item) => ({ ...item, type: 'item' }) as Item),
+    popular?.items?.map((item: Item) => ({ ...item, type: 'item' }) as Item),
   ),
 );
 export const popularPlacesReducer = createReducer(
   initialState.popularPlaces,
   on(FoodieActions.fetchPopularSuccess, (oldState, { popular }) =>
-    popular.places.map(
+    popular?.places?.map(
       (place: Place) =>
         ({
           ...place,
@@ -225,7 +230,7 @@ export const loginReducer = createReducer(
 
 export const userInfoReducer = createReducer(
   initialState.userInfo,
-  on(FoodieActions.loginCustomerSuccess, (userInfo: any) => userInfo),
+  on(FoodieActions.loginCustomerSuccess, (userInfo: CustomerInfo) => userInfo),
   on(FoodieActions.logoutCustomerSuccess, (_: any) => undefined),
 );
 
@@ -235,7 +240,18 @@ export const errorReducer = createReducer(
     ...error,
   })),
 );
+
+export const locationReducer = createReducer(
+  initialState.address,
+  // on(FoodieActions.updateLocation,
+  on(FoodieActions.updateLocation, (props: {   suburb?: string | undefined;   postcode?: string | undefined; } ) => ({
+    suburb: props.suburb,
+    postcode: props.postcode
+  } as Address)),
+);
+
 export const reducers: ActionReducerMap<State> = {
+  address: locationReducer,
   customer: customerReducer,
   popularItems: popularItemsReducer,
   popularPlaces: popularPlacesReducer,
