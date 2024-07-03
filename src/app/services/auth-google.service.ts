@@ -23,7 +23,7 @@ export class AuthGoogleService {
     @Inject(PLATFORM_ID) platformId: Object,
   ) {
     if (isPlatformBrowser(platformId)) {
-      this.initConfig({ customHashFragment: window.location.search });
+      this.initConfig({ customHashFragment: window.location.search }, config.oauthRedirectUrl);
     }
   }
 

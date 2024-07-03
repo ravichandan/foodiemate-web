@@ -4,6 +4,7 @@
   "search_sub_label": "or, look for a food place and find the best tasting dishes there.",
   "search_placeholder": "Dish or Restaurant or Cuisine",
   "popular_title": "Popular Searches:",
+  "oauthRedirectUrl": "https://foodiex.com.au/index.html",
   "host": "https://sea-lion-app-zmkac.ondigitalocean.app/foodie-service2",
   "do-host": "http://localhost:3000",
   "urlPrefix": "/api",
