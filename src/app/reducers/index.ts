@@ -29,7 +29,7 @@ export interface State {
 
 export const initialState: State = {
   address: {
-    city: 'sydney'
+    city: 'Sydney'
   } as Address,
   customer: undefined,
   popularItems: undefined,

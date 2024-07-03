@@ -78,11 +78,11 @@ export class AuthGoogleService {
     this.oa.events.subscribe((e) => {
       if (['token_received'].includes(e.type)) {
         this.oa.loadUserProfile().then((userInfo: any) => {
+          // console.log('in auth-google.service, userInfo: ', userInfo);
+          userInfo.token=this.getToken();
           this.store.dispatch(
             FoodieActions.loginOidcCustomer({
-              email: userInfo.info.email,
-              token: this.getToken(),
-              expiry: userInfo.info.exp,
+              userInfo
             }),
           );
         });
@@ -194,12 +194,10 @@ export class AuthGoogleService {
   }
 
   public getToken() {
-    return this.oa.getAccessToken();
+    return this.oa.getIdToken();
   }
 
   public hasValidAccessToken(): boolean {
-    console.log('in auth-google.service, hasValidAccessToken');
-    console.log('in auth-google.service, this.getToken, ', this.getToken());
     return this.oa.hasValidAccessToken();
   }
 

@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import config from '../../config.json';
-import { finalize, map, Observable, of, tap } from 'rxjs';
-import { Place } from '../models/Place';
-import { NewReview } from '../models/Review';
+import { tap } from 'rxjs';
 
 // import {generateCorrelationId} from "./Utils";
 
 @Injectable({ providedIn: 'root' })
-export class AppService {
+export class AuthService {
   private correlationId: string | undefined;
 
   constructor(private http: HttpClient) {}

@@ -198,7 +198,7 @@ export class FoodieEffects {
         //   tap((x) => console.log('in loginOidcCustomer$ getPopularSearches response', x)),
         //   map((popular: PopularResponse) => FoodieActions.fetchPopularSuccess({ popular })),
         //   catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
-        this.appService.loginCustomer({ email: action.email, token: action.token, expiry: action.expiry }).pipe(
+        this.appService.loginCustomer({ userInfo: action.userInfo}).pipe(
           // map((response: Response) => response.status === 201 ?
           //   FoodieActions.loginOidcCustomerSuccess({ customer }):
           //   FoodieActions.loginOidcCustomerSuccess({ customer: response.body as unknown as CustomerInfo }):

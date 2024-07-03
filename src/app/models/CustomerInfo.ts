@@ -10,7 +10,7 @@ export enum ActivityLevels {
 export interface CustomerInfo {
   id: string;
   name: string;
-  media?: Media;
+  picture?: Media;
   email?: string;
   interestedIn: Cuisine[];
   allergens: FoodAllergens[];

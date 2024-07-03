@@ -1,16 +1,29 @@
-import { Component } from '@angular/core';
-import { NgClass, NgForOf, NgTemplateOutlet } from '@angular/common';
+import { Component, OnDestroy } from '@angular/core';
+import { AsyncPipe, NgClass, NgForOf, NgTemplateOutlet } from '@angular/common';
 import { HoverClassDirective } from '../directives/hover-class.directive';
 import { RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { State } from '../reducers';
+import { customerSelector, popularsSelector } from '../selectors/foodie.selector';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { CustomerInfo } from '../models/CustomerInfo';
+import * as FoodieActions from '../actions/foodie.actions';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-left-navigation',
   standalone: true,
-  imports: [NgForOf, NgClass, NgTemplateOutlet, HoverClassDirective, RouterLink],
+  imports: [NgForOf, NgClass, NgTemplateOutlet, HoverClassDirective, RouterLink, AsyncPipe],
   templateUrl: './left-navigation.component.html',
   styleUrl: './left-navigation.component.scss',
 })
-export class LeftNavigationComponent {
+export class LeftNavigationComponent implements OnDestroy{
+
+  private readonly destroy$: Subject<any>;
+
+  config: any;
+  customer$: Observable<CustomerInfo | undefined> | undefined;
+
   items = [
     {
       label: 'Home',
@@ -53,7 +66,6 @@ export class LeftNavigationComponent {
       route: '/browse',
     },
   ];
-
   footer_items = [
     {
       label: 'Contact Us',
@@ -66,4 +78,15 @@ export class LeftNavigationComponent {
       route: '/tnc',
     },
   ];
+
+  constructor(private store: Store<State>, private appService: AppService) {
+    this.destroy$ = new Subject<any>();
+    this.config = this.appService.getConfig();
+    this.customer$ = this.store.select(customerSelector()).pipe(takeUntil(this.destroy$));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.store.dispatch(FoodieActions.pageDestroyed());
+  }
 }

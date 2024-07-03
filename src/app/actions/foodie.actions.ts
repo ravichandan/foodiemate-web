@@ -117,7 +117,7 @@ export const updateCustomerSuccess = createAction(ACTION_UPDATE_CUSTOMER_SUCCESS
 
 export const loginOidcCustomer = createAction(
   ACTION_LOGIN_OIDC_CUSTOMER,
-  props<{ email: string; token: string; expiry: string }>(),
+  props<{ userInfo: any }>(),
 );
 
 export const loginOidcCustomerSuccess = createAction(

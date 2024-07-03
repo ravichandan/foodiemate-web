@@ -27,7 +27,7 @@
     <div class="pop-items row">
       <div class="pop-item-wrapper col-6 col-md-3 col-xxl-2 px-0" *ngFor="let element of resp">
         <div class="pop-item card m-1 m-lg-2" hover-classes="text-bg-dark" (click)="popularItemSelected(element)">
-          <img [src]="element.medias[0].url" class="card-img-top pop-img-top" [alt]="element.name" />
+          <img [src]="config.bucketAccessEndpoint+'/'+element.medias[0].key" class="card-img-top pop-img-top" [alt]="element.name" />
           <div class="card-body text-center d-flex justify-content-center p-sm-1 p-lg-1">
             <p
               class="card-title fw-medium d-flex align-items-center my-sm-1"

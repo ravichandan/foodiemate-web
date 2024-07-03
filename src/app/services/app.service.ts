@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import config from '../../config.json';
-import { finalize, map, Observable, of, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { Place } from '../models/Place';
 import { NewReview } from '../models/Review';
 import { CustomerInfo } from '../models/CustomerInfo';
+import { join } from '@fireflysemantics/join';
 
 // static data
 import { StaticDataService } from './static-data.service';
@@ -209,25 +210,21 @@ export class AppService {
     return this.http.post(url, customer);
   }
 
-  loginCustomer(params: { expiry: string; email: string; token: string }): Observable<any> {
+  loginCustomer(args: { userInfo: any }): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'Access-Control-Allow-Origin': '*',
       'ngsw-bypass': '',
     });
 
-    const url = this.getConfig().loginOidcCustomerEndpoint; //.replace(':reviewId', params.reviewId);
+    const url = join(this.getConfig().host, this.getConfig().loginOidcCustomerEndpoint);
 
     console.log('in loginCustomer url: ', url);
-    console.log('in loginCustomer ', params);
+    const data = {
+      userInfo: args.userInfo
+    };
     return this.http.post(
-      url,
-      {
-        email: params.email,
-        token: params.token,
-        expiry: params.expiry,
-      },
-      // {observe: 'response'}
+      url, data,
     );
   }
 

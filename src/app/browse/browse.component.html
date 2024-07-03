@@ -47,7 +47,7 @@
             class="browse-item card m-1 m-lg-2 border-secondary"
             hover-classes="text-bg-dark"
             (click)="openItem(item)">
-            <img [src]="item.medias[0].url" class="card-img-top browse-img-top" [alt]="item.name" />
+            <img [src]="config.bucketAccessEndpoint+'/'+item.medias[0].key" class="card-img-top browse-img-top" [alt]="item.name" />
             <div class="card-body text-center d-flex justify-content-center p-1 p-lg-1">
               <p
                 class="card-title fw-medium d-flex align-items-center my-1"

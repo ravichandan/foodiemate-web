@@ -81,24 +81,26 @@
           </ul>
           <hr />
           <div class="dropdown pb-4 mt-auto w-100 flex-md-grow-1">
-            <a
-              href="#"
-              class="d-flex flex-row flex-md-column flex-xxl-row text-center align-items-center text-light text-decoration-none dropdown-toggle"
-              id="dropdownUser1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <img src="https://github.com/mdo.png" alt="food critic" width="30" height="30" class="rounded-circle" />
-              <span class="d-inline mx-1">&commat;chandans</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-              <li><a class="dropdown-item" routerLink="/new_review">New review</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
+            @if (customer$ | async; as customer) {
+              <a
+                href="#"
+                class="d-flex flex-row flex-md-column flex-xxl-row text-center align-items-center text-light text-decoration-none dropdown-toggle"
+                id="dropdownUser1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img [src]="config.bucketAccessEndpoint+'/'+customer.picture?.key" alt="profile picture" width="30" height="30" class="rounded-circle" />
+                <span class="d-inline mx-1">&commat;{{ customer.name }}</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" routerLink="/new_review">New review</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+              </ul>
+            }
           </div>
         </div>
       </div>
