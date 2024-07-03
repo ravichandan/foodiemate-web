@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { filter, map, Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Item } from '../models/Item';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -10,10 +10,10 @@ import { ItemListUnitComponent } from '../item-list-unit/item-list-unit.componen
 import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { NgbScrollSpy, NgbScrollSpyFragment } from '@ng-bootstrap/ng-bootstrap';
 import { PlaceListUnitComponent } from '../place-list-unit/place-list-unit.component';
-import configJson from '../../config.json';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ListItem } from 'ng-multiselect-dropdown/multiselect.model';
 import { FormsModule } from '@angular/forms';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-item-list',
@@ -34,6 +34,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './item-list.component.scss',
 })
 export class ItemListComponent implements OnInit, OnDestroy {
+  appService= inject(AppService);
+
   private readonly destroy$: Subject<any>;
 
   items$: Observable<Item[]> | undefined;
@@ -62,7 +64,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
     private router: Router,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
   }
 
   ngOnInit() {

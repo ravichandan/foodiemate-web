@@ -82,6 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log('in app.component.ts constructor, window.location.href:: ', window.location.href);
     }
     this.config = this.appService.getConfig();
+
     this.destroy$ = new Subject<any>();
     this.store
       .select(loginSelector())

@@ -11,7 +11,7 @@ import * as placesAbc from '../../../mock-data/places_abc.json';
 import * as newReview from '../../../mock-data/post_new_review.json';
 import * as mediaResponse from '../../../mock-data/upload_media_response.json';
 import * as customer from '../../../mock-data/customer.json';
-import config from '../../config.json';
+import config from '../../config/config.json';
 import { HttpStatusCode } from '@angular/common/http';
 
 @Injectable({ providedIn: 'any' })

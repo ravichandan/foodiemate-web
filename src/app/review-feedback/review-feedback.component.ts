@@ -1,12 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import * as FoodieActions from '../actions/foodie.actions';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import configJson from '../../config.json';
 import { NgClass } from '@angular/common';
 import { Review } from '../models/Review';
+import { AppService } from '../services/app.service';
 
 class ReviewFeedback {
   liked: boolean = false;
@@ -21,19 +21,21 @@ class ReviewFeedback {
   styleUrl: './review-feedback.component.scss',
 })
 export class ReviewFeedbackComponent implements OnInit, OnDestroy {
+  @Input('review')
+  review!: Review;
+
+  appService= inject(AppService);
+
   private readonly destroy$: Subject<any>;
   config: any;
   feedback: ReviewFeedback;
-
-  @Input('review')
-  review!: Review;
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<State>,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
     this.feedback = new ReviewFeedback();
     if (this.review?.likedBy.find((val) => this.review?.customer.id === val.id)) {
       this.feedback.liked = true;

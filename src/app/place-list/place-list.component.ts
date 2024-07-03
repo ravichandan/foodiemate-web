@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -7,7 +7,6 @@ import { itemSelector } from '../selectors/foodie.selector';
 import * as FoodieActions from '../actions/foodie.actions';
 import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { NgbCarouselModule, NgbScrollSpyModule } from '@ng-bootstrap/ng-bootstrap';
-import configJson from '../../config.json';
 import { PlaceListUnitComponent } from '../place-list-unit/place-list-unit.component';
 import { ReplacePipe } from '../directives/replace.pipe';
 import { HoverClassDirective } from '../directives/hover-class.directive';
@@ -15,6 +14,7 @@ import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-d
 import { ListItem } from 'ng-multiselect-dropdown/multiselect.model';
 import { FormsModule } from '@angular/forms';
 import { Place } from '../models/Place';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-place-list',
@@ -39,7 +39,7 @@ import { Place } from '../models/Place';
 })
 export class PlaceListComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
-
+  appService= inject(AppService);
   places$: Observable<Place[]> | undefined;
   selectedItemId: any;
   selectedItemName: any;
@@ -62,7 +62,7 @@ export class PlaceListComponent implements OnInit, OnDestroy {
     private store: Store<State>,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
     this.pageSize = this.config.pageSize;
     // this.filterBy = 'Taste';
     this.sortBy = 'Taste';

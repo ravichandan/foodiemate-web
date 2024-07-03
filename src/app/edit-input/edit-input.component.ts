@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AutofocusDirective } from '../directives/autofocus.directive';
-import configJson from '../../config.json';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons/faPencil';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-edit-input',
@@ -25,10 +25,12 @@ export class EditInputComponent implements OnInit {
 
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
 
+  appService= inject(AppService);
+
   editMode = false;
   config: any;
   constructor() {
-    this.config = configJson;
+    this.config = this.appService.getConfig();
   }
 
   ngOnInit() {}

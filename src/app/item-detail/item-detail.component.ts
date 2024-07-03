@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -10,12 +10,11 @@ import { Place } from '../models/Place';
 import { AsyncPipe, DecimalPipe, LowerCasePipe, NgForOf, NgIf, TitleCasePipe } from '@angular/common';
 import { Review } from '../models/Review';
 import { NgbCarousel, NgbSlide, NgbTooltip, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import configJson from '../../config.json';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import {PlaceReviewsComponent} from "../item-detail/item-detail.component";
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ReviewUnitComponent } from '../review-unit/review-unit.component';
 import { ListItem } from 'ng-multiselect-dropdown/multiselect.model';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-item-detail',
@@ -48,6 +47,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   item: Item | undefined;
   selectedPlace: Place | undefined;
   reviews$: Observable<Review[] | undefined> | undefined;
+  appService= inject(AppService);
 
   dropdownSettings: IDropdownSettings = {
     singleSelection: true,
@@ -67,7 +67,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private store: Store<State>,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
   }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import config from '../../config.json';
+import config from '../../config/config.json';
 import { tap } from 'rxjs';
 
 // import {generateCorrelationId} from "./Utils";

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DecimalPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../models/Place';
@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import configJson from '../../config.json';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-place-list-unit',
@@ -20,6 +20,8 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
 
   config: any;
 
+  appService= inject(AppService);
+
   @ViewChild('reviewTextCarousel') carousel: NgbCarousel | undefined;
   @ViewChild('reviewImgCarousel') reviewImgCarousel: NgbCarousel | undefined;
 
@@ -29,7 +31,7 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
     private elementRef: ElementRef,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
   }
 
   @Input('place')

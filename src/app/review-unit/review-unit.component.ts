@@ -1,14 +1,14 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input,inject, OnDestroy, OnInit } from '@angular/core';
 import { Review } from '../models/Review';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import configJson from '../../config.json';
 import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import * as FoodieActions from '../actions/foodie.actions';
 import { ReviewFeedbackComponent } from '../review-feedback/review-feedback.component';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-review-unit',
@@ -18,17 +18,19 @@ import { ReviewFeedbackComponent } from '../review-feedback/review-feedback.comp
   styleUrl: './review-unit.component.scss',
 })
 export class ReviewUnitComponent implements OnInit, OnDestroy {
-  private readonly destroy$: Subject<any>;
-  config: any;
   @Input('review')
   review!: Review;
+
+  appService= inject(AppService);
+  private readonly destroy$: Subject<any>;
+  config: any;
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<State>,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
     // this.feedback = new ReviewFeedback();
     // if(this.review?.likedBy.find(val => this.review?.customerInfo.id === val.id)){
     //     this.feedback.liked = true;

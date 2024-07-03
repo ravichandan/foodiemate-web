@@ -1,6 +1,6 @@
 import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import config from '../../config.json';
+// import config from '../../config.json';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { Router } from '@angular/router';
@@ -9,26 +9,31 @@ import { isPlatformBrowser } from '@angular/common';
 import * as FoodieActions from '../actions/foodie.actions';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
+import { AppService } from './app.service';
 
 // import {generateCorrelationId} from "./Utils";
 
 @Injectable({ providedIn: 'root' })
 export class AuthGoogleService {
   private oa: OAuthService = inject(OAuthService);
+  private appService = inject(AppService)
   private router: Router = inject(Router);
   private store: Store<State> = inject(Store);
+
+  config: any;
 
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) platformId: Object,
   ) {
+    this.config = this.appService.getConfig();
     if (isPlatformBrowser(platformId)) {
-      this.initConfig({ customHashFragment: window.location.search }, config.oauthRedirectUrl);
+      this.initConfig({ customHashFragment: window.location.search }, this.config.oauthRedirectUrl?? undefined);
     }
   }
 
   public getConfig() {
-    return config;
+    return this.config;
   }
 
   public initConfig(options: any = {}, redirectUrl: string = 'http://localhost:4300/index.html') {

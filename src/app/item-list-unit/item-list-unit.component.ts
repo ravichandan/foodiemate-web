@@ -1,13 +1,13 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
 import { DecimalPipe, LowerCasePipe, NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import configJson from '../../config.json';
 import { Item } from '../models/Item';
 import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-item-list-unit',
@@ -27,12 +27,15 @@ import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
   styleUrl: './item-list-unit.component.scss',
 })
 export class ItemListUnitComponent {
+
   private readonly destroy$: Subject<any>;
 
   config: any;
 
   currentIndex: number = -1;
   showFlag: boolean = false;
+
+  appService= inject(AppService);
 
   @ViewChild('reviewTextCarousel') carousel: NgbCarousel | undefined;
   @ViewChild('reviewImgCarousel') reviewImgCarousel: NgbCarousel | undefined;
@@ -43,7 +46,7 @@ export class ItemListUnitComponent {
     private elementRef: ElementRef,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
   }
 
   @Input('item')

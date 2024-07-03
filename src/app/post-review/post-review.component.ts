@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
+  EventEmitter, inject,
   Input,
   OnDestroy,
   OnInit,
@@ -30,7 +30,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import configJson from '../../config.json';
 import { customerSelector, postReviewResultSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
 import { Place } from '../models/Place';
 import { NewReview } from '../models/Review';
@@ -80,6 +79,8 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
   @Output()
   close: EventEmitter<string>;
 
+  appService= inject(AppService);
+
   itemGroup: FormGroup | undefined;
   itemFocus$ = new Subject<any>();
   itemClick$ = new Subject<any>();
@@ -113,11 +114,10 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private store: Store<State>,
     private cdRef: ChangeDetectorRef,
-    private appService: AppService,
     ngbConfig: NgbTypeaheadConfig,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
     this.close = new EventEmitter();
     // this.reviewFormGroup = this.defaultForm();
 
@@ -228,7 +228,6 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
     console.log('in PostReviewItemUnitComponent -> cancelUpload', id);
     this.uploadSub?.unsubscribe();
     this.reset(id);
-    // this.mediaTemplates[id].uploadProgress = 0;
   }
 
   reset(id: number) {
@@ -312,7 +311,7 @@ export class PostReviewComponent implements OnInit, OnDestroy {
     private router: Router,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
     this.reviewFormGroup = this.defaultForm();
     // this.reserveItemCtrl = this.reviewFormGroup.controls['item2Ctrl'] as FormControl;
     // customize default values of typeaheads used by this component tree

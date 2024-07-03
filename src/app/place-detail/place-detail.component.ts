@@ -1,10 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Place } from '../models/Place';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import configJson from '../../config.json';
 import { placeSelector } from '../selectors/foodie.selector';
 import * as FoodieActions from '../actions/foodie.actions';
 import { Review } from '../models/Review';
@@ -15,6 +14,7 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { getMaterialIconNameForTag } from '../services/Utils';
 import { preloadPostReviewData } from '../actions/foodie.actions';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-place-detail',
@@ -39,7 +39,7 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
   config: any;
   protected readonly getMaterialIconNameForTag = getMaterialIconNameForTag;
-
+  appService= inject(AppService);
   place$: Observable<Place | undefined> | undefined;
   // selectedItemId: any;
   selectedPlaceId: any;
@@ -66,7 +66,7 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
     private router: Router,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
   }
 
   ngOnInit() {

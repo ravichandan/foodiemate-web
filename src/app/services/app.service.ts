@@ -1,14 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import config from '../../config.json';
+// import config from '../../config/config.json';
 import { map, Observable, of, tap } from 'rxjs';
 import { Place } from '../models/Place';
 import { NewReview } from '../models/Review';
 import { CustomerInfo } from '../models/CustomerInfo';
 import { join } from '@fireflysemantics/join';
-
-// static data
 import { StaticDataService } from './static-data.service';
+import { environment } from '../../environments/environment';
 // import {generateCorrelationId} from "./Utils";
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +18,7 @@ export class AppService {
   constructor(private http: HttpClient) {}
 
   public getConfig() {
-    return config;
+    return environment;
   }
 
   public getPopularSearches(args: { city?: string; postcode?: string; suburb?: string }) {

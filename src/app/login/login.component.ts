@@ -1,6 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import configJson from '../../config.json';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
@@ -8,6 +7,7 @@ import { AsyncPipe } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGoogleService } from '../services/auth-google.service';
 import { SocialAuthService, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +20,7 @@ export class LoginComponent implements OnDestroy, OnInit {
   private readonly destroy$: Subject<any>;
 
   config: any;
+  appService= inject(AppService);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private store: Store<State> = inject(Store);
   private router: Router = inject(Router);
@@ -36,7 +37,7 @@ export class LoginComponent implements OnDestroy, OnInit {
   // }
   constructor(private authService: SocialAuthService) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
     this.loginFG = this.fb.group({});
   }
 

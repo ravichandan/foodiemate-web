@@ -1,11 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Place } from '../models/Place';
 import { Item } from '../models/Item';
 import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import configJson from '../../config.json';
 import { itemDetailOfAPlaceSelector, itemSelector, placeSelector } from '../selectors/foodie.selector';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { Review } from '../models/Review';
@@ -15,6 +14,7 @@ import { ListItem } from 'ng-multiselect-dropdown/multiselect.model';
 import { ReviewUnitComponent } from '../review-unit/review-unit.component';
 import { PlaceReviewUnitComponent } from '../place-review-unit/place-review-unit.component';
 import { placeRoutes } from '../place-detail/place-routing.module';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-place-reviews',
@@ -35,6 +35,8 @@ import { placeRoutes } from '../place-detail/place-routing.module';
 export class PlaceReviewsComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
   config: any;
+
+  appService= inject(AppService);
 
   @Input('place')
   place: Place | undefined;
@@ -61,7 +63,7 @@ export class PlaceReviewsComponent implements OnInit, OnDestroy {
     private store: Store<State>,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
   }
 
   ngOnInit() {

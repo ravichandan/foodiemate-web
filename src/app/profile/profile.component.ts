@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import configJson from '../../config.json';
 import * as FoodieActions from '../actions/foodie.actions';
 import { FormsModule } from '@angular/forms';
 import { EditInputComponent } from '../edit-input/edit-input.component';
 import { cuisinesSelector, customerSelector } from '../selectors/foodie.selector';
 import { CustomerInfo } from '../models/CustomerInfo';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +18,8 @@ import { CustomerInfo } from '../models/CustomerInfo';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+  appService= inject(AppService);
+
   config: any;
   customer!: CustomerInfo;
   allCuisines: any[] | undefined;
@@ -28,7 +30,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private store: Store<State>,
   ) {
     this.destroy$ = new Subject<any>();
-    this.config = configJson;
+    this.config = this.appService.getConfig();
   }
 
   ngOnInit() {
