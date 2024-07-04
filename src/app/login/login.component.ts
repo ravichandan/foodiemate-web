@@ -3,16 +3,17 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGoogleService } from '../services/auth-google.service';
 import { SocialAuthService, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { AppService } from '../services/app.service';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, AsyncPipe, ReactiveFormsModule, FormsModule, GoogleSigninButtonModule],
+  imports: [RouterLink, AsyncPipe, ReactiveFormsModule, FormsModule, GoogleSigninButtonModule, NgbNavModule, NgTemplateOutlet],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -27,6 +28,7 @@ export class LoginComponent implements OnDestroy, OnInit {
   loginFG!: FormGroup;
   fb: FormBuilder = inject(FormBuilder);
   authGoogleService = inject(AuthGoogleService);
+  active=1;
   // constructor( private authService:SocialAuthService) {}
 
   // ngOnInit(): void {

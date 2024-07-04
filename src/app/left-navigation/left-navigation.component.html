@@ -46,6 +46,11 @@
           <!--          <span class="fs-5 d-none d-sm-inline">Menu</span>-->
           <!--        </a>-->
 
+          @if (! (customer$|async)) {
+            <div class="w-100 flex-grow-1 d-flex d-lg-none">
+              <button class="btn btn-outline-light fs-5 flex-grow-1" routerLink="/login">Login/signup</button>
+            </div>
+          }
           <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start align-items-center w-100" id="menu">
             <li class="nav-item flex-md-grow-1 w-100" *ngFor="let item of items">
               <div class="rounded flex-md-grow-1 p-2 py-md-0">

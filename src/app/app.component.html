@@ -35,13 +35,13 @@
           <div class="col"></div>
           @if (!isLoggedIn) {
             <div class="col d-flex justify-content-end">
-              <button class="btn btn-light rounded-pill login-buttons fs-5" routerLink="/login">Login</button>
+              <button class="btn btn-light rounded-pill login-buttons fs-5" routerLink="/login">Login / Sign up</button>
             </div>
-            <div class="col">
-              <button class="btn btn-outline-light rounded-pill login-buttons fs-5" (click)="logoutClicked()">
-                Sign up
-              </button>
-            </div>
+<!--            <div class="col">-->
+<!--              <button class="btn btn-outline-light rounded-pill login-buttons fs-5" (click)="logoutClicked()">-->
+<!--                Sign up-->
+<!--              </button>-->
+<!--            </div>-->
           } @else {
             <div class="col">
               <button class="btn btn-outline-light rounded-pill login-buttons fs-5" (click)="logoutClicked()">

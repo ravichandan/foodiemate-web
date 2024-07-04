@@ -18,11 +18,11 @@ import { environment } from '../environments/environment';
 
 export function initializeMockData(mockService: MockDataService) {
   if(!environment.production) {
-    createServer({
-      routes(): void {
-        mockService.setRouteHandlers(this);
-      },
-    });
+    // createServer({
+    //   routes(): void {
+    //     mockService.setRouteHandlers(this);
+    //   },
+    // });
   }
   return () => {
     return new Promise((resolve) => {

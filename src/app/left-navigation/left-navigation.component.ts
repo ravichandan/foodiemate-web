@@ -10,6 +10,7 @@ import { CustomerInfo } from '../models/CustomerInfo';
 import * as FoodieActions from '../actions/foodie.actions';
 import { AppService } from '../services/app.service';
 
+
 @Component({
   selector: 'app-left-navigation',
   standalone: true,
@@ -83,6 +84,7 @@ export class LeftNavigationComponent implements OnDestroy{
     this.destroy$ = new Subject<any>();
     this.config = this.appService.getConfig();
     this.customer$ = this.store.select(customerSelector()).pipe(takeUntil(this.destroy$));
+
   }
 
   ngOnDestroy() {
