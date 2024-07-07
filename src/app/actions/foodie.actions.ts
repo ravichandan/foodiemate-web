@@ -57,6 +57,7 @@ export const ACTION_CUSTOMER_LOGOUT_SUCCESS = '[FoodieMate] CUSTOMER LOGOUT SUCC
 export const ACTION_ASK_FOR_VERIFICATION = '[FoodieMate] ASK CUSTOMER FOR VERIFICATION';
 
 export const ACTION_UPDATE_ADDRESS = '[FoodieMate] UPDATE ADDRESS';
+export const ACTION_CLEAR_ERROR = '[FoodieMate] CLEAR ERROR';
 
 export const ACTION_FAILED = '[FoodieMate] Failed';
 export const ACTION_PAGE_DESTROYED = '[FoodieMate] Page Destroyed';
@@ -164,6 +165,8 @@ export const preloadPostReviewData = createAction(
   ACTION_PRELOAD_POST_REVIEW,
   props<{ review?: NewReview; place?: Place; item?: Item }>(),
 );
+
+export const clearError = createAction(ACTION_CLEAR_ERROR);
 
 export const updateLocation = createAction(ACTION_UPDATE_ADDRESS, props<{ suburb?: string; postcode?: string }>());
 

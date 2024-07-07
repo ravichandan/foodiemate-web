@@ -1,21 +1,28 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-// import config from '../../config/config.json';
-import { map, Observable, of, tap } from 'rxjs';
+import { filter, map, Observable, of, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { Place } from '../models/Place';
-import { NewReview } from '../models/Review';
+import { NewReview, Review } from '../models/Review';
 import { CustomerInfo } from '../models/CustomerInfo';
 import { join } from '@fireflysemantics/join';
 import { StaticDataService } from './static-data.service';
 import { environment } from '../../environments/environment';
-// import {generateCorrelationId} from "./Utils";
+import { Store } from '@ngrx/store';
+import { customerSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
+import { State } from '../reducers';
 
 @Injectable({ providedIn: 'root' })
-export class AppService {
+export class AppService implements OnDestroy{
+  private readonly destroy$: Subject<any>;
+
   sds=inject(StaticDataService);
   private correlationId: string | undefined;
-
-  constructor(private http: HttpClient) {}
+  private customer: CustomerInfo | undefined;
+  constructor(private http: HttpClient, private store: Store< State>) {
+    this.destroy$ = new Subject<any>();
+    this.store.select(customerSelector()).pipe(
+      takeUntil(this.destroy$)).subscribe( cust => this.customer = cust)
+  }
 
   public getConfig() {
     return environment;
@@ -23,7 +30,7 @@ export class AppService {
 
   public getPopularSearches(args: { city?: string; postcode?: string; suburb?: string }) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    const url = this.getConfig().host + this.getConfig().popularSearchesEndpoint;
+    const url = join(this.getConfig().host, this.getConfig().popularSearchesEndpoint);
     let params = new HttpParams();
     !!args?.city && (params =  params.append('city', args.city));
     !!args?.postcode && (params =  params.append('postcode', args.postcode));
@@ -38,15 +45,14 @@ export class AppService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
     return of(this.sds.getCuisines())
-    // return this.http
-    //   .get(this.getConfig().allCuisinesEndpoint, { headers })
       .pipe();
   }
 
   public getCuisinesItems() {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    return this.http.get(this.getConfig().cuisinesItemsEndpoint, { headers }).pipe(
+    const url = join(this.getConfig().host, this.getConfig().cuisinesItemsEndpoint);
+    return this.http.get(url, { headers }).pipe(
       map((items: any) => ({ data: items })),
       tap((t: any) => console.log('getCuisinesItems response:: ', t)),
     );
@@ -56,7 +62,7 @@ export class AppService {
     if (!params.id) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    const url = this.getConfig().itemEndpoint.replace(':itemId', params.id);
+    const url = join(this.getConfig().host, this.getConfig().itemEndpoint.replace(':itemId', params.id));
     let httpParams = new HttpParams();
     httpParams = httpParams.append('pageSize', params.pageSize || 1);
     httpParams = httpParams.append('pageNum', params.pageNum || 1);
@@ -70,15 +76,12 @@ export class AppService {
     if (!params.id) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    const url = this.getConfig().placeEndpoint.replace(':placeId', params.id);
+    const url = join(this.getConfig().host, this.getConfig().placeEndpoint.replace(':placeId', params.id));
     // let httpParams = new HttpParams();
     // httpParams = httpParams.append('pageSize', params.pageSize || 1);
     // httpParams = httpParams.append('pageNum', params.pageNum || 1);
     return this.http
-      .get<Place>(url, {
-        headers,
-        // params: httpParams
-      })
+      .get<Place>(url, { headers, })
       .pipe(tap((t: any) => console.log('getPlace response:: ', t)));
   }
 
@@ -86,9 +89,10 @@ export class AppService {
     if (!params.itemId || !params.placeId) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    const url = this.getConfig()
+
+    const url = join(this.getConfig().host, this.getConfig()
       .itemOfAPlaceEndpoint.replace(':itemId', params.itemId)
-      .replace(':placeId', params.placeId);
+      .replace(':placeId', params.placeId));
     return this.http.get(url, { headers }).pipe(
       // map((item: any) => ({data: items})),
       tap((t: any) => console.log('fetchItemInAPlace response:: ', t)),
@@ -99,9 +103,9 @@ export class AppService {
     if (!params.itemId || !params.placeId) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    const url = this.getConfig()
+    const url = join(this.getConfig().host, this.getConfig()
       .itemOfAPlaceEndpoint.replace(':itemId', params.itemId)
-      .replace(':placeId', params.placeId);
+      .replace(':placeId', params.placeId));
 
     let httpParams = new HttpParams();
     httpParams = httpParams.append('pageSize', params.pageSize || 1);
@@ -116,9 +120,13 @@ export class AppService {
 
   public feedbackReview(params: { reviewId: string; customerId: string; action: string }): Observable<any> {
     if (!params?.reviewId || !params.customerId || !params.action) return of(undefined);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'CUSTOMER_ID': this.customer?.id || ''
+    });
 
-    const url = this.getConfig().itemEndpoint.replace(':reviewId', params.reviewId);
+    const url = join(this.getConfig().host, this.getConfig().itemEndpoint.replace(':reviewId', params.reviewId));
 
     // const
     // let httpParams = new HttpParams();
@@ -127,28 +135,62 @@ export class AppService {
     return this.http.post(url, {
       customerId: params.customerId,
       action: params.action,
-    });
+    }, {headers});
   }
 
-  public postReview(newReview: NewReview): Observable<any> {
-    console.log('in app.service->postreview', newReview);
-    if (!newReview.place) return of(undefined);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+  public postReview(/* newReview: NewReview */): Observable<any> {
+    console.log('in app.service->postreview');
+    return this.store.select(preloadReviewDataSelector()).pipe(
+      filter(Boolean),
+      take(1),
+      tap(x => console.log('in app.service->postReview, found review in state: ', x)),
+      switchMap( (data: { postReview: NewReview|Review|undefined, token: string}) => {
+        if (!data.postReview || !data.postReview.place) {
+          return of(undefined);
+        }
+        const headers =
+          new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'CUSTOMER_ID': this.customer?.id || '',
+            'x-token': data.token
+          });
 
-    const url = this.getConfig().postAReviewEndpoint; //.replace(':reviewId', params.reviewId);
+        let endpoint: any = this.getConfig().postAReviewEndpoint;
+        const url = join(this.getConfig().host, endpoint); //.replace(':reviewId', params.reviewId);
 
-    // const
-    // let httpParams = new HttpParams();
-    // httpParams = httpParams.append('customerId', customerId);
-    // httpParams = httpParams.append('action', action);
-    return this.http.post(url, newReview);
+        return this.http.post(url, data.postReview,{headers});
+        })
+    );
+    // if (!newReview.place) return of(undefined);
+    //
+    // const headers =
+    //   new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //     'CUSTOMER_ID': this.customer?.id || ''
+    //   });
+    //
+    // let endpoint: any = this.getConfig().postAReviewEndpoint;
+    // // if(!!newReview.item){
+    // //   endpoint=this.getConfig().reviewAnItemOfAPlaceEndpoint.replace(':placeId', newReview.place.id);
+    // // } else {
+    // //   endpoint=this.getConfig().reviewAPlaceEndpoint.replace(':placeId', newReview.place).replace(':itemId', newReview.item);
+    // // }
+    // const url = join(this.getConfig().host, endpoint); //.replace(':reviewId', params.reviewId);
+    //
+    // // const
+    // // let httpParams = new HttpParams();
+    // // httpParams = httpParams.append('customerId', customerId);
+    // // httpParams = httpParams.append('action', action);
+    // return this.http.post(url, newReview,{headers});
   }
 
   public searchPlaceWithName(name: string): Observable<any> {
     if (!name) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    const url = this.getConfig().searchForPlaceEndpoint; //.replace(':reviewId', params.reviewId);
+    const url = join(this.getConfig().host, this.getConfig().searchForPlaceEndpoint); //.replace(':reviewId', params.reviewId);
 
     // const
     let params = new HttpParams();
@@ -164,19 +206,21 @@ export class AppService {
     itemId?: string;
     file: File;
   }): Observable<any> {
-    // if (!name) return of(undefined);
-    // this.correlationId = generateCorrelationId();
     const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+      // 'Content-Type': 'multipart/form-data',
       'Access-Control-Allow-Origin': '*',
       'ngsw-bypass': '',
+      'CUSTOMER_ID': this.customer?.id || ''
     });
 
-    const url = this.getConfig().uploadMediaEndpoint; //.replace(':reviewId', params.reviewId);
+    const url = join(this.getConfig().host, this.getConfig().uploadMediaEndpoint);
 
-    const formData = new FormData();
-    formData.append('file', data.file);
-    formData.append('correlationId', data.correlationId);
+    let formData = new FormData();
+     formData.append('files', data.file, data.file.name);
+    // formData.append('correlationId', data.correlatiDonId);
+    console.log('in app.service -> uploadMedia(), formData:: ', formData);
+    console.log('in app.service -> uploadMedia(), formData:: ', formData.get('files'));
     if (!!data.customerId) {
       formData.append('customerId', data.customerId);
     }
@@ -203,7 +247,7 @@ export class AppService {
       'ngsw-bypass': '',
     });
 
-    const url = this.getConfig().customerByIdEndpoint.replace(':customerId', customer.id);
+    const url = join(this.getConfig().host, this.getConfig().customerByIdEndpoint.replace(':customerId', customer.id));
 
     console.log('in updateCustomer url: ', url);
     return this.http.post(url, customer);
@@ -236,9 +280,13 @@ export class AppService {
       'ngsw-bypass': '',
     });
 
-    const url = this.getConfig().logoutCustomerEndpoint.replace(':customerId', id);
+    const url = join(this.getConfig().host, this.getConfig().logoutCustomerEndpoint.replace(':customerId', id));
 
     console.log('in logoutCustomer url: ', url);
     return this.http.post(url, {});
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

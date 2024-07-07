@@ -1,5 +1,5 @@
 import { Component, Inject, inject, OnDestroy, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { AsyncPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { MenuItem } from 'primeng/api';
@@ -21,6 +21,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
+import { ToastService } from './services/toast.service';
+import { ToastContainerComponent } from './toast-container/toast-container.component';
 
 @Component({
   selector: 'app-root',
@@ -41,6 +43,7 @@ import { environment } from '../environments/environment';
     SharingButtonsComponent,
     RouterLink,
     OAuthModule,
+    ToastContainerComponent
     // BrowserModule,
     // OAuthModule.forRoot({
     //   resourceServer: {
@@ -70,13 +73,20 @@ export class AppComponent implements OnInit, OnDestroy {
   private isBrowser: boolean = false;
 
   authGoogleService = inject(AuthGoogleService);
+  toastService = inject(ToastService);
 
   constructor(
     private appService: AppService,
     private authService: AppService,
     private store: Store<State>,
     @Inject(PLATFORM_ID) platformId: Object,
-  ) {
+    private router: Router) {
+    router.events.subscribe((val) => {
+      // see also
+      if(val instanceof NavigationEnd){
+        this.store.dispatch(FoodieActions.clearError());
+      }
+    });
     this.isBrowser = isPlatformBrowser(platformId);
     if (this.isBrowser) {
       console.log('in app.component.ts constructor, window.location.href:: ', window.location.href);
@@ -97,16 +107,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     this.items = this.config.navigation_menu;
     this.store.dispatch(FoodieActions.fetchCuisines());
-    // this.store.dispatch(FoodieActions.fetchCuisinesItems());
-    // console.log('in app.component, onInit, this.oauthService.hasValidAccessToken();:: ', this.authGoogleService.hasValidAccessToken())
-    // if(this.authGoogleService.hasValidAccessToken()){
-    //   this.authGoogleService.getUserInfo().then((userInfo:any)=> {
-    //     console.log('in userinfo:: ', userInfo);
-    //     this.store.dispatch(FoodieActions.loginOidcCustomer({ email: userInfo.info.email, token: this.authGoogleService.getToken(),expiry: userInfo.info.exp  }));
-    //   })
-    // }else {
-    //   this.store.dispatch(FoodieActions.logoutCustomer());
-    // }
   }
 
   ngOnDestroy() {
@@ -121,4 +121,8 @@ export class AppComponent implements OnInit, OnDestroy {
     );
     this.authGoogleService.logout();
   }
+
+  // testToast() {
+  //   this.toastService.showSuccess("SUCCESSSSSSSSS");
+  // }
 }

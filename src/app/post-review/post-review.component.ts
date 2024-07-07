@@ -42,9 +42,10 @@ import { Item } from '../models/Item';
 import { ReplacePipe } from '../directives/replace.pipe';
 import { generateCorrelationId, getFileType } from '../services/Utils';
 import * as FoodieActions from '../actions/foodie.actions';
-import { HttpEventType } from '@angular/common/http';
+import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { ConnectFormDirective } from '../directives/connectForm.directive';
 import { CustomerInfo } from '../models/CustomerInfo';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-post-review-item-unit',
@@ -195,6 +196,13 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
         })
         .pipe(
           takeUntil(this.destroy$),
+          catchError(err => {
+            // console.log('error in onFileSelected:: ', err);
+            this.mediaTemplates[id].uploadProgress=0;
+            this.mediaTemplates[id].filename=undefined;
+            this.mediaTemplates[id].error=err.statusText + ': ' + (err.error?.message || err. message);
+            return of(err);
+          })
           // finalize(() => this.reset(id))
         );
 
@@ -216,7 +224,7 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
                 customerId: event.body?.customerId,
                 url: event.body?.url,
               },
-            ].push(...this.itemGroup?.value.mediaCtrl),
+            ].concat(...this.itemGroup?.value.mediaCtrl),
           );
         }
         this.cdRef.detectChanges();
@@ -261,8 +269,11 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
 export class PostReviewComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
   config: any;
+
   preloadReview$: Observable<NewReview | undefined> | undefined;
   form$: Observable<any>;
+
+  toastService = inject(ToastService);
   searching = false;
   searchFailed = false;
   selectedItems: { [k: string]: string } = {} as any;
@@ -281,23 +292,28 @@ export class PostReviewComponent implements OnInit, OnDestroy {
   protected readonly Object = Object;
   correlationId: string = generateCorrelationId();
   submitted: boolean = false;
+  postingReview: boolean = false;
   customer: CustomerInfo | undefined;
+  errorMsg: string | undefined;
 
   mediaTemplates: any = {
     1: {
       id: 1,
       filename: undefined,
       uploadProgress: 0,
+      error: undefined
     },
     2: {
       id: 2,
       filename: undefined,
       uploadProgress: 0,
+      error: undefined
     },
     3: {
       id: 3,
       filename: undefined,
       uploadProgress: 0,
+      error: undefined
     },
   };
 
@@ -331,6 +347,7 @@ export class PostReviewComponent implements OnInit, OnDestroy {
     this.preloadReview$ = this.store.select(preloadReviewDataSelector()).pipe(
       takeUntil(this.destroy$),
       filter((data) => !!data),
+      map(data => data.postReview),
       tap((x) => console.log('review from state received in post-review.component:: ', x)),
     );
     this.store
@@ -527,11 +544,32 @@ export class PostReviewComponent implements OnInit, OnDestroy {
     // this.reviewFormGroup.updateValueAndValidity();
 
     console.log('in formSubmitted(), form: ', this.reviewFormGroup);
+    console.log('in formSubmitted(), customer: ', this.customer);
     this.submitted = true;
+    this.errorMsg=undefined;
     if (!this.reviewFormGroup.valid) {
       this.reviewForm.nativeElement.classList.add('was-validated');
     } else {
-      this.store.dispatch(FoodieActions.newPostReview());
+      // this.store.dispatch(FoodieActions.newPostReview());
+      this.postingReview = true;
+
+      this.appService.postReview().pipe(take(1)).subscribe({
+        next: (review) => {
+          this.store.dispatch(FoodieActions.newPostReviewSuccess({ review }));
+          this.toastService.showSuccess('Thank you, we received your review.');
+        },
+        error: (error) => {
+          console.error('Error while posting the review to backend, :: ', error);
+          if(!!error.error) {
+            let e = error.error;
+            e=e.errors ?? e;
+            const keys = Object.keys(e);
+            this.errorMsg = e[keys[0]].path+': '+(e[keys[0]].msg ?? e[keys[0]].message);
+            this.postingReview = false;
+          }
+          this.cdRef.detectChanges();
+        },
+      });
     }
   }
 
@@ -560,6 +598,13 @@ export class PostReviewComponent implements OnInit, OnDestroy {
         .pipe(
           takeUntil(this.destroy$),
           // finalize(() => this.reset(id))
+          catchError(err => {
+            console.log('error in onFileSelected:: ', err);
+            this.mediaTemplates[id].uploadProgress=0;
+            this.mediaTemplates[id].filename=undefined;
+            this.mediaTemplates[id].error=err.statusText + ': ' + (err.error?.message || err. message);
+            return of(err);
+          })
         );
 
       this.uploadSub = upload$.subscribe((event) => {
@@ -568,19 +613,19 @@ export class PostReviewComponent implements OnInit, OnDestroy {
         }
         // console.log('here in ukkgfghgfgh', this.mediaTemplates[id].uploadProgress)
         if (event.type == HttpEventType.Response) {
-          console.log('here in uzbekistan', event);
+          console.log('post-review.component -> onFileSelected, event: ', event);
           this.mediaTemplates[id].uploadProgress = 100;
           this.reviewFormGroup.controls['mediaCtrl'].setValue(
             [
               {
-                id: event.body?.id,
+                id: event.body?.[0]._id,
                 name: file.name,
                 type: getFileType(file),
                 correlationId: this.correlationId,
-                customerId: event.body?.customerId,
-                url: event.body?.url,
+                customerId: event.body?.[0].customerId,
+                url: event.body?.[0].url,
               },
-            ].push(...this.reviewFormGroup.value.mediaCtrl),
+            ].concat(...this.reviewFormGroup.value.mediaCtrl),
           );
         }
         this.cdRef.detectChanges();

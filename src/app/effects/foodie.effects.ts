@@ -175,19 +175,21 @@ export class FoodieEffects {
     ),
   );
   // Effect mediates the 'undisliking a review'
-  postReview$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(FoodieActions.newPostReview),
-      tap((x) => console.log('in postReview$ effect', x)),
-      switchMap((_) => this.store.select(preloadReviewDataSelector()).pipe(filter(Boolean), take(1))),
-      mergeMap((review) =>
-        this.appService.postReview(review).pipe(
-          map((review: any) => FoodieActions.newPostReviewSuccess({ review })),
-          catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
-        ),
-      ),
-    ),
-  );
+  // postReview$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(FoodieActions.newPostReview),
+  //     tap((x) => console.log('in postReview$ effect', x)),
+  //     switchMap((_) => this.store.select(preloadReviewDataSelector()).pipe(filter(Boolean), take(1))),
+  //     tap((x) => console.log('2. in postReview$ effect2 , review:: ', x)),
+  //     mergeMap((review) =>
+  //       this.appService.postReview(review).pipe(
+  //         map((review: any) => FoodieActions.newPostReviewSuccess({ review })),
+  //         catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
+  //       ),
+  //     ),
+  //   ),
+  // );
+
   // Effect mediates the 'logging in oidc customer'
   loginOidcCustomer$ = createEffect(() =>
     this.actions$.pipe(
@@ -206,8 +208,8 @@ export class FoodieEffects {
           tap((customer) => console.log('in tap, customer:: ', customer)),
           map(
             (
-              customer: CustomerInfo, //customer.status === 'verified' ?
-            ) => FoodieActions.loginOidcCustomerSuccess({ customer }),
+              customer: any, //customer.status === 'verified' ?
+            ) => FoodieActions.loginOidcCustomerSuccess({ customer: {...customer, id: customer._id} }),
             // : FoodieActions.askForVerification({ customer })
           ),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),

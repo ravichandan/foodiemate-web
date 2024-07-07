@@ -141,11 +141,13 @@
           <div class="file-upload">
             @if (!mediaTemplates[key].uploadProgress || mediaTemplates[key].uploadProgress < 100) {
               <button class="upload-btn btn btn-outline-dark" (click)="$event.preventDefault(); fileUpload.click()">
-                Add placevimg/video {{ key }}
+                Add place image/video {{ key }}
               </button>
             }
 
-            @if (mediaTemplates[key].uploadProgress >= 100) {
+            @if(mediaTemplates[key].error){
+              <div><span class="text-danger">{{ mediaTemplates[key].error }}</span></div>
+            } @else if (mediaTemplates[key].uploadProgress >= 100) {
               @if (mediaTemplates[key].filename) {
                 <span class="fs-5 fw-medium"><i class="bi bi-paperclip"></i></span>
                 <span>
@@ -182,13 +184,25 @@
           class="btn btn-primary"
           id="reviewSubmitButton"
           type="submit"
-          [disabled]="customer?.status !== 'verified'">
-          Submit form
+          [disabled]="customer?.status !== 'verified' || postingReview">
+          @if (!postingReview) {
+            Post review
+          } @else {
+            Posting ...
+          }
+<!--          <span class="spinner-border" role="status">-->
+<!--            <span class="visually-hidden">Posting review...</span>-->
+<!--          </span>-->
         </button>
-        @if (customer?.status !== 'verified') {
+        @if (customer && customer?.status !== 'verified') {
           <label for="reviewSubmitButton" class="d-block text-danger fst-italic fs-smaller">{{
             config.postReviewLabels?.verifyEmail
           }}</label>
+        }
+        @if (errorMsg) {
+          <label for="reviewSubmitButton" class="d-block text-danger fst-italic fs-smaller">Error: {{
+              errorMsg
+            }}</label>
         }
       </div>
     </form>

@@ -5,7 +5,7 @@ import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { itemSelector, placeSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
 import * as FoodieActions from '../actions/foodie.actions';
-import { NewReview } from '../models/Review';
+import { NewReview, Review } from '../models/Review';
 import { Place } from '../models/Place';
 import { Item } from '../models/Item';
 
@@ -40,17 +40,17 @@ export class ConnectFormDirective implements OnDestroy, OnInit {
       .pipe(
         take(1),
         tap((x) => console.log('in connectForm->preloadReviewDataSelector(), x:: ', x)),
-        switchMap((preload: NewReview) =>
-          preload.place
-            ? this.store.select(placeSelector(preload.place.id)).pipe(
+        switchMap((data: { postReview: NewReview|Review|undefined, token: string}) =>
+          data.postReview?.place
+            ? this.store.select(placeSelector(data.postReview?.place.id)).pipe(
                 tap((x) => console.log('in connectForm->placeSelector(), x:: ', x)),
                 switchMap((place: Place) => {
-                  return preload.item
-                    ? of({ ...preload, placeCtrl: place, item1Group: { itemCtrl: place.items[preload.item.id] } })
-                    : of({ ...preload, placeCtrl: place });
+                  return data.postReview?.item
+                    ? of({ ...data.postReview, placeCtrl: place, item1Group: { itemCtrl: place.items[data.postReview?.item.id] } })
+                    : of({ ...data.postReview, placeCtrl: place });
                 }),
               )
-            : of(preload),
+            : of(data.postReview),
         ),
         // switchMap((preload: NewReview) =>
         //   preload.item ?  of({...preload, item1Group: {itemCtrl: item}}))) : of(preload)
@@ -58,7 +58,9 @@ export class ConnectFormDirective implements OnDestroy, OnInit {
       )
       .subscribe((val) => {
         // console.log('in connectForm.directive, patching val');
-        this.formGroupDirective.form?.patchValue(val);
+        if(val) {
+          this.formGroupDirective.form?.patchValue(val);
+        }
       });
     this.formChange = this.formGroupDirective.form.valueChanges
       .pipe(

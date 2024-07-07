@@ -230,14 +230,22 @@ export const loginReducer = createReducer(
 
 export const userInfoReducer = createReducer(
   initialState.userInfo,
-  on(FoodieActions.loginCustomerSuccess, (userInfo: CustomerInfo) => userInfo),
-  on(FoodieActions.logoutCustomerSuccess, (_: any) => undefined),
+  on(FoodieActions.loginOidcCustomer, (oldState, newState) => {
+    console.log('in userInfoReducer, newState: ', newState);
+    return newState.userInfo;
+  }),
 );
 
 export const errorReducer = createReducer(
   initialState.error,
   on(FoodieActions.failed, (oldState, { error }) => ({
     ...error,
+  })),
+  on(FoodieActions.newPostReview, (oldState, { }) => ({
+    undefined
+  })),
+  on(FoodieActions.clearError, (oldState, { }) => ({
+    undefined
   })),
 );
 

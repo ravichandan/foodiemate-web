@@ -67,11 +67,12 @@ export const addressSelector = () =>
 
 export const preloadReviewDataSelector = () =>
   createSelector(
-    (state: State) => state.postReview,
-    (postReview) => {
-      return postReview ?? {};
+    (state: State) => state,
+    (state) => {
+      return { postReview: state.postReview, token: state.userInfo?.token } ?? {};
     },
   );
+
 export const postReviewResultSelector = () =>
   createSelector(
     (state: State) => state.postReview?.id,

@@ -113,7 +113,9 @@
               Add img/video {{ key }}
             </button>
           }
-          @if (mediaTemplates[key].uploadProgress >= 100) {
+          @if(mediaTemplates[key].error) {
+            <div><span class="text-danger">{{ mediaTemplates[key].error }}</span></div>
+          } @else if (mediaTemplates[key].uploadProgress >= 100) {
             @if (mediaTemplates[key].filename) {
               <span class="fs-5 fw-medium"><i class="bi bi-paperclip"></i></span>
               <span>
