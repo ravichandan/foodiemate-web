@@ -61,7 +61,7 @@
             <!--                                    <ng-template ngbSlide>-->
             <!--                                        <div class="picsum-img-wrapper">-->
             <img
-              [src]="place.medias?.[0]?.url"
+              [src]="config.bucketAccessEndpoint+'/'+place.medias?.[0]?.key"
               alt="loading picture of the place"
               class="card-img-top w-100 img-fluid rounded-0" />
             <!--                                        </div>-->
