@@ -1,5 +1,5 @@
 {
-  "title": "foodieX",
+  "title": "FOODIEX",
   "original_title": "tangypeel",
   "search_main_label": "Search for a dish and see where it tastes best.",
   "search_sub_label": "or, look for a food place and find the best tasting dishes there.",
@@ -410,6 +410,8 @@
     }
   ],
   "noOfSuggestions": 3,
+  "defaultApiFailedErrorMsg": "Something went wrong in the backend",
+  "postReviewSuccessMessage": "Thank you, we received your review.",
   "profileLabels": {
     "email": "Email Address",
     "name": "Name"

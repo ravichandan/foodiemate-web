@@ -196,15 +196,16 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
         })
         .pipe(
           takeUntil(this.destroy$),
+          // finalize(() => this.reset(id))
           catchError(err => {
-            // console.log('error in onFileSelected:: ', err);
+            console.log('error in onFileSelected:: ', err);
             this.mediaTemplates[id].uploadProgress=0;
             this.mediaTemplates[id].filename=undefined;
             this.mediaTemplates[id].error=err.statusText + ': ' + (err.error?.message || err. message);
             return of(err);
           })
-          // finalize(() => this.reset(id))
         );
+
 
       this.uploadSub = upload$.subscribe((event) => {
         if (event.type == HttpEventType.UploadProgress) {
@@ -217,12 +218,12 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
           this.itemGroup?.controls['mediaCtrl'].setValue(
             [
               {
-                id: event.body?.id,
+                id: event.body?.[0]._id,
                 name: file.name,
                 type: getFileType(file),
                 correlationId: this.correlationId,
-                customerId: event.body?.customerId,
-                url: event.body?.url,
+                customerId: event.body?.[0].customerId,
+                url: event.body?.[0].url,
               },
             ].concat(...this.itemGroup?.value.mediaCtrl),
           );
@@ -425,10 +426,11 @@ export class PostReviewComponent implements OnInit, OnDestroy {
     this.currentItemCount = this.currentItemCount + 1;
     let nextName = 'item' + this.currentItemCount; //+'Group';
 
-    name &&
-      Object.keys(this.reviewFormGroup.controls).forEach((key) => {
-        this.reviewFormGroup.controls[key].addValidators(Validators.required);
-      });
+    // name &&
+    //   Object.keys(this.reviewFormGroup.controls).forEach((key) => {
+    //     console.log('making this control required: ', key);
+    //     this.reviewFormGroup.controls[key].addValidators(Validators.required);
+    //   });
 
     // this.reviewFormGroup.controls[name].addValidators(Validators.required)
     this.reviewFormGroup.addControl(
@@ -436,19 +438,11 @@ export class PostReviewComponent implements OnInit, OnDestroy {
       this.fb.group(
         {
           // nextName +
-          ['item' + 'Ctrl']: [null, []],
-          ['taste' +
-          // + this.currentItemCount
-          'Ctrl']: [0, []],
-          ['presentation' +
-          // + this.currentItemCount
-          'Ctrl']: [0, []],
-          ['media' +
-          // + this.currentItemCount
-          'Ctrl']: [[], []],
-          ['itemReview' +
-          // + this.currentItemCount
-          'Ctrl']: [null, []],
+          ['itemCtrl']: [null, []],
+          ['tasteCtrl']: [0, []],
+          ['presentationCtrl']: [0, []],
+          ['mediaCtrl']: [[], []],
+          ['itemReviewCtrl']: [null, []],
         },
         {
           updateOn: 'change',
@@ -458,7 +452,7 @@ export class PostReviewComponent implements OnInit, OnDestroy {
     this.reserveItemGroup = this.reviewFormGroup.controls[nextName + 'Group'] as FormGroup;
     this.reserveItemGroup.controls[
       // nextName +
-      'item' + 'Ctrl'
+      'itemCtrl'
     ].valueChanges
       .pipe(
         filter((d) => !!d),
@@ -468,7 +462,7 @@ export class PostReviewComponent implements OnInit, OnDestroy {
       .subscribe((_: any) => this.addNewItemGroup());
     this.reserveItemGroup.controls[
       // nextName +
-      'item' + 'Ctrl'
+      'itemCtrl'
     ].valueChanges
       .pipe(
         takeUntil(this.destroy$),
@@ -556,7 +550,7 @@ export class PostReviewComponent implements OnInit, OnDestroy {
       this.appService.postReview().pipe(take(1)).subscribe({
         next: (review) => {
           this.store.dispatch(FoodieActions.newPostReviewSuccess({ review }));
-          this.toastService.showSuccess('Thank you, we received your review.');
+          this.toastService.showSuccess(this.config.postReviewSuccessMessage);
         },
         error: (error) => {
           console.error('Error while posting the review to backend, :: ', error);
@@ -564,7 +558,11 @@ export class PostReviewComponent implements OnInit, OnDestroy {
             let e = error.error;
             e=e.errors ?? e;
             const keys = Object.keys(e);
-            this.errorMsg = e[keys[0]].path+': '+(e[keys[0]].msg ?? e[keys[0]].message);
+            if(keys.length < 1){
+              this.errorMsg = this.config.defaultApiFailedErrorMsg;
+            } else {
+              this.errorMsg = e[keys[0]].path + ': ' + (e[keys[0]].msg ?? e[keys[0]].message);
+            }
             this.postingReview = false;
           }
           this.cdRef.detectChanges();

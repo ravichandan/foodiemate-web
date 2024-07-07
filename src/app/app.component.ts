@@ -81,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private store: Store<State>,
     @Inject(PLATFORM_ID) platformId: Object,
     private router: Router) {
-    router.events.subscribe((val) => {
+    this.router.events.subscribe((val) => {
       // see also
       if(val instanceof NavigationEnd){
         this.store.dispatch(FoodieActions.clearError());
@@ -122,7 +122,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authGoogleService.logout();
   }
 
-  // testToast() {
-  //   this.toastService.showSuccess("SUCCESSSSSSSSS");
-  // }
+  navigateHome() {
+    this.router.navigate(['/home']).then();
+  }
+  testToast() {
+    this.toastService.showSuccess("Thank you, we have received your review");
+    this.toastService.showDanger("Thank you, we have received your review");
+  }
 }
