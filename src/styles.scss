@@ -302,3 +302,13 @@ input [type="range"] {
 }
 
 //SEPARATOR WITH TEXT ENDS
+
+
+.detail-img {
+  //width: 300px;
+  height: 350px;
+  //object-fit: none;
+  //@include media-breakpoint-down(lg) {
+    object-fit: cover;
+  //}
+}

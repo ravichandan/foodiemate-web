@@ -25,7 +25,7 @@
   <div class="pop-title lead text-body-secondary">{{ config.popular_title }}</div>
   <div class="pop-wrapper" *ngIf="popularSearches$ | async as resp">
     <div class="pop-items row">
-      <div class="pop-item-wrapper col-6 col-md-3 col-xxl-2 px-0" *ngFor="let element of resp">
+      <div class="pop-item-wrapper col-6 col-md-4 col-lg-3  px-0" *ngFor="let element of resp">
         <div class="pop-item card m-1 m-lg-2" hover-classes="text-bg-dark" (click)="popularItemSelected(element)">
           <img [src]="config.bucketAccessEndpoint+'/'+element.medias[0].key" class="card-img-top pop-img-top" [alt]="element.name" />
           <div class="card-body text-center d-flex justify-content-center p-sm-1 p-lg-1">
