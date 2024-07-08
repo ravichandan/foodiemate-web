@@ -91,7 +91,12 @@
     <div
       class="content-container col-11 col-lg-10 d-flex flex-lg-column justify-content-center justify-content-lg-start px-lg-5">
       <div class="d-flex flex-column">
-        <app-sharing-buttons class="align-self-end py-2"></app-sharing-buttons>
+        <div class="d-flex align-items-center">
+          @if (isLoggedIn && (customer$|async); as customer) {
+            <span>Welcome <strong>{{ customer.name?.split(' ')?.[0] | slice:0:11}}</strong></span>
+          }
+          <app-sharing-buttons class="align-self-end py-2 ms-auto"></app-sharing-buttons>
+        </div>
         <ng-container *ngTemplateOutlet="content"></ng-container>
       </div>
     </div>

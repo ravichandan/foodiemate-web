@@ -1,20 +1,20 @@
 import { Component, Inject, inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { AsyncPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe } from '@angular/common';
 import { MenuItem } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { AppService } from './services/app.service';
 import { LeftNavigationComponent } from './left-navigation/left-navigation.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HoverClassDirective } from './directives/hover-class.directive';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { State } from './reducers';
 import { Store } from '@ngrx/store';
 import * as FoodieActions from './actions/foodie.actions';
 import { HomeComponent } from './home/home.component';
 import { SharingButtonsComponent } from './review-reply/sharing-buttons.component';
-import { loginSelector } from './selectors/foodie.selector';
+import { customerSelector, loginSelector } from './selectors/foodie.selector';
 import { AuthGoogleService } from './services/auth-google.service';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,7 +43,8 @@ import { ToastContainerComponent } from './toast-container/toast-container.compo
     SharingButtonsComponent,
     RouterLink,
     OAuthModule,
-    ToastContainerComponent
+    ToastContainerComponent,
+    SlicePipe,
     // BrowserModule,
     // OAuthModule.forRoot({
     //   resourceServer: {
@@ -72,6 +73,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
   private isBrowser: boolean = false;
 
+  customer$ : Observable<any>;
+
   authGoogleService = inject(AuthGoogleService);
   toastService = inject(ToastService);
 
@@ -98,6 +101,11 @@ export class AppComponent implements OnInit, OnDestroy {
       .select(loginSelector())
       .pipe(takeUntil(this.destroy$))
       .subscribe((val) => (this.isLoggedIn = val));
+
+    this.customer$ = this.store
+      .select(customerSelector())
+      .pipe(takeUntil(this.destroy$));
+      // .subscribe(();
   }
 
   ngOnInit(): void {
