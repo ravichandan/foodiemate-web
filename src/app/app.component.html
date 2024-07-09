@@ -24,24 +24,51 @@
         ></span>
       </div>
       <!--      <div class="flex-grow-1 d-flex justify-content-center align-self-center">-->
-      <div class="row flex-grow-1">
-        <div class="col d-none d-md-flex"></div>
-        <div class="col d-flex justify-content-center align-self-center" (click)="navigateHome()">
-          <span class="title"
+      <div class="d-flex justify-content-between flex-grow-1 px-1 px-md-5">
+<!--        <div class="col d-none d-md-flex"></div>-->
+        <div class="d-flex justify-content-start align-self-center" (click)="navigateHome()">
+          <span class="title "
             ><strong>{{ config.title }}</strong></span
           >
         </div>
-        <div class="col d-none d-md-flex justify-content-center align-self-center row">
-          <div class="col"></div>
+<!--        <div-->
+<!--          class=" d-flex d-md-none align-self-center mt-1"-->
+<!--          (click)="topSearch.classList.toggle('d-none'); topSearch.classList.toggle('top-search')">-->
+<!--          <span-->
+<!--            class="w-100 h-100 rounded d-flex align-items-center justify-content-center nav-block px-2 fs-1"-->
+<!--            hover-classes="bg-body-secondary text-dark nav-icon"-->
+<!--          ><i class="bi bi-search fw-bold"></i-->
+<!--          ></span>-->
+<!--        </div>-->
+        <div
+          class=" d-none d-md-flex align-self-center mt-1 top-search-box"
+          >
+          <form class="d-flex flex-row align-items-center position-relative flex-grow-1">
+            <input type="search" class="form-control col-md-8 h-100" placeholder="Search a dish or restaurant" id="example-search-input">
+            <button class="btn btn-outline-primary border-0 position-absolute end-0 h-100 fw-bolder" type="submit">
+              <i class="bi bi-search fw-bold"></i>
+            </button>
+          </form>
+<!--          <form class="row justify-content-between p-0">-->
+<!--            <div class="col-9 m-1">-->
+<!--              <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>-->
+<!--              <input-->
+<!--                type="text"-->
+<!--                class="form-control border-dark focus-ring"-->
+<!--                [placeholder]="config.search_placeholder" />-->
+<!--            </div>-->
+<!--            <div class="col-2 m-1">-->
+<!--              <button type="submit" class="col-12 btn btn-dark focus-ring">Search</button>-->
+<!--            </div>-->
+<!--          </form>-->
+        </div>
+<!--        login buttons-->
+        <div class="d-none d-md-flex justify-content-center align-self-center ">
+<!--          <div class="col"></div>-->
           @if (!isLoggedIn) {
             <div class="col d-flex justify-content-end">
               <button class="btn btn-light rounded-pill login-buttons fs-5" routerLink="/login">Login / Sign up</button>
             </div>
-<!--            <div class="col">-->
-<!--              <button class="btn btn-outline-light rounded-pill login-buttons fs-5" (click)="logoutClicked()">-->
-<!--                Sign up-->
-<!--              </button>-->
-<!--            </div>-->
           } @else {
             <div class="col">
               <button class="btn btn-outline-light rounded-pill login-buttons fs-5" (click)="logoutClicked()">
@@ -50,18 +77,10 @@
             </div>
           }
 
-          <div class="col"></div>
+<!--          <div class="col"></div>-->
         </div>
       </div>
-      <div
-        class="nav-block mr-auto d-block d-lg-none align-self-center mt-1"
-        (click)="topSearch.classList.toggle('d-none'); topSearch.classList.toggle('top-search')">
-        <span
-          class="w-100 h-100 rounded d-flex align-items-center justify-content-center nav-block px-2 fs-1"
-          hover-classes="bg-body-secondary text-dark nav-icon"
-          ><i class="bi bi-search fw-bold"></i
-        ></span>
-      </div>
+
     </div>
     <div class="d-flex d-none d-lg-none top-search row justify-content-center m-1 my-2 my-sm-3" #topSearch>
       <form class="row col-11 col-lg-10 justify-content-between p-0">
@@ -79,13 +98,15 @@
       </form>
     </div>
   </div>
-  <div class="top-navigation-container col-12 gx-0">
-    <div class="col-md-12">
-      <ng-container *ngTemplateOutlet="navigation"></ng-container>
+  @if (!config.hideCuisineMenu) {
+    <div class="top-navigation-container col-12 gx-0">
+      <div class="col-md-12">
+        <ng-container *ngTemplateOutlet="navigation"></ng-container>
+      </div>
     </div>
-  </div>
+  }
   <div class="row justify-content-center justify-content-lg-start body-container col-12 gx-0">
-    <div class="left-nav-container col-0 col-lg-2 text-bg-dark">
+    <div class="left-nav-container col-0 col-lg-2 ">
       <ng-container *ngTemplateOutlet="left"></ng-container>
     </div>
     <div
@@ -105,4 +126,4 @@
 
 <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
 
-<button (click)="testToast()">toast test</button>
+<!--<button (click)="testToast()">toast test</button>-->

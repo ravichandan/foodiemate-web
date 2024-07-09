@@ -33,9 +33,11 @@
   </div>
 </div>
 
-<div class="d-none d-lg-block">
-  <ng-container *ngTemplateOutlet="nav"></ng-container>
-</div>
+@if(!config.hideLeftNavigationMenu) {
+  <div class="d-none d-lg-block">
+    <ng-container *ngTemplateOutlet="nav"></ng-container>
+  </div>
+}
 
 <ng-template #nav>
   <div class="container-fluid">

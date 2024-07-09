@@ -9,9 +9,7 @@ import { NgbToastModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
   standalone: true,
   imports: [NgbToastModule, NgTemplateOutlet, NgbTooltipModule],
   template: `
-    {{toastService.toasts.length}}
-
-		@for (toast of toastService.toasts; track toast) {
+    @for (toast of toastService.toasts; track toast) {
 			<ngb-toast
 				[class]="toast.classname"
 				[autohide]="true"

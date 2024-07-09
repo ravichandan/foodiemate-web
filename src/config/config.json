@@ -1,5 +1,5 @@
 {
-  "title": "FOODIEX",
+  "title": "foodiex",
   "original_title": "tangypeel",
   "search_main_label": "Search for a dish and see where it tastes best.",
   "search_sub_label": "or, look for a food place and find the best tasting dishes there.",
@@ -416,6 +416,8 @@
     "email": "Email Address",
     "name": "Name"
   },
+  "hideCuisineMenu": true,
+  "hideLeftNavigationMenu": true,
   "temp": {
     "label": "All",
     "route": "/all",
