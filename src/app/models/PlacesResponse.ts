@@ -2,6 +2,6 @@ import { Place } from './Place';
 
 export interface PlacesResponse {
   size: number;
-  pageNum: number;
+  page: number;
   places: Place[];
 }

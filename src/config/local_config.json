@@ -19,7 +19,7 @@
   "reviewAPlaceEndpoint": "/places/:placeId/reviews",
   "feedbackAReviewEndpoint": "/reviews/:reviewId",
   "postAReviewEndpoint": "/reviews/",
-  "searchForPlaceEndpoint": "/places/search",
+  "searchForPlaceEndpoint": "/places/",
   "uploadMediaEndpoint": "/medias/upload",
   "loginOidcCustomerEndpoint": "/customers/oidc-login",
   "logoutCustomerEndpoint": "/customers/:customerId/logout",
@@ -414,6 +414,9 @@
   "profileLabels": {
     "email": "Email Address",
     "name": "Name"
+  },
+  "general": {
+    "noMatchingItems": "No more matching items"
   },
   "hideCuisineMenu": true,
   "hideLeftNavigationMenu": true,

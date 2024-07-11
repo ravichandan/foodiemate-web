@@ -46,6 +46,7 @@ import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { ConnectFormDirective } from '../directives/connectForm.directive';
 import { CustomerInfo } from '../models/CustomerInfo';
 import { ToastService } from '../services/toast.service';
+import { B } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-post-review-item-unit',
@@ -218,12 +219,12 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
           this.itemGroup?.controls['mediaCtrl'].setValue(
             [
               {
-                id: event.body?.[0]._id,
+                id: event.body?.[0]?._id,
                 name: file.name,
                 type: getFileType(file),
                 correlationId: this.correlationId,
-                customerId: event.body?.[0].customerId,
-                url: event.body?.[0].url,
+                customerId: event.body?.[0]?.customerId,
+                url: event.body?.[0]?.url,
               },
             ].concat(...this.itemGroup?.value.mediaCtrl),
           );
@@ -485,9 +486,10 @@ export class PostReviewComponent implements OnInit, OnDestroy {
       filter((term) => term.length > 2),
       tap(() => (this.searching = true)),
       switchMap((term) =>
-        this.appService.searchPlaceWithName(term).pipe(
-          tap(() => (this.searchFailed = false)),
-          map((response: PlacesResponse) => response.places),
+        this.appService.searchPlaceWithName({ placeName: term }).pipe(
+          filter(Boolean),
+          tap((res) => res && (this.searchFailed = false)),
+          map((response: PlacesResponse | undefined) => response?.places??[]),
           catchError(() => {
             this.searchFailed = true;
             return of([]);
@@ -616,12 +618,12 @@ export class PostReviewComponent implements OnInit, OnDestroy {
           this.reviewFormGroup.controls['mediaCtrl'].setValue(
             [
               {
-                id: event.body?.[0]._id,
+                id: event.body?.[0]?._id,
                 name: file.name,
                 type: getFileType(file),
                 correlationId: this.correlationId,
-                customerId: event.body?.[0].customerId,
-                url: event.body?.[0].url,
+                customerId: event.body?.[0]?.customerId,
+                url: event.body?.[0]?.url,
               },
             ].concat(...this.reviewFormGroup.value.mediaCtrl),
           );

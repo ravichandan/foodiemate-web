@@ -47,7 +47,7 @@
             class="browse-item card m-1 m-lg-2 border-secondary"
             hover-classes="text-bg-dark"
             (click)="openItem(item)">
-            <img [src]="config.bucketAccessEndpoint+'/'+item.medias[0].key" class="card-img-top browse-img-top" [alt]="item.name" />
+            <img [src]="config.bucketAccessEndpoint+'/'+item.medias[0]?.key" class="card-img-top browse-img-top" [alt]="item.name" />
             <div class="card-body text-center d-flex justify-content-center p-1 p-lg-1">
               <p
                 class="card-title fw-medium d-flex align-items-center my-1"
@@ -69,7 +69,7 @@
         <ng-container *ngIf="ci.showMore">
           <div class="col-6 col-md-3 col-xxl-2" *ngFor="let item of ci.items.slice(12)">
             <div class="browse-item card m-1 m-lg-2" hover-classes="text-bg-dark">
-              <img [src]="item.medias[0].url" class="card-img-top browse-img-top" [alt]="item.name" />
+              <img [src]="item.medias[0]?.url" class="card-img-top browse-img-top" [alt]="item.name" />
               <div class="card-body text-center d-flex justify-content-center p-sm-1 p-lg-1">
                 <p
                   class="card-title fw-medium d-flex align-items-center my-sm-1"
@@ -92,7 +92,7 @@
 
   <!--        <div class="pop-item-wrapper  col-6 col-md-3 col-xxl-2 px-0" *ngFor="let item of resp">-->
   <!--          <div class="pop-item card m-1 m-lg-2 " hover-classes="text-bg-dark">-->
-  <!--            <img [src]="item.medias[0].url" class="card-img-top pop-img-top" [alt]="item.name">-->
+  <!--            <img [src]="item.medias[0]?.url" class="card-img-top pop-img-top" [alt]="item.name">-->
   <!--            <div class="card-body text-center d-flex justify-content-center  p-sm-1 p-lg-1">-->
   <!--              <p class="card-title fw-medium d-flex align-items-center my-sm-1"-->
   <!--                 [ngClass]="{'fs-smaller': (item.name.length > 16)}" >{{item.name}}</p>-->

@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 import { Store } from '@ngrx/store';
 import { customerSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
 import { State } from '../reducers';
+import { PlacesResponse } from '../models/PlacesResponse';
 
 @Injectable({ providedIn: 'root' })
 export class AppService implements OnDestroy{
@@ -162,41 +163,22 @@ export class AppService implements OnDestroy{
         return this.http.post(url, data.postReview,{headers});
         })
     );
-    // if (!newReview.place) return of(undefined);
-    //
-    // const headers =
-    //   new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     'Access-Control-Allow-Origin': '*',
-    //     'CUSTOMER_ID': this.customer?.id || ''
-    //   });
-    //
-    // let endpoint: any = this.getConfig().postAReviewEndpoint;
-    // // if(!!newReview.item){
-    // //   endpoint=this.getConfig().reviewAnItemOfAPlaceEndpoint.replace(':placeId', newReview.place.id);
-    // // } else {
-    // //   endpoint=this.getConfig().reviewAPlaceEndpoint.replace(':placeId', newReview.place).replace(':itemId', newReview.item);
-    // // }
-    // const url = join(this.getConfig().host, endpoint); //.replace(':reviewId', params.reviewId);
-    //
-    // // const
-    // // let httpParams = new HttpParams();
-    // // httpParams = httpParams.append('customerId', customerId);
-    // // httpParams = httpParams.append('action', action);
-    // return this.http.post(url, newReview,{headers});
   }
 
-  public searchPlaceWithName(name: string): Observable<any> {
-    if (!name) return of(undefined);
+  public searchPlaceWithName(args: { placeName: string,itemName?: string }): Observable<PlacesResponse| undefined> {
+    if (!args.placeName) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
     const url = join(this.getConfig().host, this.getConfig().searchForPlaceEndpoint); //.replace(':reviewId', params.reviewId);
 
-    // const
     let params = new HttpParams();
-    params = params.append('name', name);
-    params = params.append('postcode', 2000);
-    return this.http.get(url, { params });
+    params = params.append('placeName', args.placeName);
+    if(args.itemName) {
+      params = params.append('itemName', args.itemName);
+    }
+    params = params.append('postcode', 2763);
+    return this.http.get<PlacesResponse>(url, { params }).pipe(tap(x =>
+    console.log('app.service -> searchPlaceWithName, response:: ', x)));
   }
 
   public uploadMedia(data: {

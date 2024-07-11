@@ -1,33 +1,49 @@
 <div class="search-container m-1 m-md-5 py-2 py-md-3 col-md-10">
-  <div class="mt-2 mt-md-5">
-    <span class="text-lg-center fs-5 fw-medium text-body-secondary">{{ config.search_main_label }}</span>
+  <!--  <div class="mt-2 mt-md-5">-->
+  <!--    <span class="text-sm-center fw-light text-body-secondary">{{ config.search_main_label }}</span>-->
+  <!--  </div>-->
+  <div class="">
+    <!--    <span class="text-sm-center fw-light text-body-secondary">{{ config.search_sub_label }}</span>-->
+    <div class="btn-group" role="group" aria-label="select dishes ior restaurants to search for">
+      <input type="radio" class="btn-check" name="btnradio" id="dishesradio1" autocomplete="off" [checked]="dishFlag"
+             (change)="dishFlag=true">
+      <label class="btn btn-outline-secondary" for="dishesradio1">Dishes</label>
+
+      <input type="radio" class="btn-check" name="btnradio" id="placesradio2" autocomplete="off" [checked]="!dishFlag"
+             (change)="dishFlag=false">
+      <label class="btn btn-outline-secondary" for="placesradio2">Places</label>
+    </div>
   </div>
-  <div class="p-1">
-    <span class="text-sm-center fw-light text-body-secondary">{{ config.search_sub_label }}</span>
-  </div>
-  <form class="row g-3 pt-2 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7">
+  <form class="row g-3 pt-2 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7" (ngSubmit)="search(searchStr)">
     <div class="col-12 col-md-8">
       <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
-      <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search" />
+      <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search" #searchStr />
     </div>
     <div class="col-12 col-md">
       <button type="submit" class="col-12 btn btn-dark mb-1 mb-sm-3 focus-ring">Search</button>
     </div>
   </form>
-  <div class="suggestions-container">
-    <span class="text-body-tertiary fs-smaller">{{ config.suggestionsLabel }}</span>
-    <div class="d-block d-md-inline mx-1 suggestion" *ngFor="let suggestion of randomSuggestions">
-      <button type="button" class="btn btn-outline-secondary rounded-5 btn-sm m-1">{{ suggestion.label }}</button>
+  @if (errorMessage) {
+    <div>
+      <span class="text-danger"> {{ errorMessage }}</span>
     </div>
-  </div>
+  }
+  <!--  Removing random suggestion badges-->
+  <!--  <div class="suggestions-container">-->
+  <!--    <span class="text-body-tertiary fs-smaller">{{ config.suggestionsLabel }}</span>-->
+  <!--    <div class="d-block d-md-inline mx-1 suggestion" *ngFor="let suggestion of randomSuggestions">-->
+  <!--      <button type="button" class="btn btn-outline-secondary rounded-5 btn-sm m-1">{{ suggestion.label }}</button>-->
+  <!--    </div>-->
+  <!--  </div>-->
 </div>
-<div class="pop-container m-1 m-md-5 col-md-10">
+<div class="pop-container m-1 m-md-5 col-md-10 d-none">
   <div class="pop-title lead text-body-secondary">{{ config.popular_title }}</div>
   <div class="pop-wrapper" *ngIf="popularSearches$ | async as resp">
     <div class="pop-items row">
       <div class="pop-item-wrapper col-6 col-md-4 col-lg-3  px-0" *ngFor="let element of resp">
         <div class="pop-item card m-1 m-lg-2" hover-classes="text-bg-dark" (click)="popularItemSelected(element)">
-          <img [src]="config.bucketAccessEndpoint+'/'+element.medias[0].key" class="card-img-top pop-img-top" [alt]="element.name" />
+          <img [src]="config.bucketAccessEndpoint+'/'+element.medias[0]?.key" class="card-img-top pop-img-top"
+               [alt]="element.name" />
           <div class="card-body text-center d-flex justify-content-center p-sm-1 p-lg-1">
             <p
               class="card-title fw-medium d-flex align-items-center my-sm-1"
@@ -43,3 +59,119 @@
     </div>
   </div>
 </div>
+
+@if (placesResponse?.places) {
+  <div class="results-container m-1 m-md-5 col-md-10">
+    @for (place of placesResponse.places; track place; let idx = $index) {
+      @if (!!place) {
+        <div class="card m-4 border-secondary">
+          <div class="row g-0">
+            <div class="col-lg-8">
+              <div class="card-body pb-2 d-flex justify-content-between">
+                <div class="d-flex flex-column align-items-start align-content-start card-title">
+                  <span class=" fs-5 fw-bolder">{{ idx + 1 }}. {{ place.name }}</span>
+                  <p class="card-text text-body-secondary fs-smaller">&commat;{{ place.address?.suburb }}</p>
+                </div>
+                <div class="service-container col-6 d-flex flex-column align-self-center">
+                  <div class="card-text text-body-secondary d-flex justify-content-end">
+                    <span class="fs-smaller">Ambience:</span>
+                    <span class="mx-2 fw-bolder">{{ place.ambience | number: '1.1-1' }}</span>
+                  </div>
+                  <div class="card-text text-body-secondary d-flex justify-content-end">
+                    <span class="fs-smaller">Service:</span>
+                    <span class="mx-2 fw-bolder">{{ place.service | number: '1.1-1' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--        View all review photos link for mobile container-->
+            <!--              <div class="card-body view-photos-container d-block d-lg-none pt-0 ">-->
+            <!--                <a href="#"-->
+            <!--                   class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{-->
+            <!--                    config.allReviewPhotosLabel-->
+            <!--                  }}</a>-->
+            <!--              </div>-->
+
+            <div class="card-body py-0">
+             @if (Object.values(place.items); as items; ) {
+              @for (number of [0, 1, 2]; track number; ) {
+                <div class=" result-item-container d-flex justify-content-center flex-column">
+                  <div class="row align-items-center">
+                    <div class=" result-item-img-wrapper col-3 d-flex align-items-center">
+                      @if (items[number]?.medias?.[0]?.key) {
+                        <img [src]="config.bucketAccessEndpoint+'/'+items[number]?.medias?.[0]?.key"
+                             class="result-item-img" alt="No image available" />
+                      } @else {
+                        <span class="text-secondary-emphasis ">
+                          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"
+                               fill="#999999"><path
+                            d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
+                        </span>
+                      }
+                    </div>
+                    <div class="result-item-detail col-9 flex-column align-items-center">
+                      @if (items[number]) {
+                        <span
+                          class=" card-text text-secondary-emphasis fw-bolder">{{ items[number]?.name ?? 'No more matching items' }}</span>
+                      } @else {
+                        <span
+                          class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>
+                      }
+                      @if (items[number]) {
+                        <span class=" card-text text-body-secondary fs-smaller ">
+                          <span
+                            class="row gap-0 g-0">
+                            <span class="col-5">Taste: </span><span class="col-7">{{ items[number]?.taste }} ({{items[number]?.noOfReviews}} reviews)</span>
+                          </span>
+                          <span
+                            class="row gap-0 g-0">
+                            <span class="col-5">Presentation:</span><span class="col-7">{{ items[number]?.presentation }} ({{items[number]?.noOfReviews}} reviews)</span>
+                          </span>
+                        </span>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            }
+
+            </div>
+
+            <!--              <div class="card-body presentation-container">-->
+            <!--                <span class="d-flex flex-row card-text text-body-secondary">Presentation</span>-->
+            <!--                <div class="d-flex flex-row align-items-center justify-content-between progress-container">-->
+            <!--                  <div-->
+            <!--                    class="progress rounded-0 w-100 h-100 me-1"-->
+            <!--                    role="progressbar"-->
+            <!--                    [attr.aria-label]="'Presentation is rated at ' + (place.items?.[0]?.presentation | number: '1.1')"-->
+            <!--                    aria-valuemin="0"-->
+            <!--                    aria-valuemax="100">-->
+            <!--                    <div class="progress-bar" [style]="'width: ' + (place.items?.[0]?.presentation ?? 0) * 20 + '%'"></div>-->
+            <!--                  </div>-->
+            <!--                  <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{-->
+            <!--                      place.items?.[0]?.presentation | number: '1.1-1'-->
+            <!--                    }}</span>-->
+            <!--                </div>-->
+            <!--              </div>-->
+            <!--        dont display this in mobile view-->
+            <div class="card-body view-photos-container d-none d-lg-block">
+              <a href="#"
+                 class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
+                  config.allReviewPhotosLabel
+                }}</a>
+            </div>
+          </div>
+        </div>
+        <div class="row g-0">
+          <hr class="dropdown-divider bg-secondary-subtle" />
+          <div class="col">
+            <div class="card-body text-truncate-container">
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+  <!--  </div>-->
+}
