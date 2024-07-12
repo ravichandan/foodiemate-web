@@ -15,6 +15,7 @@ import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap';
 import { PlacesResponse } from '../models/PlacesResponse';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons/faImage';
+import { ItemResponse } from '../models/ItemResponse';
 
 @Component({
   selector: 'app-home',
@@ -26,12 +27,13 @@ import { faImage } from '@fortawesome/free-solid-svg-icons/faImage';
 export class HomeComponent implements OnDestroy, OnInit {
   config: any;
   private readonly destroy$: Subject<any>;
-  popularSearches$: Observable<any> | undefined;
+  // popularSearches$: Observable<any> | undefined;
   // randomSuggestions: any[] | undefined;
 
   placesResponse$: Observable<PlacesResponse|undefined> | undefined;
   placesResponse: PlacesResponse = {} as PlacesResponse;
-  dishFlag: boolean = false;
+  itemsResponse: ItemResponse = {} as ItemResponse;
+  dishFlag: boolean = true;
   errorMessage: string | undefined =undefined;
 
   constructor(
@@ -44,7 +46,7 @@ export class HomeComponent implements OnDestroy, OnInit {
     this.destroy$ = new Subject<any>();
 
     this.placesResponse.places=[];
-    this.popularSearches$ = this.store.select(popularsSelector).pipe(takeUntil(this.destroy$));
+    // this.popularSearches$ = this.store.select(popularsSelector).pipe(takeUntil(this.destroy$));
   }
 
   ngOnInit() {
@@ -78,6 +80,8 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   search(element: HTMLInputElement) {
     console.log('in home.component->search(), element: ', element.value);
+    this.placesResponse.places=[];
+    this.itemsResponse.items=[];
     this.errorMessage = undefined;
     if(!this.dishFlag) {
       this.appService.searchPlaceWithName({ placeName: element.value, itemName: element.value })
@@ -101,7 +105,26 @@ export class HomeComponent implements OnDestroy, OnInit {
         },
       );
     } else {
-      // TODO
+
+      this.appService.searchItemsWithName({ itemName: element.value })
+        .pipe(filter(Boolean), take(1))
+        .subscribe({
+          next: res => {
+            console.log('in home.component->search(), this.itemsResponse:: :: ', res);
+            this.itemsResponse.items.push(...res.items);
+            this.itemsResponse.size = res.size /*+ this.placesResponse.size*/;
+            this.itemsResponse.page = res.page;
+            this.cdRef.detectChanges();
+            console.log('this.itemsResponse:: ', this.itemsResponse);
+            // };
+
+          },
+            error: err => {
+              console.log('Error while fetching items with given name:: ', err);
+              this.errorMessage = err.error ?? err.message;
+            }
+        }
+        );
     }
   }
 

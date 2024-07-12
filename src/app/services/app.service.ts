@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { customerSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
 import { State } from '../reducers';
 import { PlacesResponse } from '../models/PlacesResponse';
+import { ItemResponse } from '../models/ItemResponse';
 
 @Injectable({ providedIn: 'root' })
 export class AppService implements OnDestroy{
@@ -179,6 +180,20 @@ export class AppService implements OnDestroy{
     params = params.append('postcode', 2763);
     return this.http.get<PlacesResponse>(url, { params }).pipe(tap(x =>
     console.log('app.service -> searchPlaceWithName, response:: ', x)));
+  }
+
+
+  public searchItemsWithName(args: { itemName?: string, postcode?: string }): Observable<ItemResponse| undefined> {
+    if (!args.itemName) return of(undefined);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+
+    const url = join(this.getConfig().host, this.getConfig().searchForItemsEndpoint); //.replace(':reviewId', params.reviewId);
+
+    let params = new HttpParams();
+    params = params.append('itemName', args.itemName);
+    params = params.append('postcode', 2763);
+    return this.http.get<ItemResponse>(url, { params }).pipe(tap(x =>
+    console.log('app.service -> searchItemsWithName, response:: ', x)));
   }
 
   public uploadMedia(data: {

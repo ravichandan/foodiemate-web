@@ -1,6 +1,7 @@
 import { Media } from './Media';
 import { Place } from './Place';
 import { Review } from './Review';
+import { Rating } from './Rating';
 
 export enum FoodAllergens {
   MILK = 'Milk',
@@ -37,4 +38,6 @@ export interface Item {
   medias: Media[];
   places: Place[];
   reviews: Review[];
+  ratings: Rating[];
+  details: any;
 }
