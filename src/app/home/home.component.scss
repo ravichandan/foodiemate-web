@@ -60,11 +60,12 @@
   //padding: .75rem;
 }
 .result-card-container {
-  height: 18rem;
+  height: 20rem;
   max-width: 13rem;
 }
 
 .result-item-img{
   height: 11rem;
-  width: 11rem;
+  width: 100%;
+  object-fit: none;
 }

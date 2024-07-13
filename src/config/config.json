@@ -21,6 +21,7 @@
   "feedbackAReviewEndpoint": "/reviews/:reviewId",
   "postAReviewEndpoint": "/reviews/",
   "searchForPlaceEndpoint": "/places/",
+  "searchForItemsEndpoint": "/items/",
   "uploadMediaEndpoint": "/medias/upload",
   "loginOidcCustomerEndpoint": "/customers/oidc-login",
   "logoutCustomerEndpoint": "/customers/:customerId/logout",
@@ -417,7 +418,12 @@
     "name": "Name"
   },
   "general": {
-    "noMatchingItems": "No more matching items"
+    "noMoreMatchingItems": "No more matching items",
+    "noMatchingItems": "No matching items found with the given name",
+    "noMatchingPlaces": "No matching places found with the given name",
+    "foundFollowingItems": "We found following items with the name ",
+    "foundFollowingPlaces": "We found following places that offer "
+
   },
   "hideCuisineMenu": true,
   "hideLeftNavigationMenu": true,

@@ -20,7 +20,7 @@
       <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search" #searchStr />
     </div>
     <div class="col-12 col-md">
-      <button type="submit" class="col-12 btn btn-dark mb-1 mb-sm-3 focus-ring">Search</button>
+      <button type="submit" class="col-12 btn btn-dark mb-1 mb-sm-3 focus-ring" #searchBox>Search</button>
     </div>
   </form>
   @if (errorMessage) {
@@ -61,8 +61,11 @@
   </div>
 </div>
 -->
-@if (placesResponse?.places) {
+@if (placesResponse?.places?.length) {
   <div class="results-container m-1 m-md-5 col-md-10">
+    <div class=" text-secondary-emphasis">
+      <span class="">{{config.general.foundFollowingPlaces}}</span><span class="fw-bold"> '{{searchStr.value}}'</span>
+    </div>
     @for (place of placesResponse.places; track place; let idx = $index) {
       @if (!!place) {
         <div class="card m-4 border-secondary">
@@ -97,7 +100,7 @@
             <div class="card-body py-0">
               @if (Object.values(place.items); as items; ) {
                 @for (number of [0, 1, 2]; track number; ) {
-                  <div class=" result-item-container d-flex justify-content-center flex-column">
+                  <div class=" result-item-container d-flex justify-content-center flex-column" (click)="onViewPlace(place)">
                     <div class="row align-items-center">
                       <div class=" result-item-img-wrapper col-3 d-flex align-items-center">
                         @if (items[number]?.medias?.[0]?.key) {
@@ -182,11 +185,16 @@
 }
 
 @if (itemsResponse?.items) {
-  <div class="container text-center m-0 m-sm-auto">
-    <div class="results-container row gap-3 row-cols-auto justify-content-center justify-content-sm-start">
+  <div class="container text-centerr m-0 m-sm-auto">
+    <div class=" text-secondary-emphasis">
+      <span class="">{{config.general.foundFollowingItems}}</span><span class="fw-bold"> '{{searchStr.value}}'</span>
+    </div>
+    <div class="results-container text-center row gap-3 row-cols-auto justify-content-center justify-content-sm-start">
+
       @for (item of itemsResponse.items.concat(itemsResponse.items); track item; let idx = $index) {
         @if (!!item) {
           <div class="col p-0 -5 ccol-sm">
+
             <div class="card border-secondary result-card-container">
               <div class="card-img result-item-img-wrapper col-3 d-flex align-items-center">
                 @if (item.details?.media?.key) {
@@ -205,10 +213,13 @@
               <div class="card-body pb-2 d-flex justify-content-between">
                 <div class="d-flex flex-column flex-grow-1">
                 <div class="item-name align-self-start">
-                  <span class="fw-bold">{{item.name}}</span>
+                  <span class="fw-bold text-secondary-emphasis">{{item.name}}</span>
                 </div>
-                <div class="flex-grow-1 p-0">
-                  <button class="btn btn-outline-dark w-100">View places</button>
+                  <div class="item-description align-self-start">
+                    <span class="text-secondary fst-italic">{{item.description}}</span>
+                  </div>
+                <div class="flex-grow-1 p-0 pt-3 align-content-end">
+                  <button class="btn btn-outline-dark w-100" (click)="onViewPlaces(item)">View places</button>
                 </div>
                 </div>
               </div>

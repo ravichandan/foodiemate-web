@@ -1,5 +1,6 @@
 {
   "title": "foodiex",
+  "original_title": "tangypeel",
   "search_main_label": "Search for a dish and see where it tastes best.",
   "search_sub_label": "or, look for a food place and find the best tasting dishes there.",
   "search_placeholder": "Dish or Restaurant or Cuisine",
@@ -419,7 +420,9 @@
   "general": {
     "noMoreMatchingItems": "No more matching items",
     "noMatchingItems": "No matching items found with the given name",
-    "noMatchingPlaces": "No matching places found with the given name"
+    "noMatchingPlaces": "No matching places found with the given name",
+    "foundFollowingItems": "We found following items with the name ",
+    "foundFollowingPlaces": "We found following places that offer "
   },
   "hideCuisineMenu": true,
   "hideLeftNavigationMenu": true,

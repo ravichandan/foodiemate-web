@@ -130,4 +130,14 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   protected readonly Object = Object;
   protected readonly JSON = JSON;
+
+  onViewPlaces(item: Item) {
+    console.log('Navigating to \'items/'+item.id);
+    this.router.navigate(['items/'+item.id]);
+  }
+
+  onViewPlace(place: Place){
+    console.log('Navigating to \'places/'+place.id);
+    this.router.navigate(['places/'+place.id]);
+  }
 }
