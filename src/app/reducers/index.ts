@@ -94,23 +94,26 @@ export const cuisinesItemsReducer = createReducer(
 
 export const itemDataReducer = createReducer(
   initialState.itemsData,
-  on(FoodieActions.fetchPlacesOfItemSuccess, (oldState: { [_: string]: Item }, { item }) => {
+  on(FoodieActions.fetchPlacesOfItemSuccess, (oldState: { [_: string]: Item }, { items }) => {
     const newObj = { ...oldState };
-    console.log('in newObj', item);
-    const existingItem = newObj[item.id];
-    if (!existingItem) {
-      newObj[item.id] = item;
-      return newObj;
-    }
-    console.log('============Updating item places, before update places.length:: ', existingItem.places?.length);
-
-    newObj[item.id] = mergeWith({}, existingItem, item, (ei, itm) => {
-      if (isArray(ei)) {
-        return unionBy(itm, ei, 'id').reverse();
+    for(const item of items) {
+      console.log('in newObj', item);
+      const existingItem = newObj[item.id];
+      if (!existingItem) {
+        newObj[item.id] = item;
+        return newObj;
       }
-      return itm;
-    });
-    console.log('==============Updated item places, after update places.length:: ', newObj[item.id].places?.length);
+      console.log('============Updating item places, before update places.length:: ', existingItem.places?.length);
+
+      newObj[item.id] = mergeWith({}, existingItem, item, (ei, itm) => {
+        if (isArray(ei)) {
+          return unionBy(itm, ei, 'id').reverse();
+        }
+        return itm;
+      });
+      console.log('==============Updated item places, after update places.length:: ', newObj[item.id].places?.length);
+
+    }
 
     return newObj;
   }),

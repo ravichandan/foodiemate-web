@@ -39,5 +39,4 @@ export interface Item {
   places: Place[];
   reviews: Review[];
   ratings: Rating[];
-  details: any;
 }

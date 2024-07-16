@@ -94,7 +94,7 @@ export class FoodieEffects {
       tap((x) => console.log('in fetchPlacesOfItem$ effect', x)),
       mergeMap((action) =>
         this.appService.getItem({ id: action.id, pageSize: action.pageSize, pageNum: action.pageNum }).pipe(
-          map((item: Item) => FoodieActions.fetchPlacesOfItemSuccess({ item })),
+          map((items: Item[]) => FoodieActions.fetchPlacesOfItemSuccess({ items })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
       ),

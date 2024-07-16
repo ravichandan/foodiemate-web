@@ -100,7 +100,7 @@ export const fetchPlacesOfItem = createAction(
   props<{ id: string; pageSize?: number; pageNum?: number }>(),
 );
 
-export const fetchPlacesOfItemSuccess = createAction(ACTION_FETCH_PLACES_OF_ITEM_SUCCESS, props<{ item: Item }>());
+export const fetchPlacesOfItemSuccess = createAction(ACTION_FETCH_PLACES_OF_ITEM_SUCCESS, props<{ items: Item[] }>());
 
 export const loginCustomer = createAction(
   ACTION_CUSTOMER_LOGIN,

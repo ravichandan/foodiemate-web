@@ -68,6 +68,8 @@ export class AppService implements OnDestroy{
     let httpParams = new HttpParams();
     httpParams = httpParams.append('pageSize', params.pageSize || 1);
     httpParams = httpParams.append('pageNum', params.pageNum || 1);
+    httpParams = httpParams.append('postcode', 2763);
+
     return this.http.get(url, { headers, params: httpParams }).pipe(
       // map((item: any) => ({data: items})),
       tap((t: any) => console.log('getItem response:: ', t)),

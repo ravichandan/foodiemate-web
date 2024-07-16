@@ -197,8 +197,8 @@
 
             <div class="card border-secondary result-card-container">
               <div class="card-img result-item-img-wrapper col-3 d-flex align-items-center">
-                @if (item.details?.media?.key) {
-                  <img [src]="config.bucketAccessEndpoint+'/'+item?.details?.media?.key"
+                @if (item.medias?.[0]?.key) {
+                  <img [src]="config.bucketAccessEndpoint+'/'+item?.medias?.[0]?.key"
                        class="result-item-img" alt="No image available" />
                 } @else {
                   <span class="text-secondary-emphasis ">
