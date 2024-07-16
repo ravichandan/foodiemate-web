@@ -1,6 +1,7 @@
 .place-list-img {
   //width: 70vw;
-  height: 22em;
+  //height: 22em;
+  object-fit: cover;
   @media screen and (min-width: 1200px) {
     height: 30em;
   }
