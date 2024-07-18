@@ -119,8 +119,12 @@
                           <span
                             class=" card-text text-secondary-emphasis fw-bolder">{{ items[number]?.name ?? 'No more matching items' }}</span>
                         } @else {
-                          <span
-                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>
+<!--                          <span-->
+<!--                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>-->
+<!--                          <hr class="dropdown-divider text-secondary" />-->
+                          <hr class="border-bottom border-1 border-dark">
+
+
                         }
                         @if (items[number]) {
                           <span class=" card-text text-body-secondary fs-smaller ">
@@ -238,4 +242,5 @@
   </div>
 } @else {
   <span class="fst-italic fw-bolder">{{ config.noMatchingItems }}</span>
+
 }

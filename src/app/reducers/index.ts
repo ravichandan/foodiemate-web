@@ -109,7 +109,7 @@ export const itemDataReducer = createReducer(
         if (isArray(ei)) {
           return unionBy(itm, ei, 'id').reverse();
         }
-        return itm;
+        return itm as Item;
       });
       console.log('==============Updated item places, after update places.length:: ', newObj[item.id].places?.length);
 

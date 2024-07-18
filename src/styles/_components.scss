@@ -1,0 +1,6 @@
+@import "bootstrap/scss/functions";
+@import "./variables";
+
+a, .link-primary{
+  color: $teal-dark-color !important;
+}

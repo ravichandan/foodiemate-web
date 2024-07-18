@@ -1,11 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 //@import "primeng/resources/themes/tailwind-light/theme.css";
 //@import "primeng/resources/primeng.css";
-@import "styles/variables";
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap/scss/mixins/breakpoints';
+@import "styles/variables";
+@import "styles/variables";
 
 @import "styles/checkbox";
 @import "styles/range_input";
@@ -74,6 +75,14 @@ h1 {
   @media screen and (max-width: 600px) {
     font-size: 3rem;
   }
+}
+
+.theme-background{
+  background-color: $teal-color !important;
+}
+.text-theme-background{
+  @extend .theme-background;
+  color: $light;
 }
 
 ::-webkit-scrollbar-track {
@@ -318,3 +327,5 @@ input [type="range"] {
   width: 30rem;
   height: 3.25rem;
 }
+
+@import "styles/components";

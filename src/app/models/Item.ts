@@ -34,8 +34,9 @@ export interface Item {
   taste: number;
   presentation: number;
   noOfReviews: number;
-  price: number;
+  price: string;
   medias: Media[];
+  media: Media;
   places: Place[];
   reviews: Review[];
   ratings: Rating[];

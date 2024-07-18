@@ -1,175 +1,284 @@
 <ng-template #itemListing let-place>
-  <div class="card m-4 border-secondary">
-    <div class="row g-0">
-      <div class="col-lg-8">
-        <div class="card-body d-lg-none d-flex justify-content-between">
-          <div class="d-flex flex-column align-items-start align-content-start">
-            <span class="card-title fs-5 fw-bolder">{{ place.name }}</span>
-            <p class="card-text text-body-secondary">&commat;{{ place.address?.suburb }}</p>
-          </div>
-          <div class="service-container col-6 d-flex flex-column align-self-center">
-            <div class="card-text text-body-secondary d-flex justify-content-end">
-              <span class="fs-6">Avg Ambience:</span>
-              <span class="mx-2 fw-bolder">{{ place.ambience | number: '1.1-1' }}</span>
+  <div class="card border-secondary">
+
+
+    <!--      place title and ambience ratings-->
+    <div class=" card-body text-bg-dark rounded-top-1 ">
+      <div class="col-12 card-title ">
+        <div class="  d-flex flex-column justify-content-between">
+          <span class=" col-12 card-text fs-5 fw-bolder">{{ place.name }}</span>
+          <div class="row gap-2 justify-content-between">
+            <p class="col-5 card-text">&commat;{{ place.address?.suburb }}</p>
+            <div class="service-container col-5 d-flex flex-column align-self-start">
+
+              <div class="card-text  d-flex justify-content-end">
+                <span class="fs-6">Ambience:</span>
+                <span class="mx-2 fw-bolder">{{ place.ambience | number: '1.1-1' }}</span>
+              </div>
+              <div class="card-text d-flex justify-content-end">
+                <span class="fs-6">Service:</span>
+                <span class="mx-2 fw-bolder">{{ place.service | number: '1.1-1' }}</span>
+              </div>
+              <!--            <div class="card-text  d-flex justify-content-end">-->
+              <!--              <span class="fs-6">({{ place.noOfReviews }} reviews)</span>-->
+              <!--            </div>-->
             </div>
-            <div class="card-text text-body-secondary d-flex justify-content-end">
-              <span class="fs-6">Avg Service:</span>
-              <span class="mx-2 fw-bolder">{{ place.service | number: '1.1-1' }}</span>
-            </div>
           </div>
-        </div>
-
-        <!--        new -->
-        @if (place.items?.[0]?.reviews?.length) {
-          <ngb-carousel
-            [showNavigationArrows]="config.carousel.showNavigationArrows"
-            [showNavigationIndicators]="config.carousel.showNavigationIndicators"
-            [pauseOnHover]="config.carousel.pauseOnHover"
-            [pauseOnFocus]="config.carousel.pauseOnFocus"
-            [interval]="+config.carousel.interval"
-            (mouseenter)="canPause($event, true)"
-            (mouseleave)="canPause($event, false)"
-            (slide)="changeCarouselSlide($event)"
-            #reviewImgCarousel>
-            @for (review of place.items?.[0]?.reviews; track review; ) {
-              @if(review?.medias?.length){
-                @for (media of review.medias; track media; ) {
-                  <ng-template ngbSlide>
-                    <div class="picsum-img-wrapper d-flex justify-content-center align-content-center">
-                      @if (media.key) {
-                        <img
-                          [src]="config.bucketAccessEndpoint+'/'+media.key"
-                          alt="loading picture of the dish"
-                          class="card-img-top place-list-img w-100 img-fluid rounded-0" />
-                      } @else {
-                        <span class="text-secondary-emphasis ">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
-                                 width="15rem"
-                                 fill="#999999"><path
-                              d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
-                          </span>
-                      }
-                    </div>
-                  </ng-template>
-                }
-              } @else {
-                <span class="text-secondary-emphasis ">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
-                                 width="15rem"
-                                 fill="#999999"><path
-                              d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
-                          </span>
-              }
-
-            }
-          </ngb-carousel>
-
-        } @else if (place.items?.[0].media?.key) {
-          <div class="picsum-img-wrapper">
-            <img
-              [src]="config.bucketAccessEndpoint+'/'+place.items[0].media.key"
-              alt="loading picture of the dish"
-              class="card-img-top place-list-img w-100 img-fluid rounded-0" />
-          </div>
-        } @else {
-          <div class="picsum-img-wrapper">
-              <span class="text-secondary-emphasis ">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
-                                 width="15rem"
-                                 fill="#999999"><path
-                              d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
-                          </span>
-
-          </div>
-        }
-      </div>
-
-      <div class="col-lg-4 card-body d-flex flex-column justify-content-center">
-        <div class="card-body d-none d-lg-flex flex-column align-items-center align-content-center p-0">
-          <h5 class="card-title h4">{{ place.name }}</h5>
-          <p class="card-text text-body-secondary">&commat;{{ place.address?.suburb }}</p>
-        </div>
-        <div class="service-container col-6 d-none d-lg-flex flex-column align-self-center">
-          <div class="card-text text-body-secondary d-flex justify-content-between">
-            <span class="fs-6">Ambience:</span> <span class="fs-6">{{ place.ambience | number: '1.1-1' }}</span>
-          </div>
-          <div class="card-text text-body-secondary d-flex justify-content-between">
-            <span class="fs-6">Service:</span> <span class="fs-6">{{ place.service | number: '1.1-1' }}</span>
-          </div>
-        </div>
-
-        <!--        View all for mobile container-->
-        <div class="card-body view-photos-container d-block d-lg-none pt-0 fs-5">
-          <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
-              config.allReviewPhotosLabel
-            }}</a>
-        </div>
-        <div class="card-body taste-container">
-          <span class="d-flex flex-row card-text text-body-secondary">Taste</span>
-          <div class="d-flex flex-row align-items-center justify-content-between progress-container">
-            <div
-              class="progress rounded-0 w-100 h-100 me-1"
-              role="progressbar"
-              [attr.aria-label]="'Taste is rated at ' + (place.items?.[0]?.taste | number: '1.1')"
-              aria-valuemin="0"
-              aria-valuemax="100">
-              <div class="progress-bar" [style]="'width: ' + place.items?.[0]?.taste * 20 + '%'"></div>
-            </div>
-            <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{
-                place.items?.[0]?.taste | number: '1.1-1'
-              }}</span>
-          </div>
-        </div>
-
-        <div class="card-body presentation-container">
-          <span class="d-flex flex-row card-text text-body-secondary">Presentation</span>
-          <div class="d-flex flex-row align-items-center justify-content-between progress-container">
-            <div
-              class="progress rounded-0 w-100 h-100 me-1"
-              role="progressbar"
-              [attr.aria-label]="'Presentation is rated at ' + (place.items?.[0]?.presentation | number: '1.1')"
-              aria-valuemin="0"
-              aria-valuemax="100">
-              <div class="progress-bar" [style]="'width: ' + place.items?.[0]?.presentation * 20 + '%'"></div>
-            </div>
-            <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{
-                place.items?.[0]?.presentation | number: '1.1-1'
-              }}</span>
-          </div>
-        </div>
-        <!--        dont display this in mobile view-->
-        <div class="card-body view-photos-container d-none d-lg-block">
-          <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
-              config.allReviewPhotosLabel
-            }}</a>
         </div>
       </div>
     </div>
-    <div class="row g-0">
-      <hr class="dropdown-divider bg-secondary-subtle" />
-      <div class="col">
-        <div class="card-body text-truncate-container">
-          <ngb-carousel
-            [showNavigationArrows]="false"
-            [showNavigationIndicators]="false"
-            [pauseOnHover]="config.carousel.pauseOnHover"
-            [pauseOnFocus]="config.carousel.pauseOnFocus"
-            [interval]="+config.carousel.interval"
-            (mouseenter)="canPause($event, true)"
-            (mouseleave)="canPause($event, false)"
-            #reviewTextCarousel>
-            <ng-container *ngFor="let review of place.items?.[0]?.reviews">
-              <ng-container *ngFor="let _ of review?.medias; let firstMedia = first">
-                <ng-template ngbSlide>
-                  <div class="picsum-img-wrapper">
-                    <p class="card-text carousel-text text-truncate-3">{{ review?.description }}</p>
-                  </div>
-                </ng-template>
-              </ng-container>
-            </ng-container>
-          </ngb-carousel>
-        </div>
+
+    <div class="row gap-3 card-body">
+
+
+      <!--        View all for mobile container-->
+      <!--      @if (canShowViewAllPhotosLink(place.items?.[0]?.reviews, place.name)) {-->
+      <div class="col-12 view-reviews-photos-container d-flex justify-content-between">
+        <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
+            config.allReviewsLabel | replace : 'xxx' : place?.items?.[0].noOfReviews
+          }} </a>
+        <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
+            config.allReviewPhotosLabel | replace : 'xxx' : place?.items?.[0].noOfPhotoReviews
+          }}</a>
       </div>
+      <!--      }-->
+      @if(place?.items?.length){
+        @for (item of getItemValues(place.items); track item;){
+
+
+        <!--      photos carousel-->
+        <div class="col-12 photos-carousel">
+          <!--        new -->
+          @if (item.reviews?.length) {
+            <ngb-carousel
+              [showNavigationArrows]="config.carousel.showNavigationArrows"
+              [showNavigationIndicators]="config.carousel.showNavigationIndicators"
+              [pauseOnHover]="config.carousel.pauseOnHover"
+              [pauseOnFocus]="config.carousel.pauseOnFocus"
+              [interval]="+config.carousel.interval"
+              (mouseenter)="canPause($event, true)"
+              (mouseleave)="canPause($event, false)"
+              (slide)="changeCarouselSlide($event)"
+              #reviewImgCarousel>
+              @for (review of item.reviews; track review; ) {
+                @if (review?.medias?.length) {
+                  @for (media of review.medias; track media; ) {
+                    <ng-template ngbSlide>
+                      <div class="picsum-img-wrapper d-flex justify-content-center align-content-center">
+                        @if (media.key) {
+                          <img
+                            [src]="config.bucketAccessEndpoint+'/'+media.key"
+                            alt="loading picture of the dish"
+                            class="card-img-top place-list-img w-100 img-fluid rounded-0" />
+                        } @else {
+                          <span class="text-secondary-emphasis ">
+                              <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
+                                   width="15rem"
+                                   fill="#999999"><path
+                                d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
+                            </span>
+                        }
+                      </div>
+                    </ng-template>
+                  }
+                } @else {
+                  <span class="text-secondary-emphasis ">
+                              <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
+                                   width="15rem"
+                                   fill="#999999"><path
+                                d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
+                            </span>
+                }
+
+              }
+            </ngb-carousel>
+
+
+          } @else if (item.media?.key) {
+            <div class="picsum-img-wrapper">
+              <img
+                [src]="config.bucketAccessEndpoint+'/'+item.media.key"
+                alt="loading picture of the dish"
+                class="card-img-top place-list-img w-100 img-fluid rounded-0" />
+            </div>
+          } @else {
+            <div class="picsum-img-wrapper">
+                <span class="text-secondary-emphasis ">
+                              <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
+                                   width="15rem"
+                                   fill="#999999"><path
+                                d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
+                            </span>
+
+            </div>
+          }
+          <!--      </div>-->
+
+          <!--      item/dish name-->
+          <!--      <div class="col-12 ">-->
+          <div class="bg-body-secondary w-100 p-3 rounded-bottom-3 text-theme-background " (click)="goToItemDetail(place, item)">
+            <div class="d-flex flex-column gap-3">
+
+              <div class="col-12 d-flex justify-content-between">
+                <span class="item-name fw-bolder fs-5">{{ item.name }}</span>
+                <span class="fs-5 fw-bolder">${{ item.price }}</span>
+              </div>
+              <!--            <div class="col-12">-->
+              <div class="col-11 col-sm-8 col-md-7 flex-column">
+                <div class="w-100 d-flex justify-content-between align-items-center">
+                  <span class="star rating w-100">Taste:</span>
+                  <span class="taste-text w-100 d-flex align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                       class="bi bi-star-fill align-self-center" viewBox="0 0 16 16">
+    <path
+      d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+  </svg>&nbsp;<span
+                    class="fs-5">{{ item.taste | number: '1.1' }}&nbsp;/</span>5</span>
+                </div>
+                <div class="w-100 d-flex justify-content-between align-items-center">
+                  <span class="star rating w-100">Presentation:</span>
+                  <span class="presentation-text w-100 d-flex align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                       class="bi bi-star-fill align-self-center" viewBox="0 0 16 16">
+    <path
+      d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+  </svg>&nbsp;<span
+                    class="fs-5">{{ item.presentation | number: '1.1' }}&nbsp;/</span>5</span>
+                </div>
+                <div class="w-100 d-flex justify-content-between align-items-center">
+                  <span class="fs-6">({{ place.noOfReviews }} reviews)</span>
+                </div>
+              </div>
+              <!--          </div>-->
+              <!--            <span class="presentation-text ">-->
+              <!--              Presentation: {{ place.items?.[0]?.presentation | number: '1.1' }}/5</span>-->
+            </div>
+          </div>
+        </div>
+
+        <!--      taste and presentation-->
+        <div class="d-none col-12  d-flex flex-column justify-content-center">
+
+          <div class=" taste-container">
+            <span class="d-flex flex-row card-text text-body-secondary">Taste</span>
+            <div class="d-flex flex-row align-items-center justify-content-between progress-container">
+              <div
+                class="progress rounded-0 w-100 h-100 me-1"
+                role="progressbar"
+                [attr.aria-label]="'Taste is rated at ' + (item.taste | number: '1.1')"
+                aria-valuemin="0"
+                aria-valuemax="100">
+                <div class="progress-bar" [style]="'width: ' + item.taste * 20 + '%'"></div>
+              </div>
+              <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{
+                  item.taste | number: '1.1-1'
+                }}</span>
+            </div>
+          </div>
+
+          <div class=" presentation-container">
+            <span class="d-flex flex-row card-text text-body-secondary">Presentation</span>
+            <div class="d-flex flex-row align-items-center justify-content-between progress-container">
+              <div
+                class="progress rounded-0 w-100 h-100 me-1"
+                role="progressbar"
+                [attr.aria-label]="'Presentation is rated at ' + (item.presentation | number: '1.1')"
+                aria-valuemin="0"
+                aria-valuemax="100">
+                <div class="progress-bar" [style]="'width: ' + item.presentation * 20 + '%'"></div>
+              </div>
+              <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{
+                  item.presentation | number: '1.1-1'
+                }}</span>
+            </div>
+          </div>
+
+
+          <!--        dont display this in mobile view-->
+        </div>
+        <!--        <div class=" view-photos-container d-none d-lg-block">
+                  <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
+                      config.allReviewPhotosLabel
+                    }}</a>
+                </div>-->
+
+        <!--      divider-->
+  <!--      <div class="col-10 align-self-center">-->
+  <!--        <hr class="dropdown-divider bg-secondary-subtle" />-->
+  <!--      </div>-->
+
+        <!--      reviews-->
+        @if (item?.reviews?.length) {
+          <div class="col-12 d-flex flex-column align-items-center">
+            <span class=" fw-bold align-self-start">Most recent reviews:</span>
+            <div class="row gap-3 text-truncate-container w-100 justify-content-center">
+
+                  @for (review of item.reviews?.slice(0, 3); track review; ) {
+                    <div class="col-12 review-item-wrapper bg-body-secondary rounded-3 p-3">
+                      <div class="row gap-3">
+                        <div class="rating-name-container d-flex  justify-content-between align-items-center col-12">
+                          <div class="rating-container row col-7 gap-2">
+                            <div class="col-12 d-flex justify-content-between align-items-center">
+                              <span class="star rating w-100">Taste:</span>
+                              <span class="taste-text d-flex align-items-center">
+<!--                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--                                   class="bi bi-star-fill align-self-center" viewBox="0 0 16 16">-->
+<!--    <path-->
+<!--      d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />-->
+<!--  </svg>&nbsp;-->
+                                <span
+                                class="">{{ review.taste | number: '1.1' }}&nbsp;/</span>5</span>
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-between align-items-center">
+                              <span class="star-rating w-100 small">Presentation:</span>
+                              <span class="presentation-text d-flex align-items-center">
+<!--                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--                                   class="bi bi-star-fill align-self-center" viewBox="0 0 16 16">-->
+<!--    <path-->
+<!--      d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />-->
+<!--  </svg>&nbsp;-->
+                                <span
+                                class="">{{ review.presentation | number: '1.1' }}&nbsp;/</span>5</span>
+                            </div>
+                          </div>
+                          <div class="name-container align-self-start">
+                              <span
+                                class="star rating w-100 text-secondary fw-bold">{{ review.customer?.name?.split(' ')?.[0] | slice:0:11 }}</span>
+                          </div>
+                        </div>
+                        <div class="review-desc-container col-12">
+
+                          <p class="card-text carousel-text text-truncate-3">{{ review.description }}</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  }
+  <!--              }-->
+                <!--<ngb-carousel
+                  [showNavigationArrows]="false"
+                  [showNavigationIndicators]="false"
+                  [pauseOnHover]="config.carousel.pauseOnHover"
+                  [pauseOnFocus]="config.carousel.pauseOnFocus"
+                  [interval]="+config.carousel.interval"
+                  (mouseenter)="canPause($event, true)"
+                  (mouseleave)="canPause($event, false)"
+                  #reviewTextCarousel>
+
+                  <ng-container *ngFor="let review of item.reviews">
+                    <ng-container *ngFor="let _ of review?.medias; let firstMedia = first">
+                      <ng-template ngbSlide>
+
+                      </ng-template>
+                    </ng-container>
+                  </ng-container>
+                </ngb-carousel>-->
+              </div>
+          </div>
+        }
+      }
+      }
     </div>
   </div>
 </ng-template>
