@@ -33,10 +33,15 @@
 
       <!--        View all for mobile container-->
       <!--      @if (canShowViewAllPhotosLink(item.items?.[0]?.reviews, item.name)) {-->
-      <div class="col-12 view-reviews-photos-container d-flex justify-content-between">
+      <div class="col-12 view-reviews-photos-container d-flex justify-content-start">
         <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
             config.allReviewsLabel | replace : 'xxx' : (item.ratingInfo?.noOfReviews ?? '0')
           }} </a>
+        &nbsp;&nbsp;&nbsp;
+        <div class="d-flex" >
+          <div class="vr"></div>
+        </div>
+        &nbsp;&nbsp;&nbsp;
         <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
             config.allReviewPhotosLabel | replace : 'xxx' : (''+item.noOfReviewPhotos ?? '0')
           }}</a>
