@@ -23,7 +23,9 @@ export type CalorieInfo = {
 };
 export interface Item {
   id: string;
+  placeItemId: string;
   name: string;
+  originalName: string;
   type: 'item';
   category: string;
   cuisine: string;
@@ -34,10 +36,11 @@ export interface Item {
   taste: number;
   presentation: number;
   noOfReviews: number;
+  noOfReviewPhotos: number;
   price: string;
   medias: Media[];
   media: Media;
   places: Place[];
   reviews: Review[];
-  ratings: Rating[];
+  rating: Rating;
 }

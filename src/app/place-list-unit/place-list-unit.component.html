@@ -1,26 +1,26 @@
-<ng-template #itemListing let-place>
+<ng-template #itemListing let-item>
   <div class="card border-secondary">
 
 
-    <!--      place title and ambience ratings-->
+    <!--      item title and ambience ratings-->
     <div class=" card-body text-bg-dark rounded-top-1 ">
       <div class="col-12 card-title ">
         <div class="  d-flex flex-column justify-content-between">
-          <span class=" col-12 card-text fs-5 fw-bolder">{{ place.name }}</span>
+          <span class=" col-12 card-text fs-5 fw-bolder">{{ item.places?.[0].placeName }}</span>
           <div class="row gap-2 justify-content-between">
-            <p class="col-5 card-text">&commat;{{ place.address?.suburb }}</p>
+            <p class="col-5 card-text">&commat;{{ item.places?.[0].address?.suburb }}</p>
             <div class="service-container col-5 d-flex flex-column align-self-start">
 
               <div class="card-text  d-flex justify-content-end">
                 <span class="fs-6">Ambience:</span>
-                <span class="mx-2 fw-bolder">{{ place.ambience | number: '1.1-1' }}</span>
+                <span class="mx-2 fw-bolder">{{ item.ratingInfo?.ambience | number: '1.1-1' }}</span>
               </div>
               <div class="card-text d-flex justify-content-end">
                 <span class="fs-6">Service:</span>
-                <span class="mx-2 fw-bolder">{{ place.service | number: '1.1-1' }}</span>
+                <span class="mx-2 fw-bolder">{{ item.ratingInfo?.service | number: '1.1-1' }}</span>
               </div>
               <!--            <div class="card-text  d-flex justify-content-end">-->
-              <!--              <span class="fs-6">({{ place.noOfReviews }} reviews)</span>-->
+              <!--              <span class="fs-6">({{ item.noOfReviews }} reviews)</span>-->
               <!--            </div>-->
             </div>
           </div>
@@ -32,18 +32,18 @@
 
 
       <!--        View all for mobile container-->
-      <!--      @if (canShowViewAllPhotosLink(place.items?.[0]?.reviews, place.name)) {-->
+      <!--      @if (canShowViewAllPhotosLink(item.items?.[0]?.reviews, item.name)) {-->
       <div class="col-12 view-reviews-photos-container d-flex justify-content-between">
         <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
-            config.allReviewsLabel | replace : 'xxx' : place?.items?.[0].noOfReviews
+            config.allReviewsLabel | replace : 'xxx' : (item.ratingInfo?.noOfReviews ?? '0')
           }} </a>
         <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
-            config.allReviewPhotosLabel | replace : 'xxx' : place?.items?.[0].noOfPhotoReviews
+            config.allReviewPhotosLabel | replace : 'xxx' : (''+item.noOfReviewPhotos ?? '0')
           }}</a>
       </div>
       <!--      }-->
-      @if(place?.items?.length){
-        @for (item of getItemValues(place.items); track item;){
+<!--      @if(item.place?.items?.length){-->
+<!--        @for (item of getItemValues(item.place.items); track item;){-->
 
 
         <!--      photos carousel-->
@@ -116,7 +116,7 @@
 
           <!--      item/dish name-->
           <!--      <div class="col-12 ">-->
-          <div class="bg-body-secondary w-100 p-3 rounded-bottom-3 text-theme-background " (click)="goToItemDetail(place, item)">
+          <div class="bg-body-secondary w-100 p-3 rounded-bottom-3 text-theme-background " (click)="goToItemDetail()">
             <div class="d-flex flex-column gap-3">
 
               <div class="col-12 d-flex justify-content-between">
@@ -146,12 +146,12 @@
                     class="fs-5">{{ item.presentation | number: '1.1' }}&nbsp;/</span>5</span>
                 </div>
                 <div class="w-100 d-flex justify-content-between align-items-center">
-                  <span class="fs-6">({{ place.noOfReviews }} reviews)</span>
+                  <span class="fs-6">({{ item.ratingInfo?.noOfReviews }} reviews)</span>
                 </div>
               </div>
               <!--          </div>-->
               <!--            <span class="presentation-text ">-->
-              <!--              Presentation: {{ place.items?.[0]?.presentation | number: '1.1' }}/5</span>-->
+              <!--              Presentation: {{ item.items?.[0]?.presentation | number: '1.1' }}/5</span>-->
             </div>
           </div>
         </div>
@@ -277,12 +277,12 @@
               </div>
           </div>
         }
-      }
-      }
+<!--      }-->
+<!--      }-->
     </div>
   </div>
 </ng-template>
 
-<ng-container *ngIf="place">
-  <ng-container *ngTemplateOutlet="itemListing; context: { $implicit: place }"></ng-container>
+<ng-container *ngIf="item">
+  <ng-container *ngTemplateOutlet="itemListing; context: { $implicit: item }"></ng-container>
 </ng-container>

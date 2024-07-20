@@ -6,6 +6,7 @@ import { Address } from './Address';
 export interface Place {
   id: string;
   type: 'place';
+  placeName: string;
   name: string;
   description: string;
   service: number;

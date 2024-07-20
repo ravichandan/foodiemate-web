@@ -1,299 +1,386 @@
-{
-  "id": 10,
-  "name": "Noodle Soup Bowl",
-  "category": "MAINS",
-  "cuisine": "CHINESE",
-  "description": "string",
-  "taste": 4.5,
-  "presentation": 4.3,
-  "medias": [
-    {
-      "id": 1,
-      "name": "picture 1",
-      "type": "image|video",
-      "url": "assets/images/chinese nav image.png"
-    }
-  ],
-  "places": [
-    {
-      "address": {
-        "suburb": "The Ponds",
-        "postcode": 2000,
-        "_id": 2
-      },
-      "ambience": 3.962962962962963,
-      "service": 3.144444444444444,
-      "id": 3,
-      "items": [
-        {
-          "name": "Noodle Soup Bowl",
-          "id": 2,
-          "reviews": [
+[
+  {
+    "places": [
+      {
+        "_id": "6694c4a0552204fa01efe8cb",
+        "placeName": "Taj Banjara",
+        "correlationId": "2134",
+        "address": {
+          "line": "33/63 Michael Rd",
+          "suburb": "The Ponds Hill",
+          "postcode": 2763,
+          "state": "NSW",
+          "_id": "6694c4a0552204fa01efe8cc"
+        },
+        "tags": [],
+        "openingTimes": {
+          "SUNDAY": [
             {
-              "description": "Jameson says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "58",
-              "taste": 3.1,
-              "presentation": 4.1,
-              "ambience": 3,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 800,
-                "unit": "kJ"
-              },
-              "price": 18.50,
-              "medias": [
-                {
-                  "url": "assets/images/italian nav image.jpg",
-                  "id": "2"
-                }
-              ],
-              "service": 3.7,
-              "placeName": "3",
-              "itemName": "1"
-            },
-            {
-              "description": "Jackie chan says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "57",
-              "taste": 4.1,
-              "presentation": 4.1,
-              "ambience": 4,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 800,
-                "unit": "kJ"
-              },
-              "price": 18.50,
-              "medias": [
-                {
-                  "url": "assets/images/mexican nav image.jpg",
-                  "id": "2"
-                }
-              ],
-              "service": 3.7,
-              "placeName": "3",
-              "itemName": "1"
-            },
-            {
-              "description": "Iron man says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "47",
-              "taste": 4.9,
-              "presentation": 4.7,
-              "ambience": 1,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 800,
-                "unit": "kJ"
-              },
-              "price": 18.50,
-              "medias": [
-                {
-                  "url": "assets/images/italian nav image.jpg",
-                  "id": "2"
-                }
-              ],
-              "service": 3.5,
-              "placeName": "3",
-              "itemName": "1"
-            },
-            {
-              "description": "Brad Pitt says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "46",
-              "taste": 4.9,
-              "presentation": 4.7,
-              "ambience": 2,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 800,
-                "unit": "kJ"
-              },
-              "price": 18.50,
-              "medias": [
-                {
-                  "url": "assets/images/middle east nav image.png",
-                  "id": "2"
-                }
-              ],
-              "service": 3.5,
-              "placeName": "3",
-              "itemName": "1"
-            },
-            {
-              "description": "Bruce lee says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "32",
-              "taste": 1.7,
-              "presentation": 4.24,
-              "ambience": 4.2,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 800,
-                "unit": "kJ"
-              },
-              "price": 18.50,
-              "medias": [
-                {
-                  "url": "assets/images/general food bowl.jpg",
-                  "id": "2"
-                }
-              ],
-              "service": 2.2,
-              "placeName": "3",
-              "itemName": "1"
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6694c4a0552204fa01efe8ce"
             }
           ],
-          "category": "MAINS",
-          "cuisine": "INDIAN",
-          "taste": 4.142857142857143,
-          "presentation": 2.365714285714286
-        }
-      ],
-      "name": "ABC Restaurant",
-      "reviews": []
-    },
-    {
-      "address": {
-        "suburb": "Parramatta",
-        "postcode": 2000,
-        "_id": 3
-      },
-
-      "ambience": 2.9,
-      "service": 4.12,
-      "id": 4,
-      "items": [
-        {
-          "name": "Noodle Soup Bowl",
-          "id": 2,
-          "reviews": [
+          "MONDAY": [
             {
-              "description": "John says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "58",
-              "taste": 3.1,
-              "presentation": 4.1,
-              "ambience": 3,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 900,
-                "unit": "kJ"
-              },
-              "price": 21,
-              "medias": [
-                {
-                  "url": "assets/images/italian nav image.jpg",
-                  "id": "2"
-                }
-              ],
-              "service": 3.7,
-              "placeName": "3",
-              "itemName": "1"
-            },
-            {
-              "description": "John says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "57",
-              "taste": 4.1,
-              "presentation": 4.1,
-              "ambience": 4,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 900,
-                "unit": "kJ"
-              },
-              "price": 21,
-              "medias": [
-                {
-                  "url": "assets/images/indian nav image.jpg",
-                  "id": "2"
-                }
-              ],
-              "service": 3.7,
-              "placeName": "3",
-              "itemName": "1"
-            },
-            {
-              "description": "John says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "47",
-              "taste": 4.9,
-              "presentation": 4.7,
-              "ambience": 1,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 900,
-                "unit": "kJ"
-              },
-              "price": 21,
-              "medias": [
-                {
-                  "url": "assets/images/chinese nav image.png",
-                  "id": "2"
-                }
-              ],
-              "service": 3.5,
-              "placeName": "3",
-              "itemName": "1"
-            },
-            {
-              "description": "John says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. rem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "46",
-              "taste": 4.9,
-              "presentation": 4.7,
-              "ambience": 2,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 900,
-                "unit": "kJ"
-              },
-              "price": 21,
-              "medias": [
-                {
-                  "url": "assets/images/middle east nav image.png",
-                  "id": "2"
-                }
-              ],
-              "service": 3.5,
-              "placeName": "3",
-              "itemName": "1"
-            },
-            {
-              "description": "John says: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed.  ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem.  Aliquam erat volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. ",
-              "id": "32",
-              "taste": 1.7,
-              "presentation": 4.24,
-              "ambience": 4.2,
-              "allergens": ["Milk", "Nuts"],
-              "ingredients": ["Flour",  "Wheat", "Water", "Oil", "Sugar"],
-              "calorieInfo": {
-                "count": 900,
-                "unit": "kJ"
-              },
-              "price": 21,
-              "medias": [
-                {
-                  "url": "assets/images/general food bowl.jpg",
-                  "id": "2"
-                }
-              ],
-              "service": 2.2,
-              "placeName": "3",
-              "itemName": "1"
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6694c4a0552204fa01efe8cf"
             }
           ],
-          "category": "MAINS",
-          "taste": 4.142857142857143,
-          "cuisine": "INDIAN",
-          "presentation": 4.9
-        }
-      ],
-
-      "name": "DEF Restaurant",
-      "reviews": []
-    }
-  ]
-}
+          "TUESDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6694c4a0552204fa01efe8d0"
+            }
+          ],
+          "WEDNESDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6694c4a0552204fa01efe8d1"
+            }
+          ],
+          "THURSDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6694c4a0552204fa01efe8d2"
+            }
+          ],
+          "FRIDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6694c4a0552204fa01efe8d3"
+            }
+          ],
+          "SATURDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6694c4a0552204fa01efe8d4"
+            }
+          ],
+          "_id": "6694c4a0552204fa01efe8cd"
+        },
+        "medias": [
+          {
+            "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/1-8795-1719736248461",
+            "key": "1-8795-1719736248461",
+            "_id": "668117bafba0035e4672b988"
+          }
+        ],
+        "createdAt": "2024-07-15T06:41:36.548Z",
+        "modifiedAt": "2024-07-15T06:41:36.548Z",
+        "__v": 0,
+        "id": "6694c4a0552204fa01efe8cb",
+        "items": [
+          {
+            "_id": "668a7fd5ed97f7a5de5f5690",
+            "name": "Samosa Chaat",
+            "cuisines": [
+              "INDIAN"
+            ],
+            "category": [
+              "STARTER"
+            ],
+            "createdAt": "2024-07-07T11:45:25.073Z",
+            "modifiedAt": "2024-07-07T11:45:25.073Z",
+            "__v": 0,
+            "media": {
+              "_id": "6691030d9b529ca2a1d3f525",
+              "key": "1-6754-1720829463357",
+              "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/1-6754-1720829463357"
+            },
+            "cuisine": [],
+            "price": "34.99",
+            "reviews": [],
+            "id": "6694cfdd278feaea6c9330e9"
+          }
+        ],
+        "name": "Taj Banjara"
+      }
+    ],
+    "name": "Samosa Chaat",
+    "description": null,
+    "id": "668a7fd5ed97f7a5de5f5690",
+    "medias": [
+      {
+        "_id": "6691030d9b529ca2a1d3f525",
+        "key": "1-6754-1720829463357",
+        "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/1-6754-1720829463357"
+      }
+    ]
+  },
+  {
+    "places": [
+      {
+        "_id": "6681190cfba0035e4672b98a",
+        "placeName": "Kumars Taj",
+        "correlationId": "2134",
+        "address": {
+          "line": "3/6 Douglas Rd",
+          "suburb": "Quakers Hill",
+          "postcode": 2763,
+          "city": "Sydney",
+          "state": "NSW",
+          "_id": "6681190cfba0035e4672b98b"
+        },
+        "tags": [],
+        "openingTimes": {
+          "SUNDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6681190cfba0035e4672b98d"
+            }
+          ],
+          "MONDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6681190cfba0035e4672b98e"
+            }
+          ],
+          "TUESDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6681190cfba0035e4672b98f"
+            }
+          ],
+          "WEDNESDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6681190cfba0035e4672b990"
+            }
+          ],
+          "THURSDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6681190cfba0035e4672b991"
+            }
+          ],
+          "FRIDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6681190cfba0035e4672b992"
+            }
+          ],
+          "SATURDAY": [
+            {
+              "open": 9,
+              "close": 5,
+              "mayDiffer": false,
+              "_id": "6681190cfba0035e4672b993"
+            }
+          ],
+          "_id": "6681190cfba0035e4672b98c"
+        },
+        "medias": [
+          {
+            "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/1-1074-1719993467733",
+            "key": "1-1074-1719993467733",
+            "_id": "668117bafba0035e4672b988"
+          }
+        ],
+        "createdAt": "2024-06-30T08:36:28.349Z",
+        "modifiedAt": "2024-06-30T08:36:28.349Z",
+        "__v": 0,
+        "id": "6681190cfba0035e4672b98a",
+        "items": [
+          {
+            "_id": "668a7fd5ed97f7a5de5f5690",
+            "name": "Samosa Chaat",
+            "cuisines": [
+              "INDIAN"
+            ],
+            "category": [
+              "STARTER"
+            ],
+            "createdAt": "2024-07-07T11:45:25.073Z",
+            "modifiedAt": "2024-07-07T11:45:25.073Z",
+            "__v": 0,
+            "media": {
+              "_id": "6691030d9b529ca2a1d3f525",
+              "key": "1-6754-1720829463357",
+              "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/1-6754-1720829463357"
+            },
+            "cuisine": [],
+            "price": "10",
+            "description": "chaat made of samosa",
+            "taste": 2,
+            "presentation": 4,
+            "noOfReviews": 22,
+            "reviews": [
+              {
+                "place": "6681190cfba0035e4672b98a",
+                "description": "The place is stunning and the ambience is perfect for a romantic date. But the taste of the dishes are not as per my expectations",
+                "taste": 3.6,
+                "presentation": 2.2,
+                "service": 4.7,
+                "ambience": 3.1,
+                "children": [],
+                "parent": null,
+                "medias": [],
+                "customer": {
+                  "_id": "6685036137c77220bacf7098",
+                  "name": "Chandan Sithiraju",
+                  "email": "chandan.ravi1987@gmail.com",
+                  "status": "verified",
+                  "interestedIn": [],
+                  "createdAt": "2024-07-03T07:53:05.706Z",
+                  "modifiedAt": "2024-07-03T07:53:05.706Z",
+                  "reviews": [],
+                  "__v": 0,
+                  "picture": {
+                    "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/6685036137c77220bacf7098-3148-1719993186317",
+                    "key": "6685036137c77220bacf7098-3148-1719993186317",
+                    "createdAt": "2024-07-03T07:53:07.163Z",
+                    "modifiedAt": "2024-07-03T07:53:07.163Z",
+                    "_id": "6685036337c77220bacf709d",
+                    "__v": 0
+                  }
+                },
+                "id": "6687444cec5e3a2a4f208806"
+              },
+              {
+                "place": "6681190cfba0035e4672b98a",
+                "description": "The biryani is awesome and purely authentic, it reminded of my hometown. Other dishes are also tasty. I will visit this once again",
+                "taste": 4.8,
+                "presentation": 5,
+                "service": 4.7,
+                "ambience": 3.1,
+                "children": [],
+                "parent": null,
+                "medias": [],
+                "customer": {
+                  "_id": "6685400637c77220bacf70d7",
+                  "name": "Salesha Neelima",
+                  "email": "neelima.salesha2000@gmail.com",
+                  "status": "verified",
+                  "interestedIn": [],
+                  "createdAt": "2024-07-03T12:11:50.004Z",
+                  "modifiedAt": "2024-07-03T12:11:50.004Z",
+                  "reviews": [],
+                  "__v": 0,
+                  "picture": {
+                    "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/6685400637c77220bacf70d7-5478-1720008710487",
+                    "key": "6685400637c77220bacf70d7-5478-1720008710487",
+                    "createdAt": "2024-07-03T12:11:51.617Z",
+                    "modifiedAt": "2024-07-03T12:11:51.617Z",
+                    "_id": "6685400737c77220bacf70dc",
+                    "__v": 0
+                  }
+                },
+                "id": "66874611ec5e3a2a4f20881d"
+              },
+              {
+                "place": "6681190cfba0035e4672b98a",
+                "description": "Absolutely amazing food and service! Highly recommended.",
+                "taste": 3.25,
+                "presentation": 2.25,
+                "service": null,
+                "ambience": null,
+                "medias": [
+                  {
+                    "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/6685036137c77220bacf7098-2268-1720358249201",
+                    "type": "image",
+                    "_id": "668a957ced97f7a5de5f574f",
+                    "key": "6685036137c77220bacf7098-2268-1720358249201"
+                  }
+                ],
+                "children": [],
+                "parent": "668a957ced97f7a5de5f573f",
+                "customer": {
+                  "_id": "6685036137c77220bacf7098",
+                  "name": "Chandan Sithiraju",
+                  "email": "chandan.ravi1987@gmail.com",
+                  "status": "verified",
+                  "interestedIn": [],
+                  "createdAt": "2024-07-03T07:53:05.706Z",
+                  "modifiedAt": "2024-07-03T07:53:05.706Z",
+                  "reviews": [],
+                  "__v": 0,
+                  "picture": {
+                    "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/6685036137c77220bacf7098-3148-1719993186317",
+                    "key": "6685036137c77220bacf7098-3148-1719993186317",
+                    "createdAt": "2024-07-03T07:53:07.163Z",
+                    "modifiedAt": "2024-07-03T07:53:07.163Z",
+                    "_id": "6685036337c77220bacf709d",
+                    "__v": 0
+                  }
+                },
+                "id": "668a957ced97f7a5de5f574e"
+              },
+              {
+                "place": "6681190cfba0035e4672b98a",
+                "description": null,
+                "taste": 0.05,
+                "presentation": 4.5,
+                "service": null,
+                "ambience": null,
+                "medias": [],
+                "children": [],
+                "parent": "668e06e57d47d8251342fb2e",
+                "customer": {
+                  "_id": "6685400637c77220bacf70d7",
+                  "name": "Salesha Neelima",
+                  "email": "neelima.salesha2000@gmail.com",
+                  "status": "verified",
+                  "interestedIn": [],
+                  "createdAt": "2024-07-03T12:11:50.004Z",
+                  "modifiedAt": "2024-07-03T12:11:50.004Z",
+                  "reviews": [],
+                  "__v": 0,
+                  "picture": {
+                    "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/6685400637c77220bacf70d7-5478-1720008710487",
+                    "key": "6685400637c77220bacf70d7-5478-1720008710487",
+                    "createdAt": "2024-07-03T12:11:51.617Z",
+                    "modifiedAt": "2024-07-03T12:11:51.617Z",
+                    "_id": "6685400737c77220bacf70dc",
+                    "__v": 0
+                  }
+                },
+                "id": "668e06e57d47d8251342fb3c"
+              }
+            ],
+            "id": "668a7fd5ed97f7a5de5f5692"
+          }
+        ],
+        "name": "Kumars Taj",
+        "service": 4.172727272727273,
+        "ambience": 3.1431818181818185,
+        "noOfReviews": 22
+      }
+    ],
+    "name": "Samosa Chaat",
+    "description": "chaat made of samosa",
+    "id": "668a7fd5ed97f7a5de5f5690",
+    "medias": [
+      {
+        "_id": "6691030d9b529ca2a1d3f525",
+        "key": "1-6754-1720829463357",
+        "url": "https://test-bucket.8a38bed39f846ed889c3ea56f623a0c4.r2.cloudflarestorage.com/1-6754-1720829463357"
+      }
+    ]
+  }
+]

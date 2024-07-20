@@ -18,8 +18,8 @@
               >{{ place.name }}, {{ place.address?.suburb }}</span
             >
           </div>
-          <!--          <div class="row my-1"><span class="place-suburb-text  fs-6 text-secondary-emphasis"><i-->
-          <!--            class="bi bi-geo-alt fs-5 me-3"></i>{{ place.address?.suburb }}</span></div>-->
+          <!--          <div class="row my-1"><span class="item-suburb-text  fs-6 text-secondary-emphasis"><i-->
+          <!--            class="bi bi-geo-alt fs-5 me-3"></i>{{ item.address?.suburb }}</span></div>-->
         </div>
 
         <div class="item-rating-container d-flex flex-column fw-bold col-5 col-md-3">
@@ -42,7 +42,7 @@
             </div>
             <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
             <!--                                            class="item-price-text fs-5">Price: </span><span-->
-            <!--                                            class="fw-bold fs-5 ms-1">${{place.price}}</span></div>-->
+            <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
           </div>
           <small class="no-of-reviews-text fw-normal text-secondary-emphasis fs-smaller"
             >(Out of {{ item.noOfReviews }} reviews)</small
@@ -90,11 +90,11 @@
               <div class="row gap-2 h-100">
                 <!--                <div class="col-12 d-none d-lg-flex row gap-1 flex-column "><span
                                   class="item-name-text fs-4 fw-bold my-1">{{ item.name }}</span>
-                                  <div class="row my-1"><span class="place-name-text fs-5 fw-bolder text-secondary"><i
+                                  <div class="row my-1"><span class="item-name-text fs-5 fw-bolder text-secondary"><i
                                     class="bi bi-shop fw-bolder fs-4
-                                                             me-2"></i>{{ place.name }}</span></div>
-                                  <div class="row my-1"><span class="place-suburb-text fs-5 fw-bolder text-secondary"><i
-                                    class="bi bi-geo-alt fs-4 me-2"></i>{{ place.address?.suburb }}</span></div>
+                                                             me-2"></i>{{ item.name }}</span></div>
+                                  <div class="row my-1"><span class="item-suburb-text fs-5 fw-bolder text-secondary"><i
+                                    class="bi bi-geo-alt fs-4 me-2"></i>{{ item.address?.suburb }}</span></div>
                                 </div>-->
                 <div class="row">
                   <span class="item-price-text fs-5"
@@ -139,7 +139,7 @@
         </div>
       </div>
       <div class="my-3">
-        <!--                <app-item-detail [place]="place" [item]="item"></app-item-detail>-->
+        <!--                <app-item-detail [item]="item" [item]="item"></app-item-detail>-->
         <ng-container *ngIf="reviews$ | async as reviews">
           <div class="review-container row gap-3 g-0">
             <div class="review-title fs-5 fw-bold">Reviews</div>

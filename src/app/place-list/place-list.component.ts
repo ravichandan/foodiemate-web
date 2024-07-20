@@ -15,6 +15,7 @@ import { ListItem } from 'ng-multiselect-dropdown/multiselect.model';
 import { FormsModule } from '@angular/forms';
 import { Place } from '../models/Place';
 import { AppService } from '../services/app.service';
+import { Item } from '../models/Item';
 
 @Component({
   selector: 'app-place-list',
@@ -40,7 +41,7 @@ import { AppService } from '../services/app.service';
 export class PlaceListComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
   appService= inject(AppService);
-  places$: Observable<Place[]> | undefined;
+  items$: Observable<Item[]> | undefined;
   selectedItemId: any;
   selectedItemName: any;
   config: any;
@@ -73,15 +74,15 @@ export class PlaceListComponent implements OnInit, OnDestroy {
     // this.fetchPlaces();
 
     // Fetch an item, and it will have the list of places with ratings and reviews
-    this.places$ = this.store.select(itemSelector(this.selectedItemId)).pipe(
+    this.items$ = this.store.select(itemSelector(this.selectedItemId)).pipe(
       takeUntil(this.destroy$),
       filter((x) => !!x),
       tap((x) => console.log('Places list received in place-list.component:: ', x)),
-      tap((x) => (this.selectedItemName = x.name)),
-      tap((x) => (this.currentPageNum += x.places.length / this.pageSize)),
-      map((x) => x.places),
+      tap((x) => (this.selectedItemName = x[0].originalName ?? x[0].name)),
+      tap((x) => (this.currentPageNum += x.length / this.pageSize)),
+      // map((x) => x[0].places),
     );
-    setTimeout(() => {}, 10000);
+    // setTimeout(() => {}, 10000);
 
     this.route.paramMap
       .pipe(

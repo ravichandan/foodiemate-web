@@ -1,13 +1,13 @@
-<div class="place-list-container flex-grow-1 m-1 m-md-2 m-lg-4" *ngIf="places$ | async as places">
+<div class="place-list-container flex-grow-1 m-1 m-md-2 m-lg-4" *ngIf="items$ | async as items">
   <div class="place-list-header d-flex justify-content-between align-items-end">
     <div class="d-flex align-items-center">
       <span class=""
-        >Following places offer <span class="fw-bold fs-5">"{{ selectedItemName }}"</span></span
+        >Following items offer <span class="fw-bold fs-5">"{{ selectedItemName }}"</span></span
       >
     </div>
     <div class="filter-container d-flex fs-6">
       <div class="sort-wrapper d-flex mx-2 align-items-center dropstart">
-        <span class="d-none d-lg-inline mx-1">Sort by</span>
+        <span class="d-none d-lg-inline mx-1">Sort by</span>h
         <button class="btn btn-light h-100 mx-1 rounded fs-4" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-sort-down"></i>
           <ul class="dropdown-menu">
@@ -23,13 +23,15 @@
   <div class="place-list-wrapper" *ngIf="selectedItemName">
     <div ngbScrollSpy #spy="ngbScrollSpy" (activeChange)="fetchPlaces($event)">
       <div class="row gap-3 my-3">
-      <ng-container *ngFor="let pl of places; trackBy: trackByPlaceId; index as i; first as first">
-        <div
+        @for(it of items; track it; let i = $index ; let first = $first){
+
+          <div
           class="app-place-list-item-container col-12"
-          [ngbScrollSpyFragment]="i + ',' + places.length">
-          <app-place-list-unit [place]="pl"></app-place-list-unit>
+          [ngbScrollSpyFragment]="i + ',' + items.length">
+          <app-place-list-unit [item]="it"></app-place-list-unit>
         </div>
-      </ng-container>
+
+        }
       </div>
     </div>
   </div>

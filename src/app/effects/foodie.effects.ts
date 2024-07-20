@@ -15,6 +15,7 @@ import { addressSelector, customerSelector, preloadReviewDataSelector } from '..
 import { CustomerInfo } from '../models/CustomerInfo';
 import { Address } from '../models/Address';
 import { add } from 'lodash';
+import { ItemResponse } from '../models/ItemResponse';
 
 @Injectable({ providedIn: 'root' })
 export class FoodieEffects {
@@ -94,7 +95,7 @@ export class FoodieEffects {
       tap((x) => console.log('in fetchPlacesOfItem$ effect', x)),
       mergeMap((action) =>
         this.appService.getItem({ id: action.id, pageSize: action.pageSize, pageNum: action.pageNum }).pipe(
-          map((items: Item[]) => FoodieActions.fetchPlacesOfItemSuccess({ items })),
+          map((itemResponse: ItemResponse) => FoodieActions.fetchPlacesOfItemSuccess({ itemResponse })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
       ),

@@ -7,6 +7,7 @@ import { Place } from '../models/Place';
 import { NewReview, Review } from '../models/Review';
 import { PlacesResponse } from '../models/PlacesResponse';
 import { CustomerInfo } from '../models/CustomerInfo';
+import { ItemResponse } from '../models/ItemResponse';
 
 export const ACTION_FETCH_POPULAR_REQUESTED = '[FoodieMate] Fetch Popular Requested';
 export const ACTION_FETCH_POPULAR = '[FoodieMate] Fetch Popular';
@@ -100,7 +101,7 @@ export const fetchPlacesOfItem = createAction(
   props<{ id: string; pageSize?: number; pageNum?: number }>(),
 );
 
-export const fetchPlacesOfItemSuccess = createAction(ACTION_FETCH_PLACES_OF_ITEM_SUCCESS, props<{ items: Item[] }>());
+export const fetchPlacesOfItemSuccess = createAction(ACTION_FETCH_PLACES_OF_ITEM_SUCCESS, props<{ itemResponse: ItemResponse }>());
 
 export const loginCustomer = createAction(
   ACTION_CUSTOMER_LOGIN,

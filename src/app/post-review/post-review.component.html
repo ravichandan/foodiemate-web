@@ -28,10 +28,10 @@
           </div>
         </div>
         @if (searching) {
-          <small class="form-text text-muted">searching places...</small>
+          <small class="form-text text-muted">searching items...</small>
         }
         @if (searchFailed) {
-          <div class="invalid-feedback">Sorry, places could not be found.</div>
+          <div class="invalid-feedback">Sorry, items could not be found.</div>
         }
       </div>
 
@@ -110,7 +110,7 @@
         </div>
       </div>
 
-      <!--    overall photo of place-->
+      <!--    overall photo of item-->
 
       <!--    medias (of max 3) upload templates-->
       <ng-container class="medias-container">
@@ -141,7 +141,7 @@
           <div class="file-upload">
             @if (!mediaTemplates[key].uploadProgress || mediaTemplates[key].uploadProgress < 100) {
               <button class="upload-btn btn btn-outline-dark" (click)="$event.preventDefault(); fileUpload.click()">
-                Add place image/video {{ key }}
+                Add item image/video {{ key }}
               </button>
             }
 

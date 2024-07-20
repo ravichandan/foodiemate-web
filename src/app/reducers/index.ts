@@ -18,7 +18,7 @@ export interface State {
   popularPlaces: Place[] | undefined;
   cuisines: Cuisine[] | undefined;
   cuisinesItems: CuisinesItemsResponse | undefined;
-  itemsData: { [k: string]: Item };
+  itemsData: { [k: string]: [Item] };
   placesData: { [k: string]: Place };
   postReview: NewReview | Review | undefined;
   correlationId: string | undefined;
@@ -94,24 +94,30 @@ export const cuisinesItemsReducer = createReducer(
 
 export const itemDataReducer = createReducer(
   initialState.itemsData,
-  on(FoodieActions.fetchPlacesOfItemSuccess, (oldState: { [_: string]: Item }, { items }) => {
+  on(FoodieActions.fetchPlacesOfItemSuccess, (oldState: { [_: string]: [Item] }, { itemResponse }) => {
     const newObj = { ...oldState };
-    for(const item of items) {
+    for(const item of itemResponse.items) {
       console.log('in newObj', item);
       const existingItem = newObj[item.id];
       if (!existingItem) {
-        newObj[item.id] = item;
-        return newObj;
-      }
-      console.log('============Updating item places, before update places.length:: ', existingItem.places?.length);
+        newObj[item.id] = [item];
+        console.log('============retuning new newObj:: ', newObj);
+        // return newObj;
 
-      newObj[item.id] = mergeWith({}, existingItem, item, (ei, itm) => {
-        if (isArray(ei)) {
-          return unionBy(itm, ei, 'id').reverse();
-        }
-        return itm as Item;
-      });
-      console.log('==============Updated item places, after update places.length:: ', newObj[item.id].places?.length);
+        continue;
+      }
+      console.log('============Updating item places, before update existingItem.length:: ', existingItem.length);
+
+      if(existingItem.findIndex(it => it.placeItemId === item.placeItemId) === -1) {
+        existingItem.push(item);
+      }
+      // newObj[item.id] = mergeWith({}, existingItem, item, (ei, itm) => {
+      //   if (isArray(ei)) {
+      //     return unionBy(itm, ei, 'id').reverse();
+      //   }
+      //   return itm as Item;
+      // });
+      console.log('==============Updated item places, after update existingItem.length:: ', newObj[item.id].length);
 
     }
 

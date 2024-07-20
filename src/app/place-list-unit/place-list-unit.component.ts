@@ -29,8 +29,11 @@ import { ReplacePipe } from '../directives/replace.pipe';
 })
 export class PlaceListUnitComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
-
   config: any;
+
+
+  @Input('item')
+  item: Item | undefined;
 
   appService= inject(AppService);
 
@@ -46,9 +49,6 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
     this.destroy$ = new Subject<any>();
     this.config = this.appService.getConfig();
   }
-
-  @Input('place')
-  place: Place | undefined;
 
   ngOnInit() {}
 
@@ -95,12 +95,14 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
   }
 
 
-  goToItemDetail(place: Place, item: Item) {
+  goToItemDetail() {
 
-    console.log('in place-list-unit.component-> goToItemDetail', item);
+    console.log('in place-list-unit.component-> goToItemDetail', this.item);
     let r = 'places/:placeId/items/:itemId';
-    r=r.replace(':placeId', place.id);
-    r=r.replace(':itemId', item.id);
+    // r=r.replace(':placeId', place.id);
+    if(this.item) {
+      r = r.replace(':itemId', this.item.id);
+    }
     this.router.navigate([r]).then();
 
 

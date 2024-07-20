@@ -25,7 +25,7 @@
           </div>
           <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
           <!--                                            class="item-price-text fs-5">Price: </span><span-->
-          <!--                                            class="fw-bold fs-5 ms-1">${{place.price}}</span></div>-->
+          <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
         </div>
         <span class="no-of-reviews-text fw-normal text-secondary-emphasis fs-smaller"
           >(Out of {{ place.noOfReviews }} reviews):
@@ -39,16 +39,16 @@
             <!-- <div class="card-body d-lg-none d-flex justify-content-between">
                <div class="d-flex flex-column align-items-start align-content-start ">
                         <span class="card-text text-body-secondary text-truncate-3"><i
-                                class="bi bi-shop fs-5 me-2"></i>{{place.name}}</span>
+                                class="bi bi-shop fs-5 me-2"></i>{{item.name}}</span>
                     <span class="card-text text-body-secondary text-truncate-3"><i
-                            class="bi bi-geo-alt fs-5 me-2"></i>{{place.address?.suburb}}</span>
+                            class="bi bi-geo-alt fs-5 me-2"></i>{{item.address?.suburb}}</span>
                 </div>
                 <div class="item-rating-container d-flex flex-column fw-bold ">
                     <div class="d-flex justify-content-between"><span
-                            class="ambience-text me-2">Ambience: </span><span>{{place.ambience| number : '1.1-1'}}</span>
+                            class="ambience-text me-2">Ambience: </span><span>{{item.ambience| number : '1.1-1'}}</span>
                     </div>
                     <div class="d-flex justify-content-between"><span class="service-text">Service: </span>
-                        <span>{{place.service| number : '1.1-1'}}</span></div>
+                        <span>{{item.service| number : '1.1-1'}}</span></div>
                 </div>
             </div>-->
             <!--                        <ngb-carousel [showNavigationArrows]="config.carousel.showNavigationArrows"-->
@@ -57,12 +57,12 @@
             <!--                                      [pauseOnFocus]="config.carousel.pauseOnFocus"-->
             <!--                                      [interval]="0"-->
             <!--                                      #reviewImgCarousel>-->
-            <!--                                <ng-container *ngFor="let media of place?.medias;">-->
+            <!--                                <ng-container *ngFor="let media of item?.medias;">-->
             <!--                                    <ng-template ngbSlide>-->
             <!--                                        <div class="picsum-img-wrapper">-->
             <img
               [src]="config.bucketAccessEndpoint+'/'+place.medias?.[0]?.key"
-              alt="loading picture of the place"
+              alt="loading picture of the item"
               class="place-detail-img detail-img w-100 img-fluid rounded-0" />
             <!--                                        </div>-->
             <!--                                    </ng-template>-->
@@ -73,11 +73,11 @@
             <div class="row gap-2 mx-0 px-0 my-4 justify-content-center">
               <!--
                 <div class="col-12 d-none d-lg-flex row gap-1 flex-column ">
-                    <div class="row my-1"><span class="place-name-text fs-6 fw-bolder text-secondary-emphasis"><i
+                    <div class="row my-1"><span class="item-name-text fs-6 fw-bolder text-secondary-emphasis"><i
                             class="bi bi-shop fw-bolder fs-4
-                                 me-2"></i>{{place.name}}</span></div>
-                    <div class="row my-1"><span class="place-suburb-text fw-bolder text-secondary-emphasis"><i
-                            class="bi bi-geo-alt fs-4 me-2"></i>{{place.address?.suburb}}</span></div>
+                                 me-2"></i>{{item.name}}</span></div>
+                    <div class="row my-1"><span class="item-suburb-text fw-bolder text-secondary-emphasis"><i
+                            class="bi bi-geo-alt fs-4 me-2"></i>{{item.address?.suburb}}</span></div>
                 </div>
               -->
               <div class="row mx-3 mx-lg-0">
@@ -102,7 +102,7 @@
                       <span class="px-1 text-dark"><i class="bi bi-chevron-right"></i></span>
                     </span>
                   </div>
-                  <!--                                <div class="d-flex col-12 col-md-4 col-lg-6 py-1 py-lg-0 text-secondary " *ngFor="let e of Object.entries(place.openingTimes)" >-->
+                  <!--                                <div class="d-flex col-12 col-md-4 col-lg-6 py-1 py-lg-0 text-secondary " *ngFor="let e of Object.entries(item.openingTimes)" >-->
                   <!--                                    <span class=" d-inline">-->
                   <!--                                        {{e[0] | titlecase}}: {{e[1].open  }}:00-{{e[1].close}}:00-->
                   <!--                                    </span>-->
@@ -131,7 +131,7 @@
                   <span class="no-of-reviews-text fw-normal text-secondary"
                     >(Out of {{ place.noOfReviews }} reviews):
                   </span>
-                  <!--                                    <span>{{place.ambience| number : '1.1-1'}}</span>-->
+                  <!--                                    <span>{{item.ambience| number : '1.1-1'}}</span>-->
                 </div>
                 <!--                              service -->
                 <div class="d-flex flex-column">
@@ -153,7 +153,7 @@
                     >(Out of {{ place.noOfReviews }} reviews):
                   </span>
 
-                  <!--                                    <span>{{place.service| number : '1.1-1'}}</span>-->
+                  <!--                                    <span>{{item.service| number : '1.1-1'}}</span>-->
                 </div>
               </div>
               <div class="row place-give-review-container mt-auto mx-3 mx-lg-0">
