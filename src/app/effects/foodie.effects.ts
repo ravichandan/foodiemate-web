@@ -16,6 +16,7 @@ import { CustomerInfo } from '../models/CustomerInfo';
 import { Address } from '../models/Address';
 import { add } from 'lodash';
 import { ItemResponse } from '../models/ItemResponse';
+import { PlacesResponse } from '../models/PlacesResponse';
 
 @Injectable({ providedIn: 'root' })
 export class FoodieEffects {
@@ -102,20 +103,21 @@ export class FoodieEffects {
     ),
   );
   // Effect mediates the 'fetching the asked item by id'
+  // Effect mediates the 'liking a review'
   fetchItemOfAPlaces$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FoodieActions.fetchItemOfAPlace),
       tap((x) => console.log('in fetchPlacesOfItem$ effect', x)),
-      mergeMap((action) =>
-        this.appService.fetchItemInAPlace({ itemId: action.itemId, placeId: action.placeId }).pipe(
+      switchMap((action) =>
+        this.appService.fetchItemInAPlace({ itemId: action.itemId, placeId: action.placeId, placeItemId: action.placeItemId }).pipe(
           // map((place: Place) => FoodieActions.fetchItemOfAPlaceSuccess({response: { placeId: place.id, item: place.items[action.itemId]}})),
-          map((place: Place) => FoodieActions.fetchItemOfAPlaceSuccess({ response: { place, itemId: action.itemId } })),
+          tap(placesResponse => console.log('in 1.fetchPlacesOfItem$ effect, placesResponse', placesResponse)),
+          map((response) => FoodieActions.fetchItemOfAPlaceSuccess({ response } )),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
       ),
     ),
   );
-  // Effect mediates the 'liking a review'
   likeReview$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FoodieActions.likeReview),

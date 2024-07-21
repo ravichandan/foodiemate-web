@@ -80,6 +80,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
   }
 
   openItem(item: Item | any) {
-    this.router.navigate(['/items', item.id]);
+    this.router.navigate(['/items', item._id]);
   }
 }

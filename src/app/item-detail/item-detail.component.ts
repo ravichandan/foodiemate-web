@@ -1,15 +1,15 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { filter, map, Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { Item } from '../models/Item';
 import * as FoodieActions from '../actions/foodie.actions';
-import { itemDetailOfAPlaceSelector } from '../selectors/foodie.selector';
+import { itemDetailOfAPlaceSelector, placeItemFromItemDataSelector } from '../selectors/foodie.selector';
 import { Place } from '../models/Place';
 import { AsyncPipe, DecimalPipe, LowerCasePipe, NgForOf, NgIf, TitleCasePipe } from '@angular/common';
 import { Review } from '../models/Review';
-import { NgbCarousel, NgbSlide, NgbTooltip, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbSlide, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ReviewUnitComponent } from '../review-unit/review-unit.component';
@@ -36,6 +36,7 @@ import { AppService } from '../services/app.service';
   ],
   templateUrl: './item-detail.component.html',
   styleUrl: './item-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
@@ -92,14 +93,27 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       .pipe(
         // tap(x => console.log('in paramMap, params:: ')),
         takeUntil(this.destroy$),
+
         tap((params: ParamMap) => {
           console.log('in paramMap, params:: ', params);
           this.selectedItemId = params.get('itemId');
           this.selectedPlaceId = params.get('placeId');
-          this.store.dispatch(
-            FoodieActions.fetchItemOfAPlace({ placeId: this.selectedPlaceId, itemId: this.selectedItemId }),
-          );
         }),
+        switchMap((params: ParamMap) =>
+          this.store.select(placeItemFromItemDataSelector(this.selectedPlaceId, this.selectedItemId )).
+            pipe(
+              // filter(Boolean),
+              map(item => item)
+          )
+        ),
+        tap(x => console.log('in item-detail.component, item:: ',x)),
+        tap((item: Item| undefined) =>
+          item?.placeItemId
+            ? this.store.dispatch(
+              FoodieActions.fetchItemOfAPlace({ placeItemId: item.placeItemId }))
+            : this.store.dispatch(
+          FoodieActions.fetchItemOfAPlace({ placeId: this.selectedPlaceId, itemId: this.selectedItemId }),
+        )),
       )
       .subscribe();
 
@@ -112,7 +126,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   trackByReviewId(index: number, r: Review) {
-    return r.id;
+    return r._id;
   }
 
   onReviewFilterChange($event: ListItem) {

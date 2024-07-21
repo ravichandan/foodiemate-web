@@ -111,12 +111,12 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
   fetchItems(name: string) {}
   trackByItemId(_: number, i: Item) {
-    return i.id;
+    return i._id;
   }
 
   openItemDetail(item: Item) {
-    console.log('in item-list.component, opening details page for item:: ', item.id);
-    this.router.navigate(['places/' + this.selectedPlaceId + '/items/' + item.id]);
+    console.log('in item-list.component, opening details page for item:: ', item._id);
+    this.router.navigate(['places/' + this.selectedPlaceId + '/items/' + item._id]);
     // this.router.navigate(['items/' + element.id],);
   }
 

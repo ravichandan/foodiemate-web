@@ -107,7 +107,7 @@
                 class="card-img-top place-list-img w-100 img-fluid rounded-0" />
             </div>
           } @else {
-            <div class="picsum-img-wrapper">
+            <div class="picsum-img-wrapper d-flex justify-content-center">
                 <span class="text-secondary-emphasis ">
                               <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
                                    width="15rem"
@@ -222,7 +222,7 @@
                     <div class="col-12 review-item-wrapper bg-body-secondary rounded-3 p-3">
                       <div class="row gap-3">
                         <div class="rating-name-container d-flex  justify-content-between align-items-center col-12">
-                          <div class="rating-container row col-7 gap-2">
+                          <div class="rating-container row col-4 gap-2">
                             <div class="col-12 d-flex justify-content-between align-items-center">
                               <span class="star rating w-100">Taste:</span>
                               <span class="taste-text d-flex align-items-center">
@@ -247,7 +247,7 @@
                                 class="">{{ review.presentation | number: '1.1' }}&nbsp;/</span>5</span>
                             </div>
                           </div>
-                          <div class="name-container align-self-start">
+                          <div class="name-container align-self-start col-8">
                               <span
                                 class="star rating w-100 text-secondary fw-bold">{{ review.customer?.name?.split(' ')?.[0] | slice:0:11 }}</span>
                           </div>

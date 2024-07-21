@@ -134,13 +134,13 @@ export const logoutCustomerSuccess = createAction(ACTION_CUSTOMER_LOGOUT_SUCCESS
 export const askForVerification = createAction(ACTION_ASK_FOR_VERIFICATION, props<{ customer: CustomerInfo }>());
 export const fetchItemOfAPlace = createAction(
   ACTION_FETCH_ITEM_OF_A_PLACE,
-  props<{ placeId: string; itemId: string; pageSize?: number; pageNum?: number }>(),
+  props<{ placeId?: string; itemId?: string; placeItemId?: string; pageSize?: number; pageNum?: number }>(),
 );
 
 export const fetchItemOfAPlaceSuccess = createAction(
   ACTION_FETCH_ITEM_OF_A_PLACE_SUCCESS,
   // props<{ response: {placeId: string, item: Item} }>()
-  props<{ response: { place: Place; itemId: string } }>(),
+  props<{ response: PlacesResponse }>(),
 );
 
 export const likeReview = createAction(ACTION_LIKE_REVIEW, props<{ reviewId: string; customerId: string }>());

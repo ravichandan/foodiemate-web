@@ -99,9 +99,10 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
 
     console.log('in place-list-unit.component-> goToItemDetail', this.item);
     let r = 'places/:placeId/items/:itemId';
-    // r=r.replace(':placeId', place.id);
+    if (this.item?.places?.[0]?._id)
+      r=r.replace(':placeId', this.item?.places?.[0]?._id);
     if(this.item) {
-      r = r.replace(':itemId', this.item.id);
+      r = r.replace(':itemId', this.item._id);
     }
     this.router.navigate([r]).then();
 

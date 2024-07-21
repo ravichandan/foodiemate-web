@@ -98,9 +98,9 @@ export const itemDataReducer = createReducer(
     const newObj = { ...oldState };
     for(const item of itemResponse.items) {
       console.log('in newObj', item);
-      const existingItem = newObj[item.id];
+      const existingItem = newObj[item._id];
       if (!existingItem) {
-        newObj[item.id] = [item];
+        newObj[item._id] = [item];
         console.log('============retuning new newObj:: ', newObj);
         // return newObj;
 
@@ -111,13 +111,13 @@ export const itemDataReducer = createReducer(
       if(existingItem.findIndex(it => it.placeItemId === item.placeItemId) === -1) {
         existingItem.push(item);
       }
-      // newObj[item.id] = mergeWith({}, existingItem, item, (ei, itm) => {
+      // newObj[item._id] = mergeWith({}, existingItem, item, (ei, itm) => {
       //   if (isArray(ei)) {
       //     return unionBy(itm, ei, 'id').reverse();
       //   }
       //   return itm as Item;
       // });
-      console.log('==============Updated item places, after update existingItem.length:: ', newObj[item.id].length);
+      console.log('==============Updated item places, after update existingItem.length:: ', newObj[item._id].length);
 
     }
 
@@ -130,13 +130,13 @@ export const placesDataReducer = createReducer(
   on(FoodieActions.fetchPlaceSuccess, (oldState: { [_: string]: Place }, { place }) => {
     const newObj = { ...oldState };
     console.log('in newObj', place);
-    const existingPlace = newObj[place.id];
+    const existingPlace = newObj[place._id];
     if (!existingPlace) {
-      newObj[place.id] = place;
+      newObj[place._id] = place;
       return newObj;
     }
 
-    newObj[place.id] = mergeWith({}, existingPlace, place, (ep, pl) => {
+    newObj[place._id] = mergeWith({}, existingPlace, place, (ep, pl) => {
       if (isArray(ep)) {
         return unionBy(pl, ep, 'id').reverse();
       }
@@ -145,29 +145,31 @@ export const placesDataReducer = createReducer(
 
     return newObj;
   }),
-  on(FoodieActions.fetchItemOfAPlaceSuccess, (oldState: { [_: string]: Place }, { response }) => {
+  on(FoodieActions.fetchItemOfAPlaceSuccess, (oldState: { [_: string]: Place },
+                                              { response }) => {
+    console.log('in index.ts-> on fetchItemOfAPlaceSuccess, response:: ', response);
     const copy = { ...oldState };
-    const pId = response.place.id;
+    const place: Place = response.places?.[0];
     console.log('in reducer -> fetchItemOfAPlaceSuccess, oldState copy :: ', copy);
-    const existingPlace = copy[pId];
+    const existingPlace = copy[place._id];
+    const item = place.items[0];
     if (!existingPlace) {
       console.log('in reducer -> fetchItemOfAPlaceSuccess, inside If ', copy);
-      copy[pId] = {
-        ...response.place,
+      copy[place._id] = {
+        ...place,
         items: {
-          [response.itemId]: response.place.items[response.itemId],
+          [item._id]: item,
         },
       } as Place;
       return copy;
     }
-    const val = { ...response.place.items[response.itemId] };
-    copy[pId] = { ...copy[pId], items: { ...copy[pId].items, [response.itemId]: val } };
+    copy[place._id] = { ...copy[place._id], items: { ...copy[place._id].items, [item._id]: { ...item } } };
     return copy;
   }),
   on(FoodieActions.feedbackReviewSuccess, (oldState: { [_: string]: Place }, { review }) => {
     const copy = { ...oldState };
-    const reviewsObj = copy[review.place.id].items[review.item.id].reviews;
-    copy[review.place.id].items[review.item.id].reviews = [...reviewsObj.map((r) => (r.id === review.id ? review : r))];
+    const reviewsObj = copy[review.place._id].items[review.item._id].reviews;
+    copy[review.place._id].items[review.item._id].reviews = [...reviewsObj.map((r) => (r._id === review._id ? review : r))];
     return copy;
   }),
 );
@@ -221,7 +223,7 @@ export const preloadPostReviewReducer = createReducer(
   on(FoodieActions.newPostReviewSuccess, (oldState: NewReview | undefined, { review }) => {
     console.log('in reducer, newPostReviewSuccess, review:: ', review);
     let copy = { ...oldState, ...review };
-    copy.id = review.id ?? (review as any)._id;
+    copy.id = review._id ?? (review as any)._id;
     return copy;
   }),
 );

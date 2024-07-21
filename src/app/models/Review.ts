@@ -4,7 +4,7 @@ import { Item } from './Item';
 import { Place } from './Place';
 
 export interface Review {
-  id: string;
+  _id: string;
   description: string;
   service: number;
   ambience: number;
@@ -21,7 +21,7 @@ export interface Review {
 }
 
 export interface NewReview {
-  id?: string;
+  _id?: string;
   description?: string;
   service?: number;
   ambience?: number;

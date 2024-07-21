@@ -52,10 +52,10 @@ export class ReviewFeedbackComponent implements OnInit, OnDestroy {
     console.log('likeClicked() this.feedback.liked %s', this.feedback.liked, $event);
     // console.log('likeClicked() this.feedback.disliked %s',this.feedback.disliked , $event);
     if (this.feedback.liked) {
-      this.store.dispatch(FoodieActions.likeReview({ reviewId: this.review.id, customerId: this.review.customer.id }));
+      this.store.dispatch(FoodieActions.likeReview({ reviewId: this.review._id, customerId: this.review.customer.id }));
     } else {
       this.store.dispatch(
-        FoodieActions.unlikeReview({ reviewId: this.review.id, customerId: this.review.customer.id }),
+        FoodieActions.unlikeReview({ reviewId: this.review._id, customerId: this.review.customer.id }),
       );
     }
   }
@@ -64,11 +64,11 @@ export class ReviewFeedbackComponent implements OnInit, OnDestroy {
     // console.log('dislikeClicked() this.feedback.disliked %s',this.feedback.disliked , $event);
     if (this.feedback.disliked) {
       this.store.dispatch(
-        FoodieActions.dislikeReview({ reviewId: this.review.id, customerId: this.review.customer.id }),
+        FoodieActions.dislikeReview({ reviewId: this.review._id, customerId: this.review.customer.id }),
       );
     } else {
       this.store.dispatch(
-        FoodieActions.undislikeReview({ reviewId: this.review.id, customerId: this.review.customer.id }),
+        FoodieActions.undislikeReview({ reviewId: this.review._id, customerId: this.review.customer.id }),
       );
     }
   }

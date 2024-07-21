@@ -22,7 +22,7 @@ export type CalorieInfo = {
   unit: CalorieUnit;
 };
 export interface Item {
-  id: string;
+  _id: string;
   placeItemId: string;
   name: string;
   originalName: string;

@@ -4,7 +4,7 @@ import { Review } from './Review';
 import { Address } from './Address';
 
 export interface Place {
-  id: string;
+  _id: string;
   type: 'place';
   placeName: string;
   name: string;
@@ -18,6 +18,7 @@ export interface Place {
   reviews: Review[];
   medias: Media[];
   address: Address;
+  placeItem: any;
 }
 
 export enum FriendlyTag {

@@ -89,14 +89,21 @@ export class AppService implements OnDestroy{
       .pipe(tap((t: any) => console.log('getPlace response:: ', t)));
   }
 
-  public fetchItemInAPlace(params: { placeId: string; itemId: string }) {
-    if (!params.itemId || !params.placeId) return of(undefined);
+  public fetchItemInAPlace(args: { placeId?: string; itemId?: string ; placeItemId?: string }) {
+    if (!args.itemId && !args.placeId && !args.placeItemId) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-
-    const url = join(this.getConfig().host, this.getConfig()
-      .itemOfAPlaceEndpoint.replace(':itemId', params.itemId)
-      .replace(':placeId', params.placeId));
+    console.log('in app.service, fetchItemInAPlace, args:: ', args);
+    let url ;
+    if(args.placeItemId) {
+      url = join(this.getConfig().host, this.getConfig()
+        .itemOfAPlaceEndpoint.replace(':itemId', args.placeItemId)
+        .replace('/:placeId', ''));
+    } else {
+      url = join(this.getConfig().host, this.getConfig()
+        .itemOfAPlaceEndpoint.replace(':itemId', args.itemId)
+        .replace(':placeId', args.placeId));
+    }
     return this.http.get(url, { headers }).pipe(
       // map((item: any) => ({data: items})),
       tap((t: any) => console.log('fetchItemInAPlace response:: ', t)),

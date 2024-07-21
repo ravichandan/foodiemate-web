@@ -42,11 +42,11 @@ export class ConnectFormDirective implements OnDestroy, OnInit {
         tap((x) => console.log('in connectForm->preloadReviewDataSelector(), x:: ', x)),
         switchMap((data: { postReview: NewReview|Review|undefined, token: string}) =>
           data.postReview?.place
-            ? this.store.select(placeSelector(data.postReview?.place.id)).pipe(
+            ? this.store.select(placeSelector(data.postReview?.place._id)).pipe(
                 tap((x) => console.log('in connectForm->placeSelector(), x:: ', x)),
                 switchMap((place: Place) => {
                   return data.postReview?.item
-                    ? of({ ...data.postReview, placeCtrl: place, item1Group: { itemCtrl: place.items[data.postReview?.item.id] } })
+                    ? of({ ...data.postReview, placeCtrl: place, item1Group: { itemCtrl: place.items[data.postReview?.item._id] } })
                     : of({ ...data.postReview, placeCtrl: place });
                 }),
               )

@@ -106,7 +106,7 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
   }
 
   trackByReviewId(index: number, r: Review) {
-    return r.id;
+    return r._id;
   }
 
   onGiveAReviewClick() {

@@ -72,9 +72,9 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   popularItemSelected(element: Item | Place) {
     if (element.type === 'item') {
-      this.router.navigate(['items/' + element.id]);
+      this.router.navigate(['items/' + element._id]);
     } else {
-      this.router.navigate(['places/' + element.id]);
+      this.router.navigate(['places/' + element._id]);
     }
   }
 
@@ -132,12 +132,12 @@ export class HomeComponent implements OnDestroy, OnInit {
   protected readonly JSON = JSON;
 
   onViewPlaces(item: Item) {
-    console.log('Navigating to \'items/'+item.id);
-    this.router.navigate(['items/'+item.id]);
+    console.log('Navigating to \'items/'+item._id);
+    this.router.navigate(['items/'+item._id]);
   }
 
   onViewPlace(place: Place){
-    console.log('Navigating to \'places/'+place.id);
-    this.router.navigate(['places/'+place.id]);
+    console.log('Navigating to \'places/'+place._id);
+    this.router.navigate(['places/'+place._id]);
   }
 }

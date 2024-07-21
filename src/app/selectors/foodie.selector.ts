@@ -75,7 +75,7 @@ export const preloadReviewDataSelector = () =>
 
 export const postReviewResultSelector = () =>
   createSelector(
-    (state: State) => state.postReview?.id,
+    (state: State) => state.postReview?._id,
     (id) => {
       return id;
     },
@@ -106,6 +106,20 @@ export const itemDetailOfAPlaceSelector = (placeId: string, itemId: string) =>
       // console.log('in selector:: ,id:: ', id);
       // console.log('in selector:: ,itemData[id]:: ', itemData[id]);
       if (!placesData[placeId]?.items?.[itemId]) return undefined;
-      return { ...placesData[placeId], items: { [itemId]: placesData[placeId]?.items?.[itemId] } } as Place;
+      return { ...placesData[placeId], items: { [itemId]: placesData[placeId].items?.[itemId] } } as Place;
+    },
+  );
+
+export const placeItemFromItemDataSelector = (placeId: string, itemId: string) =>
+  createSelector(
+    (state: State) => state.itemsData,
+    (itemsData) => {
+      console.log('in placeItemFromItemDataSelector:: ,itemsData:: ', itemsData);
+      console.log('in placeItemFromItemDataSelector:: ,placeId:: ', placeId);
+      console.log('in placeItemFromItemDataSelector:: ,itemId:: ', itemId);
+      // console.log('in selector:: ,itemData[id]:: ', itemData[id]);
+      if (!itemsData[itemId]) return undefined;
+      return itemsData[itemId].find(entry => entry.places?.[0]._id === placeId);
+      // return { ...itemsData[placeId], items: { [itemId]: itemsData[placeId]?.items?.[itemId] } } as Place;
     },
   );

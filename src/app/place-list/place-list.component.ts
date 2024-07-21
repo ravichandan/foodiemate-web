@@ -119,7 +119,7 @@ export class PlaceListComponent implements OnInit, OnDestroy {
   }
 
   trackByPlaceId(index: number, pl: Place) {
-    return pl.id;
+    return pl._id;
   }
 
   onFilterChange($event: ListItem) {
