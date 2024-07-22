@@ -85,6 +85,11 @@ h1 {
   color: $light;
 }
 
+.text-darker-bg-theme{
+  background-color: $teal-dark-color;
+  color: $light;
+}
+
 ::-webkit-scrollbar-track {
   background: white;
 }
