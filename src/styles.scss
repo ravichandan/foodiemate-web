@@ -77,6 +77,14 @@ h1 {
   }
 }
 
+.text-theme{
+  color: $teal-color !important;
+}
+
+.text-darker-theme{
+  color: $teal-dark-color !important;
+}
+
 .theme-background{
   background-color: $teal-color !important;
 }
@@ -218,7 +226,8 @@ h1 {
 }
 
 .rating-info-row ngb-rating span {
-  color: $orange-700;
+  //color: $orange-700;
+  color: $teal-dark-color;
 }
 
 pre {

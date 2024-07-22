@@ -1,252 +1,265 @@
-<ng-container *ngIf="place$ | async as place">
-  <ng-container *ngIf="!!item">
-            <div class="m-2 m-md-4 ">
-    <div class="row gap-4 ">
-      <div class="item-title-container container col-12 text-darker-bg-theme rounded-top-3">
-        <div class="row  justify-content-between align-items-baseline ">
-          <div class="col-12 col-md-9">
-            <div class="row my-1">
-              <span class="place-name-text d-flex align-items-center fw-bolder "
-                ><span class="material-symbols-outlined fs-3 me-2">local_dining</span>{{ item.name }}</span
-              >
-            </div>
-            <div class="row my-1">
-              <span class="place-suburb-text "
-                ><i
-                  class="bi bi-shop fs-5 me-3"
+@if (place$ | async; as place) {
+  @if (!!item) {
+    <div class="m-1 m-md-4 ">
+      <div class="row gap-4 mx-0">
+        <!-- title, place name, overall ratings etc-->
+        <div class="item-title-container container col-12 py-3 text-darker-bg-theme rounded-top-3">
+          <div class="row gap-2 justify-content-between align-items-start ">
+
+            <!-- item, place name-->
+            <div class="col-8 col-md-9">
+              <div class="col-12 my-1">
+                <span class="place-name-text d-flex align-items-center fw-bolder "><span
+                  class="material-symbols-outlined fs-3 me-2">local_dining</span>{{ item.name }}</span>
+              </div>
+              <div class="col-12 my-1">
+                <span class="place-suburb-text "><i
+                  class="bi bi-shop fs-6 me-3"
                   placement="start"
                   [ngbTooltip]="place.name + ', @' + place.address?.suburb"></i
-                >{{ place.name }}, {{ place.address?.suburb }}</span
-              >
+                >{{ place.name }}, {{ place.address?.suburb }}</span>
+              </div>
+              <!--          <div class="row my-1"><span class="item-suburb-text  fs-6 text-secondary-emphasis"><i-->
+              <!--            class="bi bi-geo-alt fs-5 me-3"></i>{{ item.address?.suburb }}</span></div>-->
             </div>
-            <!--          <div class="row my-1"><span class="item-suburb-text  fs-6 text-secondary-emphasis"><i-->
-            <!--            class="bi bi-geo-alt fs-5 me-3"></i>{{ item.address?.suburb }}</span></div>-->
-          </div>
-
-          <div class="item-rating-container d-flex flex-column fw-bold col-5 col-md-3">
-          <div class="ambience-container mobile-ambience-container">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <span class="taste-text me-2">Taste: </span
-              ><span class=""
-                ><span class="fs-6">{{ place.placeItem.ratingInfo?.taste | number: '1.1-1' }}&nbsp;/</span
-                ><span class="fw-normal">&nbsp;5</span></span
-              >
-            </div>
-          </div>
-          <div class="presentation-container mobile-presentation-container">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <span class="presentation-text">Presentation: </span>
-              <span class=""
-                ><span class="fs-6">{{ place.placeItem.ratingInfo?.presentation | number: '1.1-1' }}&nbsp;/</span
-                ><span class="fw-normal">&nbsp;5</span></span
-              >
-            </div>
-            <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
-            <!--                                            class="item-price-text fs-5">Price: </span><span-->
-            <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
-          </div>
-          <small class="no-of-reviews-text fw-normal  fs-smaller"
-            >(Out of {{ place.placeItem.ratingInfo?.noOfReviews }} reviews)</small
-          >
-        </div>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="card border-secondary">
-          <div class="row mx-0">
-            <div class="col-12 col-lg-7 image-container px-0">
-              @if(place.placeItem.ratingInfo?.noOfReviewPhotos) {
-                <ngb-carousel
-                  [showNavigationArrows]="config.carousel.showNavigationArrows"
-                  [showNavigationIndicators]="config.carousel.showNavigationIndicators"
-                  [pauseOnHover]="config.carousel.pauseOnHover"
-                  [pauseOnFocus]="config.carousel.pauseOnFocus"
-                  [interval]="0"
-                  #reviewImgCarousel>
-                  @for (review of item?.reviews; track review) {
-                    @for (media of review?.medias; track media) {
-
-                      <ng-template ngbSlide>
-                        <div class="picsum-img-wrapper">
-                          <img
-                            [src]="config.bucketAccessEndpoint+'/'+media.key"
-                            alt="loading picture of the dish"
-                            class="card-img-top detail-img place-list-img w-100 img-fluid rounded-0" />
-                        </div>
-                      </ng-template>
-                    }
-                  }
-                </ngb-carousel>
-              } @else if (item.media) {
-                <div class="picsum-img-wrapper">
-                  <img
-                    [src]="config.bucketAccessEndpoint+'/'+item.media.key"
-                    alt="loading picture of the dish"
-                    class="card-img-top detail-img place-list-img w-100 img-fluid rounded-0" />
+            <!-- item overall rating-->
+            <div class="item-rating-container d-flex flex-column col-4 row gap-1">
+              <div class="ambience-container mobile-ambience-container col-12">
+                <div class="d-flex justify-content-between align-items-baseline">
+                  <span class="taste-text me-2">Taste: </span
+                  ><span class=""
+                    ><span class="fs-6 fw-bold">{{ place.placeItem.ratingInfo?.taste | number: '1.1-1' }}&nbsp;/</span
+                    ><span class="fw-normal">&nbsp;5</span></span
+                    >
                 </div>
-              } @else {
-                <div class="picsum-img-wrapper">
+              </div>
+              <div class="presentation-container mobile-presentation-container col-12">
+                <div class="d-flex justify-content-between align-items-baseline">
+                  <span class="presentation-text small">Presentation: </span>
+                  <span class=""
+                  ><span
+                    class="fs-6 fw-bold">{{ place.placeItem.ratingInfo?.presentation | number: '1.1-1' }}&nbsp;/</span
+                  ><span class="fw-normal">&nbsp;5</span></span
+                  >
+                </div>
+                <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
+                <!--                                            class="item-price-text fs-5">Price: </span><span-->
+                <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
+              </div>
+              <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"
+              >(Out of {{ place.placeItem.ratingInfo?.noOfReviews }} reviews)</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- photos carousels etc-->
+        <div class="col-12">
+          <div class="card border-secondary">
+<!--            <div class="row mx-0">-->
+              <div class="col-12 col-lg-7 image-container px-0">
+                @if (place.placeItem.ratingInfo?.noOfReviewPhotos) {
+                  <ngb-carousel
+                    [showNavigationArrows]="config.carousel.showNavigationArrows"
+                    [showNavigationIndicators]="config.carousel.showNavigationIndicators"
+                    [pauseOnHover]="config.carousel.pauseOnHover"
+                    [pauseOnFocus]="config.carousel.pauseOnFocus"
+                    [interval]="0"
+                    #reviewImgCarousel>
+                    @for (review of item?.reviews; track review) {
+                      @for (media of review?.medias; track media) {
+
+                        <ng-template ngbSlide>
+                          <div class="picsum-img-wrapper">
+                            <img
+                              [src]="config.bucketAccessEndpoint+'/'+media.key"
+                              alt="loading picture of the dish"
+                              class="card-img-top detail-img place-list-img w-100 img-fluid rounded-0" />
+                          </div>
+                        </ng-template>
+                      }
+                    }
+                  </ngb-carousel>
+                } @else if (item.media) {
+                  <div class="picsum-img-wrapper">
+                    <img
+                      [src]="config.bucketAccessEndpoint+'/'+item.media.key"
+                      alt="loading picture of the dish"
+                      class="card-img-top detail-img place-list-img w-100 img-fluid rounded-0" />
+                  </div>
+                } @else {
+                  <div class="picsum-img-wrapper">
                   <span class="text-secondary-emphasis ">
                               <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
                                    width="15rem"
                                    fill="#999999"><path
                                 d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
                             </span>
-                </div>
-              }
-            </div>
-            <div class="col-12 col-lg-5 detail-container">
-              <div class="row gap-3 h-100">
-                <!--                <div class="col-12 d-none d-lg-flex row gap-1 flex-column "><span
-                                  class="item-name-text fs-4 fw-bold my-1">{{ item.name }}</span>
-                                  <div class="row my-1"><span class="item-name-text fs-5 fw-bolder text-secondary"><i
-                                    class="bi bi-shop fw-bolder fs-4
-                                                             me-2"></i>{{ item.name }}</span></div>
-                                  <div class="row my-1"><span class="item-suburb-text fs-5 fw-bolder text-secondary"><i
-                                    class="bi bi-geo-alt fs-4 me-2"></i>{{ item.address?.suburb }}</span></div>
-                                </div>-->
-                <div class="col-12">
+                  </div>
+                }
+              </div>
+              <div class="col-12 col-lg-5 detail-container card-body">
+                <div class="row gap-3 h-100 card-text">
+                  <!--                <div class="col-12 d-none d-lg-flex row gap-1 flex-column "><span
+                                    class="item-name-text fs-4 fw-bold my-1">{{ item.name }}</span>
+                                    <div class="row my-1"><span class="item-name-text fs-5 fw-bolder text-secondary"><i
+                                      class="bi bi-shop fw-bolder fs-4
+                                                               me-2"></i>{{ item.name }}</span></div>
+                                    <div class="row my-1"><span class="item-suburb-text fs-5 fw-bolder text-secondary"><i
+                                      class="bi bi-geo-alt fs-4 me-2"></i>{{ item.address?.suburb }}</span></div>
+                                  </div>-->
+                  <div class="col-12">
                   <span class="item-price-text fs-5"
-                    >Price: <span class="fw-bold ms-1">${{ place.placeItem.price }}</span></span
+                  >Price: <span class="fw-bold ms-1">${{ place.placeItem.price }}</span></span
                   >
-                </div>
-                <div class="col-12 ">
-                  <span class="item-description-text text-justify">{{ item.description }}</span>
-                </div>
+                  </div>
+                  <div class="col-12 ">
+                    <span class="item-description-text text-justify">{{ item.description }}</span>
+                  </div>
 
-                <div class="allergens-container col-12">
+                  <div class="allergens-container col-12">
                   <span
-                    ><span class="fw-bolder">Allergens: </span
-                    ><span class="text-body-secondary"> &nbsp; {{ (place.placeItem.allergens?.join(', ') | titlecase) ?? 'NA' }} </span></span
+                  ><span class="fw-bolder">Allergens: </span
+                  ><span
+                    class="text-body-secondary"> &nbsp; {{ (place.placeItem.allergens?.join(', ') | titlecase) ?? 'NA' }} </span></span
                   >
-                </div>
-                <div class="ingredients-container col-12">
+                  </div>
+                  <div class="ingredients-container col-12">
                   <span
-                    ><span class="fw-bolder">Ingredients: </span
-                    ><span class="text-body-secondary">{{ place.placeItem?.ingredients?.length ? place.placeItem?.ingredients?.join(', ')?.trim() : ' NA' }}</span></span
+                  ><span class="fw-bolder">Ingredients: </span
+                  ><span
+                    class="text-body-secondary">{{ place.placeItem?.ingredients?.length ? place.placeItem?.ingredients?.join(', ')?.trim() : ' NA' }}</span></span
                   >
-                </div>
+                  </div>
 
-                <div class="calories-container col-12">
-                  <span
-                    ><span class="fw-bolder">Calorie Info: </span
-                    ><span class="text-body-secondary"
-                      ><span class="fs-5"> {{ item.calorieInfo?.count }}</span>
-                      <span class=""> {{ item.calorieInfo?.unit ?? 'NA'}}</span>
+                  <div class="calories-container col-12">
+                  <span><span class="fw-bolder">Calorie Info: </span>
+                    @if(item.calorieInfo?.count) {
+                    <span class="text-body-secondary"
+                    ><span class="fs-5"> {{ item.calorieInfo.count }}</span>
+                      <span class=""> {{ item.calorieInfo?.unit }}</span>
                     </span>
+                  } @else {
+                    <span
+                      class="text-body-secondary">NA</span>
+                  }
                   </span>
-                </div>
+                  </div>
 
-                <div class="give-review-container ">
-                  <button (click)="onGiveAReviewClick()" class="btn btn-dark w-100">
-                    {{ config.giveAReviewLabel }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="my-3">
-        <!--                <app-item-detail [item]="item" [item]="item"></app-item-detail>-->
-        <ng-container *ngIf="reviews$ | async as reviews">
-          <div class="review-container row gap-3 g-0">
-            <div class="review-title fs-5 fw-bold">Reviews</div>
-            <div class="review-search-container">
-              <form class="row gap-3 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7">
-                <div class="col-12 col-md-8">
-                  <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
-                  <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search" />
-                </div>
-                <div class="col-12 col-md d-flex justify-content-center">
-                  <button type="submit" class="col-12 col-md-11 btn btn-dark focus-ring">Search</button>
-                </div>
-              </form>
-            </div>
-
-            <div class="filter-container d-flex flex-column">
-              <div class="filter-buttons-container d-flex flex-grow-1 align-self-end">
-                <div class="sort-wrapper d-flex mx-2 align-items-center">
-                  <span class="d-none d-lg-inline mx-1">Sort by</span>
-                  <button class="btn btn-light h-100 mx-1 rounded fs-4" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-sort-down"></i>
-                    <ul class="dropdown-menu">
-                      @for (option of config.itemDetailSortBy; track option) {
-                        <li class="mx-3">
-                          <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
-                        </li>
-                      }
-
-                    </ul>
-                  </button>
-                </div>
-                <div class="filter-by-wrapper d-flex mx-2 align-items-center">
-                  <span class="d-none d-lg-inline mx-1">Filter by</span>
-                  <button
-                    class="btn btn-light h-100 mx-1 rounded fs-4"
-                    aria-expanded="false"
-                    (click)="
-                      itemDetailFilterBlock.classList.toggle('d-none');
-                      itemDetailFilterBlock.classList.toggle('item-detail-filter')
-                    ">
-                    <i class="bi bi-filter"></i>
-                    <ul class="dropdown-menu">
-                      @for(option of config.itemDetailFilterBy; track option) {
-                        <li class="mx-3" >
-                          <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
-                        </li>
-                      }
-                    </ul>
-                  </button>
-                </div>
-              </div>
-              <div
-                class="d-flex d-none item-detail-filter row justify-content-center my-2 my-sm-3"
-                #itemDetailFilterBlock>
-                <div class="flex-grow-1 col-12 col-md-5 col-lg-4 me-md-2 my-2">
-                  <ng-multiselect-dropdown
-                    class=""
-                    [placeholder]="'Filter'"
-                    [settings]="dropdownSettings"
-                    [data]="config.itemDetailFilterBy"
-                    [(ngModel)]="selectedReviewFilter"
-                    (onSelect)="onReviewFilterChange($event)">
-                  </ng-multiselect-dropdown>
-                </div>
-                <div class="flex-grow-1 col-12 col-md-5 col-lg-4 ms-md-2 my-2">
-                  <ng-multiselect-dropdown
-                    class=" "
-                    [placeholder]="'Stars'"
-                    [settings]="dropdownSettings"
-                    [data]="config.itemDetailFilterByStars"
-                    [(ngModel)]="selectedStarFilter"
-                    (onSelect)="onStarFilterChange($event)">
-                  </ng-multiselect-dropdown>
-                </div>
-
-                <div class="checkbox-container d-none">
-                  <!--                <h1>{{config.itemDetailShowOnlyImagesLabel}}</h1>-->
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" data-ng-model="showReviewsWithImages" />
-                      <span class="box"></span>
-                      {{ config.itemDetailShowOnlyImagesLabel }}
-                    </label>
+                  <div class="give-review-container ">
+                    <button (click)="onGiveAReviewClick()" class="btn btn-dark w-100">
+                      {{ config.giveAReviewLabel }}
+                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-
-            @for(review of reviews; track review) {
-              <div class="row cols-auto">
-                <app-review-unit [review]="review"></app-review-unit>
-              </div>
-            }
-
+<!--            </div>-->
           </div>
-        </ng-container>
+        </div>
+
+        <!-- review container-->
+        <div class="col-12">
+          <!--                <app-item-detail [item]="item" [item]="item"></app-item-detail>-->
+          <ng-container *ngIf="reviews$ | async as reviews">
+            <div class="review-container row gap-3 g-0">
+              <div class="review-title fs-5 fw-bold">Reviews</div>
+              <div class="review-search-container">
+                <form class="row gap-3 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7">
+                  <div class="col-12 col-md-8">
+                    <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
+                    <input type="text" class="form-control border-dark focus-ring" id="homeSearch"
+                           placeholder="Search" />
+                  </div>
+                  <div class="col-12 col-md d-flex justify-content-center">
+                    <button type="submit" class="col-12 col-md-11 btn btn-dark focus-ring">Search</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="filter-container d-flex flex-column">
+                <div class="filter-buttons-container d-flex flex-grow-1 align-self-end">
+                  <div class="sort-wrapper d-flex mx-2 align-items-center">
+                    <span class="d-none d-lg-inline mx-1">Sort by</span>
+                    <button class="btn btn-light h-100 mx-1 rounded fs-4" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                      <i class="bi bi-sort-down"></i>
+                      <ul class="dropdown-menu">
+                        @for (option of config.itemDetailSortBy; track option) {
+                          <li class="mx-3">
+                            <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
+                          </li>
+                        }
+
+                      </ul>
+                    </button>
+                  </div>
+                  <div class="filter-by-wrapper d-flex mx-2 align-items-center">
+                    <span class="d-none d-lg-inline mx-1">Filter by</span>
+                    <button
+                      class="btn btn-light h-100 mx-1 rounded fs-4"
+                      aria-expanded="false"
+                      (click)="
+                      itemDetailFilterBlock.classList.toggle('d-none');
+                      itemDetailFilterBlock.classList.toggle('item-detail-filter')
+                    ">
+                      <i class="bi bi-filter"></i>
+                      <ul class="dropdown-menu">
+                        @for (option of config.itemDetailFilterBy; track option) {
+                          <li class="mx-3">
+                            <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
+                          </li>
+                        }
+                      </ul>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="d-flex d-none item-detail-filter row justify-content-center my-2 my-sm-3"
+                  #itemDetailFilterBlock>
+                  <div class="flex-grow-1 col-12 col-md-5 col-lg-4 me-md-2 my-2">
+                    <ng-multiselect-dropdown
+                      class=""
+                      [placeholder]="'Filter'"
+                      [settings]="dropdownSettings"
+                      [data]="config.itemDetailFilterBy"
+                      [(ngModel)]="selectedReviewFilter"
+                      (onSelect)="onReviewFilterChange($event)">
+                    </ng-multiselect-dropdown>
+                  </div>
+                  <div class="flex-grow-1 col-12 col-md-5 col-lg-4 ms-md-2 my-2">
+                    <ng-multiselect-dropdown
+                      class=" "
+                      [placeholder]="'Stars'"
+                      [settings]="dropdownSettings"
+                      [data]="config.itemDetailFilterByStars"
+                      [(ngModel)]="selectedStarFilter"
+                      (onSelect)="onStarFilterChange($event)">
+                    </ng-multiselect-dropdown>
+                  </div>
+
+                  <div class="checkbox-container d-none">
+                    <!--                <h1>{{config.itemDetailShowOnlyImagesLabel}}</h1>-->
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" data-ng-model="showReviewsWithImages" />
+                        <span class="box"></span>
+                        {{ config.itemDetailShowOnlyImagesLabel }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              @for (review of reviews; track review) {
+                <div class="row cols-auto">
+                  <app-review-unit [review]="review"></app-review-unit>
+                </div>
+              }
+
+            </div>
+          </ng-container>
+        </div>
       </div>
     </div>
-            </div>
-  </ng-container>
-</ng-container>
+  }
+}

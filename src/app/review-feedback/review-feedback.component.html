@@ -3,7 +3,7 @@
     <input type="checkbox" class="btn-check" id="like-review-check" autocomplete="off" (change)="likeClicked($event)" />
     <label class="form-check-label cursor-pointer" for="like-review-check">
       <i
-        class="bi bi-hand-thumbs-up fs-1"
+        class="bi bi-hand-thumbs-up fs-1 text-darker-theme"
         [ngClass]="{ 'bi-hand-thumbs-up-fill': feedback.liked, 'bi-hand-thumbs-up': !feedback.liked }"
         (click)="this.feedback.disliked = false; this.feedback.liked = !this.feedback.liked"></i>
     </label>
@@ -17,7 +17,7 @@
       (change)="dislikeClicked($event)" />
     <label class="form-check-label cursor-pointer" for="dislike-review-check">
       <i
-        class="bi bi-hand-thumbs-down fs-1"
+        class="bi bi-hand-thumbs-down fs-1 text-darker-theme"
         [ngClass]="{ 'bi-hand-thumbs-down-fill': feedback.disliked, 'bi-hand-thumbs-down': !feedback.disliked }"
         (click)="this.feedback.liked = false; this.feedback.disliked = !this.feedback.disliked"></i>
     </label>
