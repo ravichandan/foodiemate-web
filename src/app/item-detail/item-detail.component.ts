@@ -22,7 +22,6 @@ import { AppService } from '../services/app.service';
   imports: [
     NgIf,
     AsyncPipe,
-    NgForOf,
     NgbCarousel,
     NgbSlide,
     DecimalPipe,
@@ -87,7 +86,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       tap((p: Place | undefined) => (this.item = p?.items[this.selectedItemId])),
     );
 
-    this.reviews$ = selected$.pipe(map((x) => x?.items[this.selectedItemId].reviews));
+    this.reviews$ = selected$.pipe(map((x) => x?.placeItem.reviews));
 
     this.route.paramMap
       .pipe(

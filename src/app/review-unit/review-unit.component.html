@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="row gap-1 review-date-row">
-      <span class="fw-bold text-secondary">Reviewed on {{ review.customer.reviewedOn | date: 'd MMMM, y' }}</span>
+      <span class=" text-secondary"> {{ review.modifiedAt | date: 'd MMMM, y' }}</span>
     </div>
     <div class="row gap-1 rating-info-row">
       <div class="row row-cols-2 gap-2">

@@ -18,6 +18,7 @@ export interface Review {
   notHelpful: number;
   likedBy: CustomerInfo[];
   children: Review[];
+  modifiedAt: Date;
 }
 
 export interface NewReview {
