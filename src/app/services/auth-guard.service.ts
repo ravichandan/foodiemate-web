@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { loginSelector } from '../selectors/foodie.selector';
+import { loggedInSelector } from '../selectors/foodie.selector';
 import { map, Observable, take, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
@@ -15,7 +15,7 @@ export class AuthGuardService {
   ) {}
 
   canActivate() {
-    return this.store.select(loginSelector()).pipe(
+    return this.store.select(loggedInSelector()).pipe(
       take(1),
       map((loggedIn: boolean) => {
         if (loggedIn) {

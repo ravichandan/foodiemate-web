@@ -331,6 +331,10 @@ input [type="range"] {
 .detail-img {
   //width: 300px;
   height: 350px;
+  @include media-breakpoint-down(lg) {
+    height: 280px;
+  }
+
   //object-fit: none;
   //@include media-breakpoint-down(lg) {
     object-fit: cover;

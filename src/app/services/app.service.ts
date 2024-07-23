@@ -1,6 +1,6 @@
 import { inject, Injectable, OnDestroy } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { filter, map, Observable, of, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { filter, map, Observable, of, Subject, switchMap, take, takeUntil, tap, throwError } from 'rxjs';
 import { Place } from '../models/Place';
 import { NewReview, Review } from '../models/Review';
 import { CustomerInfo } from '../models/CustomerInfo';
@@ -129,23 +129,30 @@ export class AppService implements OnDestroy{
     );
   }
 
-  public feedbackReview(params: { reviewId: string; customerId: string; action: string }): Observable<any> {
-    if (!params?.reviewId || !params.customerId || !params.action) return of(undefined);
+  public feedbackReview(args: { reviewId: string; action: string }): Observable<any> {
+    if(!this.customer){
+      let msg ='You have to login first to do this';
+      console.error(msg);
+      return throwError(() => new HttpErrorResponse({error: new Error(msg), status: 401, statusText: msg}));
+    }
+    if (!args?.reviewId || !args.action) throw new Error('At least one of the required args is missing: '+ args);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'CUSTOMER_ID': this.customer?.id || ''
+      'CUSTOMER_ID': this.customer?.id || '',
+      'x-action': args.action
     });
 
-    const url = join(this.getConfig().host, this.getConfig().itemEndpoint.replace(':reviewId', params.reviewId));
+    console.log('in app.service, feedbackReview(), params: ', args);
+    const url = join(this.getConfig().host, this.getConfig().feedbackAReviewEndpoint.replace(':reviewId', args.reviewId));
 
     // const
     // let httpParams = new HttpParams();
     // httpParams = httpParams.append('customerId', customerId);
     // httpParams = httpParams.append('action', action);
-    return this.http.post(url, {
-      customerId: params.customerId,
-      action: params.action,
+    return this.http.put(url, {
+      customerId: this.customer.id,
+      action: args.action,
     }, {headers});
   }
 

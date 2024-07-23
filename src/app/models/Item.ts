@@ -43,4 +43,5 @@ export interface Item {
   places: Place[];
   reviews: Review[];
   rating: Rating;
+  placeItem: any;
 }

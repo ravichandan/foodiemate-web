@@ -87,7 +87,7 @@ export const customerSelector = () =>
     (customer) => customer,
   );
 
-export const loginSelector = () =>
+export const loggedInSelector = () =>
   createSelector(
     (state: State) => state.loggedIn,
     (loggedIn) => loggedIn,

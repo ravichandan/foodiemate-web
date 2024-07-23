@@ -124,7 +124,7 @@ export class FoodieEffects {
       tap((x) => console.log('in likeReview$ effect', x)),
       mergeMap((action) =>
         this.appService
-          .feedbackReview({ reviewId: action.reviewId, customerId: action.customerId, action: 'like' })
+          .feedbackReview({ reviewId: action.reviewId, action: 'like' })
           .pipe(
             map((review: any) => FoodieActions.feedbackReviewSuccess({ review })),
             catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
@@ -139,7 +139,7 @@ export class FoodieEffects {
       tap((x) => console.log('in unlikeReview$ effect', x)),
       mergeMap((action) =>
         this.appService
-          .feedbackReview({ reviewId: action.reviewId, customerId: action.customerId, action: 'unlike' })
+          .feedbackReview({ reviewId: action.reviewId, action: 'unlike' })
           .pipe(
             map((review: any) => FoodieActions.feedbackReviewSuccess({ review })),
             catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
@@ -154,7 +154,7 @@ export class FoodieEffects {
       tap((x) => console.log('in dislikeReview$ effect', x)),
       mergeMap((action) =>
         this.appService
-          .feedbackReview({ reviewId: action.reviewId, customerId: action.customerId, action: 'dislike' })
+          .feedbackReview({ reviewId: action.reviewId, action: 'dislike' })
           .pipe(
             map((review: any) => FoodieActions.feedbackReviewSuccess({ review })),
             catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
@@ -169,7 +169,7 @@ export class FoodieEffects {
       tap((x) => console.log('in undislikeReview$ effect', x)),
       mergeMap((action) =>
         this.appService
-          .feedbackReview({ reviewId: action.reviewId, customerId: action.customerId, action: 'undislike' })
+          .feedbackReview({ reviewId: action.reviewId, action: 'undislike' })
           .pipe(
             map((review: any) => FoodieActions.feedbackReviewSuccess({ review })),
             catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),

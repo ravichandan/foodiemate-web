@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
 import * as FoodieActions from './actions/foodie.actions';
 import { HomeComponent } from './home/home.component';
 import { SharingButtonsComponent } from './review-reply/sharing-buttons.component';
-import { customerSelector, loginSelector } from './selectors/foodie.selector';
+import { customerSelector, loggedInSelector } from './selectors/foodie.selector';
 import { AuthGoogleService } from './services/auth-google.service';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { BrowserModule } from '@angular/platform-browser';
@@ -98,7 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.destroy$ = new Subject<any>();
     this.store
-      .select(loginSelector())
+      .select(loggedInSelector())
       .pipe(takeUntil(this.destroy$))
       .subscribe((val) => (this.isLoggedIn = val));
 

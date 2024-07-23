@@ -168,8 +168,31 @@ export const placesDataReducer = createReducer(
   }),
   on(FoodieActions.feedbackReviewSuccess, (oldState: { [_: string]: Place }, { review }) => {
     const copy = { ...oldState };
-    const reviewsObj = copy[review.place._id].items[review.item._id].reviews;
-    copy[review.place._id].items[review.item._id].reviews = [...reviewsObj.map((r) => (r._id === review._id ? review : r))];
+    const placeId = review.place?._id ?? review.place;
+    const items = copy[placeId].items;
+    const itemId = Object.values(items).find(item => item.placeItem?._id === (review.placeItem?._id ??  review.placeItem))?._id;
+    if(itemId) {
+      const reviewsObj = items[itemId].placeItem.reviews;
+      // items[itemId].placeItem.reviews = [...reviewsObj.map((r: Review) => (r._id === review._id ? review : r))];
+      const result = {
+        ...copy,
+        [placeId]: {
+          ...copy[placeId],
+          items: {
+            ...items,
+            [itemId]: {
+              ...items[itemId],
+              placeItem: {
+                ...items[itemId].placeItem,
+                reviews: items[itemId].placeItem.reviews.map((r: Review) => (r._id === review._id ? review : r))
+              }
+            },
+
+          }
+        }
+      }
+      return result;
+    }
     return copy;
   }),
 );

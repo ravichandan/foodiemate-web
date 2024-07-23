@@ -143,13 +143,13 @@ export const fetchItemOfAPlaceSuccess = createAction(
   props<{ response: PlacesResponse }>(),
 );
 
-export const likeReview = createAction(ACTION_LIKE_REVIEW, props<{ reviewId: string; customerId: string }>());
+export const likeReview = createAction(ACTION_LIKE_REVIEW, props<{ reviewId: string}> ());
 
-export const dislikeReview = createAction(ACTION_DISLIKE_REVIEW, props<{ reviewId: string; customerId: string }>());
+export const dislikeReview = createAction(ACTION_DISLIKE_REVIEW, props<{ reviewId: string }>());
 
-export const unlikeReview = createAction(ACTION_UNLIKE_REVIEW, props<{ reviewId: string; customerId: string }>());
+export const unlikeReview = createAction(ACTION_UNLIKE_REVIEW, props<{ reviewId: string }>());
 
-export const undislikeReview = createAction(ACTION_UNDISLIKE_REVIEW, props<{ reviewId: string; customerId: string }>());
+export const undislikeReview = createAction(ACTION_UNDISLIKE_REVIEW, props<{ reviewId: string }>());
 
 export const feedbackReviewSuccess = createAction(ACTION_FEEDBACK_REVIEW_SUCCESS, props<{ review: Review }>());
 

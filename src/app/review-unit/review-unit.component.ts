@@ -1,4 +1,4 @@
-import { Component, Input,inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Review } from '../models/Review';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -16,6 +16,7 @@ import { AppService } from '../services/app.service';
   imports: [NgIf, DatePipe, NgbRatingModule, NgForOf, NgClass, ReviewFeedbackComponent],
   templateUrl: './review-unit.component.html',
   styleUrl: './review-unit.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReviewUnitComponent implements OnInit, OnDestroy {
   @Input('review')
@@ -46,4 +47,5 @@ export class ReviewUnitComponent implements OnInit, OnDestroy {
   ariaValueText(current: number, max: number) {
     return `${current} out of ${max}`;
   }
+
 }

@@ -3,6 +3,11 @@ import { CustomerInfo } from './CustomerInfo';
 import { Item } from './Item';
 import { Place } from './Place';
 
+export interface ReviewThread {
+  _id: string;
+  likedBy: CustomerInfo[];
+
+}
 export interface Review {
   _id: string;
   description: string;
@@ -14,9 +19,11 @@ export interface Review {
   customer: CustomerInfo;
   place: Place;
   item: Item;
+  placeItem: any;
   helpful: number;
   notHelpful: number;
-  likedBy: CustomerInfo[];
+  noOfReplies: number;
+  info: ReviewThread;
   children: Review[];
   modifiedAt: Date;
 }
