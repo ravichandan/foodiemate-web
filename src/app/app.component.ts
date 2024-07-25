@@ -112,6 +112,20 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('environment.production::', environment.production);
     if (this.isBrowser) {
       console.log('in app.component.ts ngOnInit, window.location.href:: ', window.location.href);
+      const x = new URLSearchParams(window.location.search);
+      const y = x.get('state')
+        if(y) {
+          const states = y.split(';');
+          if(states.length > 1) {
+            const state = states[1];
+            if(!!state) {
+              let url = decodeURIComponent(state);
+              console.log('Redirecting to ', url);
+              this.router.navigate([url]).then();
+            }
+          }
+        }
+
     }
     this.items = this.config.navigation_menu;
     this.store.dispatch(FoodieActions.fetchCuisines());

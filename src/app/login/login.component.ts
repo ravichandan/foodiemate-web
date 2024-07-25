@@ -29,6 +29,7 @@ export class LoginComponent implements OnDestroy, OnInit {
   fb: FormBuilder = inject(FormBuilder);
   authGoogleService = inject(AuthGoogleService);
   active=1;
+  prevPage: string | undefined;
   // constructor( private authService:SocialAuthService) {}
 
   // ngOnInit(): void {
@@ -41,9 +42,12 @@ export class LoginComponent implements OnDestroy, OnInit {
     this.destroy$ = new Subject<any>();
     this.config = this.appService.getConfig();
     this.loginFG = this.fb.group({});
+
+    this.prevPage = this.router.getCurrentNavigation()?.previousNavigation?.finalUrl?.toString();
   }
 
   ngOnInit() {
+
     this.authService.authState.subscribe((user) => {
       console.log('in this.authService.authState.subscribe, user:: ', user);
       //perform further logics
@@ -56,6 +60,7 @@ export class LoginComponent implements OnDestroy, OnInit {
 
   submitLogin() {
     console.log('in login.component.ts->submitLogin');
-    this.authGoogleService.login();
+    // this.authGoogleService.login({state: 'http://localhost:4300/places/6681190cfba0035e4672b98a/items/668a7fd5ed97f7a5de5f5690'});
+    this.authGoogleService.login({ state: this.prevPage }).then();
   }
 }

@@ -27,6 +27,7 @@ export class AuthGoogleService {
     @Inject(PLATFORM_ID) platformId: Object,
   ) {
     this.config = this.appService.getConfig();
+
     if (isPlatformBrowser(platformId)) {
       this.initConfig({ customHashFragment: window.location.search }, this.config.oauthRedirectUrl?? undefined);
     }
@@ -174,15 +175,17 @@ export class AuthGoogleService {
      */
   }
 
-  public login(redirectUrl: string = 'http://localhost:4300/ind', state?: string) {
-    console.log('in auth-google.service, state:: ', state);
+  public async login(args?:{ redirectUrl?: string, state?: string
+}) {
+    console.log('in auth-google.service, state:: ', args?.state);
+    // http://localhost:4300/places/6681190cfba0035e4672b98a/items/668a7fd5ed97f7a5de5f5690
     // this.initConfig(redirectUrl);
     // this.oa.redirectUri = redirectUrl;
     // setTimeout(()=> {
-    this.oa.initCodeFlow();
+    this.oa.initCodeFlow(args?.state);
     // }, 10)
 
-    console.log('end in auth-google.service, state:: ', state);
+    console.log('end in auth-google.service, state:: ', args?.state);
   }
 
   public logout() {
