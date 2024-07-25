@@ -44,6 +44,7 @@
     "lodash": "^4.17.21",
     "ng-image-fullscreen-view": "file:3rd-party-libs/ng-image-fullscreen-view-3.0.3.tgz",
     "ng-multiselect-dropdown": "^1.0.0",
+    "ngx-bootstrap": "^12.0.0",
     "ngx-sharebuttons": "^13.0.0",
     "primeng": "^17.12.0",
     "rxjs": "~7.8.0",

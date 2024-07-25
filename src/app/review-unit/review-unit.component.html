@@ -1,3 +1,33 @@
+<ng-template #ratingTemplate let-val="val">
+  @if(val){<span  class="text-theme "><span class=""
+  >@for (i of [].constructor(Math.floor(val)); track i;) {
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="currentcolor"
+       stroke="currentcolor" stroke-linecap="miter" stroke-linejoin="miter" stroke-width="2">
+    <path d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z" />
+  </svg>
+  }</span><span
+  >@if((val-Math.floor(val))>0) {
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" stroke="currentcolor"
+       stroke-linecap="miter" stroke-linejoin="miter" stroke-width="2">
+    <defs>
+      <linearGradient [id]="'grad-'+review._id">
+        <stop offset="50%" stop-color="currentcolor" />
+        <stop offset="50%" stop-color="white" />
+      </linearGradient>
+    </defs>
+    <path [attr.fill]="'url(#grad-'+review._id+')'" d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z" />
+  </svg>
+  }</span><span
+  >@for (i of [].constructor(5-Math.ceil(val)); track i;) {
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor"
+       stroke-linecap="miter" stroke-linejoin="miter" stroke-width="2">
+    <path d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z" />
+  </svg>
+  }</span>
+            </span>}
+</ng-template>
+
+
 @if(review) {
     <div class="review-unit-container row gap-3 my-2">
       <div class="row gap-1 customer-info-row">
@@ -18,28 +48,37 @@
         <span class=" text-secondary"> {{ review.modifiedAt | date: 'd MMMM, y' }}</span>
       </div>
       <div class="row gap-1 rating-info-row">
-        <div class="row row-cols-1 row-cols-md-2 gap-2">
-          <div class="col d-flex justify-content-between align-items-center rating-element">
-            <span>Taste: </span>
-                      <ngb-rating
-                        [rate]="review.taste"
-                        class="fs-5"
-                        [readonly]="true"
-                        [max]="5"
-                        [ariaValueText]="ariaValueText" />
+        <div class="row gap-2">
+          <div class="col-12 col-md-6 d-flex justify-content-between align-items-center rating-element">
+            <span class="mt-1">Taste: </span>
+            <span class="row gap-0">
+              <span class="col-auto p-0 fw-medium"><ng-container *ngTemplateOutlet="ratingTemplate; context: { val: review.taste }"></ng-container></span>
+              <span class="col-auto  fw-bold">({{ review.taste |number: '1.1-1'}})</span>
+            </span>
+<!--            <ng-container [ngTemplateOutlet]="ratingTemplate" [ngTemplateOutletContext]="{ val: 3 }"></ng-container>-->
+
           </div>
 
 
-          <div class="col d-flex justify-content-between align-items-center rating-element">
-            <span class="">Presentation: </span>
-                      <ngb-rating
+          <div class="col-12 col-md-6 d-flex justify-content-between align-items-center rating-element">
+            <span class="mt-1">Presentation: </span>
+<!--                      <ngb-rating-->
 
-                        [disabled]="true"
-                        [rate]="review.presentation"
-                        class="fs-5"
-                        [readonly]="true"
-                        [max]="5"
-                        [ariaValueText]="ariaValueText" />
+<!--                        [disabled]="true"-->
+<!--                        [rate]="review.presentation"-->
+<!--                        class="fs-5"-->
+<!--                        [readonly]="true"-->
+<!--                        [max]="5"-->
+<!--                        [ariaValueText]="ariaValueText" />-->
+<!--            <rating  [ngModel]="review.presentation"-->
+<!--                     class="fs-5 text-theme"-->
+<!--                     [readonly]="true"-->
+<!--                     [attr.aria-valuetext]="ariaValueText(review.taste, 5)"-->
+<!--            ></rating>-->
+            <span class="row gap-0">
+              <span class="col-auto p-0 "><ng-container *ngTemplateOutlet="ratingTemplate; context: { val: review.presentation }"></ng-container></span>
+              <span class="col-auto mt-1 fw-bold">({{ review.presentation|number: '1.1-1'}})</span>
+            </span>
           </div>
           <!-- <div class="col d-flex justify-content-between align-items-center rating-element-small">
              <span>Service: </span>
@@ -92,3 +131,12 @@
       </div>
     </div>
   }
+
+<!--<ng-container *ngTemplateOutlet="ratingTemplate; context: {val: 3.5}"></ng-container>-->
+
+<!--<ng-template #estimateTemplate let-val="val">-->
+<!--  <div> Approximately {{val}} lessons ...</div>-->
+<!--</ng-template>-->
+<!--<ng-container-->
+<!--  *ngTemplateOutlet="estimateTemplate;context:{val: 10}">-->
+<!--</ng-container>-->

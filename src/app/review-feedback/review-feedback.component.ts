@@ -34,7 +34,7 @@ class ReviewFeedback {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReviewFeedbackComponent implements OnInit, OnDestroy
-  // , AfterViewInit, AfterContentInit, AfterViewChecked, AfterViewChecked
+  , AfterViewInit, AfterContentInit, AfterViewChecked, AfterViewChecked
 {
   @Input('review')
   review!: Review;
@@ -121,18 +121,18 @@ export class ReviewFeedbackComponent implements OnInit, OnDestroy
     }
   }
 
-  // ngAfterContentInit(): void {
-  //   console.log('ngAfterContentInit(), index:: '+ this.index +' reviewId:: ' + this.review?._id);
-  //
-  // }
-  //
-  // ngAfterViewChecked(): void {
-  //   console.log('ngAfterContentInit(), index:: '+ this.index +' reviewId:: ' + this.review?._id);
-  //
-  // }
-  //
-  // ngAfterViewInit(): void {
-  //   console.log('ngAfterContentInit(), index:: '+ this.index +' reviewId:: ' + this.review?._id);
-  //
-  // }
+  ngAfterContentInit(): void {
+    console.log('ngAfterContentInit(),  reviewId:: ' + this.review?._id);
+
+  }
+
+  ngAfterViewChecked(): void {
+    console.log('ngAfterContentInit(),  reviewId:: ' + this.review?._id);
+
+  }
+
+  ngAfterViewInit(): void {
+    console.log('ngAfterContentInit(),  reviewId:: ' + this.review?._id);
+
+  }
 }
