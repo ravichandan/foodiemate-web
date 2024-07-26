@@ -423,7 +423,9 @@
     "noMatchingItems": "No matching items found with the given name",
     "noMatchingPlaces": "No matching places found with the given name",
     "foundFollowingItems": "We found following items with the name ",
-    "foundFollowingPlaces": "We found following places that offer "
+    "foundFollowingPlaces": "We found following places that offer ",
+    "viewFullMenu": "View full menu",
+    "moreDetails": "More Details"
   },
   "hideCuisineMenu": true,
   "hideLeftNavigationMenu": true,

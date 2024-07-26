@@ -12,7 +12,7 @@ import { DecimalPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe } from
 import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../models/Place';
 import { Subject } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { AppService } from '../services/app.service';
@@ -22,7 +22,7 @@ import { ReplacePipe } from '../directives/replace.pipe';
 @Component({
   selector: 'app-place-list-unit',
   standalone: true,
-  imports: [DecimalPipe, NgForOf, NgbCarousel, NgbSlide, NgTemplateOutlet, NgIf, NgClass, SlicePipe, ReplacePipe],
+  imports: [DecimalPipe, NgForOf, NgbCarousel, NgbSlide, NgTemplateOutlet, NgIf, NgClass, SlicePipe, ReplacePipe, RouterLink],
   templateUrl: './place-list-unit.component.html',
   styleUrl: './place-list-unit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -107,5 +107,14 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
     this.router.navigate([r]).then();
 
 
+  }
+
+  goToPlaceDetail() {
+
+    console.log('in place-list-unit.component-> goToPlaceDetail', this.item);
+    let r = 'places/:placeId';
+    if (this.item?.places?.[0]?._id)
+      r=r.replace(':placeId', this.item?.places?.[0]?._id);
+    this.router.navigate([r]).then();
   }
 }

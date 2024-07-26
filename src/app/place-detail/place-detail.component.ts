@@ -115,4 +115,5 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
   }
 
   protected readonly Object = Object;
+  protected readonly JSON = JSON;
 }

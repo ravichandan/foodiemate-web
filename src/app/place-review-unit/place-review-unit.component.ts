@@ -45,4 +45,6 @@ export class PlaceReviewUnitComponent implements OnInit, OnDestroy {
   ariaValueText(current: number, max: number) {
     return `${current} out of ${max}`;
   }
+
+  protected readonly Math = Math;
 }

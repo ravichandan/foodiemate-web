@@ -1,37 +1,58 @@
 <ng-container *ngIf="place$ | async as place">
-  <div class="row gap-4 place-detail-container mobile-place-detail-container">
-    <div class="place-title-container col-12 row justify-content-between align-items-end">
-      <div class="col-12 col-md-8">
-        <div class="row my-1">
-          <span class="place-name-text fw-bolder text-secondary-emphasis"
-            ><i class="bi bi-shop me-2"></i>{{ place.name }}</span
+  <div class="m-1 m-md-4 ">
+    <div class="row gap-4 mx-0 place-detail-container mobile-place-detail-container">
+    <div class="place-title-container container col-12 py-3 text-darker-bg-theme rounded-top-3">
+      <div class="row gap-2 align-items-start ">
+
+        <!-- item, place name-->
+        <div class="col-7 col-md-9">
+          <div class="col-12 my-1">
+                <span class="place-name-text d-flex align-items-center fw-bolder "><span
+                  class=""><svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="currentColor"><path d="M280-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Zm400 0v-320H560v-280q0-83 58.5-141.5T760-880v800h-80Z"/>
+                </svg></span>{{ place.name }}</span>
+          </div>
+
+          <div class="col-12 my-1">
+                <span class="place-suburb-text">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg>
+                  {{ place.address?.suburb }}
+                </span>
+
+          </div>
+          <!--          <div class="row my-1"><span class="item-suburb-text  fs-6 text-secondary-emphasis"><i-->
+          <!--            class="bi bi-geo-alt fs-5 me-3"></i>{{ item.address?.suburb }}</span></div>-->
+        </div>
+        <!-- item overall rating-->
+        <div class="place-rating-container d-flex flex-column col-5 row gap-1 px-0">
+          <div class="ambience-container mobile-ambience-container col-12">
+            <div class="d-flex justify-content-between align-items-baseline">
+                  <span class="ambience-text me-2">Ambience: </span
+                  ><span class=""
+            ><span class="fs-6 fw-bold">{{ place.ambience | number: '1.1-1' }}&nbsp;/</span
+            ><span class="fw-normal">&nbsp;5</span></span
+            >
+            </div>
+          </div>
+          <div class="service-container mobile-service-container col-12">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <span class="service-text small">Service: </span>
+              <span class=""
+              ><span
+                class="fs-6 fw-bold">{{ place.service | number: '1.1-1' }}&nbsp;/</span
+              ><span class="fw-normal">&nbsp;5</span></span
+              >
+            </div>
+            <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
+            <!--                                            class="item-price-text fs-5">Price: </span><span-->
+            <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
+          </div>
+          <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"
+          >(Out of {{ place.noOfReviews }} reviews)</small
           >
         </div>
-        <div class="row my-1">
-          <span class="place-suburb-text fw-bolder fs-6 text-secondary-emphasis"
-            ><i class="bi bi-geo-alt fs-5 me-2"></i>{{ place.address?.suburb }}</span
-          >
-        </div>
-      </div>
-      <div class="item-rating-container d-flex d-lg-none flex-column fw-bold col-12 col-md-3">
-        <div class="ambience-container mobile-ambience-container">
-          <div class="d-flex justify-content-between">
-            <span class="ambience-text me-2">Ambience: </span><span>{{ place.ambience | number: '1.1-1' }}</span>
-          </div>
-        </div>
-        <div class="service-container mobile-service-container">
-          <div class="d-flex justify-content-between">
-            <span class="service-text">Service: </span> <span>{{ place.service | number: '1.1-1' }}</span>
-          </div>
-          <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
-          <!--                                            class="item-price-text fs-5">Price: </span><span-->
-          <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
-        </div>
-        <span class="no-of-reviews-text fw-normal text-secondary-emphasis fs-smaller"
-          >(Out of {{ place.noOfReviews }} reviews):
-        </span>
       </div>
     </div>
+
     <div class="col-12">
       <div class="card border-secondary">
         <div class="row mx-0">
@@ -80,15 +101,17 @@
                             class="bi bi-geo-alt fs-4 me-2"></i>{{item.address?.suburb}}</span></div>
                 </div>
               -->
-              <div class="row mx-3 mx-lg-0">
-                <div class="d-flex col-12 col-md-4 col-lg-6 py-1 py-lg-0 text-secondary" *ngFor="let tag of place.tags">
+              @if(place.tags?.length) {
+                <div class="row mx-3 mx-lg-0">
+                  <div class="d-flex col-12 col-md-4 col-lg-6 py-1 py-lg-0 text-secondary"
+                       *ngFor="let tag of place.tags">
                   <span class="material-symbols-outlined d-inline">
                     {{ getMaterialIconNameForTag({ name: tag.label }) }}
                   </span>
-                  <span class="px-2 place-tag-text text-justify d-inline">{{ tag.label }}</span>
+                    <span class="px-2 place-tag-text text-justify d-inline">{{ tag.label }}</span>
+                  </div>
                 </div>
-              </div>
-
+              }
               <div class="row mx-3 mx-lg-0">
                 <div class="opening-times-container row mx-0 px-0">
                   <!-- div Button triggers BusinessHours modal -->
@@ -200,7 +223,7 @@
       </ng-container>
     </div>
   </div>
-
+  </div>
   <!-- Modal -->
   <div
     class="modal fade"
@@ -217,6 +240,7 @@
         <div class="modal-body">
           <div class="container-fluid">
             <div class="row my-1" *ngFor="let e of Object.entries(place.openingTimes)">
+              {{JSON.stringify(e)}}
               <div class="col-4">{{ e[0] | titlecase }}:</div>
               <div class="col-7 ms-auto">{{ e[1].open }}:00 - {{ e[1].close }}:00</div>
             </div>
