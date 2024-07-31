@@ -157,9 +157,7 @@ export const placesDataReducer = createReducer(
       console.log('in reducer -> fetchItemOfAPlaceSuccess, inside If ', copy);
       copy[place._id] = {
         ...place,
-        items: {
-          [item._id]: item,
-        },
+        items: [item],
       } as Place;
       return copy;
     }
@@ -170,25 +168,32 @@ export const placesDataReducer = createReducer(
     const copy = { ...oldState };
     const placeId = review.place?._id ?? review.place;
     const items = copy[placeId].items;
-    const itemId = Object.values(items).find(item => item.placeItem?._id === (review.placeItem?._id ??  review.placeItem))?._id;
-    if(itemId) {
-      const reviewsObj = items[itemId].placeItem.reviews;
+    const itemId: string| undefined = items.find(item => item.placeItem?._id === (review.placeItem?._id ??  review.placeItem))?._id;
+    const item: Item| undefined = items.find(item => item.placeItem?._id === (review.placeItem?._id ??  review.placeItem));
+    if(itemId && item) {
+
+      const reviewsObj = item.placeItem.reviews;
       // items[itemId].placeItem.reviews = [...reviewsObj.map((r: Review) => (r._id === review._id ? review : r))];
       const result = {
         ...copy,
         [placeId]: {
           ...copy[placeId],
           items: {
-            ...items,
-            [itemId]: {
-              ...items[itemId],
+            ...items.map((it) => it._id !== item._id ? it : {
+              ...item,
               placeItem: {
-                ...items[itemId].placeItem,
-                reviews: items[itemId].placeItem.reviews.map((r: Review) => (r._id === review._id ? review : r))
+                ...item.placeItem,
+                reviews: item.placeItem.reviews.map((r: Review) => (r._id === review._id ? review : r))
               }
-            },
+            })
+            // [itemId]: {
+            //   ...item,
+            //   placeItem: {
+            //     ...items[itemId].placeItem,
+            //     reviews: items[itemId].placeItem.reviews.map((r: Review) => (r._id === review._id ? review : r))
+            //   }
+          },
 
-          }
         }
       }
       return result;

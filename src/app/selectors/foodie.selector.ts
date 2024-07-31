@@ -105,8 +105,9 @@ export const itemDetailOfAPlaceSelector = (placeId: string, itemId: string) =>
       // console.log('in selector:: ,itemData:: ', itemData);
       // console.log('in selector:: ,id:: ', id);
       // console.log('in selector:: ,itemData[id]:: ', itemData[id]);
-      if (!placesData[placeId]?.items?.[itemId]) return undefined;
-      return { ...placesData[placeId], items: { [itemId]: placesData[placeId].items?.[itemId] } } as Place;
+      const item = placesData[placeId]?.items?.find(it => it._id===itemId);
+      if (!item) return undefined;
+      return { ...placesData[placeId], items: [item] } as Place;
     },
   );
 

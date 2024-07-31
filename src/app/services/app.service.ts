@@ -76,16 +76,20 @@ export class AppService implements OnDestroy{
     );
   }
 
-  public getPlace(params: { id: string; pageSize?: number; pageNum?: number }): Observable<any> {
-    if (!params.id) return of(undefined);
+  public getPlace(args: { id: string; fetchMenu?: boolean; fetchReviews?: boolean; pageSize?: number; pageNum?: number }): Observable<any> {
+    if (!args.id) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    const url = join(this.getConfig().host, this.getConfig().placeEndpoint.replace(':placeId', params.id));
-    // let httpParams = new HttpParams();
-    // httpParams = httpParams.append('pageSize', params.pageSize || 1);
-    // httpParams = httpParams.append('pageNum', params.pageNum || 1);
+    console.log('in app.service.getPlace, args:: ', args);
+    const url = join(this.getConfig().host, this.getConfig().placeEndpoint.replace(':placeId', args.id));
+    let params = new HttpParams();
+    params = params.append('pageSize', args.pageSize || 5);
+    params = params.append('pageNum', args.pageNum || 1);
+    params = args.fetchMenu? params.append('fetchMenu', true): params ;
+    params = args.fetchReviews? params.append('fetchReviews', true): params ;
+
     return this.http
-      .get<Place>(url, { headers, })
+      .get<Place>(url, { headers, params})
       .pipe(tap((t: any) => console.log('getPlace response:: ', t)));
   }
 

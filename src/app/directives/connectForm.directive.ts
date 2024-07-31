@@ -46,7 +46,7 @@ export class ConnectFormDirective implements OnDestroy, OnInit {
                 tap((x) => console.log('in connectForm->placeSelector(), x:: ', x)),
                 switchMap((place: Place) => {
                   return data.postReview?.item
-                    ? of({ ...data.postReview, placeCtrl: place, item1Group: { itemCtrl: place.items[data.postReview?.item._id] } })
+                    ? of({ ...data.postReview, placeCtrl: place, item1Group: { itemCtrl: place.items.find(i => i._id ===data.postReview?.item?._id) } })
                     : of({ ...data.postReview, placeCtrl: place });
                 }),
               )

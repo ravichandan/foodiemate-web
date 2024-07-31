@@ -81,7 +81,7 @@ export class FoodieEffects {
       ofType(FoodieActions.fetchPlace),
       tap((x) => console.log('in loadAPlace$ effect', x)),
       mergeMap((action) =>
-        this.appService.getPlace({ id: action.id }).pipe(
+        this.appService.getPlace({ id: action.id, fetchMenu: action.fetchMenu ?? false, fetchReviews: action.fetchReviews ?? false }).pipe(
           filter(Boolean),
           map((place: Place) => FoodieActions.fetchPlaceSuccess({ place })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),

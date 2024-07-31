@@ -85,7 +85,7 @@ export const fetchItem = createAction(ACTION_FETCH_ITEM, props<{ id: string }>()
 
 export const fetchItemSuccess = createAction(ACTION_FETCH_ITEM_SUCCESS, props<{ item: Item }>());
 
-export const fetchPlace = createAction(ACTION_FETCH_PLACE, props<{ id: string }>());
+export const fetchPlace = createAction(ACTION_FETCH_PLACE, props<{ id: string; fetchMenu?: boolean; fetchReviews?: boolean }>());
 
 export const fetchPlaceSuccess = createAction(ACTION_FETCH_PLACE_SUCCESS, props<{ place: Place }>());
 

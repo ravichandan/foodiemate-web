@@ -8,6 +8,7 @@ import { State } from '../reducers';
 import { Item } from '../models/Item';
 import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 import { AppService } from '../services/app.service';
+import { ReplacePipe } from '../directives/replace.pipe';
 
 @Component({
   selector: 'app-item-list-unit',
@@ -22,6 +23,7 @@ import { AppService } from '../services/app.service';
     NgClass,
     NgImageFullscreenViewModule,
     LowerCasePipe,
+    ReplacePipe,
   ],
   templateUrl: './item-list-unit.component.html',
   styleUrl: './item-list-unit.component.scss',

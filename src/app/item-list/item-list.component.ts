@@ -86,12 +86,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
       tap((x) => console.log('items received in item-list.component, x.items:: ', x.items)),
       tap((x) => (this.selectedPlaceName = x.name)),
 
-      map((x) => Object.values(x.items)),
+      map((x) => x.items as Item[]),
       map((items: Item[]) => items?.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
     );
     setTimeout(() => {}, 10000);
-
-    console.log('hee', this.route.paramMap);
 
     this.route.paramMap
       .pipe(
@@ -100,7 +98,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
         tap((params: ParamMap) => {
           console.log('in paramMap, params:: ', params);
           this.selectedPlaceId = params.get('placeId');
-          this.store.dispatch(FoodieActions.fetchPlace({ id: this.selectedPlaceId }));
+          this.store.dispatch(FoodieActions.fetchPlace({ id: this.selectedPlaceId, fetchMenu: true }));
         }),
       )
       .subscribe();

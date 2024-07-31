@@ -2,6 +2,7 @@ import { Media } from './Media';
 import { Item } from './Item';
 import { Review } from './Review';
 import { Address } from './Address';
+import { Rating } from './Rating';
 
 export interface Place {
   _id: string;
@@ -12,13 +13,16 @@ export interface Place {
   service: number;
   ambience: number;
   noOfReviews: number;
-  items: { [k: string]: Item };
+  // items: { [k: string]: Item };
+  items: Item[];
   tags: { id: string; label: string }[];
   openingTimes: OpeningTimes;
   reviews: Review[];
   medias: Media[];
   address: Address;
   placeItem: any;
+  placeItems: any;
+  ratingInfo: Rating;
 }
 
 export enum FriendlyTag {
