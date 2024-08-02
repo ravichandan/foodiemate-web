@@ -36,7 +36,7 @@
 <!--          <accordion-group >-->
 <!--            <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
               <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
-              <app-item-list-unit [item]="item"></app-item-list-unit>
+              <app-item-list-unit [item]="item" (toItemDetail)="goToItemDetail(item._id)"></app-item-list-unit>
 <!--            </div>-->
 <!--          </accordion-group>-->
         }

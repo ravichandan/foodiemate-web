@@ -161,7 +161,16 @@ export const placesDataReducer = createReducer(
       } as Place;
       return copy;
     }
-    copy[place._id] = { ...copy[place._id], items: { ...copy[place._id].items, [item._id]: { ...item } } };
+    let index = copy[place._id].items.findIndex(it=> it._id==item._id);
+
+    const items = [...copy[place._id].items];
+    if (index !== -1) {
+      items[index] = item;
+    } else {
+      items.push(item);
+    }
+    copy[place._id] = { ...copy[place._id], items: items };
+    // copy[place._id] = { ...copy[place._id], items: { ...copy[place._id].items, [item._id]: { ...item } } };
     return copy;
   }),
   on(FoodieActions.feedbackReviewSuccess, (oldState: { [_: string]: Place }, { review }) => {

@@ -65,7 +65,7 @@
           <div class="card border-secondary">
 <!--            <div class="row mx-0">-->
               <div class="col-12 col-lg-7 image-container px-0">
-                @if (item.placeItem.ratingInfo?.noOfReviewPhotos) {
+                @if (item.placeItem.reviewMedias?.length) {
                   <ngb-carousel
                     [showNavigationArrows]="config.carousel.showNavigationArrows"
                     [showNavigationIndicators]="config.carousel.showNavigationIndicators"
@@ -73,18 +73,16 @@
                     [pauseOnFocus]="config.carousel.pauseOnFocus"
                     [interval]="0"
                     #reviewImgCarousel>
-                    @for (review of item?.reviews; track review) {
-                      @for (media of review?.medias; track media) {
+                    @for (rev of item.placeItem?.reviewMedias; track rev.media) {
 
                         <ng-template ngbSlide>
                           <div class="picsum-img-wrapper">
                             <img
-                              [src]="config.bucketAccessEndpoint+'/'+media.key"
-                              alt="loading picture of the dish"
+                              [src]="config.bucketAccessEndpoint+'/'+rev.media.key"
+                              alt="loading review photos"
                               class="card-img-top detail-img place-list-img w-100 img-fluid rounded-0" />
                           </div>
                         </ng-template>
-                      }
                     }
                   </ngb-carousel>
                 } @else if (item.media) {

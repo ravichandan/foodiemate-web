@@ -83,10 +83,10 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
     this.place$ = selected$.pipe(
       tap((p) => (this.selectedPlace = p)),
-      tap((p: Place | undefined) => (this.item = p?.items[this.selectedItemId])),
+      tap((p: Place | undefined) => (this.item = p?.items[0])),
     );
 
-    this.reviews$ = selected$.pipe(map((x) => x?.items[this.selectedItemId].placeItem.reviews));
+    this.reviews$ = selected$.pipe(map((x) => x?.items[0].placeItem.reviews));
 
     this.route.paramMap
       .pipe(
@@ -107,11 +107,12 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         ),
         tap(x => console.log('in item-detail.component, item:: ',x)),
         tap((item: Item| undefined) =>
-          item?.placeItemId
-            ? this.store.dispatch(
-              FoodieActions.fetchItemOfAPlace({ placeItemId: item.placeItemId }))
-            : this.store.dispatch(
-          FoodieActions.fetchItemOfAPlace({ placeId: this.selectedPlaceId, itemId: this.selectedItemId }),
+          // item?.placeItemId
+          //   ? this.store.dispatch(
+          //     FoodieActions.fetchItemOfAPlace({ placeItemId: item.placeItemId }))
+          //   :
+            this.store.dispatch(
+              FoodieActions.fetchItemOfAPlace({ placeId: this.selectedPlaceId, itemId: this.selectedItemId }),
         )),
       )
       .subscribe();
@@ -141,4 +142,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.store.dispatch(FoodieActions.preloadPostReviewData({ place: this.selectedPlace, item: this.item }));
     this.router.navigate(['/new_review']);
   }
+
+  protected readonly JSON = JSON;
 }

@@ -1,8 +1,8 @@
-import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { DecimalPipe, LowerCasePipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe } from '@angular/common';
 import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { Item } from '../models/Item';
@@ -45,10 +45,13 @@ export class ItemListUnitComponent {
   @ViewChild('reviewTextCarousel') carousel: NgbCarousel | undefined;
   @ViewChild('reviewImgCarousel') reviewImgCarousel: NgbCarousel | undefined;
 
+  @Output() toItemDetail = new EventEmitter();
+
   constructor(
     private route: ActivatedRoute,
     private store: Store<State>,
     private elementRef: ElementRef,
+    private router: Router
   ) {
     this.destroy$ = new Subject<any>();
     this.config = this.appService.getConfig();
@@ -93,5 +96,10 @@ export class ItemListUnitComponent {
   closeEventHandler() {
     this.showFlag = false;
     this.currentIndex = -1;
+  }
+
+  goToItemDetail() {
+    this.toItemDetail.emit(this.currentIndex);
+
   }
 }
