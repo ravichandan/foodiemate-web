@@ -14,6 +14,7 @@ import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-d
 import { ListItem } from 'ng-multiselect-dropdown/multiselect.model';
 import { FormsModule } from '@angular/forms';
 import { AppService } from '../services/app.service';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 @Component({
   selector: 'app-item-list',
@@ -29,6 +30,7 @@ import { AppService } from '../services/app.service';
     NgbScrollSpyFragment,
     NgMultiSelectDropDownModule,
     FormsModule,
+    AccordionModule,
   ],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',

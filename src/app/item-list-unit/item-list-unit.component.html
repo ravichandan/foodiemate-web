@@ -1,167 +1,309 @@
 <ng-template #itemListing let-item>
-  <div class="card m-lg-4 border-secondary">
-    <div class="row g-0">
-      <div class="col-12 card-body d-flex flex-column justify-content-between text-darker-bg-theme rounded-2">
-        <div class="col-12 d-flex">
-          <div class="d-flex flex-column align-items-start align-content-start col-10">
+  <accordion-group class="list-unit-accordion-group">
+    <button
+      class="btn btn-outline-secondary w-100 rounded-2 border-light-subtle shadow-none card item-list-unit-container "
+      accordion-heading type="button">
+      <!--    <div class= "">-->
+      <div class="row  h-100">
+        <!--      image-->
+        <div class="col-4 pe-0 d-flex">
+          <div class="picsum-img-wrapper flex-grow-1 d-flex flex-grow-1">
+            <img
+              [src]="config.bucketAccessEndpoint+'/'+item?.media.key"
+              alt="loading picture of the dish"
+              class="card-img-top item-list-img img-fluid rounded-1 flex-grow-1" />
+
+          </div>
+        </div>
+        <!--      item summary wrapper -->
+        <div class="item-summary-wrapper col-8 ">
+          <div class="d-flex flex-column align-items-center align-content-center ">
+            <span class="card-title mb-0 mt-1">
+              <span class="fw-bold">{{ item.placeItem.name }}</span>
+              <span class="fw-light">
+              <span class=""> {{ item.placeItem?.calorieInfo?.count }}</span>
+                      <span class="fs-smaller"> {{ item.placeItem?.calorieInfo?.unit }}</span>
+                    </span>
+            </span>
+          </div>
+          <div class="row">
+            <div class="col-8 d-flex flex-column justify-content-start remove-rating-block">
+              <div class="taste-wrapper d-flex justify-content-between align-items-center">
+            <span class="d-flex flex-row justify-content-center"><span
+              class="fs-smaller card-text  "
+            >Taste:&nbsp;</span>
+            </span>
+                <span class="ms-1 card-text"
+                ><span class="">{{ item.placeItem?.ratingInfo?.taste | number: '1.1-1' }}</span
+                ><span class="fs-small">/5</span></span>
+              </div>
+              <div class="presentation-wrapper d-flex justify-content-between align-items-center">
+            <span class="fs-smaller card-text "
+            >Presentation:&nbsp;</span>
+                <span class="ms-1 card-text  "
+                ><span class="">{{ item.placeItem?.ratingInfo?.presentation | number: '1.1-1' }}</span
+                ><span class="fs-small">/5</span></span>
+              </div>
+            </div>
+
+            <div class="col-4 border-start ps-0 d-flex justify-content-center align-items-center">
+              <span class="card-text  ">${{ item.placeItem.price }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--    </div>-->
+
+    </button>
+    <div class="accordion-item">
+      <div class="row ">
+        <!--      description -->
+        @if(item.placeItem.description) {
+          <div class="col-12 ">
+         <span class="item-description text-body-secondary fs-smaller">
+            <p class="text-truncate-2 fst-italic">{{ item.placeItem.description }}</p>
+          </span>
+          </div>
+        }
+        <!--      more details links-->
+        <div class="col-12 d-flex justify-content-between">
+          <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
+              config.allReviewsLabel | replace : 'xxx' : ('' + item.placeItem?.ratingInfo?.noOfReviews ?? '0')
+            }}</a>
+          <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
+              config.allReviewPhotosLabel | replace : 'xxx' : ('' + item.placeItem?.ratingInfo?.noOfReviewPhotos ?? '0')
+            }}</a>
+        </div>
+
+        <!--      item summary wrapper-->
+        @if (item.placeItem?.reviews?.length > 0) {
+          <div class="item-recent-reviews ">
+            <div class="recent-reviews-title my-2">
+              <span class="fw-bold">Recent reviews</span>
+            </div>
+            @for (review of item.placeItem?.reviews; track review; let last= $last) {
+              <div class="row my-2">
+                <div class="col-12 d-flex justify-content-between">
+                  <span
+                    class="fw-medium text-body-secondary d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                    </svg>&nbsp;
+                    <span
+                      class="d-flex align-items-center">{{ review?.customer?.name?.split(' ')?.[0]|slice:0:11 }}@if (review?.customer?.status === 'verified') {
+                      &nbsp;
+                      <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                           fill="#2298a4"><path
+                        d="m424-408-86-86q-11-11-28-11t-28 11q-11 11-11 28t11 28l114 114q12 12 28 12t28-12l226-226q11-11 11-28t-11-28q-11-11-28-11t-28 11L424-408Zm56 328q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" /></svg>
+                    }</span>
+                  </span>
+                  <span
+                    class=" text-body-secondary">T: &nbsp;{{ review?.taste }}</span>
+                  <span
+                    class=" text-body-secondary">P: &nbsp;{{ review?.presentation }}</span>
+                </div>
+                <!--          </div>-->
+                <!--          <div class="row">-->
+                <div class="col-12">
+                  <span class="text-secondary text-truncate-2 fst-italic fs-small">{{ review?.description }}</span>
+                </div>
+              </div>
+              @if(!last) {
+                <hr class="dropdown-divider bg-secondary-subtle" />
+              }
+            }
+            <div class="row d-none">
+              <div class="col-8 d-flex flex-column justify-content-start remove-rating-block">
+                <div class="taste-wrapper d-flex justify-content-between">
+            <span class="d-flex flex-row justify-content-center"><span
+              class="fs-smaller card-text text-body-secondary "
+            >Taste:&nbsp;</span>
+            </span>
+                  <span class="ms-1 card-text text-body-secondary fs-smaller"
+                  ><span class="fw-medium">{{ item.placeItem?.ratingInfo?.taste | number: '1.1-1' }}</span
+                  >/5</span>
+                </div>
+                <div class="presentation-wrapper d-flex justify-content-between">
+            <span class="fs-smaller card-text text-body-secondary"
+            >Presentation:&nbsp;</span>
+                  <span class="ms-1 card-text text-body-secondary fs-smaller"
+                  ><span class="fw-medium">{{ item.placeItem?.ratingInfo?.presentation | number: '1.1-1' }}</span
+                  >/5</span>
+                </div>
+              </div>
+
+              <div class="col-4 border-start ps-0 d-flex justify-content-center align-items-center">
+                <span class="card-text  ">${{ item.placeItem.price }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="row g-0 d-none">
+        <div class="col-12 card-body d-flex flex-column justify-content-between text-darker-bg-theme rounded-2">
+          <div class="col-12 d-flex">
+            <div class="d-flex flex-column align-items-start align-content-start col-10">
             <span class="card-title">
               <span class="fs-6 fw-bolder">{{ item.placeItem.name }}</span>
               <span class=""> &nbsp; (Contains {{ item.placeItem.allergens?.join(', ') | lowercase }})</span>
             </span>
-            <p class="card-subtitle  text-truncate-3">{{ item.placeItem.description }}</p>
+              <p class="card-subtitle  text-truncate-3">{{ item.placeItem.description }}</p>
+            </div>
+            <div class="col-2 border-start d-flex justify-content-center align-items-center">
+              <span class="card-title fs-4 fw-bolder">${{ item.placeItem.price }}</span>
+            </div>
           </div>
-          <div class="col-2 border-start d-flex justify-content-center align-items-center">
-            <span class="card-title fs-4 fw-bolder">${{ item.placeItem.price }}</span>
-          </div>
-        </div>
-        <div class="col-12 d-flex">
-          <div class="ingredients-container card-body d-flex d-lg-none align-items-center p-0 col-10 border-end">
+          <div class="col-12 d-flex">
+            <div class="ingredients-container card-body d-flex d-lg-none align-items-center p-0 col-10 border-end">
             <span>
               <span class="fw-bolder">Ingredients: </span>
               <span class=" px-2">{{ item.placeItem.ingredients?.join(', ') }}</span></span
             >
-          </div>
+            </div>
 
-          <div
-            class="calories-container card-body d-flex d-lg-none flex-column justify-content-center align-items-center p-1 p-sm-2 col-2">
-            <span class="card-text fw-bolder text-center">Calorie Info: </span>
-            <span class="">
+            <div
+              class="calories-container card-body d-flex d-lg-none flex-column justify-content-center align-items-center p-1 p-sm-2 col-2">
+              <span class="card-text fw-bolder text-center">Calorie Info: </span>
+              <span class="">
               <span class="fs-5"> {{ item.placeItem.calorieInfo?.count }}</span>
               <span class=""> {{ item.placeItem.calorieInfo?.unit }}</span>
             </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-8">
-        <!--        new-->
-        <ngb-carousel
-          [showNavigationArrows]="config.carousel.showNavigationArrows"
-          [showNavigationIndicators]="config.carousel.showNavigationIndicators"
-          [pauseOnHover]="config.carousel.pauseOnHover"
-          [pauseOnFocus]="config.carousel.pauseOnFocus"
-          [interval]="+config.carousel.interval"
-          (mouseenter)="canPause($event, true)"
-          (mouseleave)="canPause($event, false)"
-          (slide)="changeCarouselSlide($event)"
-          #reviewImgCarousel>
-          <ng-container *ngFor="let review of item.reviews">
-            <ng-container *ngFor="let media of review?.medias">
-              <ng-template ngbSlide>
-                <div class="picsum-img-wrapper">
-                  <img
-                    [src]="media.url"
-                    alt="loading picture of the dish"
-                    class="card-img-top item-list-img w-100 img-fluid rounded-0" />
-                </div>
-              </ng-template>
-            </ng-container>
-          </ng-container>
-        </ngb-carousel>
-      </div>
-
-      <div class="col-lg-4 card-body d-flex flex-column justify-content-center">
-        <!--        View all for mobile container-->
-        <div class="card-body view-photos-container d-block d-lg-none pt-0 px-0 fs-5">
-          <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
-            config.allReviewPhotosLabel | replace : 'xxx' : (''+item.placeItem?.ratingInfo?.noOfReviewPhotos ?? '0')
-          }}</a>
-        </div>
-        <div class="card-body taste-container px-0">
-          <span class="d-flex flex-row align-items-center card-text text-body-secondary fw-bolder"
-            >Taste&nbsp;<span class="no-of-reviews-text fw-normal text-secondary-emphasis fs-smaller"
-              >(Out of {{ item.placeItem?.ratingInfo?.noOfReviews }} reviews):
-            </span></span
-          >
-          <div class="d-flex flex-row align-items-center justify-content-between progress-container">
-            <div
-              class="progress rounded-0 w-100 h-100 me-1"
-              role="progressbar"
-              [attr.aria-label]="'Taste is rated at ' + (item.placeItem?.ratingInfo?.taste | number: '1.1')"
-              aria-valuemin="0"
-              aria-valuemax="100">
-              <div class="progress-bar" [style]="'width: ' + item.placeItem?.ratingInfo?.taste * 20 + '%'"></div>
             </div>
-            <span class="ms-1 card-text text-body-secondary text-dark fw-bolder"
-              ><span class="fs-5">{{ item.placeItem?.ratingInfo?.taste | number: '1.1-1' }}</span
-              >&nbsp;/&nbsp;5</span
-            >
           </div>
         </div>
-
-        <div class="card-body presentation-container px-0">
-          <span class="d-flex flex-row align-items-center card-text text-body-secondary fw-bolder"
-            >Presentation&nbsp;<span class="no-of-reviews-text fw-normal text-secondary-emphasis fs-smaller"
-              >(Out of {{ item.placeItem?.ratingInfo?.noOfReviews }} reviews):
-            </span></span
-          >
-          <div class="d-flex flex-row align-items-center justify-content-between progress-container">
-            <div
-              class="progress rounded-0 w-100 h-100 me-1"
-              role="progressbar"
-              [attr.aria-label]="'Presentation is rated at ' + (item.placeItem?.ratingInfo?.presentation | number: '1.1')"
-              aria-valuemin="0"
-              aria-valuemax="100">
-              <div class="progress-bar" [style]="'width: ' + item.placeItem?.ratingInfo?.presentation * 20 + '%'"></div>
-            </div>
-            <span class="ms-1 card-text text-body-secondary text-dark fw-bolder"
-              ><span class="fs-5">{{ item.placeItem?.ratingInfo?.presentation | number: '1.1-1' }}</span
-              >&nbsp;/&nbsp;5</span
-            >
-          </div>
-        </div>
-
-        <div class="calories-container card-body d-none d-lg-flex align-items-baseline p-0">
-          <span class="card-text fw-bolder">Calorie Info: </span>
-          <!--          <p class="card-text text-body-secondary px-2">-->
-          <span class="px-2 fs-5 text-body-secondary"> {{ item.calorieInfo?.count }}</span>
-          <span class="text-body-secondary"> {{ item.calorieInfo?.unit }}</span>
-          <!--          </p>-->
-        </div>
-
-        <div class="ingredients-container card-body d-none d-lg-flex align-items-baseline p-0">
-          <span>
-            <span class="fw-bolder">Ingredients: </span>
-            <span class="text-body-secondary px-2">{{ item.ingredients?.join(', ') }}</span></span
-          >
-        </div>
-
-        <!--        dont display this in mobile view-->
-        <div class="card-body view-photos-container d-none d-lg-block">
-          <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
-            config.allReviewPhotosLabel
-          }}</a>
-        </div>
-      </div>
-    </div>
-
-    <!--    review text carousel-->
-    <div class="row g-0">
-      <hr class="dropdown-divider bg-secondary-subtle" />
-      <div class="col">
-        <div class="card-body text-truncate-container">
+        <div class="col-lg-8">
+          <!--        new-->
           <ngb-carousel
-            [showNavigationArrows]="false"
-            [showNavigationIndicators]="false"
+            [showNavigationArrows]="config.carousel.showNavigationArrows"
+            [showNavigationIndicators]="config.carousel.showNavigationIndicators"
             [pauseOnHover]="config.carousel.pauseOnHover"
             [pauseOnFocus]="config.carousel.pauseOnFocus"
             [interval]="+config.carousel.interval"
             (mouseenter)="canPause($event, true)"
             (mouseleave)="canPause($event, false)"
-            #reviewTextCarousel>
+            (slide)="changeCarouselSlide($event)"
+            #reviewImgCarousel>
             <ng-container *ngFor="let review of item.reviews">
-              <ng-container *ngFor="let _ of review?.medias; let firstMedia = first">
+              <ng-container *ngFor="let media of review?.medias">
                 <ng-template ngbSlide>
                   <div class="picsum-img-wrapper">
-                    <p class="card-text carousel-text text-truncate-3">{{ review?.description }}</p>
+                    <img
+                      [src]="media.url"
+                      alt="loading picture of the dish"
+                      class="card-img-top item-list-img w-100 img-fluid rounded-0" />
                   </div>
                 </ng-template>
               </ng-container>
             </ng-container>
           </ngb-carousel>
         </div>
+
+        <div class="col-lg-4 card-body d-flex flex-column justify-content-center">
+          <!--        View all for mobile container-->
+          <div class="card-body view-photos-container d-block d-lg-none pt-0 px-0 fs-5">
+            <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
+                config.allReviewPhotosLabel | replace : 'xxx' : ('' + item.placeItem?.ratingInfo?.noOfReviewPhotos ?? '0')
+              }}</a>
+          </div>
+          <div class="card-body taste-container px-0">
+          <span class="d-flex flex-row align-items-center card-text text-body-secondary fw-bolder"
+          >Taste&nbsp;<span class="no-of-reviews-text fw-normal text-secondary-emphasis fs-smaller"
+          >(Out of {{ item.placeItem?.ratingInfo?.noOfReviews }} reviews):
+            </span></span
+          >
+            <div class="d-flex flex-row align-items-center justify-content-between progress-container">
+              <div
+                class="progress rounded-0 w-100 h-100 me-1"
+                role="progressbar"
+                [attr.aria-label]="'Taste is rated at ' + (item.placeItem?.ratingInfo?.taste | number: '1.1')"
+                aria-valuemin="0"
+                aria-valuemax="100">
+                <div class="progress-bar" [style]="'width: ' + item.placeItem?.ratingInfo?.taste * 20 + '%'"></div>
+              </div>
+              <span class="ms-1 card-text text-body-secondary text-dark fw-bolder"
+              ><span class="fs-5">{{ item.placeItem?.ratingInfo?.taste | number: '1.1-1' }}</span
+              >&nbsp;/&nbsp;5</span
+              >
+            </div>
+          </div>
+
+          <div class="card-body presentation-container px-0">
+          <span class="d-flex flex-row align-items-center card-text text-body-secondary fw-bolder"
+          >Presentation&nbsp;<span class="no-of-reviews-text fw-normal text-secondary-emphasis fs-smaller"
+          >(Out of {{ item.placeItem?.ratingInfo?.noOfReviews }} reviews):
+            </span></span
+          >
+            <div class="d-flex flex-row align-items-center justify-content-between progress-container">
+              <div
+                class="progress rounded-0 w-100 h-100 me-1"
+                role="progressbar"
+                [attr.aria-label]="'Presentation is rated at ' + (item.placeItem?.ratingInfo?.presentation | number: '1.1')"
+                aria-valuemin="0"
+                aria-valuemax="100">
+                <div class="progress-bar"
+                     [style]="'width: ' + item.placeItem?.ratingInfo?.presentation * 20 + '%'"></div>
+              </div>
+              <span class="ms-1 card-text text-body-secondary text-dark fw-bolder"
+              ><span class="fs-5">{{ item.placeItem?.ratingInfo?.presentation | number: '1.1-1' }}</span
+              >&nbsp;/&nbsp;5</span
+              >
+            </div>
+          </div>
+
+          <div class="calories-container card-body d-none d-lg-flex align-items-baseline p-0">
+            <span class="card-text fw-bolder">Calorie Info: </span>
+            <!--          <p class="card-text text-body-secondary px-2">-->
+            <span class="px-2 fs-5 text-body-secondary"> {{ item.calorieInfo?.count }}</span>
+            <span class="text-body-secondary"> {{ item.calorieInfo?.unit }}</span>
+            <!--          </p>-->
+          </div>
+
+          <div class="ingredients-container card-body d-none d-lg-flex align-items-baseline p-0">
+          <span>
+            <span class="fw-bolder">Ingredients: </span>
+            <span class="text-body-secondary px-2">{{ item.ingredients?.join(', ') }}</span></span
+          >
+          </div>
+
+          <!--        dont display this in mobile view-->
+          <div class="card-body view-photos-container d-none d-lg-block">
+            <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
+                config.allReviewPhotosLabel
+              }}</a>
+          </div>
+        </div>
+      </div>
+
+      <!--    review text carousel-->
+      <div class="row g-0 d-none">
+        <hr class="dropdown-divider bg-secondary-subtle" />
+        <div class="col">
+          <div class="card-body text-truncate-container">
+            <ngb-carousel
+              [showNavigationArrows]="false"
+              [showNavigationIndicators]="false"
+              [pauseOnHover]="config.carousel.pauseOnHover"
+              [pauseOnFocus]="config.carousel.pauseOnFocus"
+              [interval]="+config.carousel.interval"
+              (mouseenter)="canPause($event, true)"
+              (mouseleave)="canPause($event, false)"
+              #reviewTextCarousel>
+              <ng-container *ngFor="let review of item.reviews">
+                <ng-container *ngFor="let _ of review?.medias; let firstMedia = first">
+                  <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                      <p class="card-text carousel-text text-truncate-3">{{ review?.description }}</p>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </ng-container>
+            </ngb-carousel>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </accordion-group>
 </ng-template>
 
 <ng-container *ngIf="item">

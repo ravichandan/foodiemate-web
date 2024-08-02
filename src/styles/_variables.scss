@@ -8,7 +8,8 @@
 //$dropdown-link-color: $dark-bg-subtle;
 $dropdown-link-hover-color: $light-bg-subtle;
 $dropdown-link-hover-bg:  $dropdown-dark-bg;
-$dropdown-link-active-bg: $dark;
+$dropdown-link-active-bg: $info;
+
 
 // Nav bars
 $nav-tabs-border-width: 2px;
@@ -21,3 +22,4 @@ $nav-link-hover-color:$dark-text-emphasis;
 $teal-color: #2298a4;
 $teal-light-color: #25adbb;
 $teal-dark-color: #1e828c;
+$info: $teal-color;

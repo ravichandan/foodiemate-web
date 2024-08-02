@@ -30,15 +30,24 @@
       </div>
     </div>
 
-    <div class="item-list-wrapper row gap-3">
-      <!--            <div ngbScrollSpy #spy="ngbScrollSpy" (activeChange)="fetchItems($event)">-->
-      <ng-container *ngFor="let item of items; trackBy: trackByItemId; index as i; first as first">
-        <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">
-          <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
-          <app-item-list-unit [item]="item"></app-item-list-unit>
-        </div>
-      </ng-container>
-      <!--            </div>-->
+    <div class="item-list-wrapper row gap-3 my-2">
+      <accordion [isAnimated]="true">
+        @for (item of items; track item;  let i=$index; let first = $first) {
+<!--          <accordion-group >-->
+<!--            <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
+              <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
+              <app-item-list-unit [item]="item"></app-item-list-unit>
+<!--            </div>-->
+<!--          </accordion-group>-->
+        }
+      </accordion>
+
+<!--      <ng-container *ngFor="let item of items; trackBy: trackByItemId; index as i; first as first">-->
+<!--        <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
+<!--          &lt;!&ndash;                         [ngbScrollSpyFragment]="i+','+items.length">&ndash;&gt;-->
+<!--          <app-item-list-unit [item]="item"></app-item-list-unit>-->
+<!--        </div>-->
+<!--      </ng-container>-->
     </div>
   </div>
 </ng-container>

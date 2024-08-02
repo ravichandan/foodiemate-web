@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
-import { DecimalPipe, LowerCasePipe, NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { DecimalPipe, LowerCasePipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe } from '@angular/common';
 import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -9,6 +9,7 @@ import { Item } from '../models/Item';
 import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 import { AppService } from '../services/app.service';
 import { ReplacePipe } from '../directives/replace.pipe';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 @Component({
   selector: 'app-item-list-unit',
@@ -24,6 +25,8 @@ import { ReplacePipe } from '../directives/replace.pipe';
     NgImageFullscreenViewModule,
     LowerCasePipe,
     ReplacePipe,
+    AccordionModule,
+    SlicePipe,
   ],
   templateUrl: './item-list-unit.component.html',
   styleUrl: './item-list-unit.component.scss',
