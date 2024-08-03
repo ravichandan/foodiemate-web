@@ -1,14 +1,15 @@
 <ng-template #ratingTemplate let-val="val">
-  @if(val){<span  class="text-theme "><span class=""
-  >@for (i of [].constructor(Math.floor(val)); track i;) {
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="currentcolor"
-         stroke="currentcolor" stroke-linecap="miter" stroke-linejoin="miter" stroke-width="2">
+  @if (val) {
+    <span class="text-theme "><span class=""
+    >@for (i of [].constructor(Math.floor(val)); track i; ) {
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="currentcolor"
+           stroke="currentcolor" stroke-linecap="miter" stroke-linejoin="miter" stroke-width="2">
     <path d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z" />
   </svg>
-  }</span><span
-  >@if((val-Math.floor(val))>0) {
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" stroke="currentcolor"
-         stroke-linecap="miter" stroke-linejoin="miter" stroke-width="2">
+    }</span><span
+    >@if ((val - Math.floor(val)) > 0) {
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" stroke="currentcolor"
+           stroke-linecap="miter" stroke-linejoin="miter" stroke-width="2">
     <defs>
       <linearGradient [id]="'grad-'+review._id">
         <stop offset="50%" stop-color="currentcolor" />
@@ -17,18 +18,20 @@
     </defs>
     <path [attr.fill]="'url(#grad-'+review._id+')'" d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z" />
   </svg>
-  }</span><span
-  >@for (i of [].constructor(5-Math.ceil(val)); track i;) {
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor"
-         stroke-linecap="miter" stroke-linejoin="miter" stroke-width="2">
+    }</span><span
+    >@for (i of [].constructor(5 - Math.ceil(val)); track i; ) {
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none"
+           stroke="currentcolor"
+           stroke-linecap="miter" stroke-linejoin="miter" stroke-width="2">
     <path d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z" />
   </svg>
-  }</span>
-            </span>}
+    }</span>
+            </span>
+  }
 </ng-template>
 
 
-@if(review) {
+@if (review) {
   <div class="review-unit-container row gap-3 my-2">
     <div class="row gap-1 customer-info-row">
       <div class="customer-pic-wrapper col-auto rounded-5 bg-dark-subtle d-flex justify-content-center">
@@ -51,21 +54,19 @@
       <div class="row row-cols-1 row-cols-md-2 gap-2 mx-2 px-0">
         <div class="col d-flex justify-content-between align-items-center rating-element-small fw-bolder">
           <span>Service: </span>
-          <ngb-rating
-            [(rate)]="review.service"
-            class="fs-5"
-            [readonly]="true"
-            [max]="5"
-            [ariaValueText]="ariaValueText" />
+          <span class="row gap-0">
+              <span class="col-auto p-0 "><ng-container
+                *ngTemplateOutlet="ratingTemplate; context: { val: review.service }"></ng-container></span>
+              <span class="col-auto mt-1 fw-bold">({{ review.service|number: '1.1-1' }})</span>
+            </span>
         </div>
         <div class="col d-flex justify-content-between align-items-center rating-element fw-bolder">
           <span>Ambience: </span>
-          <ngb-rating
-            [(rate)]="review.ambience"
-            class="fs-5"
-            [readonly]="true"
-            [max]="5"
-            [ariaValueText]="ariaValueText" />
+          <span class="row gap-0">
+              <span class="col-auto p-0 "><ng-container
+                *ngTemplateOutlet="ratingTemplate; context: { val: review.ambience }"></ng-container></span>
+              <span class="col-auto mt-1 fw-bold">({{ review.ambience|number: '1.1-1' }})</span>
+            </span>
         </div>
       </div>
     </div>
@@ -87,44 +88,45 @@
               &nbsp;
               <span class="review-items-item-name fs-6 fw-bold text-body-secondary">{{
 
-                ir.item._id
-                // place.items[ir.item._id].name
-              }}</span>
+                  ir?.placeItem?.name
+                  // place.items[ir.item._id].name
+
+                }}</span>
             </div>
             <div class="col-12 review-items-item-rating-wrapper row justify-content-end">
               <div class="row rating-info-row gap-2 my-2">
                 <div
                   class="col d-flex justify-content-between justify-content-lg-evenly align-items-center rating-element">
                   <span class="fw-bolder">Taste: </span>
-                  <ngb-rating
-                    [(rate)]="review.taste"
-                    class="fs-5"
-                    [readonly]="true"
-                    [max]="5"
-                    [ariaValueText]="ariaValueText" />
+                  <span class="row gap-0">
+                    <span class="col-auto p-0 "><ng-container
+                      *ngTemplateOutlet="ratingTemplate; context: { val: ir.taste }"></ng-container></span>
+                    <span class="col-auto mt-1 fw-bold">({{ ir.taste|number: '1.1-1' }})</span>
+                  </span>
                 </div>
                 <div
                   class="col d-flex justify-content-between justify-content-lg-evenly align-items-center rating-element">
                   <span class="fw-bolder">Presentation: </span>
-                  <ngb-rating
-                    [(rate)]="review.presentation"
-                    class="fs-5"
-                    [readonly]="true"
-                    [max]="5"
-                    [ariaValueText]="ariaValueText" />
+                  <span class="row gap-0">
+                    <span class="col-auto p-0 "><ng-container
+                      *ngTemplateOutlet="ratingTemplate; context: { val: ir.presentation }"></ng-container></span>
+                    <span class="col-auto mt-1 fw-bold">({{ ir.presentation|number: '1.1-1' }})</span>
+                  </span>
                 </div>
               </div>
               <div class="col-12 row gap-1 review-items-item-description-row text-justify px-0">
                 <pre class="text-justify">
-                                    {{ review.description }}
+                                    {{ ir.description }}
                                 </pre
-                >
+                                >
               </div>
               <div class="review-photos-wrapper-holder col">
-                <ng-container *ngFor="let media of review.medias">
-                  <img [src]="media.url" class="img-thumbnail" alt="Image" />
-                  <img [src]="media.url" class="img-thumbnail" alt="Image" />
-                  <img [src]="media.url" class="img-thumbnail" alt="Image" />
+                <ng-container *ngFor="let media of ir.medias">
+                  <img
+                    [src]="config.bucketAccessEndpoint+'/'+media?.key"
+                    class="img-thumbnail" alt="Image" />
+                  <!--                  <img [src]="media.url" class="img-thumbnail" alt="Image" />-->
+                  <!--                  <img [src]="media.url" class="img-thumbnail" alt="Image" />-->
                 </ng-container>
               </div>
             </div>

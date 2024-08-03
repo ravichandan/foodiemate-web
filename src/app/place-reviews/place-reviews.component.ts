@@ -2,7 +2,7 @@ import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Place } from '../models/Place';
 import { Item } from '../models/Item';
 import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { itemDetailOfAPlaceSelector, itemSelector, placeSelector } from '../selectors/foodie.selector';
@@ -15,6 +15,7 @@ import { ReviewUnitComponent } from '../review-unit/review-unit.component';
 import { PlaceReviewUnitComponent } from '../place-review-unit/place-review-unit.component';
 import { placeRoutes } from '../place-detail/place-routing.module';
 import { AppService } from '../services/app.service';
+import * as FoodieActions from '../actions/foodie.actions';
 
 @Component({
   selector: 'app-place-reviews',
@@ -57,6 +58,7 @@ export class PlaceReviewsComponent implements OnInit, OnDestroy {
   };
   selectedReviewFilter: any;
   selectedStarFilter: any;
+  private selectedPlaceId: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -77,6 +79,18 @@ export class PlaceReviewsComponent implements OnInit, OnDestroy {
       tap((p) => (this.place = p)),
       map((x) => x?.reviews),
     );
+
+    this.route.paramMap
+      .pipe(
+        // tap(x => console.log('in paramMap, params:: ')),
+        takeUntil(this.destroy$),
+        tap((params: ParamMap) => {
+          console.log('in place-reviews->paramMap, params:: ', params);
+          this.selectedPlaceId = params.get('placeId');
+          this.store.dispatch(FoodieActions.fetchPlace({ id: this.selectedPlaceId, fetchReviews: true }));
+        }),
+      )
+      .subscribe();
 
     // this.reviews$ = selected$.pipe(
     //     map(p => p?.reviews));
