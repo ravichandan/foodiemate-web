@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Place } from '../models/Place';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
@@ -10,11 +10,14 @@ import { Review } from '../models/Review';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { PlaceReviewsComponent } from '../place-reviews/place-reviews.component';
 import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, TitleCasePipe } from '@angular/common';
-import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule, NgbScrollSpyModule } from '@ng-bootstrap/ng-bootstrap';
 import { ItemListComponent } from '../item-list/item-list.component';
 import { getMaterialIconNameForTag } from '../services/Utils';
 import { preloadPostReviewData } from '../actions/foodie.actions';
 import { AppService } from '../services/app.service';
+import { ScrolledToDirective } from '../directives/scrolledTo.directive';
+import { ScrollToDirective } from '../directives/scrollTo.directive';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @Component({
   selector: 'app-place-detail',
@@ -26,14 +29,19 @@ import { AppService } from '../services/app.service';
     NgbCarouselModule,
     NgForOf,
     NgIf,
+    NgbScrollSpyModule,
     // RouterModule,
     ItemListComponent,
     NgClass,
     RouterLink,
     TitleCasePipe,
+    ScrolledToDirective,
+    ScrollToDirective,
+    TooltipModule,
   ],
   templateUrl: './place-detail.component.html',
   styleUrl: './place-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaceDetailComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
@@ -46,6 +54,7 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
   selectedPlace: Place | undefined;
   // item: Item | undefined;
   reviews$: Observable<Review[] | undefined> | undefined;
+  windowScrolled = false;
 
   dropdownSettings: IDropdownSettings = {
     singleSelection: true,
@@ -99,6 +108,9 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
 
     // this.selectedReviewFilter = [this.config?.itemDetailFilterBy?.[0]];
     // this.selectedStarFilter = [this.config?.itemDetailFilterByStars?.[0]];
+    window.addEventListener('scroll', () => {
+      this.windowScrolled = window.scrollY !== 0;
+    });
   }
 
   ngOnDestroy() {
@@ -111,7 +123,13 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
 
   onGiveAReviewClick() {
     this.store.dispatch(FoodieActions.preloadPostReviewData({ place: this.selectedPlace }));
-    this.router.navigate(['/new_review']);
+    this.router.navigate(['/new_review']).then();
+  }
+
+  scrollToTop(): void {
+    // scroll to the top of the body
+    window.scrollTo(0, 0);
+    this.windowScrolled=false;
   }
 
   protected readonly Object = Object;

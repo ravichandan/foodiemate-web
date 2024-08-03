@@ -109,26 +109,17 @@ export class ItemListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
   }
-  fetchItems(name: string) {}
+
   trackByItemId(_: number, i: Item) {
     return i._id;
-  }
-
-  openItemDetail(item: Item) {
-    console.log('in item-list.component, opening details page for item:: ', item._id);
-    this.router.navigate(['places/' + this.selectedPlaceId + '/items/' + item._id]);
-    // this.router.navigate(['items/' + element.id],);
   }
 
   onReviewFilterChange($event: ListItem) {}
 
   goToItemDetail(itemId: string) {
     let r = '/places/:placeId/items/:itemId';
-    // if (this.item?.places?.[0]?._id)
-      r=r.replace(':placeId', this.selectedPlaceId);
-    // if(this.item) {
-      r = r.replace(':itemId', itemId);
-    // }
+    r=r.replace(':placeId', this.selectedPlaceId);
+    r = r.replace(':itemId', itemId);
     this.router.navigate([r]).then();
   }
 }

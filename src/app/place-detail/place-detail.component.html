@@ -193,29 +193,52 @@
         </div>
       </div>
     </div>
-    <div class="place-navigation-container col-12">
+      <div class="place-navigation-container col-12">
+
+      <nav class="navbar bg-light px-3 mb-3 d-none">
+        <ul class="nav nav-pills" >
+          <li class="nav-item">
+            <button class="nav-link" scrollTo target="#menuItems" [class.active]="menuItems.focus" >First</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" scrollTo target="#reviews" [class.active]="reviews.focus">Second</button>
+          </li>
+        </ul>
+      </nav>
+
       <ul class="nav nav-tabs nav-justified">
         <li class="nav-item cursor-pointer">
           <a
             class="nav-link"
             aria-current="page"
-            [ngClass]="{ active: this.showMenuItems, 'fw-bolder': this.showMenuItems }"
-            (click)="this.showMenuItems = true">
-            <span class="fs-6">Menu Items</span>
+            [class.fw-bolder]="menuItems.focus"
+            scrollTo target="#menuItems" [class.active]="menuItems.focus"
+          >
+            <span class="fs-6">Our Menu</span>
           </a>
         </li>
         <li class="nav-item cursor-pointer">
           <a
             class="nav-link"
             aria-current="page"
-            [ngClass]="{ active: !this.showMenuItems, 'fw-bolder': !this.showMenuItems }"
-            (click)="this.showMenuItems = false">
+            [class.fw-bolder]="reviews.focus"
+            scrollTo target="#reviews" [class.active]="reviews.focus" >
             <span class="fs-6">Reviews</span>
           </a>
         </li>
       </ul>
-    </div>
-    <div class="col-12">
+
+        <div class="12">
+          <section scrolledTo #menuItems="scrolledTo" id="menuItems">
+            <app-item-list></app-item-list>
+          </section>
+          <section scrolledTo #reviews="scrolledTo" id="reviews">
+            <app-place-reviews [place]="place"></app-place-reviews>
+          </section>
+        </div>
+
+      </div>
+    <div class="col-12 d-none">
       <!-- <router-outlet name="placeSpot"></router-outlet>-->
       <ng-container *ngIf="showMenuItems">
         <app-item-list></app-item-list>
@@ -255,3 +278,9 @@
     </div>
   </div>
 </ng-container>
+
+<div class="to-top bg-light rounded-5" (click)="scrollToTop()" [ngClass]="{ 'show-scrollTop': windowScrolled }" tooltip="Scroll to the top">
+  <svg xmlns="http://www.w3.org/2000/svg" height="56px" viewBox="0 -960 960 960" width="56px" fill="currentcolor">
+    <path d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z"/>
+  </svg>
+</div>
