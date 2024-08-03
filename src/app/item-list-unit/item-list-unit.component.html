@@ -67,10 +67,10 @@
         }
         <!--      more details links-->
         <div class="col-12 d-flex justify-content-between">
-          <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" (click)="goToItemDetail()">{{
+          <a  class=" cursor-pointer link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" (click)="goToItemDetail()">{{
               config.allReviewsLabel | replace : 'xxx' : ('' + item.placeItem?.ratingInfo?.noOfReviews ?? '0')
             }}</a>
-          <a href="#" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" (click)="goToItemDetail()">{{
+          <a class=" cursor-pointer link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" (click)="goToItemDetail()">{{
               config.allReviewPhotosLabel | replace : 'xxx' : ('' + item.placeItem?.ratingInfo?.noOfReviewPhotos ?? '0')
             }}</a>
         </div>

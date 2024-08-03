@@ -123,8 +123,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   onReviewFilterChange($event: ListItem) {}
 
   goToItemDetail(itemId: string) {
-    console.log('Going to itemDetail of item:: ', itemId);
-    let r = 'places/:placeId/items/:itemId';
+    let r = '/places/:placeId/items/:itemId';
     // if (this.item?.places?.[0]?._id)
       r=r.replace(':placeId', this.selectedPlaceId);
     // if(this.item) {
