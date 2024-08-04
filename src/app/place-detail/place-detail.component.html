@@ -48,9 +48,16 @@
             <!--                                            class="item-price-text fs-5">Price: </span><span-->
             <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
           </div>
-          <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"
-          >(Out of {{ place.ratingInfo?.noOfReviews }} reviews)</small
-          >
+          <a
+            class="no-of-reviews-text fs-small cursor-pointer text-light"
+            aria-current="page"
+            [class.fw-bolder]="reviews.focus"
+            scrollTo target="#reviews" [class.active]="reviews.focus" >
+            <span class="">{{ place.ratingInfo?.noOfReviews }} reviews</span>
+          </a>
+<!--          <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"-->
+<!--          >(Out of {{ place.ratingInfo?.noOfReviews }} reviews)</small-->
+<!--          >-->
         </div>
       </div>
     </div>
@@ -228,11 +235,11 @@
         </li>
       </ul>
 
-        <div class="12">
-          <section scrolledTo #menuItems="scrolledTo" id="menuItems">
+        <div class="row gap-2">
+          <section scrolledTo #menuItems="scrolledTo" id="menuItems" class="col-12">
             <app-item-list></app-item-list>
           </section>
-          <section scrolledTo #reviews="scrolledTo" id="reviews">
+          <section scrolledTo #reviews="scrolledTo" id="reviews" class="col-12">
             <app-place-reviews [place]="place"></app-place-reviews>
           </section>
         </div>

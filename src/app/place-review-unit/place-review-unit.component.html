@@ -34,38 +34,38 @@
 @if (review) {
   <div class="review-unit-container row gap-3 my-2">
     <div class="row gap-1 customer-info-row">
-      <div class="customer-pic-wrapper col-auto rounded-5 bg-dark-subtle d-flex justify-content-center">
+      <div class="customer-pic-wrapper col-auto rounded-5 text-light d-flex justify-content-center pe-0">
         @if (review.customer?.picture?.key) {
           <img [src]="config.bucketAccessEndpoint+'/'+review.customer?.picture?.key" alt="profile picture"
                class="rounded-circle" />
         } @else {
-          <i class="bi bi-person-fill text-light fs-2"></i>
+          <span class="fx-icon fx-icon-person-fill bg-dark-subtle"></span>
         }
       </div>
       <div
-        class="customer-name-wrapper col-auto d-flex flex-column justify-content-center fw-bold text-secondary-emphasis fs-5">
-        {{ review.customer.name }}
+        class="customer-name-wrapper col-auto d-flex align-items-center fw-bold text-secondary-emphasis fs-5">
+        {{ review.customer.name }}@if (review?.customer?.status === 'verified') {
+        &nbsp;<span class="fx-icon fx-icon-rounded-check theme-background mt-1"></span>
+      }
       </div>
     </div>
     <div class="row gap-1 review-date-row">
       <span class=" text-secondary"> {{ review.modifiedAt | date: 'd MMMM, y' }}</span>
     </div>
     <div class="row gap-1 rating-info-row">
-      <div class="row row-cols-1 row-cols-md-2 gap-2 mx-2 px-0">
-        <div class="col d-flex justify-content-between align-items-center rating-element-small fw-bolder">
-          <span>Service: </span>
-          <span class="row gap-0">
-              <span class="col-auto p-0 "><ng-container
+      <div class="row row-cols-1 row-cols-md-2 gap-2 ">
+        <div class="col d-flex justify-content-between align-items-center rating-element fw-bolder ">
+          <span class="">Service: </span>
+          <span class=" row gap-0">
+              <span class="col-auto mt-1 fw-bold">{{ review.service|number: '1.1-1' }}</span>&nbsp;<span class="col-auto p-0 "><ng-container
                 *ngTemplateOutlet="ratingTemplate; context: { val: review.service }"></ng-container></span>
-              <span class="col-auto mt-1 fw-bold">({{ review.service|number: '1.1-1' }})</span>
             </span>
         </div>
         <div class="col d-flex justify-content-between align-items-center rating-element fw-bolder">
           <span>Ambience: </span>
           <span class="row gap-0">
-              <span class="col-auto p-0 "><ng-container
+              <span class="col-auto mt-1 fw-bold">{{ review.ambience|number: '1.1-1' }}</span>&nbsp;<span class="col-auto p-0 "><ng-container
                 *ngTemplateOutlet="ratingTemplate; context: { val: review.ambience }"></ng-container></span>
-              <span class="col-auto mt-1 fw-bold">({{ review.ambience|number: '1.1-1' }})</span>
             </span>
         </div>
       </div>
@@ -76,64 +76,68 @@
             </pre
             >
     </div>
-    <div class="row gap-1 review-items-row">
-      <div class="review-items-label fs-6 fw-bold text-dark">
-        <span>{{ config.placeReviewItemsLabel }}</span>
-      </div>
-      <div class="review-items-wrapper row gap-3 mx-0 px-0">
-        <ng-container *ngFor="let ir of review.children; let index = index">
-          <div class="row gap-2 review-header-row d-flex justify-content-between mx-0 px-0">
-            <div class="col-12 review-items-item-label d-flex">
-              <span class="review-items-item-index fs-6 fw-bold text-secondary">{{ index + 1 }}.</span>
-              &nbsp;
-              <span class="review-items-item-name fs-6 fw-bold text-body-secondary">{{
+    @if(review.children?.length) {
+      <div class="row gap-2 review-items-row">
+        <div class="review-items-label fs-6 fw-bold text-dark">
+          <span>{{ config.placeReviewItemsLabel }}</span>
+        </div>
+        <div class="review-items-wrapper row gap-3 mx-0 px-0 text-dark">
+            @for(ir of review.children; track  ir; let index = $index) {
+              <div class="row gap-2 review-header-row d-flex justify-content-between mx-0 px-0 g-1">
+                <div class="col-12 review-items-item-label d-flex">
+                  <span class="review-items-item-index fs-6 fw-bold ">{{ index + 1 }}.</span>
+                  &nbsp;
+                  <span class="review-items-item-name fs-6 fw-bold ">{{
 
-                  ir?.placeItem?.name
-                  // place.items[ir.item._id].name
+                      ir?.placeItem?.name
+                      // place.items[ir.item._id].name
 
-                }}</span>
-            </div>
-            <div class="col-12 review-items-item-rating-wrapper row justify-content-end">
-              <div class="row rating-info-row gap-2 my-2">
-                <div
-                  class="col d-flex justify-content-between justify-content-lg-evenly align-items-center rating-element">
-                  <span class="fw-bolder">Taste: </span>
-                  <span class="row gap-0">
-                    <span class="col-auto p-0 "><ng-container
-                      *ngTemplateOutlet="ratingTemplate; context: { val: ir.taste }"></ng-container></span>
-                    <span class="col-auto mt-1 fw-bold">({{ ir.taste|number: '1.1-1' }})</span>
-                  </span>
+
+
+                    }}</span>
                 </div>
-                <div
-                  class="col d-flex justify-content-between justify-content-lg-evenly align-items-center rating-element">
-                  <span class="fw-bolder">Presentation: </span>
-                  <span class="row gap-0">
-                    <span class="col-auto p-0 "><ng-container
-                      *ngTemplateOutlet="ratingTemplate; context: { val: ir.presentation }"></ng-container></span>
-                    <span class="col-auto mt-1 fw-bold">({{ ir.presentation|number: '1.1-1' }})</span>
+                <div class="col-12 review-items-item-rating-wrapper row justify-content-end">
+                  <div class="row rating-info-row gap-2 my-2">
+                    <div class="row row-cols-1 row-cols-md-2 gap-2">
+                      <div class="col d-flex justify-content-between align-items-center rating-element fs-smaller">
+                        <span class="">Taste: </span>
+                        <span class=" row gap-0">
+                    <span class="col-auto mt-1 fw-bold">{{ ir.taste|number: '1.1-1' }}</span>&nbsp;<span
+                          class="col-auto p-0 "><ng-container
+                          *ngTemplateOutlet="ratingTemplate; context: { val: ir.taste }"></ng-container></span>
                   </span>
-                </div>
-              </div>
-              <div class="col-12 row gap-1 review-items-item-description-row text-justify px-0">
+                      </div>
+                      <div class="col d-flex justify-content-between align-items-center rating-element  fs-smaller">
+                        <span class="">Presentation: </span>
+                        <span class=" row gap-0">
+                    <span class="col-auto mt-1 fw-bold">{{ ir.presentation|number: '1.1-1' }}</span>&nbsp;<span
+                          class="col-auto p-0 "><ng-container
+                          *ngTemplateOutlet="ratingTemplate; context: { val: ir.presentation }"></ng-container></span>
+                  </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 row gap-1 review-items-item-description-row text-justify px-0">
                 <pre class="text-justify">
                                     {{ ir.description }}
                                 </pre
                                 >
+                  </div>
+                  <div class="review-photos-wrapper-holder col">
+                    <ng-container *ngFor="let media of ir.medias">
+                      <img
+                        [src]="config.bucketAccessEndpoint+'/'+media?.key"
+                        class="img-thumbnail" alt="Image" />
+                      <!--                  <img [src]="media.url" class="img-thumbnail" alt="Image" />-->
+                      <!--                  <img [src]="media.url" class="img-thumbnail" alt="Image" />-->
+                    </ng-container>
+                  </div>
+                </div>
               </div>
-              <div class="review-photos-wrapper-holder col">
-                <ng-container *ngFor="let media of ir.medias">
-                  <img
-                    [src]="config.bucketAccessEndpoint+'/'+media?.key"
-                    class="img-thumbnail" alt="Image" />
-                  <!--                  <img [src]="media.url" class="img-thumbnail" alt="Image" />-->
-                  <!--                  <img [src]="media.url" class="img-thumbnail" alt="Image" />-->
-                </ng-container>
-              </div>
-            </div>
-          </div>
-        </ng-container>
+            }
+        </div>
       </div>
-    </div>
+    }
     @if (review.medias?.length) {
       <div class="row gap-1 review-photos-row">
         <div class="review-photos-wrapper-holder">
