@@ -1,19 +1,13 @@
 <div class="search-container m-1 m-md-5 py-2 py-md-3 col-md-10">
-  <!--  <div class="mt-2 mt-md-5">-->
-  <!--    <span class="text-sm-center fw-light text-body-secondary">{{ config.search_main_label }}</span>-->
-  <!--  </div>-->
-  <div class="">
-    <!--    <span class="text-sm-center fw-light text-body-secondary">{{ config.search_sub_label }}</span>-->
-    <div class="btn-group" role="group" aria-label="select dishes ior restaurants to search for">
+  <div class="btn-group" role="group" aria-label="select dishes ior restaurants to search for">
       <input type="radio" class="btn-check" name="btnradio" id="dishesradio1" autocomplete="off" [checked]="dishFlag"
              (change)="dishFlag=true">
-      <label class="btn btn-outline-secondary" for="dishesradio1">Dishes</label>
+      <label class="btn btn-outline-secondary  " [ngClass]="{'text-darker-bg-theme': dishFlag}" for="dishesradio1">Dishes</label>
 
       <input type="radio" class="btn-check" name="btnradio" id="placesradio2" autocomplete="off" [checked]="!dishFlag"
              (change)="dishFlag=false">
-      <label class="btn btn-outline-secondary" for="placesradio2">Places</label>
+      <label class="btn btn-outline-secondary" for="placesradio2" [ngClass]="{'text-darker-bg-theme': !dishFlag}">Places</label>
     </div>
-  </div>
   <form class="row g-3 pt-2 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7" (ngSubmit)="search(searchStr)">
     <div class="col-12 col-md-8">
       <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
@@ -69,22 +63,22 @@
     </div>
     @for (place of placesResponse.places; track place; let idx = $index) {
       @if (!!place) {
-        <div class="card m-4 border-secondary">
+        <div class="card m-4 border-secondary cursor-pointer" (click)="onViewPlace(place)">
           <div class="row g-0">
             <div class="col-lg-8">
               <div class="card-body pb-2 d-flex justify-content-between">
                 <div class="d-flex flex-column align-items-start align-content-start card-title">
-                  <span class=" fs-5 fw-bolder">{{ idx + 1 }}. {{ place.name }}</span>
+                  <span class=" fs-5 fw-bolder">{{ idx + 1 }}. {{ place.placeName }}</span>
                   <p class="card-text text-body-secondary fs-smaller">&commat;{{ place.address?.suburb }}</p>
                 </div>
                 <div class="service-container col-6 d-flex flex-column align-self-center">
                   <div class="card-text text-body-secondary d-flex justify-content-end">
                     <span class="fs-smaller">Ambience:</span>
-                    <span class="mx-2 fw-bolder">{{ place.ambience | number: '1.1-1' }}</span>
+                    <span class="mx-2 fw-bolder">{{ place.ratingInfo?.ambience | number: '1.1-1' }}</span>
                   </div>
                   <div class="card-text text-body-secondary d-flex justify-content-end">
                     <span class="fs-smaller">Service:</span>
-                    <span class="mx-2 fw-bolder">{{ place.service | number: '1.1-1' }}</span>
+                    <span class="mx-2 fw-bolder">{{ place.ratingInfo?.service | number: '1.1-1' }}</span>
                   </div>
                 </div>
               </div>
@@ -101,25 +95,24 @@
             <div class="card-body py-0">
               @if (Object.values(place.items); as items; ) {
                 @for (number of [0, 1, 2]; track number; ) {
-                  <div class=" result-item-container d-flex justify-content-center flex-column"
-                       (click)="onViewPlace(place)">
+                  <div class=" result-item-container d-flex justify-content-center flex-column">
                     <div class="row align-items-center">
-                      <div class=" result-item-img-wrapper col-3 d-flex align-items-center">
-                        @if (items[number]?.medias?.[0]?.key) {
-                          <img [src]="config.bucketAccessEndpoint+'/'+items[number]?.medias?.[0]?.key"
-                               class="result-item-img" alt="No image available" />
+                      <div class=" result-place-img-wrapper col-3 d-flex align-items-center">
+                        @if ((items[number]?.placeItem?.medias?.[0]?.key ?? items[number]?.media?.key); as key) {
+                          <img [src]="config.bucketAccessEndpoint+'/'+key"
+                               class="result-place-img bg-no-img" alt="No image available" />
                         } @else {
-                          <span class="text-secondary-emphasis ">
-                          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"
-                               fill="#999999"><path
-                            d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
+                          <span class="text-secondary-emphasis fx-icon fx-icon-no-image">
+<!--                          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"-->
+<!--                               fill="#999999"><path-->
+<!--                            d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>-->
                         </span>
                         }
                       </div>
                       <div class="result-item-detail col-9 flex-column align-items-center">
                         @if (items[number]) {
                           <span
-                            class=" card-text text-secondary-emphasis fw-bolder">{{ items[number]?.name ?? 'No more matching items' }}</span>
+                            class=" card-text text-secondary-emphasis fw-bolder">{{ items[number]?.placeItem?.name ?? items[number]?.name ?? 'No more matching items' }}</span>
                         } @else {
                           <!--                          <span-->
                             <!--                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>-->
@@ -128,17 +121,18 @@
 
 
                         }
-                        @if (items[number]) {
+<!--                        {{items[number]?.ratingInfo}}-->
+                        @if (items[number]?.placeItem?.ratingInfo; as ri) {
                           <span class=" card-text text-body-secondary fs-smaller ">
                           <span
                             class="row gap-0 g-0">
-                            <span class="col-5">Taste: </span><span class="col-7">{{ items[number]?.taste }}
-                            ({{ items[number]?.noOfReviews }} reviews)</span>
+                            <span class="col-5">Taste: </span><span class="col-7">{{ ri.taste }}
+                            ({{ ri.noOfReviews }} reviews)</span>
                           </span>
                           <span
                             class="row gap-0 g-0">
                             <span class="col-5">Presentation:</span><span
-                            class="col-7">{{ items[number]?.presentation }} ({{ items[number]?.noOfReviews }}
+                            class="col-7">{{ ri.presentation }} ({{ ri.noOfReviews }}
                             reviews)</span>
                           </span>
                         </span>
