@@ -64,7 +64,8 @@
 @if (placesResponse?.places?.length) {
   <div class="results-container m-1 m-md-5 col-md-10">
     <div class=" text-secondary-emphasis">
-      <span class="">{{config.general.foundFollowingPlaces}}</span><span class="fw-bold"> '{{searchStr.value}}'</span>
+      <span class="">{{ config.general.foundFollowingPlaces }}</span><span class="fw-bold"> '{{ searchStr.value }}
+      '</span>
     </div>
     @for (place of placesResponse.places; track place; let idx = $index) {
       @if (!!place) {
@@ -100,7 +101,8 @@
             <div class="card-body py-0">
               @if (Object.values(place.items); as items; ) {
                 @for (number of [0, 1, 2]; track number; ) {
-                  <div class=" result-item-container d-flex justify-content-center flex-column" (click)="onViewPlace(place)">
+                  <div class=" result-item-container d-flex justify-content-center flex-column"
+                       (click)="onViewPlace(place)">
                     <div class="row align-items-center">
                       <div class=" result-item-img-wrapper col-3 d-flex align-items-center">
                         @if (items[number]?.medias?.[0]?.key) {
@@ -119,9 +121,9 @@
                           <span
                             class=" card-text text-secondary-emphasis fw-bolder">{{ items[number]?.name ?? 'No more matching items' }}</span>
                         } @else {
-<!--                          <span-->
-<!--                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>-->
-<!--                          <hr class="dropdown-divider text-secondary" />-->
+                          <!--                          <span-->
+                            <!--                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>-->
+                            <!--                          <hr class="dropdown-divider text-secondary" />-->
                           <hr class="border-bottom border-1 border-dark">
 
 
@@ -191,7 +193,8 @@
 @if (itemsResponse?.items) {
   <div class="container text-centerr m-0 m-sm-auto">
     <div class=" text-secondary-emphasis">
-      <span class="">{{config.general.foundFollowingItems}}</span><span class="fw-bold"> '{{searchStr.value}}'</span>
+      <span class="">{{ config.general.foundFollowingItems }}</span><span class="fw-bold"> '{{ searchStr.value }}
+      '</span>
     </div>
     <div class="results-container text-center row gap-3 row-cols-auto justify-content-center justify-content-sm-start">
 
@@ -203,28 +206,33 @@
               <div class="card-img result-item-img-wrapper col-3 d-flex align-items-center">
                 @if (item.medias?.[0]?.key) {
                   <img [src]="config.bucketAccessEndpoint+'/'+item?.medias?.[0]?.key"
-                       class="result-item-img" alt="No image available" />
+                       class="result-item-img bg-no-img" alt="No image available" />
                 } @else {
-                  <span class="text-secondary-emphasis ">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960" width="11rem"
-                                 fill="#999999"><path
-                              d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
-                          </span>
+
+<!--                  <span class="fx-icon fx-icon-no-image bg-dark-subtle result-item-img"></span>-->
+                  <object type="image/svg+xml" data="assets/images/svgs/No_image_available.svg" class="result-item-img">
+                  </object>
+<!--  <span class="result-item-img"></span>-->
+                  <!--                  <span class="text-secondary-emphasis ">-->
+                    <!--                           -->
+                    <!--                          </span>-->
                 }
                 <!--          </div>-->
               </div>
 
               <div class="card-body pb-2 d-flex justify-content-between">
                 <div class="d-flex flex-column flex-grow-1">
-                <div class="item-name align-self-start">
-                  <span class="fw-bold text-secondary-emphasis">{{item.name}}</span>
-                </div>
-                  <div class="item-description align-self-start">
-                    <span class="text-secondary fst-italic">{{item.description}}</span>
+                  <div class="item-name align-self-start">
+                    <span class="fw-bold text-secondary-emphasis">{{ item.name }}</span>
                   </div>
-                <div class="flex-grow-1 p-0 pt-3 align-content-end">
-                  <button class="btn btn-outline-dark w-100" (click)="onViewPlaces(item)">View places</button>
-                </div>
+                  @if (item.description) {
+                    <div class="item-description align-self-start">
+                      <span class="text-secondary fst-italic">{{ item.description }}</span>
+                    </div>
+                  }
+                  <div class="flex-grow-1 p-0 pt-3 align-content-end">
+                    <button class="btn btn-outline-dark w-100" (click)="onViewPlaces(item)">View places</button>
+                  </div>
                 </div>
               </div>
             </div>

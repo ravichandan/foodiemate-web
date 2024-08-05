@@ -409,39 +409,14 @@ input [type="range"] {
   }
 }
 
-.fx-icon {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  //width: 2.5rem;
-  //height: 2.5rem;
-  background-color: black;
-  mask-size: cover;
-}
-
-.fx-icon-person-fill {
-  mask: url(assets/images/svgs/person-fill.svg) no-repeat;
-  position: relative;
-  left: -4px;
-}
-.fx-icon-rounded-check {
-  mask: url(assets/images/svgs/rounded-check.svg) no-repeat;
-  width: 24px;
-  height: 24px;
-}
-
-
-.fx-icon:hover,
-.fx-icon:focus {
-  background-color: $teal-dark-color;
-}
-
 
 .rating-element {
   max-width: 17rem;
 }
 
-
+.bg-no-img {
+  background: url(assets/images/svgs/no-image.svg) no-repeat;
+}
 
 @import "styles/components";
 

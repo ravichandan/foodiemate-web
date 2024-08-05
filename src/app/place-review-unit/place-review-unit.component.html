@@ -32,8 +32,8 @@
 
 
 @if (review) {
-  <div class="review-unit-container row gap-3 my-2">
-    <div class="row gap-1 customer-info-row">
+  <div class="review-unit-container row gap-3 my-2 g-0">
+    <div class="row g-0 gap-1 customer-info-row">
       <div class="customer-pic-wrapper col-auto rounded-5 text-light d-flex justify-content-center pe-0">
         @if (review.customer?.picture?.key) {
           <img [src]="config.bucketAccessEndpoint+'/'+review.customer?.picture?.key" alt="profile picture"
@@ -49,19 +49,19 @@
       }
       </div>
     </div>
-    <div class="row gap-1 review-date-row">
+    <div class="row g-0 gap-1 review-date-row">
       <span class=" text-secondary"> {{ review.modifiedAt | date: 'd MMMM, y' }}</span>
     </div>
-    <div class="row gap-1 rating-info-row">
+    <div class="row g-0 gap-1 rating-info-row">
       <div class="row row-cols-1 row-cols-md-2 gap-2 ">
-        <div class="col d-flex justify-content-between align-items-center rating-element fw-bolder ">
+        <div class="col d-flex justify-content-between align-items-center rating-element  ">
           <span class="">Service: </span>
           <span class=" row gap-0">
               <span class="col-auto mt-1 fw-bold">{{ review.service|number: '1.1-1' }}</span>&nbsp;<span class="col-auto p-0 "><ng-container
                 *ngTemplateOutlet="ratingTemplate; context: { val: review.service }"></ng-container></span>
             </span>
         </div>
-        <div class="col d-flex justify-content-between align-items-center rating-element fw-bolder">
+        <div class="col d-flex justify-content-between align-items-center rating-element ">
           <span>Ambience: </span>
           <span class="row gap-0">
               <span class="col-auto mt-1 fw-bold">{{ review.ambience|number: '1.1-1' }}</span>&nbsp;<span class="col-auto p-0 "><ng-container
@@ -70,14 +70,14 @@
         </div>
       </div>
     </div>
-    <div class="row gap-1 review-description-row">
+    <div class="row g-0 gap-1 review-description-row">
       <pre class="mb-0">
                 {{ review.description }}
             </pre
             >
     </div>
     @if(review.children?.length) {
-      <div class="row gap-2 review-items-row">
+      <div class="row g-0 gap-2 review-items-row">
         <div class="review-items-label fs-6 fw-bold text-dark">
           <span>{{ config.placeReviewItemsLabel }}</span>
         </div>
@@ -139,7 +139,7 @@
       </div>
     }
     @if (review.medias?.length) {
-      <div class="row gap-1 review-photos-row">
+      <div class="row g-0 gap-1 review-photos-row">
         <div class="review-photos-wrapper-holder">
           @for (media of review.medias; track media) {
             <img [src]="config.bucketAccessEndpoint+'/'+media.key" class="img-thumbnail" alt="Image" />
@@ -150,7 +150,7 @@
         </div>
       </div>
     }
-    <div class="row gap-1 review-feedback-row">
+    <div class="row g-0 gap-1 review-feedback-row">
       <div class="review-feedback-wrapper d-flex flex-column">
         <app-review-feedback [review]="review"></app-review-feedback>
         @if (review.helpful) {
