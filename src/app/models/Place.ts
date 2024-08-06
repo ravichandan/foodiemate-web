@@ -43,9 +43,9 @@ export enum WeekDays {
 }
 // o: {[p: string]: WeekDays} | ArrayLike<WeekDays>):
 export type OpeningTimes = {
-  [p in WeekDays]: {
+  [p in WeekDays]: [{
     open: number;
     close: number;
     mayDiffer: boolean;
-  };
+  }];
 };

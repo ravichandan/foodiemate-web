@@ -272,9 +272,11 @@
         <div class="modal-body">
           <div class="container-fluid">
             <div class="row my-1" *ngFor="let e of Object.entries(place.openingTimes)">
-              {{JSON.stringify(e)}}
+<!--              {{JSON.stringify(e[1])}}-->
               <div class="col-4">{{ e[0] | titlecase }}:</div>
-              <div class="col-7 ms-auto">{{ e[1].open }}:00 - {{ e[1].close }}:00</div>
+              @for (time of e[1]; track time;) {
+                <div class="col-7 ms-auto">{{ time.open }}:00 - {{ time.close }}:00</div>
+              }
             </div>
           </div>
         </div>
