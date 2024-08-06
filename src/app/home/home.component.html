@@ -65,18 +65,18 @@
       @if (!!place) {
         <div class="card m-4 border-secondary cursor-pointer" (click)="onViewPlace(place)">
           <div class="row g-0">
-            <div class="col-lg-8">
+            <div class="col-lg-8 text-darker-bg-theme">
               <div class="card-body pb-2 d-flex justify-content-between">
                 <div class="d-flex flex-column align-items-start align-content-start card-title">
                   <span class=" fs-5 fw-bolder">{{ idx + 1 }}. {{ place.placeName }}</span>
-                  <p class="card-text text-body-secondary fs-smaller">&commat;{{ place.address?.suburb }}</p>
+                  <p class="card-text  fs-smaller">&commat;{{ place.address?.suburb }}</p>
                 </div>
                 <div class="service-container col-6 d-flex flex-column align-self-center">
-                  <div class="card-text text-body-secondary d-flex justify-content-end">
+                  <div class="card-text  d-flex justify-content-end">
                     <span class="fs-smaller">Ambience:</span>
                     <span class="mx-2 fw-bolder">{{ place.ratingInfo?.ambience | number: '1.1-1' }}</span>
                   </div>
-                  <div class="card-text text-body-secondary d-flex justify-content-end">
+                  <div class="card-text  d-flex justify-content-end">
                     <span class="fs-smaller">Service:</span>
                     <span class="mx-2 fw-bolder">{{ place.ratingInfo?.service | number: '1.1-1' }}</span>
                   </div>
@@ -124,20 +124,27 @@
 
                           }
                           <!--                        {{items[number]?.ratingInfo}}-->
-                          @if (items[number]?.placeItem?.ratingInfo; as ri) {
+                          @if (items[number]?.placeItem; as pi) {
                             <span class=" card-text text-body-secondary fs-smaller ">
-                          <span
-                            class="row gap-0 g-0">
-                            <span class="col-5">Taste: </span><span class="col-7">{{ ri.taste }}
-                            ({{ ri.noOfReviews }} reviews)</span>
-                          </span>
-                          <span
-                            class="row gap-0 g-0">
-                            <span class="col-5">Presentation:</span><span
-                            class="col-7">{{ ri.presentation }} ({{ ri.noOfReviews }}
-                            reviews)</span>
-                          </span>
-                        </span>
+                              <span
+                                class="row gap-0 g-0">
+                                  <span class="col-5">Taste: </span>@if(pi.ratingInfo?.taste) {<span
+                                    class="col-7">{{ pi.ratingInfo.taste }}
+                                      ({{ pi.ratingInfo.noOfReviews }} reviews)</span>
+                                    } @else {<span
+                                      class="col-7 fst-italic"> Not reviewed yet</span>
+                                    }
+                              </span>
+                              <span
+                                class="row gap-0 g-0">
+                                  <span class="col-5">Presentation: </span>@if(pi.ratingInfo?.presentation) {<span
+                                    class="col-7">{{ pi.ratingInfo?.presentation }} ({{ pi.ratingInfo?.noOfReviews }}
+                                    reviews)</span>
+                                  } @else {<span
+                                    class="col-7 fst-italic"> Not reviewed yet</span>
+                                  }
+                              </span>
+                            </span>
                           }
                         </div>
                       </div>

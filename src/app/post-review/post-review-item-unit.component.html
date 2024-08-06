@@ -1,12 +1,12 @@
 @if (itemGroup) {
-  <div class="row gap-3 border border-1 border-light-subtle rounded-2" [formGroup]="itemGroup">
-    <div class="post-review-item-label mt-3 d-flex justify-content-between col-12">
+  <div class="row gap-3 border border-1 border-light-subtle rounded-2 py-3" [formGroup]="itemGroup">
+    <div class="post-review-item-label  d-flex justify-content-between col-12">
       <span class="fw-bold">Item {{ (index + 1) }}</span>
       <button type="button" class="btn-close" aria-label="Close" (click)="close.emit(getFormGroupName())"></button>
     </div>
 
     <!--  item name search-->
-    <div class="input-group mb-3 col-12">
+    <div class="input-group col-12">
       <div class="input-group-text"><i class="bi bi-search fs-4"></i></div>
       <div class="form-floating">
         <input
@@ -85,7 +85,7 @@
 
       <ng-container class="item-review-description">
         <!--  item review description search-->
-        <div class="input-group mb-3 col-12">
+        <div class="input-group  col-12">
           <div class="form-floating">
             <textarea
               [id]="'itemReviewInput-'+index"
