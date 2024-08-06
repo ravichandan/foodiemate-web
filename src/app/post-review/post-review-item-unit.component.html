@@ -1,7 +1,7 @@
 @if (itemGroup) {
   <div class="row gap-3 border border-1 border-light-subtle rounded-2" [formGroup]="itemGroup">
-    <div class="post-review-item-label mmt-3 d-flex justify-content-between col-12">
-      <span class="fw-bold">Item {{ index }}</span>
+    <div class="post-review-item-label mt-3 d-flex justify-content-between col-12">
+      <span class="fw-bold">Item {{ (index + 1) }}</span>
       <button type="button" class="btn-close" aria-label="Close" (click)="close.emit(getFormGroupName())"></button>
     </div>
 
@@ -25,6 +25,7 @@
         <label [for]="'searchItemInput-'+index">{{ config.postReviewLabels?.item?.label }}</label>
       </div>
     </div>
+
     @if (showNext) {
       <!--    taste input range-->
       <div class="col-12 col-md-6">

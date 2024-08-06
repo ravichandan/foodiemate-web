@@ -187,6 +187,9 @@ export class AppService implements OnDestroy{
   }
 
   public searchPlaceWithName(args: { placeName: string,itemName?: string }): Observable<PlacesResponse| undefined> {
+    console.log(
+      'in app.service->searchPlaceWithName args:: ',args
+    )
     if (!args.placeName) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 

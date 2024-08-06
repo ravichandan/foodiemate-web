@@ -1,4 +1,6 @@
 import {
+  AfterContentInit, AfterViewChecked,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -35,7 +37,7 @@ import { Place } from '../models/Place';
 import { NewReview } from '../models/Review';
 import { AsyncPipe, DecimalPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import { Form, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgbTypeahead, NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeahead, NgbTypeaheadConfig, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { AppService } from '../services/app.service';
 import { PlacesResponse } from '../models/PlacesResponse';
 import { Item } from '../models/Item';
@@ -136,13 +138,15 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         filter((data) => !!data),
-        tap((x) => console.log('In ' + 'item' + this.ctrlSuffix + ' value changes, value:: ', x)),
+        tap((x) => console.log('In itemCtrl value changes, value:: ', x)),
         tap((x) => (this.showNext = true)),
         tap((x) => this.itemGroup?.controls['item' + this.ctrlSuffix].addValidators(Validators.required)),
         tap((x) => this.itemGroup?.controls['taste' + this.ctrlSuffix].addValidators(Validators.min(1))),
         tap((x) => this.itemGroup?.controls['presentation' + this.ctrlSuffix].addValidators(Validators.min(1))),
+        tap((x) => this.cdRef?.detectChanges()),
       )
       .subscribe();
+
   }
 
   ngOnDestroy() {
@@ -151,7 +155,7 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
 
   formatter = (x: Place | Item) => x.name;
 
-  extractItems: () => Item[] = () => Object.values(this.reviewFormGroup.value.placeCtrl.items) as Item[];
+  extractItems: () => Item[] = () => Object.values(this.reviewFormGroup.value.placeCtrl?.items ?? [] ) as Item[];
 
   searchItemTypeahead: OperatorFunction<string, readonly Item[]> = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(350), distinctUntilChanged());
@@ -161,6 +165,7 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map((term) =>
         this.extractItems()
+          .filter(Boolean)
           .filter((v) => v.name.toLowerCase().includes(term.toLocaleLowerCase()))
           .filter((v) => !Object.values(this.selectedItems).includes(v.name))
           .splice(0, 10),
@@ -267,7 +272,7 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
   providers: [NgbTypeaheadConfig],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostReviewComponent implements OnInit, OnDestroy {
+export class PostReviewComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit, AfterViewChecked, AfterViewChecked {
   private readonly destroy$: Subject<any>;
   config: any;
 
@@ -296,7 +301,7 @@ export class PostReviewComponent implements OnInit, OnDestroy {
   postingReview: boolean = false;
   customer: CustomerInfo | undefined;
   errorMsg: string | undefined;
-
+  postReview: any;
   mediaTemplates: any = {
     1: {
       id: 1,
@@ -335,22 +340,21 @@ export class PostReviewComponent implements OnInit, OnDestroy {
     ngbConfig.showHint = true;
     this.form$ = this.store.select(preloadReviewDataSelector()).pipe(
       takeUntil(this.destroy$),
-      tap((x) => console.log('preloadReview', x)),
+      // tap((x) => console.log('preloadReview', x)),
     );
     console.log('123 ' + this.router.getCurrentNavigation()?.previousNavigation?.finalUrl?.toString());
     this.previousPage =
       this.router.getCurrentNavigation()?.previousNavigation?.finalUrl?.toString() ?? this.previousPage;
     this.addNewItemGroup();
+
   }
 
   ngOnInit() {
     console.log('in post-review.component, ngOnInit()...');
-    this.preloadReview$ = this.store.select(preloadReviewDataSelector()).pipe(
-      takeUntil(this.destroy$),
-      filter((data) => !!data),
-      map(data => data.postReview),
-      tap((x) => console.log('review from state received in post-review.component:: ', x)),
-    );
+    // this.reserveItemGroup?.controls['placeCtrl'].valueChanges.subscribe((value) => {
+    //
+    // });
+
     this.store
       .select(postReviewResultSelector())
       .pipe(
@@ -363,6 +367,14 @@ export class PostReviewComponent implements OnInit, OnDestroy {
       .select(customerSelector())
       .pipe(takeUntil(this.destroy$))
       .subscribe((cust) => (this.customer = cust));
+    this.preloadReview$ = this.store.select(preloadReviewDataSelector()).pipe(
+      takeUntil(this.destroy$),
+      filter((data) => !!data),
+      map(data => data.postReview),
+      tap((x) => console.log('review from state received in post-review.component:: ', x)),
+      tap((x) => this.postReview = x),
+
+    );
   }
 
   ngOnDestroy() {
@@ -476,7 +488,7 @@ export class PostReviewComponent implements OnInit, OnDestroy {
     console.log('this.reviewFormGroup.controls:: ', this.reviewFormGroup.controls);
   }
 
-  formatter = (x: Place | Item) => x.name;
+  formatter = (x: any) => x.placeName;
 
   searchPlaceTypeahead: OperatorFunction<string, readonly Place[]> = (text$: Observable<string>) =>
     text$.pipe(
@@ -498,7 +510,7 @@ export class PostReviewComponent implements OnInit, OnDestroy {
       tap(() => (this.searching = false)),
     );
 
-  extractItems: () => Item[] = () => Object.values(this.reviewFormGroup.value.placeCtrl.items) as Item[];
+  extractItems: () => Item[] = () => Object.values(this.reviewFormGroup.value.placeCtrl?.items) as Item[];
 
   // searchItemTypeahead: OperatorFunction<string, readonly Item[]> = (text$: Observable<string>) =>
   // {
@@ -644,5 +656,29 @@ export class PostReviewComponent implements OnInit, OnDestroy {
     this.mediaTemplates[id].uploadProgress = 0;
     this.mediaTemplates[id].filename = undefined;
     this.uploadSub = undefined;
+  }
+
+  beforeSelectingPlace($event: NgbTypeaheadSelectItemEvent<any>) {
+    console.log('beforeSelectingPlace, $event: ', $event);
+  }
+
+
+  ngAfterContentInit(): void {
+    console.log('1. ngAfterContentInit');
+  }
+
+  ngAfterViewChecked(): void {
+    console.log('2. ngAfterViewChecked');
+  }
+
+  ngAfterViewInit(): void {
+    console.log('3. ngAfterViewInit');
+    if(this.postReview.place){
+      this.reviewFormGroup?.controls?.['placeCtrl']?.setValue(this.postReview.place);
+    }
+    if(this.postReview.item){
+      (this.reviewFormGroup?.controls?.['item1Group'] as any)?.controls?.['itemCtrl']?.setValue(this.postReview.item);
+    }
+    this.reviewFormGroup?.updateValueAndValidity({onlySelf: true});
   }
 }

@@ -265,8 +265,9 @@ pre {
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
-  text-align: var(--bs-body-text-align);
+  text-align: justify;
   white-space: pre-line;
+
 }
 
 .img-thumbnail {

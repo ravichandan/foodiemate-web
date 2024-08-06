@@ -34,6 +34,7 @@
   "placeReviewItemsLabel": "Items we had there: ",
   "placeReviewPhotosWrapperLabel": "Pics of the place overall: ",
   "giveAReviewLabel": "Review this place",
+  "giveAItemReviewLabel": "Review this item",
   "postReviewLabels": {
     "place": {
       "label": "Where did you have food?",
@@ -69,7 +70,7 @@
       "placeholder": "Search Place"
     },
     "itemDescription": {
-      "label": "Tell us anything else like quantity, cold/hot, etc",
+      "label": "Anything else like quantity, spicy, etc",
       "placeholder": "Tell us something like temperature, quantity, etc"
     },
     "description": {

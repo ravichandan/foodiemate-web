@@ -14,3 +14,7 @@
 .review-text-area {
   height: 5rem;
 }
+
+.form-floating > .form-control:focus ~ label, .form-floating > .form-control:not(:placeholder-shown) ~ label, .form-floating > .form-control-plaintext ~ label, .form-floating > .form-select ~ label {
+  padding: 0;
+}

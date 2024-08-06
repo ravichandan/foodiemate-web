@@ -1,12 +1,13 @@
 @if (preloadReview$ | async) {
-  <div class="d-flex">
+  <div class="d-flex m-2">
     <form
-      class="row gap-4 needs-validation review-form"
+      class="row g-0 gap-4 needs-validation review-form"
       novalidate
       #reviewForm
       (ngSubmit)="formSubmitted()"
       [formGroup]="reviewFormGroup"
-      [connectForm]="form$ | async">
+    >
+<!--      [connectForm]="form$ | async"-->
       <!--      Place input -->
       <div class="col-12">
         <div class="input-group mb-3">
@@ -22,6 +23,7 @@
               [ngbTypeahead]="searchPlaceTypeahead"
               [inputFormatter]="formatter"
               [resultFormatter]="formatter"
+              (selectItem)="beforeSelectingPlace($event)"
               [editable]="false" />
             <label for="searchPlaceInput">{{ config.postReviewLabels?.place?.label }}</label>
             <div class="valid-feedback">Looks good!</div>
