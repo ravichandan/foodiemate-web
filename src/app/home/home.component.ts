@@ -80,6 +80,7 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   search(element: HTMLInputElement) {
     console.log('in home.component->search(), element: ', element.value);
+    if(!element.value?.length) {return;}
     this.placesResponse.places=[];
     this.itemsResponse.items=[];
     this.errorMessage = undefined;

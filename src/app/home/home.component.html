@@ -1,14 +1,14 @@
 <div class="search-container m-1 m-md-5 py-2 py-md-3 col-md-10">
   <div class="btn-group" role="group" aria-label="select dishes ior restaurants to search for">
       <input type="radio" class="btn-check" name="btnradio" id="dishesradio1" autocomplete="off" [checked]="dishFlag"
-             (change)="dishFlag=true">
+             (change)="dishFlag=true; searchBox.click()">
       <label class="btn btn-outline-secondary  " [ngClass]="{'text-darker-bg-theme': dishFlag}" for="dishesradio1">Dishes</label>
 
       <input type="radio" class="btn-check" name="btnradio" id="placesradio2" autocomplete="off" [checked]="!dishFlag"
-             (change)="dishFlag=false">
+             (change)="dishFlag=false; searchBox.click()">
       <label class="btn btn-outline-secondary" for="placesradio2" [ngClass]="{'text-darker-bg-theme': !dishFlag}">Places</label>
     </div>
-  <form class="row g-3 pt-2 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7" (ngSubmit)="search(searchStr)">
+  <form class="row g-3 pt-2 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7" #homeSearchForm (ngSubmit)="search(searchStr)">
     <div class="col-12 col-md-8">
       <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
       <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search" #searchStr />
@@ -95,35 +95,37 @@
             <div class="card-body py-0">
               @if (Object.values(place.items); as items; ) {
                 @for (number of [0, 1, 2]; track number; ) {
-                  <div class=" result-item-container d-flex justify-content-center flex-column">
-                    <div class="row align-items-center">
-                      <div class=" result-place-img-wrapper col-3 d-flex align-items-center">
-                        @if ((items[number]?.placeItem?.medias?.[0]?.key ?? items[number]?.media?.key); as key) {
-                          <img [src]="config.bucketAccessEndpoint+'/'+key"
-                               class="result-place-img bg-no-img" alt="No image available" />
-                        } @else {
-                          <span class="text-secondary-emphasis fx-icon fx-icon-no-image">
+                  @if(!!items[number]) {
+                    <div class=" result-item-container d-flex justify-content-center flex-column">
+                      <div class="row align-items-center">
+                        <div class=" result-place-img-wrapper col-3 d-flex align-items-center p-0 justify-content-center">
+                          @if ((items[number]?.placeItem?.medias?.[0]?.key ?? items[number]?.media?.key); as key) {
+                            <img [src]="config.bucketAccessEndpoint+'/'+key"
+                                 class="result-place-img bg-no-img"  />
+                          } @else {
+
+                            <span class="text-secondary-emphasis result-place-img fx-icon fx-icon-no-image">
 <!--                          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"-->
-<!--                               fill="#999999"><path-->
-<!--                            d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>-->
+                              <!--                               fill="#999999"><path-->
+                              <!--                            d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>-->
                         </span>
-                        }
-                      </div>
-                      <div class="result-item-detail col-9 flex-column align-items-center">
-                        @if (items[number]) {
-                          <span
-                            class=" card-text text-secondary-emphasis fw-bolder">{{ items[number]?.placeItem?.name ?? items[number]?.name ?? 'No more matching items' }}</span>
-                        } @else {
-                          <!--                          <span-->
-                            <!--                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>-->
-                            <!--                          <hr class="dropdown-divider text-secondary" />-->
-                          <hr class="border-bottom border-1 border-dark">
+                          }
+                        </div>
+                        <div class="result-item-detail col-9 flex-column align-items-center">
+                          @if (items[number]) {
+                            <span
+                              class=" card-text text-secondary-emphasis fw-bolder">{{ items[number]?.placeItem?.name ?? items[number]?.name ?? 'No more matching items' }}</span>
+                          } @else {
+                            <!--                          <span-->
+                              <!--                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>-->
+                              <!--                          <hr class="dropdown-divider text-secondary" />-->
+                            <hr class="border-bottom border-1 border-dark">
 
 
-                        }
-<!--                        {{items[number]?.ratingInfo}}-->
-                        @if (items[number]?.placeItem?.ratingInfo; as ri) {
-                          <span class=" card-text text-body-secondary fs-smaller ">
+                          }
+                          <!--                        {{items[number]?.ratingInfo}}-->
+                          @if (items[number]?.placeItem?.ratingInfo; as ri) {
+                            <span class=" card-text text-body-secondary fs-smaller ">
                           <span
                             class="row gap-0 g-0">
                             <span class="col-5">Taste: </span><span class="col-7">{{ ri.taste }}
@@ -136,10 +138,11 @@
                             reviews)</span>
                           </span>
                         </span>
-                        }
+                          }
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  }
                 }
               }
 
@@ -184,11 +187,10 @@
   <span class="fst-italic fw-bolder">{{ config.noMatchingPlaces }}</span>
 }
 
-@if (itemsResponse?.items) {
+@if (itemsResponse?.items?.length) {
   <div class="container text-centerr m-0 m-sm-auto">
     <div class=" text-secondary-emphasis">
-      <span class="">{{ config.general.foundFollowingItems }}</span><span class="fw-bold"> '{{ searchStr.value }}
-      '</span>
+      <span class="">{{ config.general.foundFollowingItems }}</span><span class="fw-bold"> '{{ searchStr.value }}'</span>
     </div>
     <div class="results-container text-center row gap-3 row-cols-auto justify-content-center justify-content-sm-start">
 

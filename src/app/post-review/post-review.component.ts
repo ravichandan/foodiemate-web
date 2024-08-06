@@ -46,7 +46,6 @@ import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { ConnectFormDirective } from '../directives/connectForm.directive';
 import { CustomerInfo } from '../models/CustomerInfo';
 import { ToastService } from '../services/toast.service';
-import { B } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-post-review-item-unit',

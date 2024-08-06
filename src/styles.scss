@@ -281,6 +281,9 @@ pre {
 
 ngb-typeahead-window {
   width: 100%;
+  .dropdown-item.active, .dropdown-item:active{
+    background-color: $teal-color;
+  }
 }
 
 .input-group .form-floating > input {
@@ -416,6 +419,7 @@ input [type="range"] {
 
 .bg-no-img {
   background: url(assets/images/svgs/no-image.svg) no-repeat;
+  background-size: contain;
 }
 
 @import "styles/components";
