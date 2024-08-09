@@ -1,9 +1,9 @@
-<ng-container *ngIf="filtered as items">
+@if(filtered; as items) {
   <div class="item-list-container flex-grow-1">
     <div class="item-list-header ps-md-1 d-flex justify-content-between align-items-center">
- <!--     <div class="d-flex align-items-center">
-        <span class="fs-5">Menu:</span>
-      </div>-->
+      <!--     <div class="d-flex align-items-center">
+             <span class="fs-5">Menu:</span>
+           </div>-->
       <div class="filter-container d-flex">
         <div class="items-filter-wrapper col-12 col-lg-5 me-md-2 my-2">
           <ng-multiselect-dropdown
@@ -19,23 +19,24 @@
         <div class="sort-wrapper d-flex mx-2 align-items-center col-12 col-lg-5">
           <div class="new-check-v16">
             <label class="control control--checkbox">{{ config.general.sortByTaste }}
-              <input type="checkbox" checked="checked" [(ngModel)]="isSortByTaste" (change)="checkTasteSorting(isSortByTaste)">
+              <input type="checkbox" checked="checked" [(ngModel)]="isSortByTaste"
+                     (change)="checkTasteSorting(isSortByTaste)">
               <div class="control__indicator"></div>
             </label>
           </div>
           <div>
-<!--            <mat-checkbox class="example-margin" >Disabled</mat-checkbox>-->
+            <!--            <mat-checkbox class="example-margin" >Disabled</mat-checkbox>-->
 
           </div>
-         <!-- <div class="checkbox-container ">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox"  />
-                <span class="box"></span>
-                {{ config.general.sortByTaste }}
-              </label>
-            </div>
-          </div>-->
+          <!-- <div class="checkbox-container ">
+             <div class="checkbox">
+               <label>
+                 <input type="checkbox"  />
+                 <span class="box"></span>
+                 {{ config.general.sortByTaste }}
+               </label>
+             </div>
+           </div>-->
           <!--<span class="d-none d-lg-inline mx-1">Sort by</span>
           <button class="btn btn-light h-100 mx-1 rounded fs-4" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-sort-down"></i>
@@ -51,22 +52,26 @@
 
     <div class="item-list-wrapper row gap-3 my-2">
       <accordion [isAnimated]="true">
-        @for (item of items; track item;  let i=$index; let first = $first) {
-<!--          <accordion-group >-->
-<!--            <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
-              <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
-              <app-item-list-unit [item]="item" (toItemDetail)="goToItemDetail(item._id)"></app-item-list-unit>
-<!--            </div>-->
-<!--          </accordion-group>-->
+        @for (item of items; track item; let i = $index; let first = $first) {
+          <!--          <accordion-group >-->
+            <!--            <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
+            <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
+          <app-item-list-unit [item]="item" (toItemDetail)="goToItemDetail(item._id)"></app-item-list-unit>
+          <!--            </div>-->
+            <!--          </accordion-group>-->
         }
       </accordion>
 
-<!--      <ng-container *ngFor="let item of items; trackBy: trackByItemId; index as i; first as first">-->
-<!--        <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
-<!--          &lt;!&ndash;                         [ngbScrollSpyFragment]="i+','+items.length">&ndash;&gt;-->
-<!--          <app-item-list-unit [item]="item"></app-item-list-unit>-->
-<!--        </div>-->
-<!--      </ng-container>-->
+      <!--      <ng-container *ngFor="let item of items; trackBy: trackByItemId; index as i; first as first">-->
+      <!--        <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
+      <!--          &lt;!&ndash;                         [ngbScrollSpyFragment]="i+','+items.length">&ndash;&gt;-->
+      <!--          <app-item-list-unit [item]="item"></app-item-list-unit>-->
+      <!--        </div>-->
+      <!--      </ng-container>-->
     </div>
   </div>
-</ng-container>
+} @else {
+  <div class="m-4">
+    <span class="fst-italic">No menu items found</span>
+  </div>
+}

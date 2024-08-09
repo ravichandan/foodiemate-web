@@ -1,5 +1,5 @@
-<ng-container *ngIf="reviews$ | async as reviews">
-  <ng-container *ngIf="place">
+@if (reviews$ | async; as reviews) {
+  @if (reviews.length && place) {
     <div class="review-container row gap-3 g-0">
       <div class="review-title fs-5 fw-bold">Reviews</div>
       <div class="review-search-container">
@@ -25,9 +25,11 @@
             <button class="btn btn-light h-100 mx-1 rounded fs-4" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-sort-down"></i>
               <ul class="dropdown-menu">
-                <li class="mx-3" *ngFor="let option of config.itemDetailSortBy">
-                  <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
-                </li>
+                @for (option of config.itemDetailSortBy; track option) {
+                  <li class="mx-3">
+                    <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
+                  </li>
+                }
               </ul>
             </button>
           </div>
@@ -42,9 +44,11 @@
               ">
               <i class="bi bi-filter"></i>
               <ul class="dropdown-menu">
-                <li class="mx-3" *ngFor="let option of config.itemDetailFilterBy">
-                  <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
-                </li>
+                @for (option of config.itemDetailFilterBy; track option) {
+                  <li class="mx-3">
+                    <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
+                  </li>
+                }
               </ul>
             </button>
           </div>
@@ -84,11 +88,15 @@
         </div>
       </div>
 
-      <ng-container *ngFor="let review of reviews">
+      @for(review of reviews; track review) {
         <div class="row cols-auto g-0">
           <app-place-review-unit [review]="review" [place]="place"></app-place-review-unit>
         </div>
-      </ng-container>
+      }
     </div>
-  </ng-container>
-</ng-container>
+  } @else {
+    <div class="m-4">
+      <span class="fst-italic">No reviews yet</span>
+    </div>
+  }
+}

@@ -21,9 +21,7 @@ import * as FoodieActions from '../actions/foodie.actions';
   selector: 'app-place-reviews',
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
-    NgForOf,
     FormsModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule,
