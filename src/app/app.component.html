@@ -11,7 +11,7 @@
 
 <div class="row gx-0 justify-content-center">
   <div class="app-title col-12 gx-0">
-    <div class="d-flex m-3 p-2 p-lg-0 m-lg-0 text-bg-dark" style="height: 6rem;">
+    <div class="d-flex p-3 p-lg-0 m-lg-0 text-bg-dark" style="height: 6rem;">
       <div class="nav-block mr-auto d-block d-lg-none align-self-center mt-1">
         <span
           class="w-100 h-100 rounded d-flex align-items-center justify-content-center nav-block px-2 fs-1"
@@ -112,14 +112,16 @@
     </div>
     <div
       class="content-container col-12 col-lg-10 d-flex flex-lg-column justify-content-center justify-content-lg-start px-lg-5">
-      <div class="d-flex flex-column flex-grow-1">
-        <div class="d-flex align-items-center">
+      <div class="d-flex flex-column flex-grow-1 row gap-0 m-0 content-wrapper">
+        <div class="d-flex align-items-center  col-12">
           @if (isLoggedIn && (customer$|async); as customer) {
             <span>Welcome <strong>{{ customer.name?.split(' ')?.[0] | slice:0:11}}</strong></span>
           }
           <app-sharing-buttons class="align-self-end py-2 ms-auto"></app-sharing-buttons>
         </div>
-        <ng-container *ngTemplateOutlet="content"></ng-container>
+        <div class="col-12">
+          <ng-container *ngTemplateOutlet="content"></ng-container>
+        </div>
       </div>
     </div>
   </div>

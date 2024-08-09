@@ -1,4 +1,4 @@
-<div class="search-container m-1 m-md-5 py-2 py-md-3 col-md-10">
+<div class="search-container  py-2 py-md-3 col-md-10">
   <div class="btn-group" role="group" aria-label="select dishes ior restaurants to search for">
       <input type="radio" class="btn-check" name="btnradio" id="dishesradio1" autocomplete="off" [checked]="dishFlag"
              (change)="dishFlag=true; searchBox.click()">
@@ -8,12 +8,16 @@
              (change)="dishFlag=false; searchBox.click()">
       <label class="btn btn-outline-secondary" for="placesradio2" [ngClass]="{'text-darker-bg-theme': !dishFlag}">Places</label>
     </div>
-  <form class="row g-3 pt-2 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7" #homeSearchForm (ngSubmit)="search(searchStr)">
-    <div class="col-12 col-md-8">
+  <form class="row gap-3 m-0 pt-2 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7" #homeSearchForm (ngSubmit)="search(searchStr)">
+<!--    <div class="col-12 col-md-8">-->
+<!--      <span >{{ config.search_main_label }}</span>-->
+<!--      <span >{{ config.search_sub_label }}</span>-->
+<!--    </div>-->
+    <div class="col-12 col-md-8 p-0">
       <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
-      <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search" #searchStr />
+      <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search for a dish or place" #searchStr />
     </div>
-    <div class="col-12 col-md">
+    <div class="col-12 col-md p-0">
       <button type="submit" class="col-12 btn btn-dark mb-1 mb-sm-3 focus-ring" #searchBox>Search</button>
     </div>
   </form>

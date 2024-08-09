@@ -10,6 +10,7 @@ import * as FoodieActions from '../actions/foodie.actions';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { AppService } from './app.service';
+import { ACTION_OIDC_TOKEN_FETCHED_SUCCESS } from '../actions/foodie.actions';
 
 // import {generateCorrelationId} from "./Utils";
 
@@ -85,8 +86,9 @@ export class AuthGoogleService {
       if (['token_received'].includes(e.type)) {
         console.log('token_recieveddd:: ');
         this.oa.loadUserProfile().then((userInfo: any) => {
-          // console.log('in auth-google.service, userInfo: ', userInfo);
+          console.log('in auth-google.service, userInfo: ', userInfo);
           userInfo.token=this.getToken();
+          this.store.dispatch(FoodieActions.oidcTokenFetchedSuccess({userInfo}))
           this.store.dispatch(
             FoodieActions.loginOidcCustomer({
               userInfo

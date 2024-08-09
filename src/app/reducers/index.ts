@@ -49,6 +49,7 @@ export const customerReducer = createReducer(
   initialState.customer,
   on(FoodieActions.loginCustomerSuccess, (oldState, { customer }) => ({ ...customer })),
   on(FoodieActions.loginOidcCustomerSuccess, (oldState, { customer }) => ({ ...customer })),
+  on(FoodieActions.oidcTokenFetchedSuccess, (oldState, { userInfo }) => ({ ...oldState, id: '1', name: userInfo.info.given_name + ' '+ userInfo.info.family_name, email: userInfo.info.email} as CustomerInfo)),
 );
 
 export const popularItemsReducer = createReducer(

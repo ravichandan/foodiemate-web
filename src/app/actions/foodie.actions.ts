@@ -46,6 +46,7 @@ export const ACTION_PRELOAD_POST_REVIEW = '[FoodieMate] PRELOAD POST REVIEW';
 
 export const ACTION_LOGIN_OIDC_CUSTOMER = '[FoodieMate] LOGIN OIDC CUSTOMER';
 export const ACTION_LOGIN_OIDC_CUSTOMER_SUCCESS = '[FoodieMate] LOGIN OIDC CUSTOMER SUCCESS';
+export const ACTION_OIDC_TOKEN_FETCHED_SUCCESS = '[FoodieMate] OIDC TOKEN FETCHED SUCCESS';
 
 export const ACTION_CUSTOMER_LOGIN = '[FoodieMate] CUSTOMER LOGIN';
 export const ACTION_CUSTOMER_LOGIN_SUCCESS = '[FoodieMate] CUSTOMER LOGIN SUCCESS';
@@ -125,6 +126,11 @@ export const loginOidcCustomer = createAction(
 export const loginOidcCustomerSuccess = createAction(
   ACTION_LOGIN_OIDC_CUSTOMER_SUCCESS,
   props<{ customer: CustomerInfo }>(),
+);
+
+export const oidcTokenFetchedSuccess = createAction(
+  ACTION_OIDC_TOKEN_FETCHED_SUCCESS,
+  props<{ userInfo: any }>(),
 );
 
 export const logoutCustomer = createAction(ACTION_CUSTOMER_LOGOUT);
