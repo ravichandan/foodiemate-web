@@ -200,7 +200,7 @@ export class AppService implements OnDestroy{
     if(args.itemName) {
       params = params.append('itemName', args.itemName);
     }
-    params = params.append('postcode', 2763);
+    params = params.append('city', 'sydney');
     return this.http.get<PlacesResponse>(url, { params }).pipe(tap(x =>
     console.log('app.service -> searchPlaceWithName, response:: ', x)));
   }

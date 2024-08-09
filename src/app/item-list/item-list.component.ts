@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { filter, map, Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { filter, map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import { Item } from '../models/Item';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -36,18 +36,13 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
   styleUrl: './item-list.component.scss',
 })
 export class ItemListComponent implements OnInit, OnDestroy {
-  appService= inject(AppService);
-
-  private readonly destroy$: Subject<any>;
-
+  appService = inject(AppService);
   items$: Observable<Item[]> | undefined;
-  private selectedPlaceId: any;
   selectedPlaceName: any;
   config: any;
   sortBy: string = 'Taste';
   pageSize: number = 1;
   currentPageNum: number = 0;
-
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
     idField: 'label',
@@ -58,8 +53,13 @@ export class ItemListComponent implements OnInit, OnDestroy {
     allowSearchFilter: false,
   };
   selectedAllergensFilter: any;
-  // selectedStarFilter: any;
-  //
+  isSortByTaste: boolean = false;
+  allItems: Item[] | undefined = undefined;
+  filtered: Item[] | undefined = undefined;
+
+  private readonly destroy$: Subject<any>;
+  private selectedPlaceId: any;
+
   constructor(
     private route: ActivatedRoute,
     private store: Store<State>,
@@ -81,17 +81,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
     // this.fetchPlaces();
 
     // Fetch an item, and it will have the list of places with ratings and reviews
-    this.items$ = this.store.select(placeSelector(this.selectedPlaceId)).pipe(
-      takeUntil(this.destroy$),
-      filter((x) => !!x),
-      tap((x) => console.log('Place received in item-list.component:: ', x)),
-      tap((x) => console.log('items received in item-list.component, x.items:: ', x.items)),
-      tap((x) => (this.selectedPlaceName = x.name)),
+    //this.items$ =
+    this.onFilterChange();
 
-      map((x) => x.items as Item[]),
-      map((items: Item[]) => items?.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
-    );
-    setTimeout(() => {}, 10000);
+    // setTimeout(() => {}, 10000);
 
     this.route.paramMap
       .pipe(
@@ -114,12 +107,34 @@ export class ItemListComponent implements OnInit, OnDestroy {
     return i._id;
   }
 
-  onReviewFilterChange($event: ListItem) {}
+  onReviewFilterChange($event: ListItem) {
+    this.onFilterChange();
+  }
 
   goToItemDetail(itemId: string) {
     let r = '/places/:placeId/items/:itemId';
-    r=r.replace(':placeId', this.selectedPlaceId);
+    r = r.replace(':placeId', this.selectedPlaceId);
     r = r.replace(':itemId', itemId);
     this.router.navigate([r]).then();
+  }
+
+  checkTasteSorting(isSortByTaste: boolean) {
+    console.log('in checkTasteSorting, isSortByTaste:: ', isSortByTaste);
+    this.onFilterChange();
+  }
+
+  private onFilterChange() {
+    this.store.select(placeSelector(this.selectedPlaceId)).pipe(
+      filter((x) => !!x),
+      take(1),
+      // takeUntil(this.destroy$),
+      tap((x) => console.log('Place received in item-list.component:: ', x)),
+      tap((x) => console.log('items received in item-list.component, x.items:: ', x.items)),
+      tap((x) => (this.selectedPlaceName = x.name)),
+
+      map((x) => this.allItems = x.items as Item[]),
+      map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
+      map((items: Item[]) => this.filtered = this.isSortByTaste ? items.sort((a, b) => a.ratingInfo.taste - b.ratingInfo.taste) : items),
+    ).subscribe();
   }
 }

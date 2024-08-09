@@ -1,239 +1,243 @@
 <ng-container *ngIf="place$ | async as place">
   <div class="m-1 m-md-4 ">
     <div class="row gap-4 mx-0 place-detail-container mobile-place-detail-container">
-    <div class="place-title-container container col-12 py-3 text-darker-bg-theme  rounded-top-3">
-      <div class="row gap-2 align-items-start ">
+      <div class="place-title-container container col-12 py-3 text-darker-bg-theme  rounded-top-3">
+        <div class="row gap-2 align-items-start ">
 
-        <!-- item, place name-->
-        <div class="col-7 col-md-9">
-          <div class="col-12 my-1">
+          <!-- item, place name-->
+          <div class="col-7 col-md-9">
+            <div class="col-12 my-1">
                 <span class="place-name-text d-flex align-items-center fw-bolder "><span
-                  class="me-2"><svg xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true" focusable="false"  fill="currentcolor" viewBox="0 0 448 512">
-                  <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M416 0C400 0 288 32 288 176l0 112c0 35.3 28.7 64 64 64l32 0 0 128c0 17.7 14.3 32 32 32s32-14.3 32-32l0-128 0-112 0-208c0-17.7-14.3-32-32-32zM64 16C64 7.8 57.9 1 49.7 .1S34.2 4.6 32.4 12.5L2.1 148.8C.7 155.1 0 161.5 0 167.9c0 45.9 35.1 83.6 80 87.7L80 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-224.4c44.9-4.1 80-41.8 80-87.7c0-6.4-.7-12.8-2.1-19.1L191.6 12.5c-1.8-8-9.3-13.3-17.4-12.4S160 7.8 160 16l0 134.2c0 5.4-4.4 9.8-9.8 9.8c-5.1 0-9.3-3.9-9.8-9L127.9 14.6C127.2 6.3 120.3 0 112 0s-15.2 6.3-15.9 14.6L83.7 151c-.5 5.1-4.7 9-9.8 9c-5.4 0-9.8-4.4-9.8-9.8L64 16zm48.3 152l-.3 0-.3 0 .3-.7 .3 .7z"/></svg>
+                  class="me-2"><svg xmlns="http://www.w3.org/2000/svg"  class="icon" aria-hidden="true" focusable="false"
+                                    fill="currentcolor" viewBox="0 0 448 512">
+                  <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
+                  d="M416 0C400 0 288 32 288 176l0 112c0 35.3 28.7 64 64 64l32 0 0 128c0 17.7 14.3 32 32 32s32-14.3 32-32l0-128 0-112 0-208c0-17.7-14.3-32-32-32zM64 16C64 7.8 57.9 1 49.7 .1S34.2 4.6 32.4 12.5L2.1 148.8C.7 155.1 0 161.5 0 167.9c0 45.9 35.1 83.6 80 87.7L80 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-224.4c44.9-4.1 80-41.8 80-87.7c0-6.4-.7-12.8-2.1-19.1L191.6 12.5c-1.8-8-9.3-13.3-17.4-12.4S160 7.8 160 16l0 134.2c0 5.4-4.4 9.8-9.8 9.8c-5.1 0-9.3-3.9-9.8-9L127.9 14.6C127.2 6.3 120.3 0 112 0s-15.2 6.3-15.9 14.6L83.7 151c-.5 5.1-4.7 9-9.8 9c-5.4 0-9.8-4.4-9.8-9.8L64 16zm48.3 152l-.3 0-.3 0 .3-.7 .3 .7z" /></svg>
                 </span>{{ place.placeName }}</span>
-          </div>
+            </div>
 
-          <div class="col-12 my-1">
+            <div class="col-12 my-1">
                 <span class="place-suburb-text">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                       fill="currentColor"><path
+                    d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z" /></svg>
                   {{ place.address?.suburb }}
                 </span>
 
+            </div>
+            <!--          <di
+            v class="row my-1"><span class="item-suburb-text  fs-6 text-secondary-emphasis"><i-->
+            <!--            class="bi bi-geo-alt fs-5 me-3"></i>{{ item.address?.suburb }}</span></div>-->
           </div>
-          <!--          <di
-          v class="row my-1"><span class="item-suburb-text  fs-6 text-secondary-emphasis"><i-->
-          <!--            class="bi bi-geo-alt fs-5 me-3"></i>{{ item.address?.suburb }}</span></div>-->
-        </div>
-        <!-- item overall rating-->
-        <div class="place-rating-container d-flex flex-column col-5 row gap-1 px-0">
-          <div class="ambience-container mobile-ambience-container col-12">
-            <div class="d-flex justify-content-between align-items-baseline">
+          <!-- item overall rating-->
+          <div class="place-rating-container d-flex flex-column col-5 row gap-1 px-0">
+            <div class="ambience-container mobile-ambience-container col-12">
+              <div class="d-flex justify-content-between align-items-baseline">
                   <span class="ambience-text me-2">Ambience: </span
                   ><span class=""
-            ><span class="fs-6 fw-bold">{{ place.ratingInfo?.ambience | number: '1.1-1' }}&nbsp;/</span
-            ><span class="fw-normal">&nbsp;5</span></span
-            >
-            </div>
-          </div>
-          <div class="service-container mobile-service-container col-12">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <span class="service-text small">Service: </span>
-              <span class=""
-              ><span
-                class="fs-6 fw-bold">{{ place.ratingInfo?.service | number: '1.1-1' }}&nbsp;/</span
+              ><span class="fs-6 fw-bold">{{ place.ratingInfo?.ambience | number: '1.1-1' }}&nbsp;/</span
               ><span class="fw-normal">&nbsp;5</span></span
               >
+              </div>
             </div>
-            <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
-            <!--                                            class="item-price-text fs-5">Price: </span><span-->
-            <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
+            <div class="service-container mobile-service-container col-12">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <span class="service-text small">Service: </span>
+                <span class=""
+                ><span
+                  class="fs-6 fw-bold">{{ place.ratingInfo?.service | number: '1.1-1' }}&nbsp;/</span
+                ><span class="fw-normal">&nbsp;5</span></span
+                >
+              </div>
+              <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
+              <!--                                            class="item-price-text fs-5">Price: </span><span-->
+              <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
+            </div>
+            <a
+              class="no-of-reviews-text fs-small cursor-pointer text-light"
+              aria-current="page"
+              [class.fw-bolder]="reviews.focus"
+              scrollTo target="#reviews" [class.active]="reviews.focus">
+              <span class="">{{ place.ratingInfo?.noOfReviews }} reviews</span>
+            </a>
+            <!--          <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"-->
+            <!--          >(Out of {{ place.ratingInfo?.noOfReviews }} reviews)</small-->
+            <!--          >-->
           </div>
-          <a
-            class="no-of-reviews-text fs-small cursor-pointer text-light"
-            aria-current="page"
-            [class.fw-bolder]="reviews.focus"
-            scrollTo target="#reviews" [class.active]="reviews.focus" >
-            <span class="">{{ place.ratingInfo?.noOfReviews }} reviews</span>
-          </a>
-<!--          <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"-->
-<!--          >(Out of {{ place.ratingInfo?.noOfReviews }} reviews)</small-->
-<!--          >-->
         </div>
       </div>
-    </div>
 
-    <div class="col-12">
-      <div class="card border-secondary">
-        <div class="row mx-0">
-          <div class="col-12 col-lg-7 image-container px-0">
-            <!-- <div class="card-body d-lg-none d-flex justify-content-between">
-               <div class="d-flex flex-column align-items-start align-content-start ">
-                        <span class="card-text text-body-secondary text-truncate-3"><i
-                                class="bi bi-shop fs-5 me-2"></i>{{item.name}}</span>
-                    <span class="card-text text-body-secondary text-truncate-3"><i
-                            class="bi bi-geo-alt fs-5 me-2"></i>{{item.address?.suburb}}</span>
-                </div>
-                <div class="item-rating-container d-flex flex-column fw-bold ">
-                    <div class="d-flex justify-content-between"><span
-                            class="ambience-text me-2">Ambience: </span><span>{{item.ambience| number : '1.1-1'}}</span>
-                    </div>
-                    <div class="d-flex justify-content-between"><span class="service-text">Service: </span>
-                        <span>{{item.service| number : '1.1-1'}}</span></div>
-                </div>
-            </div>-->
-            <!--                        <ngb-carousel [showNavigationArrows]="config.carousel.showNavigationArrows"-->
-            <!--                                      [showNavigationIndicators]="config.carousel.showNavigationIndicators"-->
-            <!--                                      [pauseOnHover]="config.carousel.pauseOnHover"-->
-            <!--                                      [pauseOnFocus]="config.carousel.pauseOnFocus"-->
-            <!--                                      [interval]="0"-->
-            <!--                                      #reviewImgCarousel>-->
-            <!--                                <ng-container *ngFor="let media of item?.medias;">-->
-            <!--                                    <ng-template ngbSlide>-->
-            <!--                                        <div class="picsum-img-wrapper">-->
-            <img
-              [src]="config.bucketAccessEndpoint+'/'+place.medias?.[0]?.key"
-              alt="loading picture of the item"
-              class="place-detail-img detail-img w-100 img-fluid rounded-0" />
-            <!--                                        </div>-->
-            <!--                                    </ng-template>-->
-            <!--                                </ng-container>-->
-            <!--                        </ngb-carousel>-->
-          </div>
-          <div class="d-flex justify-content-center col-12 col-lg detail-container">
-            <div class="row gap-2 mx-0 px-0 my-4 justify-content-center">
-              <!--
-                <div class="col-12 d-none d-lg-flex row gap-1 flex-column ">
-                    <div class="row my-1"><span class="item-name-text fs-6 fw-bolder text-secondary-emphasis"><i
-                            class="bi bi-shop fw-bolder fs-4
-                                 me-2"></i>{{item.name}}</span></div>
-                    <div class="row my-1"><span class="item-suburb-text fw-bolder text-secondary-emphasis"><i
-                            class="bi bi-geo-alt fs-4 me-2"></i>{{item.address?.suburb}}</span></div>
-                </div>
-              -->
-              @if(place.tags?.length) {
-                <div class="row mx-3 mx-lg-0">
-                  <div class="d-flex col-12 col-md-4 col-lg-6 py-1 py-lg-0 text-secondary"
-                       *ngFor="let tag of place.tags">
+      <div class="col-12">
+        <div class="card border-secondary">
+          <div class="row mx-0">
+            <div class="col-12 col-lg-7 image-container px-0">
+              <!-- <div class="card-body d-lg-none d-flex justify-content-between">
+                 <div class="d-flex flex-column align-items-start align-content-start ">
+                          <span class="card-text text-body-secondary text-truncate-3"><i
+                                  class="bi bi-shop fs-5 me-2"></i>{{item.name}}</span>
+                      <span class="card-text text-body-secondary text-truncate-3"><i
+                              class="bi bi-geo-alt fs-5 me-2"></i>{{item.address?.suburb}}</span>
+                  </div>
+                  <div class="item-rating-container d-flex flex-column fw-bold ">
+                      <div class="d-flex justify-content-between"><span
+                              class="ambience-text me-2">Ambience: </span><span>{{item.ambience| number : '1.1-1'}}</span>
+                      </div>
+                      <div class="d-flex justify-content-between"><span class="service-text">Service: </span>
+                          <span>{{item.service| number : '1.1-1'}}</span></div>
+                  </div>
+              </div>-->
+              <!--                        <ngb-carousel [showNavigationArrows]="config.carousel.showNavigationArrows"-->
+              <!--                                      [showNavigationIndicators]="config.carousel.showNavigationIndicators"-->
+              <!--                                      [pauseOnHover]="config.carousel.pauseOnHover"-->
+              <!--                                      [pauseOnFocus]="config.carousel.pauseOnFocus"-->
+              <!--                                      [interval]="0"-->
+              <!--                                      #reviewImgCarousel>-->
+              <!--                                <ng-container *ngFor="let media of item?.medias;">-->
+              <!--                                    <ng-template ngbSlide>-->
+              <!--                                        <div class="picsum-img-wrapper">-->
+              <img
+                [src]="config.bucketAccessEndpoint+'/'+place.medias?.[0]?.key"
+                alt="loading picture of the item"
+                class="place-detail-img detail-img w-100 img-fluid rounded-0" />
+              <!--                                        </div>-->
+              <!--                                    </ng-template>-->
+              <!--                                </ng-container>-->
+              <!--                        </ngb-carousel>-->
+            </div>
+            <div class="d-flex justify-content-center col-12 col-lg detail-container">
+              <div class="row gap-2 mx-0 px-0 my-4 justify-content-center">
+                <!--
+                  <div class="col-12 d-none d-lg-flex row gap-1 flex-column ">
+                      <div class="row my-1"><span class="item-name-text fs-6 fw-bolder text-secondary-emphasis"><i
+                              class="bi bi-shop fw-bolder fs-4
+                                   me-2"></i>{{item.name}}</span></div>
+                      <div class="row my-1"><span class="item-suburb-text fw-bolder text-secondary-emphasis"><i
+                              class="bi bi-geo-alt fs-4 me-2"></i>{{item.address?.suburb}}</span></div>
+                  </div>
+                -->
+                @if (place.tags?.length) {
+                  <div class="row mx-3 mx-lg-0">
+                    <div class="d-flex col-12 col-md-4 col-lg-6 py-1 py-lg-0 text-secondary"
+                         *ngFor="let tag of place.tags">
                   <span class="material-symbols-outlined d-inline">
                     {{ getMaterialIconNameForTag({ name: tag.label }) }}
                   </span>
-                    <span class="px-2 place-tag-text text-justify d-inline">{{ tag.label }}</span>
+                      <span class="px-2 place-tag-text text-justify d-inline">{{ tag.label }}</span>
+                    </div>
                   </div>
-                </div>
-              }
-              <div class="row mx-3 mx-lg-0">
-                <div class="opening-times-container row mx-0 px-0">
-                  <!-- div Button triggers BusinessHours modal -->
-                  <div
-                    type="button"
-                    class="d-flex flex-row col-12 py-1 py-lg-0 text-secondary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#businessHoursModal">
+                }
+                <div class="row mx-3 mx-lg-0">
+                  <div class="opening-times-container row mx-0 px-0">
+                    <!-- div Button triggers BusinessHours modal -->
+                    <div
+                      type="button"
+                      class="d-flex flex-row col-12 py-1 py-lg-0 text-secondary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#businessHoursModal">
                     <span class="fw-bolder d-inline">
                       Business Hours
                       <span class="px-1 text-dark"><i class="bi bi-chevron-right"></i></span>
                     </span>
-                  </div>
-                  <!--                                <div class="d-flex col-12 col-md-4 col-lg-6 py-1 py-lg-0 text-secondary " *ngFor="let e of Object.entries(item.openingTimes)" >-->
-                  <!--                                    <span class=" d-inline">-->
-                  <!--                                        {{e[0] | titlecase}}: {{e[1].open  }}:00-{{e[1].close}}:00-->
-                  <!--                                    </span>-->
-                  <!--                                </div>-->
-                </div>
-              </div>
-
-              <div
-                class="row gap-1 col-12 d-none d-lg-flex place-rating-container desktop-place-rating-container mt-2 fw-bold">
-                <!--                              ambience-->
-                <div class="d-flex flex-column j">
-                  <span class="ambience-text">Ambience: </span>
-                  <div class="d-flex flex-row align-items-center justify-content-between progress-container">
-                    <div
-                      class="progress rounded-0 flex-grow-1 h-100 me-1"
-                      role="progressbar"
-                      [attr.aria-label]="'Ambience at this place is rated at ' + (place.ambience | number: '1.1')"
-                      aria-valuemin="0"
-                      aria-valuemax="100">
-                      <div class="progress-bar" [style]="'width: ' + place.ambience * 20 + '%'"></div>
                     </div>
-                    <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{
-                      place.ambience | number: '1.1-1'
-                    }}</span>
+                    <!--                                <div class="d-flex col-12 col-md-4 col-lg-6 py-1 py-lg-0 text-secondary " *ngFor="let e of Object.entries(item.openingTimes)" >-->
+                    <!--                                    <span class=" d-inline">-->
+                    <!--                                        {{e[0] | titlecase}}: {{e[1].open  }}:00-{{e[1].close}}:00-->
+                    <!--                                    </span>-->
+                    <!--                                </div>-->
                   </div>
-                  <span class="no-of-reviews-text fw-normal text-secondary"
+                </div>
+
+                <div
+                  class="row gap-1 col-12 d-none d-lg-flex place-rating-container desktop-place-rating-container mt-2 fw-bold">
+                  <!--                              ambience-->
+                  <div class="d-flex flex-column j">
+                    <span class="ambience-text">Ambience: </span>
+                    <div class="d-flex flex-row align-items-center justify-content-between progress-container">
+                      <div
+                        class="progress rounded-0 flex-grow-1 h-100 me-1"
+                        role="progressbar"
+                        [attr.aria-label]="'Ambience at this place is rated at ' + (place.ambience | number: '1.1')"
+                        aria-valuemin="0"
+                        aria-valuemax="100">
+                        <div class="progress-bar" [style]="'width: ' + place.ambience * 20 + '%'"></div>
+                      </div>
+                      <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{
+                          place.ambience | number: '1.1-1'
+                        }}</span>
+                    </div>
+                    <span class="no-of-reviews-text fw-normal text-secondary"
                     >(Out of {{ place.noOfReviews }} reviews):
                   </span>
-                  <!--                                    <span>{{item.ambience| number : '1.1-1'}}</span>-->
-                </div>
-                <!--                              service -->
-                <div class="d-flex flex-column">
-                  <span class="service-text">Service: </span>
-                  <div class="d-flex flex-row align-items-center justify-content-between progress-container">
-                    <div
-                      class="progress rounded-0 flex-grow-1 h-100 me-1"
-                      role="progressbar"
-                      [attr.aria-label]="'Service at this place is rated at ' + (place.service | number: '1.1')"
-                      aria-valuemin="0"
-                      aria-valuemax="100">
-                      <div class="progress-bar" [style]="'width: ' + place.service * 20 + '%'"></div>
-                    </div>
-                    <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{
-                      place.service | number: '1.1-1'
-                    }}</span>
+                    <!--                                    <span>{{item.ambience| number : '1.1-1'}}</span>-->
                   </div>
-                  <span class="no-of-reviews-text fw-normal text-secondary"
+                  <!--                              service -->
+                  <div class="d-flex flex-column">
+                    <span class="service-text">Service: </span>
+                    <div class="d-flex flex-row align-items-center justify-content-between progress-container">
+                      <div
+                        class="progress rounded-0 flex-grow-1 h-100 me-1"
+                        role="progressbar"
+                        [attr.aria-label]="'Service at this place is rated at ' + (place.service | number: '1.1')"
+                        aria-valuemin="0"
+                        aria-valuemax="100">
+                        <div class="progress-bar" [style]="'width: ' + place.service * 20 + '%'"></div>
+                      </div>
+                      <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{
+                          place.service | number: '1.1-1'
+                        }}</span>
+                    </div>
+                    <span class="no-of-reviews-text fw-normal text-secondary"
                     >(Out of {{ place.noOfReviews }} reviews):
                   </span>
 
-                  <!--                                    <span>{{item.service| number : '1.1-1'}}</span>-->
+                    <!--                                    <span>{{item.service| number : '1.1-1'}}</span>-->
+                  </div>
                 </div>
-              </div>
-              <div class="row place-give-review-container mt-auto mx-3 mx-lg-0">
-                <!--                      <div class="d-flexx justify-content-centerr ">-->
-                <button (click)="onGiveAReviewClick()" class="btn btn-dark">
-                  {{ config.giveAReviewLabel }}
-                </button>
-                <!--                      </div>-->
+                <div class="row place-give-review-container mt-auto mx-3 mx-lg-0">
+                  <!--                      <div class="d-flexx justify-content-centerr ">-->
+                  <button (click)="onGiveAReviewClick()" class="btn btn-dark">
+                    {{ config.giveAReviewLabel }}
+                  </button>
+                  <!--                      </div>-->
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
       <div class="place-navigation-container col-12">
 
-      <nav class="navbar bg-light px-3 mb-3 d-none">
-        <ul class="nav nav-pills" >
-          <li class="nav-item">
-            <button class="nav-link" scrollTo target="#menuItems" [class.active]="menuItems.focus" >First</button>
+        <nav class="navbar bg-light px-3 mb-3 d-none">
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <button class="nav-link" scrollTo target="#menuItems" [class.active]="menuItems.focus">First</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" scrollTo target="#reviews" [class.active]="reviews.focus">Second</button>
+            </li>
+          </ul>
+        </nav>
+
+        <ul class="nav nav-tabs nav-justified">
+          <li class="nav-item cursor-pointer">
+            <a
+              class="nav-link"
+              aria-current="page"
+              [class.fw-bolder]="menuItems.focus"
+              scrollTo target="#menuItems" [class.active]="menuItems.focus"
+            >
+              <span class="fs-6">Our Menu</span>
+            </a>
           </li>
-          <li class="nav-item">
-            <button class="nav-link" scrollTo target="#reviews" [class.active]="reviews.focus">Second</button>
+          <li class="nav-item cursor-pointer">
+            <a
+              class="nav-link"
+              aria-current="page"
+              [class.fw-bolder]="reviews.focus"
+              scrollTo target="#reviews" [class.active]="reviews.focus">
+              <span class="fs-6">Reviews</span>
+            </a>
           </li>
         </ul>
-      </nav>
-
-      <ul class="nav nav-tabs nav-justified">
-        <li class="nav-item cursor-pointer">
-          <a
-            class="nav-link"
-            aria-current="page"
-            [class.fw-bolder]="menuItems.focus"
-            scrollTo target="#menuItems" [class.active]="menuItems.focus"
-          >
-            <span class="fs-6">Our Menu</span>
-          </a>
-        </li>
-        <li class="nav-item cursor-pointer">
-          <a
-            class="nav-link"
-            aria-current="page"
-            [class.fw-bolder]="reviews.focus"
-            scrollTo target="#reviews" [class.active]="reviews.focus" >
-            <span class="fs-6">Reviews</span>
-          </a>
-        </li>
-      </ul>
 
         <div class="row gap-2">
           <section scrolledTo #menuItems="scrolledTo" id="menuItems" class="col-12">
@@ -245,16 +249,16 @@
         </div>
 
       </div>
-    <div class="col-12 d-none">
-      <!-- <router-outlet name="placeSpot"></router-outlet>-->
-      <ng-container *ngIf="showMenuItems">
-        <app-item-list></app-item-list>
-      </ng-container>
-      <ng-container *ngIf="!showMenuItems">
-        <app-place-reviews [place]="place"></app-place-reviews>
-      </ng-container>
+      <div class="col-12 d-none">
+        <!-- <router-outlet name="placeSpot"></router-outlet>-->
+        <ng-container *ngIf="showMenuItems">
+          <app-item-list></app-item-list>
+        </ng-container>
+        <ng-container *ngIf="!showMenuItems">
+          <app-place-reviews [place]="place"></app-place-reviews>
+        </ng-container>
+      </div>
     </div>
-  </div>
   </div>
   <!-- Modal -->
   <div
@@ -271,16 +275,17 @@
         </div>
         <div class="modal-body">
           <div class="container-fluid">
-            <div class="row my-1" *ngFor="let e of Object.entries(place.openingTimes)">
-<!--              {{JSON.stringify(e[1])}}-->
-              <div class="col-4">{{ e[0] | titlecase }}:</div>
-              @for (time of e[1]; track time;) {
-                <div class="col-7 ms-auto">{{ time.open }}:00 - {{ time.close }}:00</div>
-              }
-            </div>
+            @for (e of Object.entries(place.openingTimes); track e) {
+              <div class="row my-1">
+                <div class="col-4">{{ e[0] | titlecase }}:</div>
+                @for (time of e[1]; track time; ) {
+                  <div class="col-7 ms-auto">{{ time.open }}:00 - {{ time.close }}:00</div>
+                }
+              </div>
+            }
           </div>
         </div>
-        <div class="modal-footer">
+          <div class="344">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
@@ -288,8 +293,10 @@
   </div>
 </ng-container>
 
-<div class="to-top bg-light rounded-5" (click)="scrollToTop()" [ngClass]="{ 'show-scrollTop': windowScrolled }" tooltip="Scroll to the top">
+<div class="to-top bg-light rounded-5" (click)="scrollToTop()" [ngClass]="{ 'show-scrollTop': windowScrolled }"
+     tooltip="Scroll to the top">
   <svg xmlns="http://www.w3.org/2000/svg" height="56px" viewBox="0 -960 960 960" width="56px" fill="currentcolor">
-    <path d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z"/>
+    <path
+      d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z" />
   </svg>
 </div>

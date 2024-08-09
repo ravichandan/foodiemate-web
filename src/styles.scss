@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 //@import "primeng/resources/themes/tailwind-light/theme.css";
 //@import "primeng/resources/primeng.css";
+@font-face {
+  font-family: 'icomoon';
+  src: url('assets/fonts/icomoon.eot');
+}
 
 /* Importing Bootstrap SCSS file. */
 @import "styles/variables";
@@ -12,6 +16,9 @@
 @import "styles/svg_components";
 @import "styles/range_input";
 @import 'ngx-sharebuttons/themes/default';
+
+@import "styles/new_checkbox";
+
 
 
 //320px
@@ -27,6 +34,9 @@
 
 html {
   //background-color: $input-border-color;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 
@@ -424,5 +434,4 @@ input [type="range"] {
 }
 
 @import "styles/components";
-
 

@@ -426,7 +426,8 @@
     "foundFollowingItems": "We found following items with the name ",
     "foundFollowingPlaces": "We found following places that offer ",
     "viewFullMenu": "View full menu",
-    "moreDetails": "More Details"
+    "moreDetails": "More Details",
+    "sortByTaste": "Sort by taste"
   },
   "hideCuisineMenu": true,
   "hideLeftNavigationMenu": true,

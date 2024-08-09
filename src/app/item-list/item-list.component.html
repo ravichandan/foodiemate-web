@@ -1,4 +1,4 @@
-<ng-container *ngIf="items$ | async as items">
+<ng-container *ngIf="filtered as items">
   <div class="item-list-container flex-grow-1">
     <div class="item-list-header ps-md-1 d-flex justify-content-between align-items-center">
  <!--     <div class="d-flex align-items-center">
@@ -17,7 +17,26 @@
         </div>
 
         <div class="sort-wrapper d-flex mx-2 align-items-center col-12 col-lg-5">
-          <span class="d-none d-lg-inline mx-1">Sort by</span>
+          <div class="new-check-v16">
+            <label class="control control--checkbox">{{ config.general.sortByTaste }}
+              <input type="checkbox" checked="checked" [(ngModel)]="isSortByTaste" (change)="checkTasteSorting(isSortByTaste)">
+              <div class="control__indicator"></div>
+            </label>
+          </div>
+          <div>
+<!--            <mat-checkbox class="example-margin" >Disabled</mat-checkbox>-->
+
+          </div>
+         <!-- <div class="checkbox-container ">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"  />
+                <span class="box"></span>
+                {{ config.general.sortByTaste }}
+              </label>
+            </div>
+          </div>-->
+          <!--<span class="d-none d-lg-inline mx-1">Sort by</span>
           <button class="btn btn-light h-100 mx-1 rounded fs-4" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-sort-down"></i>
             <ul class="dropdown-menu">
@@ -25,7 +44,7 @@
                 <a class="dropdown-item fs-5" href="#">{{ option.label }}</a>
               </li>
             </ul>
-          </button>
+          </button>-->
         </div>
       </div>
     </div>
