@@ -57,7 +57,7 @@ export class ConnectFormDirective implements OnDestroy, OnInit {
         // )
       )
       .subscribe((val) => {
-        // console.log('in connectForm.directive, patching val');
+        console.log('in connectForm.directive, patching val');
         if(val) {
           this.formGroupDirective.form?.patchValue(val);
         }

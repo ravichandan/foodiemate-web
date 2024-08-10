@@ -6,6 +6,7 @@
       #reviewForm
       (ngSubmit)="formSubmitted()"
       [formGroup]="reviewFormGroup"
+      [connectForm]="form$ | async"
     >
 <!--      [connectForm]="form$ | async"-->
       <!--      Place input -->

@@ -237,7 +237,7 @@ export const preloadPostReviewReducer = createReducer(
   on(FoodieActions.updateNewPostReviewState, (oldState: NewReview | undefined, { form }) => {
     console.log('in reducer->updateNewPostReviewState, form:: ', form);
     const copy = oldState ? { ...oldState } : ({} as Review);
-    copy.place = form.placeCtrl?.id;
+    copy.place = form.placeCtrl?._id;
     copy.service = form.serviceCtrl;
     copy.ambience = form.ambienceCtrl;
     copy.description = form.descriptionCtrl;
@@ -248,8 +248,8 @@ export const preloadPostReviewReducer = createReducer(
     itemGroups?.forEach((group) => {
       !!form[group].itemCtrl &&
         copy.children?.push({
-          place: form.placeCtrl?.id,
-          item: form[group].itemCtrl?.id,
+          place: form.placeCtrl?._id,
+          item: form[group].itemCtrl?._id,
           taste: form[group].tasteCtrl,
           presentation: form[group].presentationCtrl,
           description: form[group].itemReviewCtrl,
