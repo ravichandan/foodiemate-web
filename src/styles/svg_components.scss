@@ -27,6 +27,14 @@
   opacity: 0.3;
 }
 
+.fx-icon-edit {
+  mask: url(../assets/images/svgs/edit.svg) no-repeat;
+  width: 24px;
+  height: 24px;
+  mask-size: contain;
+  opacity: 0.8;
+}
+
 
 .fx-icon:hover,
 .fx-icon:focus {

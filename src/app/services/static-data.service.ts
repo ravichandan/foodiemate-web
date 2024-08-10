@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CuisinesResponse } from '../models/CuisinesResponse';
+import { Cuisine } from '../models/Cuisine';
 
 @Injectable({ providedIn: 'root' })
 export class StaticDataService {
@@ -7,51 +8,62 @@ export class StaticDataService {
   public getCuisines(): CuisinesResponse {
     return {
       "cuisines": [
+        Cuisine. INDIAN,
+        Cuisine.ITALIAN,
+        Cuisine. CHINESE,
+        Cuisine. JAPANESE,
+        Cuisine. MIDDLE_EAST,
+        Cuisine. MEXICAN,
+        Cuisine. GREEK,
+        Cuisine. AFRICAN
+      ]
+      /*"cuisines": [
         {
-          "name": "ITALIAN",
+          "name": "INDIAN",
+          "value": 'Indian',
           "id": 1
         },
         {
-          "name": "INDIAN",
+          "name": "ITALIAN",
+          "value": 'Italian',
           "id": 2
         },
         {
           "name": "CHINESE",
+          "value": "Chinese",
           "id": 3
         },
         {
           "name": "JAPANESE",
+          "value": "Japanese",
           "id": 4
         },
         {
           "name": "ASIAN",
+          "value": "Asian",
           "id": 5
         },
         {
-          "name": "INDO_CHINESE",
+          "name": "MIDDLE_EAST",
+          "value": "Middle East",
           "id": 6
         },
         {
-          "name": "INDO_ITALIAN",
+          "name": "MEXICAN",
+          "value": "Mexican",
           "id": 7
         },
         {
-          "name": "MIDDLE_EAST",
+          "name": "GREEK",
+          "value": "Greek",
           "id": 8
         },
         {
-          "name": "MEXICAN",
-          "id": 9
-        },
-        {
-          "name": "GREEK",
-          "id": 10
-        },
-        {
           "name": "AFRICAN",
-          "id": 11
+          "value": "African",
+          "id": 9
         }
-      ]
+      ]*/
     }
 
   }

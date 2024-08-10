@@ -1,0 +1,14 @@
+@import "variables";
+.btn-teal {
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: #{shade-color($teal-color, 10%)};
+  --bs-btn-border-color: #{shade-color($teal-color, 10%)};
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #{shade-color($teal-light-color, 10%)};
+  --bs-btn-hover-border-color: #{shade-color($teal-light-color, 10%)};
+  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #{shade-color($teal-dark-color, 20%)};
+  --bs-btn-active-border-color: #{shade-color($teal-dark-color, 20%)};
+}

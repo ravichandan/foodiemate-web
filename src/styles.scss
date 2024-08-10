@@ -10,7 +10,7 @@
 @import "styles/variables";
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap/scss/mixins/breakpoints';
-//@import "styles/variables";
+
 
 @import "styles/checkbox";
 @import "styles/svg_components";
@@ -435,3 +435,4 @@ input [type="range"] {
 
 @import "styles/components";
 
+@import "styles/button";
