@@ -11,10 +11,11 @@ import { FoodieEffects } from './effects/foodie.effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from '../environments/environment';
+import { TokenStorageService } from './services/token-storage.service';
 
 export function initializeMockData(mockService: MockDataService) {
   if(!environment.production) {
@@ -65,6 +66,10 @@ export const appConfig: ApplicationConfig = {
     //     sendAccessToken: true
     //   }
     // })),
+    {
+      provide: OAuthStorage,
+      useClass: TokenStorageService
+    },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

@@ -84,7 +84,7 @@ export class AuthGoogleService {
 
     this.oa.events.subscribe((e) => {
       if (['token_received'].includes(e.type)) {
-        console.log('token_recieveddd:: ');
+        console.log('token_received:: ');
         this.oa.loadUserProfile().then((userInfo: any) => {
           console.log('in auth-google.service, userInfo: ', userInfo);
           userInfo.token=this.getToken();

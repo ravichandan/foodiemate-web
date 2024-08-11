@@ -214,7 +214,7 @@ export class AppService implements OnDestroy{
 
     let params = new HttpParams();
     params = params.append('itemName', args.itemName);
-    params = params.append('postcode', 2153);
+    // params = params.append('postcode', 2153);
     return this.http.get<ItemResponse>(url, { params }).pipe(tap(x =>
     console.log('app.service -> searchItemsWithName, response:: ', x)));
   }
