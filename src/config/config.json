@@ -423,8 +423,8 @@
     "noMoreMatchingItems": "No more matching items",
     "noMatchingItems": "No matching items found with the given name",
     "noMatchingPlaces": "No matching places found with the given name",
-    "foundFollowingItems": "We found following items with the name ",
-    "foundFollowingPlaces": "We found following places that offer ",
+    "foundFollowingItems": "Dishes",
+    "foundFollowingPlaces": "Places ",
     "viewFullMenu": "View full menu",
     "moreDetails": "More Details",
     "sortByTaste": "Sort by taste"

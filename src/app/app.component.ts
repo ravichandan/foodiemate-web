@@ -109,7 +109,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('environment.production::', environment.production);
     if (this.isBrowser) {
-      console.log('in app.component.ts ngOnInit, window.location.href:: ', window.location.href);
+      // console.log('in app.component.ts ngOnInit, window.location.href:: ', window.location.href);
       const x = new URLSearchParams(window.location.search);
       const y = x.get('state');
       if (y) {
@@ -123,13 +123,13 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         }
       } else {
-        console.log('must be already logged in');
+        console.log('User must be already logged in');
 
         // const token = "eyJ0eXAiO.../// jwt token";
         const act = this.cookieService.get('id_token');
-        console.log('Access token: ', act);
+        // console.log('Access token: ', act);
         const decoded: any = jwtDecode(act);
-        console.log('Decoded Access token: ', decoded);
+        // console.log('Decoded Access token: ', decoded);
         this.store.dispatch(
           FoodieActions.loginOidcCustomer({
             userInfo: {
@@ -140,8 +140,7 @@ export class AppComponent implements OnInit, OnDestroy {
             },
           }),
         );
-        // serInfo.info.email
-        console.log(decoded);
+        // console.log(decoded);
       }
 
     }

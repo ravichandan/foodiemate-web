@@ -1,5 +1,6 @@
+
 <div class="search-container  py-2 py-md-3 col-md-10">
-  <div class="btn-group" role="group" aria-label="select dishes ior restaurants to search for">
+  <div class="btn-group d-none" role="group" aria-label="select dishes ior restaurants to search for">
       <input type="radio" class="btn-check" name="btnradio" id="dishesradio1" autocomplete="off" [checked]="dishFlag"
              (change)="dishFlag=true; searchBox.click()">
       <label class="btn btn-outline-secondary  " [ngClass]="{'text-darker-bg-theme': dishFlag}" for="dishesradio1">Dishes</label>
@@ -23,7 +24,7 @@
   </form>
   @if (errorMessage) {
     <div>
-      <span class="text-danger"> {{ errorMessage }}</span>
+      <span class="text-danger"> {{ JSON.stringify(errorMessage) }}</span>
     </div>
   }
   <!--  Removing random suggestion badges-->
@@ -62,8 +63,7 @@
 @if (placesResponse?.places?.length) {
   <div class="results-container m-1 m-md-5 col-md-10">
     <div class=" text-secondary-emphasis">
-      <span class="">{{ config.general.foundFollowingPlaces }}</span><span class="fw-bold"> '{{ searchStr.value }}
-      '</span>
+      <span class="fs-5 fw-bold">{{ config.general.foundFollowingPlaces }}:</span><span class="fw-bold d-none"> '{{ searchStr.value }}'</span>
     </div>
     @for (place of placesResponse.places; track place; let idx = $index) {
       @if (!!place) {
@@ -201,7 +201,7 @@
 @if (itemsResponse?.items?.length) {
   <div class="container text-centerr m-0 m-sm-auto">
     <div class=" text-secondary-emphasis">
-      <span class="">{{ config.general.foundFollowingItems }}</span><span class="fw-bold"> '{{ searchStr.value }}'</span>
+      <span class="fs-5 fw-bold">{{ config.general.foundFollowingItems }}:</span><span class="fw-bold"> '{{ searchStr.value }}'</span>
     </div>
     <div class="results-container text-center row gap-3 row-cols-auto justify-content-center justify-content-sm-start">
 
