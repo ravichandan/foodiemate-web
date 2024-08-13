@@ -80,9 +80,7 @@ export class PlaceListComponent implements OnInit, OnDestroy {
       tap((x) => console.log('Places list received in place-list.component:: ', x)),
       tap((x) => (this.selectedItemName = x[0].originalName ?? x[0].name)),
       tap((x) => (this.currentPageNum += x.length / this.pageSize)),
-      // map((x) => x[0].places),
     );
-    // setTimeout(() => {}, 10000);
 
     this.route.paramMap
       .pipe(

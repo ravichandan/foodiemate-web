@@ -2,7 +2,7 @@
   "title": "foodiex",
   "original_title": "tangypeel",
   "search_main_label": "Search for a dish and see where it tastes best.",
-  "search_sub_label": "or, look for a food place and find the best tasting dishes there.",
+  "search_sub_label": "or, look for a restaurant and find the best tasting dishes there.",
   "search_placeholder": "Dish or Restaurant or Cuisine",
   "popular_title": "Popular Searches:",
   "oauthRedirectUrl": "https://foodiex.com.au/index.html",
@@ -421,10 +421,10 @@
   },
   "general": {
     "noMoreMatchingItems": "No more matching items",
-    "noMatchingItems": "No matching items found with the given name",
-    "noMatchingPlaces": "No matching places found with the given name",
+    "noMatchingItems": "No dishes found in any restaurant with name",
+    "noMatchingPlaces": "No matching places found with the name",
     "foundFollowingItems": "Dishes",
-    "foundFollowingPlaces": "Places ",
+    "foundFollowingPlaces": "Found xxx restaurants matching the criteria ",
     "viewFullMenu": "View full menu",
     "moreDetails": "More Details",
     "sortByTaste": "Sort by taste"

@@ -14,11 +14,13 @@ import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap';
 import { PlacesResponse } from '../models/PlacesResponse';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ItemResponse } from '../models/ItemResponse';
+import { ScrollToDirective } from '../directives/scrollTo.directive';
+import { ReplacePipe } from '../directives/replace.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AsyncPipe, FormsModule, HoverClassDirective, NgForOf, NgIf, ReactiveFormsModule, NgClass, DecimalPipe, NgbCarousel, NgbSlide, FaIconComponent],
+  imports: [AsyncPipe, FormsModule, HoverClassDirective, NgForOf, NgIf, ReactiveFormsModule, NgClass, DecimalPipe, NgbCarousel, NgbSlide, FaIconComponent, ScrollToDirective, ReplacePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -33,7 +35,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   // randomSuggestions: any[] | undefined;
   placesResponse: PlacesResponse = {} as PlacesResponse;
   itemsResponse: ItemResponse = {} as ItemResponse;
-  dishFlag: boolean = true;
+  dishFlag: boolean = false;
   errorMessage: string | undefined = undefined;
   searchKey: string|null;
   protected readonly Object = Object;
@@ -168,11 +170,12 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.router.navigate(['places/' + place._id]).then();
   }
 
-  public ngAfterViewInit(): void
-  {
+  public ngAfterViewInit(): void {
+    console.log('in home.component.ts -> ngAfterViewInit()');
     if (this.searchInput) {
       this.searchInput.nativeElement.value = this.searchKey ?? null;
     }
+    this.cdRef.detectChanges();
   //   this.childrenComponent.changes.subscribe((comps: QueryList<MyComponent>) =>
   //   {
   //     // Now you can access the child component

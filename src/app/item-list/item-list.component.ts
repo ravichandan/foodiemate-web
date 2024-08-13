@@ -78,20 +78,15 @@ export class ItemListComponent implements OnInit, OnDestroy {
         filter((x) => !!x),
       )
       .subscribe((c) => (this.selectedAllergensFilter = c?.allergens));
-    // this.fetchPlaces();
 
     // Fetch an item, and it will have the list of places with ratings and reviews
-    //this.items$ =
     this.onFilterChange();
-
-    // setTimeout(() => {}, 10000);
 
     this.route.paramMap
       .pipe(
         // tap(x => console.log('in paramMap, params:: ')),
         takeUntil(this.destroy$),
         tap((params: ParamMap) => {
-          console.log('in paramMap, params:: ', params);
           this.selectedPlaceId = params.get('placeId');
           this.store.dispatch(FoodieActions.fetchPlace({ id: this.selectedPlaceId, fetchMenu: true }));
         }),
@@ -119,7 +114,6 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   checkTasteSorting(isSortByTaste: boolean) {
-    console.log('in checkTasteSorting, isSortByTaste:: ', isSortByTaste);
     this.onFilterChange();
   }
 
@@ -127,11 +121,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
     this.store.select(placeSelector(this.selectedPlaceId)).pipe(
       filter((x) => !!x),
       take(1),
-      // takeUntil(this.destroy$),
-      tap((x) => console.log('Place received in item-list.component:: ', x)),
-      tap((x) => console.log('items received in item-list.component, x.items:: ', x.items)),
       tap((x) => (this.selectedPlaceName = x.name)),
-
       map((x) => this.allItems = x.items as Item[]),
       filter(x => !!x?.length),
       map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
