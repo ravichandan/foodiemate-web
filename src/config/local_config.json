@@ -1,8 +1,8 @@
 {
   "title": "foodiex",
   "original_title": "tangypeel",
-  "search_main_label": "Search for a dish and see where it tastes best.",
-  "search_sub_label": "or, look for a food place and find the best tasting dishes there.",
+  "search_main_label": "Search for best tasting dishes or places",
+  "search_sub_label": "and see the best tasting ones",
   "search_placeholder": "Dish or Restaurant or Cuisine",
   "popular_title": "Popular Searches:",
   "oauthRedirectUrl": "http://localhost:4300/index.html",

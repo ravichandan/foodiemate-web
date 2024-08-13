@@ -3,8 +3,8 @@
   <form class="row gap-3 m-0 pt-2 col-12" #homeSearchForm
         (ngSubmit)="search(searchStr)">
         <div class="col-12 col-md-8 p-0 d-flex flex-column text-secondary">
-          <span class="fs-5 fw-medium">{{ config.search_main_label }}</span>
-          <span class="fs-small">{{ config.search_sub_label }}</span>
+          <span class="fs-6 fw-medium">{{ config.search_main_label }}</span>
+<!--          <span class="fs-smaller ">{{ config.search_sub_label }}</span>-->
         </div>
     <div class="col-12 col-md-8 p-0">
       <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
@@ -12,7 +12,7 @@
              placeholder="Search for a dish or place" #searchStr />
     </div>
     <div class="col-12 col-md p-0">
-      <button type="submit" class="col-12 btn btn-dark mb-1 mb-sm-3 focus-ring" #searchBox>Search</button>
+      <button type="submit" class="col-12 btn btn-teal mb-1 mb-sm-3 focus-ring" #searchBox>Search</button>
     </div>
   </form>
   @if (errorMessage) {

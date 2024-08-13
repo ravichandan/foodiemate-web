@@ -120,16 +120,16 @@ h1 {
 }
 
 .fs-smaller {
-  @media screen and ((min-width: 1400px)  and (max-width: 1661px)) {
+  //@media screen and ((min-width: 1400px)  and (max-width: 1661px)) {
+  //  font-size: smaller;
+  //}
+  //@media screen and (min-width: 768px) and (max-width: 1024px) {
+  //  font-size: smaller;
+  //}
+  //
+  //@media screen and (max-width: 420px) {
     font-size: smaller;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1024px) {
-    font-size: smaller;
-  }
-
-  @media screen and (max-width: 420px) {
-    font-size: smaller;
-  }
+  //}
 }
 
 .fs-small {
