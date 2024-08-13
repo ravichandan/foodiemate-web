@@ -169,4 +169,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.toastService.showSuccess('Thank you, we have received your review');
     this.toastService.showDanger('Thank you, we have received your review');
   }
+
+  submitSearch(topSearch: HTMLInputElement) {
+    if(!!topSearch.value) {
+      this.router.navigateByUrl('/', { skipLocationChange: true })
+        .then(() => this.router.navigate(['home'], { queryParams: { search: topSearch.value } }));
+    }
+  }
 }

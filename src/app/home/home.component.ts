@@ -83,7 +83,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
                 this.placesResponse.places.push(...res.places);
                 this.placesResponse.size = res.size /*+ this.placesResponse.size*/;
                 this.placesResponse.page = res.page;
-                this.cdRef.detectChanges();
+                // this.cdRef.detectChanges();
                 console.log('this.placesResponse:: ', this.placesResponse);
                 // };
 
@@ -103,7 +103,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
                 this.itemsResponse.items.push(...res.items);
                 this.itemsResponse.size = res.size /*+ this.placesResponse.size*/;
                 this.itemsResponse.page = res.page;
-                this.cdRef.detectChanges();
+                // this.cdRef.detectChanges();
                 console.log('this.itemsResponse:: ', this.itemsResponse);
                 // };
 

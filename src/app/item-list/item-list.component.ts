@@ -133,6 +133,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
       tap((x) => (this.selectedPlaceName = x.name)),
 
       map((x) => this.allItems = x.items as Item[]),
+      filter(x => !!x?.length),
       map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
       map((items: Item[]) => this.filtered = this.isSortByTaste ? items.sort((a, b) => a.ratingInfo.taste - b.ratingInfo.taste) : items),
     ).subscribe();

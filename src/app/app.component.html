@@ -42,11 +42,12 @@
 <!--          ></span>-->
 <!--        </div>-->
         <div
-          class=" d-none d-md-flex align-self-center mt-1 top-search-box"
-          >
-          <form class="d-flex flex-row align-items-center position-relative flex-grow-1">
-            <input type="search" class="form-control col-md-8 h-100" placeholder="Search a dish or restaurant" id="example-search-input">
-            <button class="btn btn-lg btn-outline-primary text-darker-bg-theme border-0 position-absolute end-0 h-100 fw-bolder" type="submit">
+          class=" d-none d-md-flex align-self-center mt-1 top-search-box"          >
+          <form class="d-flex flex-row align-items-center position-relative flex-grow-1"
+          (ngSubmit)="submitSearch(topSearch)">
+            <input type="search" class="form-control col-md-8 h-100" placeholder="Search a dish or restaurant" id="example-search-input" #topSearch>
+            <button class="btn btn-lg btn-outline-primary text-darker-bg-theme border-0 position-absolute end-0 h-100 fw-bolder" type="submit"
+            >
               <i class="bi bi-search fw-bold"></i>
             </button>
           </form>
