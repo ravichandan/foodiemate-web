@@ -43,6 +43,19 @@ export class AppService implements OnDestroy{
       .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));
   }
 
+  public getAllSuburbs(city: string) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+
+    const url = join(this.getConfig().host, this.getConfig().suburbsEndpoint);
+    let params = new HttpParams();
+    params = params.append('city', city);
+    console.log('in app.service, getAllSuburbs() -> params',params);
+
+    return this.http
+      .get(url , { headers , params})
+      .pipe(tap((t: any) => console.log('/suburbs response:: ', t)));
+  }
+
   public getAllCuisines() {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
@@ -186,7 +199,7 @@ export class AppService implements OnDestroy{
     );
   }
 
-  public searchPlaceWithName(args: { placeName: string,itemName?: string }): Observable<PlacesResponse| undefined> {
+  public searchPlaceWithName(args: { placeName: string,itemName?: string, suburbs?: string[],  includeSurroundingSuburbs?: boolean }): Observable<PlacesResponse| undefined> {
     console.log(
       'in app.service->searchPlaceWithName args:: ',args
     )
@@ -200,13 +213,17 @@ export class AppService implements OnDestroy{
     if(args.itemName) {
       params = params.append('itemName', args.itemName);
     }
+    if(args.suburbs?.length) {
+      params = params.append('suburbs', args.suburbs.join(','));
+      params = params.append('includeSurroundingSuburbs', !!args.includeSurroundingSuburbs);
+    }
     params = params.append('city', 'sydney');
     return this.http.get<PlacesResponse>(url, { params }).pipe(tap(x =>
     console.log('app.service -> searchPlaceWithName, response:: ', x)));
   }
 
 
-  public searchItemsWithName(args: { itemName?: string, postcode?: string }): Observable<ItemResponse| undefined> {
+  public searchItemsWithName(args: { itemName?: string, postcode?: string, suburbs?: string[],  includeSurroundingSuburbs?: boolean }): Observable<ItemResponse| undefined> {
     if (!args.itemName) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
@@ -214,8 +231,11 @@ export class AppService implements OnDestroy{
 
     let params = new HttpParams();
     params = params.append('itemName', args.itemName);
-    // params = params.append('postcode', 2153);
-    params = params.append('city', 'sydney');
+    if(args.suburbs) {
+      params = params.append('suburbs', args.suburbs.join(','));
+      params = params.append('includeSurroundingSuburbs', !!args.includeSurroundingSuburbs);
+    }
+    params = params.append('city', 'Sydney');
     return this.http.get<ItemResponse>(url, { params }).pipe(tap(x =>
     console.log('app.service -> searchItemsWithName, response:: ', x)));
   }

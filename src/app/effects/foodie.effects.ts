@@ -17,6 +17,7 @@ import { Address } from '../models/Address';
 import { add } from 'lodash';
 import { ItemResponse } from '../models/ItemResponse';
 import { PlacesResponse } from '../models/PlacesResponse';
+import { SuburbsResponse } from '../models/SuburbsResponse';
 
 @Injectable({ providedIn: 'root' })
 export class FoodieEffects {
@@ -47,6 +48,21 @@ export class FoodieEffects {
       ),
     ),
   );
+
+  // Effect mediates the 'fetching the all Suburbs'
+  loadSuburbs = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FoodieActions.fetchSuburbs),
+      tap((x) => console.log('in loadSuburbs effect')),
+      mergeMap((action) =>
+        this.appService.getAllSuburbs(action.city).pipe(
+          map((suburbsResponse: SuburbsResponse) => FoodieActions.fetchSuburbsSuccess({ suburbsResponse })),
+          catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
+        ),
+      ),
+    ),
+  );
+
   // Effect mediates the 'fetching the all cuisines items'
   loadCuisinesItems$ = createEffect(() =>
     this.actions$.pipe(

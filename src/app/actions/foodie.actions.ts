@@ -8,12 +8,15 @@ import { NewReview, Review } from '../models/Review';
 import { PlacesResponse } from '../models/PlacesResponse';
 import { CustomerInfo } from '../models/CustomerInfo';
 import { ItemResponse } from '../models/ItemResponse';
+import { SuburbsResponse } from '../models/SuburbsResponse';
 
 export const ACTION_FETCH_POPULAR_REQUESTED = '[FoodieMate] Fetch Popular Requested';
 export const ACTION_FETCH_POPULAR = '[FoodieMate] Fetch Popular';
 export const ACTION_FETCH_POPULAR_SUCCESS = '[FoodieMate] Fetch Popular Success';
 export const ACTION_FETCH_CUISINES = '[FoodieMate] Fetch CUISINES';
 export const ACTION_FETCH_CUISINES_SUCCESS = '[FoodieMate] Fetch CUISINES Success';
+export const ACTION_FETCH_SUBURBS = '[FoodieMate] Fetch SUBURBS';
+export const ACTION_FETCH_SUBURBS_SUCCESS = '[FoodieMate] Fetch SUBURBS Success';
 export const ACTION_FETCH_CUISINES_ITEMS = '[FoodieMate] Fetch CUISINES ITEMS';
 export const ACTION_FETCH_CUISINES_ITEMS_SUCCESS = '[FoodieMate] Fetch CUISINES ITEMS Success';
 
@@ -69,10 +72,16 @@ export const fetchPopular = createAction(ACTION_FETCH_POPULAR);
 export const fetchPopularSuccess = createAction(ACTION_FETCH_POPULAR_SUCCESS, props<{ popular: PopularResponse }>());
 
 export const fetchCuisines = createAction(ACTION_FETCH_CUISINES);
+export const fetchSuburbs = createAction(ACTION_FETCH_SUBURBS, props<{ city: string }>());
 
 export const fetchCuisinesSuccess = createAction(
   ACTION_FETCH_CUISINES_SUCCESS,
   props<{ cuisinesResponse: CuisinesResponse }>(),
+);
+
+export const fetchSuburbsSuccess = createAction(
+  ACTION_FETCH_SUBURBS_SUCCESS,
+  props<{ suburbsResponse: SuburbsResponse }>(),
 );
 
 export const fetchCuisinesItems = createAction(ACTION_FETCH_CUISINES_ITEMS);

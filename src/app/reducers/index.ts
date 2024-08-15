@@ -10,6 +10,7 @@ import { NewReview, Review } from '../models/Review';
 import { Media } from '../models/Media';
 import { CustomerInfo } from '../models/CustomerInfo';
 import { Address } from '../models/Address';
+import { SuburbsResponse } from '../models/SuburbsResponse';
 
 export interface State {
   address: Address;
@@ -17,6 +18,7 @@ export interface State {
   popularItems: Item[] | undefined;
   popularPlaces: Place[] | undefined;
   cuisines: Cuisine[] | undefined;
+  suburbs: SuburbsResponse | undefined;
   cuisinesItems: CuisinesItemsResponse | undefined;
   itemsData: { [k: string]: [Item] };
   placesData: { [k: string]: Place };
@@ -35,6 +37,7 @@ export const initialState: State = {
   popularItems: undefined,
   popularPlaces: undefined,
   cuisines: undefined,
+  suburbs: undefined,
   cuisinesItems: undefined,
   itemsData: {},
   placesData: {},
@@ -74,6 +77,11 @@ export const popularPlacesReducer = createReducer(
 export const cuisinesReducer = createReducer(
   initialState.cuisines,
   on(FoodieActions.fetchCuisinesSuccess, (oldState, { cuisinesResponse }) => [...cuisinesResponse.cuisines]),
+);
+
+export const suburbsReducer = createReducer(
+  initialState.suburbs,
+  on(FoodieActions.fetchSuburbsSuccess, (oldState, { suburbsResponse }) => suburbsResponse),
 );
 
 export const cuisinesItemsReducer = createReducer(
@@ -313,6 +321,7 @@ export const reducers: ActionReducerMap<State> = {
   popularItems: popularItemsReducer,
   popularPlaces: popularPlacesReducer,
   cuisines: cuisinesReducer,
+  suburbs: suburbsReducer,
   cuisinesItems: cuisinesItemsReducer,
   itemsData: itemDataReducer,
   placesData: placesDataReducer,

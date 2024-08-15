@@ -11,6 +11,7 @@
   "urlPrefix": "/api",
   "bucketAccessEndpoint": "https://img.foodiex.com.au",
   "popularSearchesEndpoint": "/popular-searches",
+  "suburbsEndpoint": "/suburbs",
   "allCuisinesEndpoint": "/all-cuisines",
   "cuisinesItemsEndpoint": "/cuisines-items",
   "itemEndpoint": "/items/:itemId",
@@ -427,7 +428,8 @@
     "foundFollowingPlaces": "Found xxx restaurants matching the criteria ",
     "viewFullMenu": "View full menu",
     "moreDetails": "More Details",
-    "sortByTaste": "Sort by taste"
+    "sortByTaste": "Sort by taste",
+    "includeSurroundingSuburbs": "Include surrounding suburbs"
   },
   "hideCuisineMenu": true,
   "hideLeftNavigationMenu": true,

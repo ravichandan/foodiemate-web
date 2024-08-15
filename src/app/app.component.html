@@ -7,6 +7,15 @@
 
 <ng-template #content>
   <router-outlet />
+  <div inViewport
+       [inViewportOptions]="{ threshold: [0] }"
+       (inViewportAction)="endInSight($event)" class="circle circle-1"
+        style="height: 30px;">
+  </div>
+
+  @if(showScrollPrompt) {
+    <app-scroll-prompt></app-scroll-prompt>
+  }
 </ng-template>
 
 <div class="row gx-0 justify-content-center">

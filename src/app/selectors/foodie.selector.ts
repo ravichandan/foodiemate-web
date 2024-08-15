@@ -28,6 +28,13 @@ export const cuisinesSelector = () =>
     (state: State) => state.cuisines,
     (cuisines) => cuisines,
   );
+
+export const suburbsSelector = () =>
+  createSelector(
+    (state: State) => state.suburbs,
+    (suburbs) => suburbs,
+  );
+
 export const cuisinesItemsSelector = () =>
   createSelector(
     (state: State) => state.cuisinesItems,

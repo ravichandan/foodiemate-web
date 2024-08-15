@@ -22,6 +22,8 @@ import { ToastService } from './services/toast.service';
 import { ToastContainerComponent } from './toast-container/toast-container.component';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
+import { InViewportAction, InViewportModule } from 'ng-in-viewport';
+import { ScrollPromptComponent } from './cutil/scroll-prompt.component';
 
 @Component({
   selector: 'app-root',
@@ -38,12 +40,15 @@ import { CookieService } from 'ngx-cookie-service';
     NgIf,
     AsyncPipe,
     NgClass,
+    InViewportModule,
+
     HomeComponent,
     SharingButtonsComponent,
     RouterLink,
     OAuthModule,
     ToastContainerComponent,
     SlicePipe,
+    ScrollPromptComponent,
     // BrowserModule,
     // OAuthModule.forRoot({
     //   resourceServer: {
@@ -75,6 +80,8 @@ export class AppComponent implements OnInit, OnDestroy {
   protected isLoggedIn: boolean = false;
   private readonly destroy$: Subject<any>;
   private isBrowser: boolean = false;
+
+  showScrollPrompt = true;
 
   constructor(
     private appService: AppService,
@@ -175,5 +182,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/', { skipLocationChange: true })
         .then(() => this.router.navigate(['home'], { queryParams: { search: topSearch.value } }));
     }
+  }
+
+  endInSight({ target, visible }: { target: Element; visible: boolean }) {
+    this.showScrollPrompt=!visible;
   }
 }

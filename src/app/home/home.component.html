@@ -1,18 +1,86 @@
+<!--<button type="button" class="btn btn-primary" (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">Toggle collapse
+</button>
+<hr>-->
+
+
 <div class="search-container row m-0 gap-4 py-2 py-md-5 my-md-4 ">
 
   <form class="row gap-3 m-0 pt-2 col-12" #homeSearchForm
         (ngSubmit)="search(searchStr)">
-        <div class="col-12 col-md-8 p-0 d-flex flex-column text-secondary">
-          <span class="fs-6 fw-medium">{{ config.search_main_label }}</span>
-<!--          <span class="fs-smaller ">{{ config.search_sub_label }}</span>-->
-        </div>
-    <div class="col-12 col-md-8 p-0">
-      <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
-      <input type="text" class="form-control border-dark focus-ring" id="homeSearch"
-             placeholder="Search a dish or restaurant" #searchStr />
+    <div class="col-12 col-md-8 p-0 d-flex justify-content-end text-secondary">
+      @if (suburbs$ | async; as suburbs) {
+        <ng-multiselect-dropdown
+          class="align-self-end  m-1 m-md-2"
+          [placeholder]="'Select suburb'"
+          [settings]="suburbDropdownSettings"
+          [data]="suburbs"
+          [(ngModel)]="selectedSuburbs"
+
+          [ngModelOptions]="{standalone: true}">
+
+          <!--              (onSelect)="onItemSelect($event)"-->
+          <!--              (onSelectAll)="onSelectAll($event)">-->
+        </ng-multiselect-dropdown>
+      }
+
     </div>
-    <div class="col-12 col-md p-0">
-      <button type="submit" class="col-12 btn btn-teal mb-1 mb-sm-3 focus-ring" #searchBox>Search</button>
+    <div class="col-12 col-md-8 p-0 d-flex justify-content-between text-secondary">
+      <span class="fs-6 fw-bold">{{ config.search_main_label }}</span>
+      <!--          <span class="fs-smaller ">{{ config.search_sub_label }}</span>-->
+    </div>
+    <div class="col-12 col-md-8 p-0 d-flex gap-3 ">
+      <div class="col-auto flex-grow-1 ">
+        <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
+        <input type="text" class="form-control d-inline border-dark focus-ring" id="homeSearch"
+               placeholder="Search a dish or restaurant" #searchStr />
+      </div>
+      <span class=" col-auto filter-icon d-flex align-items-center" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseBasic"><span class="fx-icon fx-icon-filter"></span></span>
+    </div>
+
+    <div class="filter-container col-md-8 d-flex flex-column p-0">
+
+      <div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true" class="border border-light-subtle border-1 rounded-1 p-2 my-2">
+<!--        <span class="text-secondary">Filters:</span>-->
+        <div class="row gap-2 m-0 my-3">
+          @if (cuisines$ | async; as cuisines) {
+            <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center m-1 m-md-2 p-0">
+              <span class="text-secondary ">Choose cuisines</span>
+            <ng-multiselect-dropdown
+              class="text-secondary"
+              [placeholder]="'----'"
+              [settings]="dropdownSettings"
+              [data]="cuisines"
+              [(ngModel)]="selectedCuisines"
+              [ngModelOptions]="{standalone: true}">
+              <!--              (onSelect)="onItemSelect($event)"-->
+              <!--              (onSelectAll)="onSelectAll($event)">-->
+            </ng-multiselect-dropdown>
+            </div>
+          }
+          <!--          <div class="surrounding-suburbs-toggle d-flex " >-->
+          <div class="fx-toggle d-flex align-items-center col-12 col-md-auto p-1"><input type="checkbox" id="switch" checked="checked"
+                                               [(ngModel)]="includeSurroundingSuburbs"
+                                               (change)="includeSurroundingSuburbs=false"
+                                               [ngModelOptions]="{standalone: true}" class="d-inline" />
+            <label for="switch">{{ config.general.includeSurroundingSuburbs }}</label>
+            <span class="ps-2 text-secondary">{{ config.general.includeSurroundingSuburbs }}</span>
+          </div>
+          <!--          </div>-->
+          <!--          <div class="new-check-v16">-->
+          <!--            <label class="control control&#45;&#45;checkbox">{{ config.general.includeSurroundingSuburbs }}-->
+          <!--              <input type="checkbox" checked="checked" [(ngModel)]="includeSurroundingSuburbs"-->
+          <!--                     (change)="includeSurroundingSuburbs=false">-->
+          <!--              <div class="control__indicator"></div>-->
+          <!--            </label>-->
+          <!--          </div>-->
+        </div>
+      </div>
+
+      <div class="col-12 col-md p-0">
+        <button type="submit" class="col-12 btn btn-teal focus-ring" #searchBox>Search</button>
+      </div>
     </div>
   </form>
   @if (errorMessage) {
@@ -96,7 +164,7 @@
         @if (placesResponse?.places?.length) {
           <div class="results-container m-1 col-12 col-md-10">
             <div class=" text-secondary-emphasis">
-              <span class="">Found <span class=" fw-bold">{{ placesResponse?.places?.length}}</span> restaurants matching the criteria.</span><span
+              <span class="">Found <span class=" fw-bold">{{ placesResponse?.places?.length }}</span> restaurants matching the criteria.</span><span
               class="fw-bold d-none"> '{{ searchStr.value }}'</span>
             </div>
             @for (place of placesResponse.places; track place; let idx = $index) {
@@ -244,78 +312,81 @@
           </div>
         } @else {
           <div class="p-3">
-            <span class=" fw-medium">{{ config.general.noMatchingPlaces }}: <span class="fw-bold">{{searchKey}}</span></span>
+            <span class=" fw-medium">{{ config.general.noMatchingPlaces }}: <span class="fw-bold">{{ searchKey }}</span></span>
           </div>
         }
       } @else {
         @if (itemsResponse?.items?.length) {
           <div class="p-3">
             <div class="results-container m-1 col-12 col-md-10">
-            <div class=" text-secondary-emphasis">
-              <span class="fs-5 fw-bold">{{ config.general.foundFollowingItems }}:</span><span
-              class="fw-bold"> '{{ searchStr.value }}'</span>
-            </div>
-            <div
-              class="results-container text-center row gap-3 row-cols-auto justify-content-center justify-content-sm-start">
+              <div class=" text-secondary-emphasis">
+                <span class="fs-5 fw-bold">{{ config.general.foundFollowingItems }}:</span><span
+                class="fw-bold"> '{{ searchStr.value }}'</span>
+              </div>
+              <div
+                class="results-container text-center row gap-3 row-cols-auto justify-content-center justify-content-sm-start">
 
-              @for (item of itemsResponse.items.concat(itemsResponse.items); track item; let idx = $index) {
-                @if (!!item) {
-                  <div class="col p-0 -5 ccol-sm">
+                @for (item of itemsResponse.items.concat(itemsResponse.items); track item; let idx = $index) {
+                  @if (!!item) {
+                    <div class="col p-0 -5 ccol-sm">
 
-                    <div class="card border-secondary result-card-container">
-                      <div class="card-img result-item-img-wrapper col-3 d-flex align-items-center">
-                        @if (item.medias?.[0]?.key) {
-                          <img [src]="config.bucketAccessEndpoint+'/'+item?.medias?.[0]?.key"
-                               class="result-item-img bg-no-img" alt="No image available" />
-                        } @else {
+                      <div class="card border-secondary result-card-container">
+                        <div class="card-img result-item-img-wrapper col-3 d-flex align-items-center">
+                          @if (item.medias?.[0]?.key) {
+                            <img [src]="config.bucketAccessEndpoint+'/'+item?.medias?.[0]?.key"
+                                 class="result-item-img bg-no-img" alt="No image available" />
+                          } @else {
 
-                          <!--                  <span class="fx-icon fx-icon-no-image bg-dark-subtle result-item-img"></span>-->
-                          <object type="image/svg+xml" data="assets/images/svgs/No_image_available.svg"
-                                  class="result-item-img">
-                          </object>
-                          <!--  <span class="result-item-img"></span>-->
-                            <!--                  <span class="text-secondary-emphasis ">-->
-                            <!--                           -->
-                            <!--                          </span>-->
-                        }
-                        <!--          </div>-->
-                      </div>
-
-                      <div class="card-body pb-2 d-flex justify-content-between">
-                        <div class="d-flex flex-column flex-grow-1">
-                          <div class="item-name align-self-start">
-                            <span class="fw-bold text-secondary-emphasis">{{ item.name }}</span>
-                          </div>
-                          @if (item.description) {
-                            <div class="item-description align-self-start">
-                              <span class="text-secondary fst-italic">{{ item.description }}</span>
-                            </div>
+                            <!--                  <span class="fx-icon fx-icon-no-image bg-dark-subtle result-item-img"></span>-->
+                            <object type="image/svg+xml" data="assets/images/svgs/No_image_available.svg"
+                                    class="result-item-img">
+                            </object>
+                            <!--  <span class="result-item-img"></span>-->
+                              <!--                  <span class="text-secondary-emphasis ">-->
+                              <!--                           -->
+                              <!--                          </span>-->
                           }
-                          <div class="flex-grow-1 p-0 pt-3 align-content-end">
-                            <button class="btn btn-outline-dark w-100" (click)="onViewPlaces(item)">View places</button>
+                          <!--          </div>-->
+                        </div>
+
+                        <div class="card-body pb-2 d-flex justify-content-between">
+                          <div class="d-flex flex-column flex-grow-1">
+                            <div class="item-name align-self-start">
+                              <span class="fw-bold text-secondary-emphasis">{{ item.name }}</span>
+                            </div>
+                            @if (item.description) {
+                              <div class="item-description align-self-start">
+                                <span class="text-secondary fst-italic">{{ item.description }}</span>
+                              </div>
+                            }
+                            <div class="flex-grow-1 p-0 pt-3 align-content-end">
+                              <button class="btn btn-outline-dark w-100" (click)="onViewPlaces(item)">View places
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <!--        <div class="row g-0">-->
-                    <!--          <hr class="dropdown-divider bg-secondary-subtle" />-->
-                    <!--          <div class="col">-->
-                    <!--            <div class="card-body text-truncate-container">-->
-                    <!--            </div>-->
-                    <!--          </div>-->
-                    <!--        </div>-->
+                    <!--        <div class="row g-0">-->
+                      <!--          <hr class="dropdown-divider bg-secondary-subtle" />-->
+                      <!--          <div class="col">-->
+                      <!--            <div class="card-body text-truncate-container">-->
+                      <!--            </div>-->
+                      <!--          </div>-->
+                      <!--        </div>-->
+                  }
                 }
-              }
+              </div>
             </div>
-          </div>
           </div>
         } @else {
           <div class="p-3">
-            <span class="fst-italic fw-medium">{{ config.general.noMatchingItems }}: <span class="fw-bold">{{searchKey}}</span></span>
+            <span class="fst-italic fw-medium">{{ config.general.noMatchingItems }}: <span
+              class="fw-bold">{{ searchKey }}</span></span>
           </div>
         }
       }
     </div>
   }
 </div>
+

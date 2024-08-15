@@ -13,7 +13,9 @@
 
 
 @import "styles/checkbox";
+@import "styles/toggle";
 @import "styles/svg_components";
+@import "styles/scroll-prompt";
 @import "styles/range_input";
 @import 'ngx-sharebuttons/themes/default';
 
@@ -177,7 +179,6 @@ h1 {
     --bs-btn-font-size: 0.750rem;
   }
 }
-
 .row {
   //--bs-gutter-x: 0rem;
 }
@@ -255,7 +256,17 @@ h1 {
 }
 
 .multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
-  max-width: unset !important;
+  max-width: 5rem !important;
+  max-height: 1.5rem;
+}
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item a {
+  display: none;
+}
+
+ng-multiselect-dropdown, .multiselect-dropdown .dropdown-btn {
+  max-width: 10rem;
+  min-width: 10rem;
+  height: 2.25rem;
 }
 
 .customer-pic-wrapper {
@@ -432,6 +443,7 @@ input [type="range"] {
   background: url(assets/images/svgs/no-image.svg) no-repeat;
   background-size: contain;
 }
+
 
 @import "styles/components";
 
