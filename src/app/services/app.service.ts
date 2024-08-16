@@ -156,7 +156,7 @@ export class AppService implements OnDestroy{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'CUSTOMER_ID': this.customer?.id || '',
+      'CUSTOMER_ID': this.customer?._id || '',
       'x-action': args.action
     });
 
@@ -168,7 +168,7 @@ export class AppService implements OnDestroy{
     // httpParams = httpParams.append('customerId', customerId);
     // httpParams = httpParams.append('action', action);
     return this.http.put(url, {
-      customerId: this.customer.id,
+      customerId: this.customer._id,
       action: args.action,
     }, {headers});
   }
@@ -187,7 +187,7 @@ export class AppService implements OnDestroy{
           new HttpHeaders({
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            'CUSTOMER_ID': this.customer?.id || '',
+            'CUSTOMER_ID': this.customer?._id || '',
             'x-token': data.token
           });
 
@@ -252,7 +252,7 @@ export class AppService implements OnDestroy{
       // 'Content-Type': 'multipart/form-data',
       'Access-Control-Allow-Origin': '*',
       'ngsw-bypass': '',
-      'CUSTOMER_ID': this.customer?.id || ''
+      'CUSTOMER_ID': this.customer?._id || ''
     });
 
     const url = join(this.getConfig().host, this.getConfig().uploadMediaEndpoint);
@@ -288,7 +288,7 @@ export class AppService implements OnDestroy{
       'ngsw-bypass': '',
     });
 
-    const url = join(this.getConfig().host, this.getConfig().customerByIdEndpoint.replace(':customerId', customer.id));
+    const url = join(this.getConfig().host, this.getConfig().customerByIdEndpoint.replace(':customerId', customer._id));
 
     console.log('in updateCustomer url: ', url);
     return this.http.post(url, customer);

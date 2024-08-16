@@ -8,7 +8,7 @@ export enum ActivityLevels {
   INFLUENCER = 'INFLUENCER',
 }
 export interface CustomerInfo {
-  id: string;
+  _id: string;
   name: string;
   picture?: Media;
   email?: string;

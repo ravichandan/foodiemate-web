@@ -70,7 +70,10 @@ export class ReviewFeedbackComponent implements OnInit, OnDestroy
     this.store.select(customerSelector()).pipe(
       take(1),
       filter(Boolean),
-      tap(cust => this.feedback.liked = this.review?.customer.id === cust.id),
+      tap(cust => {
+        console.log('inreview-feedback.component, likebY:: ', this.review?.info?.likedBy);
+        this.feedback.liked = this.review?.info?.likedBy?.findIndex(liked => liked._id === cust._id) > -1;
+      } ),
       tap(cust => console.log('this.feedback in pipe:: ', this.feedback)),
     ).subscribe(x => setTimeout(()=>this.cdRef.detectChanges(),1));
 

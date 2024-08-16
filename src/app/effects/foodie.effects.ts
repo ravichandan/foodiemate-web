@@ -242,7 +242,7 @@ export class FoodieEffects {
       tap((x) => console.log('in logoutCustomer$ effect', x)),
       switchMap((_) => this.store.select(customerSelector()).pipe(filter(Boolean), take(1))),
       switchMap((customer) =>
-        this.appService.logoutCustomer(customer?.id).pipe(
+        this.appService.logoutCustomer(customer?._id).pipe(
           map((_) => FoodieActions.logoutCustomerSuccess()),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
