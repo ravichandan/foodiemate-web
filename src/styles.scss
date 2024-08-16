@@ -261,8 +261,8 @@ h1 {
 }
 .multiselect-item-checkbox input[type=checkbox]:checked + div:before{
   background-color: $teal-dark-color !important;
-
 }
+
 .multiselect-item-checkbox input[type=checkbox]:checked + div:after{
   border-color: $white !important;
 }

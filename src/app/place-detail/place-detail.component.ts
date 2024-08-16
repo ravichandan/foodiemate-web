@@ -18,6 +18,7 @@ import { AppService } from '../services/app.service';
 import { ScrolledToDirective } from '../directives/scrolledTo.directive';
 import { ScrollToDirective } from '../directives/scrollTo.directive';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ScrollToTopComponent } from '../cutil/scroll-to-top.component';
 
 @Component({
   selector: 'app-place-detail',
@@ -30,7 +31,6 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     NgForOf,
     NgIf,
     NgbScrollSpyModule,
-    // RouterModule,
     ItemListComponent,
     NgClass,
     RouterLink,
@@ -54,7 +54,6 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
   selectedPlace: Place | undefined;
   // item: Item | undefined;
   reviews$: Observable<Review[] | undefined> | undefined;
-  windowScrolled = false;
 
   dropdownSettings: IDropdownSettings = {
     singleSelection: true,
@@ -108,9 +107,7 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
 
     // this.selectedReviewFilter = [this.config?.itemDetailFilterBy?.[0]];
     // this.selectedStarFilter = [this.config?.itemDetailFilterByStars?.[0]];
-    window.addEventListener('scroll', () => {
-      this.windowScrolled = window.scrollY !== 0;
-    });
+
   }
 
   ngOnDestroy() {
@@ -126,11 +123,6 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['/new_review']).then();
   }
 
-  scrollToTop(): void {
-    // scroll to the top of the body
-    window.scrollTo(0, 0);
-    this.windowScrolled=false;
-  }
 
   protected readonly Object = Object;
   protected readonly JSON = JSON;

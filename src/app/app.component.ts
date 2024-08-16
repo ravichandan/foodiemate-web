@@ -24,6 +24,7 @@ import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { InViewportAction, InViewportModule } from 'ng-in-viewport';
 import { ScrollPromptComponent } from './cutil/scroll-prompt.component';
+import { ScrollToTopComponent } from './cutil/scroll-to-top.component';
 
 @Component({
   selector: 'app-root',
@@ -49,6 +50,7 @@ import { ScrollPromptComponent } from './cutil/scroll-prompt.component';
     ToastContainerComponent,
     SlicePipe,
     ScrollPromptComponent,
+    ScrollToTopComponent,
     // BrowserModule,
     // OAuthModule.forRoot({
     //   resourceServer: {
@@ -82,6 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private isBrowser: boolean = false;
 
   showScrollPrompt = true;
+  showScrollToTop = true;
 
   constructor(
     private appService: AppService,
@@ -186,5 +189,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   endInSight({ target, visible }: { target: Element; visible: boolean }) {
     this.showScrollPrompt=!visible;
+  }
+
+  startOutOfSight({ target, visible }: { target: Element; visible: boolean }) {
+    this.showScrollToTop=!visible;
   }
 }

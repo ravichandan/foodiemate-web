@@ -6,9 +6,10 @@
 
 <div class="search-container row m-0 gap-4 py-2 py-md-5 my-md-4 ">
 
-  <form class="row gap-3 m-0 pt-2 col-12" #homeSearchForm
+  <div class="col-12 py-2 d-flex justify-content-center">
+  <form class="row gap-3 m-0 col-12 col-md-10  p-0 " #homeSearchForm
         (ngSubmit)="search(searchStr)">
-    <div class="col-12 col-md-8 p-0 d-flex justify-content-end text-secondary">
+    <div class=" d-flex justify-content-end text-secondary px-0">
       @if (suburbs$ | async; as suburbs) {
         <ng-multiselect-dropdown
           class="align-self-end  m-1 m-md-2"
@@ -16,7 +17,6 @@
           [settings]="suburbDropdownSettings"
           [data]="suburbs"
           [(ngModel)]="selectedSuburbs"
-
           [ngModelOptions]="{standalone: true}">
 
           <!--              (onSelect)="onItemSelect($event)"-->
@@ -25,11 +25,11 @@
       }
 
     </div>
-    <div class="col-12 col-md-8 p-0 d-flex justify-content-between text-secondary">
+    <div class=" d-flex justify-content-between text-secondary px-0">
       <span class="fs-6 fw-bold">{{ config.search_main_label }}</span>
       <!--          <span class="fs-smaller ">{{ config.search_sub_label }}</span>-->
     </div>
-    <div class="col-12 col-md-8 p-0 d-flex gap-3 ">
+    <div class=" d-flex gap-3  px-0">
       <div class="col-auto flex-grow-1 ">
         <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
         <input type="text" class="form-control d-inline border-dark focus-ring" id="homeSearch"
@@ -39,7 +39,7 @@
             aria-controls="collapseBasic"><span class="fx-icon fx-icon-filter"></span></span>
     </div>
 
-    <div class="filter-container col-md-8 d-flex flex-column p-0">
+    <div class="filter-container d-flex flex-column p-0">
 
       <div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true" class="border border-light-subtle border-1 rounded-1 p-2 my-2">
 <!--        <span class="text-secondary">Filters:</span>-->
@@ -83,6 +83,7 @@
       </div>
     </div>
   </form>
+  </div>
   @if (errorMessage) {
     <div>
       <span class="text-danger"> {{ JSON.stringify(errorMessage) }}</span>
@@ -169,7 +170,7 @@
             </div>
             @for (place of placesResponse.places; track place; let idx = $index) {
               @if (!!place) {
-                <div class="card m-md-2 my-2 border-secondary cursor-pointer" (click)="onViewPlace(place)">
+                <div class="card my-2 border-secondary cursor-pointer places-response-card" (click)="onViewPlace(place)">
                   <div class="row g-0">
                     <div class=" text-darker-bg-theme">
                       <div class="card-body d-flex ">
@@ -209,10 +210,10 @@
                             <div class=" result-item-container d-flex justify-content-center flex-column">
                               <div class="d-flex align-items-center">
                                 <div
-                                  class=" result-place-img-wrapper d-flex align-items-center px-3 justify-content-center">
+                                  class=" result-place-img-wrapper d-flex align-items-center px-2 justify-content-center">
                                   @if ((items[number]?.placeItem?.medias?.[0]?.key ?? items[number]?.media?.key); as key) {
                                     <img [src]="config.bucketAccessEndpoint+'/'+key"
-                                         class="result-place-img bg-no-img" />
+                                         class="result-place-img bg-no-img rounded-2" />
                                   } @else {
 
                                     <span
@@ -223,7 +224,7 @@
                         </span>
                                   }
                                 </div>
-                                <div class="result-item-detail flex-grow-1 px-3 flex-column align-items-center">
+                                <div class="result-item-detail flex-grow-1 px-1 flex-column align-items-center">
                                   @if (items[number]) {
                                     <span
                                       class=" card-text text-secondary-emphasis fw-bolder">{{ items[number]?.placeItem?.name ?? items[number]?.name ?? 'No more matching items' }}</span>

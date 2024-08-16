@@ -122,7 +122,17 @@
     </div>
     <div
       class="content-container col-12  d-flex flex-lg-column justify-content-center  px-lg-5">
+      <div inViewport
+           [inViewportOptions]="{ threshold: [0] }"
+           (inViewportAction)="startOutOfSight($event)" class="scroll-to-top-viewport circle circle-1"
+           style="height: 3px;">
+      </div>
+
+      @if(showScrollToTop) {
+        <app-scroll--to-top></app-scroll--to-top>
+      }
       <div class="d-flex flex-column flex-grow-1 row gap-0 m-0 content-wrapper">
+
         <div class="d-flex align-items-center  col-12">
           @if (isLoggedIn && (customer$|async); as customer) {
             <span>Welcome <strong>{{ customer.name?.split(' ')?.[0] | slice:0:11}}</strong></span>
