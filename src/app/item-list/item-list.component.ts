@@ -120,7 +120,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   private onFilterChange() {
     this.store.select(placeSelector(this.selectedPlaceId)).pipe(
       filter((x) => !!x),
-      take(1),
+      takeUntil(this.destroy$),
       tap((x) => (this.selectedPlaceName = x.name)),
       map((x) => this.allItems = x.items as Item[]),
       filter(x => !!x?.length),

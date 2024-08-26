@@ -122,7 +122,7 @@ export const itemDataReducer = createReducer(
       }
       // newObj[item._id] = mergeWith({}, existingItem, item, (ei, itm) => {
       //   if (isArray(ei)) {
-      //     return unionBy(itm, ei, 'id').reverse();
+      //     return unionBy(itm, ei, '_id').reverse();
       //   }
       //   return itm as Item;
       // });
@@ -138,7 +138,7 @@ export const placesDataReducer = createReducer(
   initialState.placesData,
   on(FoodieActions.fetchPlaceSuccess, (oldState: { [_: string]: Place }, { place }) => {
     const newObj = { ...oldState };
-    console.log('in newObj', place);
+    console.log('in placesDataReducer -> newObj', place);
     const existingPlace = newObj[place._id];
     if (!existingPlace) {
       newObj[place._id] = place;
@@ -147,7 +147,7 @@ export const placesDataReducer = createReducer(
 
     newObj[place._id] = mergeWith({}, existingPlace, place, (ep, pl) => {
       if (isArray(ep)) {
-        return unionBy(pl, ep, 'id').reverse();
+        return unionBy(pl, ep, '_id').reverse();
       }
       return pl;
     });

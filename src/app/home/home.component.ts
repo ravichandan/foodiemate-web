@@ -108,7 +108,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
 
         console.log('params[suburbs]:: ',params['suburbs']);
         this.selectedCuisines = !!params['cuisines'] ? params['cuisines'].split(',') : this.selectedCuisines;
-        this.selectedSuburbs = !!params['suburbs'] ? params['suburbs'].split(',').map((sub: string) => suburbs!.find(s=> s.name == sub)) : this.selectedSuburbs;
+        this.selectedSuburbs = !!params['suburbs'] ? params['suburbs'].split(',').map((sub: string) => suburbs!.find(s=> s?.name == sub)) : this.selectedSuburbs;
 
         this.placesResponse.places = [];
         this.itemsResponse.items = [];
