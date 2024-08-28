@@ -4,7 +4,7 @@
       <!--     <div class="d-flex align-items-center">
              <span class="fs-5">Menu:</span>
            </div>-->
-      <div class="filter-container d-flex">
+      <div class="filter-container d-flex justify-content-between">
         <div class="items-filter-wrapper col-12 col-lg-5 me-md-2 my-2">
           <ng-multiselect-dropdown
             class=""
@@ -16,7 +16,7 @@
           </ng-multiselect-dropdown>
         </div>
 
-        <div class="sort-wrapper d-flex mx-2 align-items-center col-12 col-lg-5">
+        <div class="sort-wrapper d-flex mx-2 align-items-center col-12 col-lg-5 justify-content-center">
           <div class="new-check-v16">
             <label class="control control--checkbox">{{ config.general.sortByTaste }}
               <input type="checkbox" checked="checked" [(ngModel)]="isSortByTaste"
@@ -50,13 +50,15 @@
       </div>
     </div>
 
-    <div class="item-list-wrapper row gap-3 my-2">
-      <accordion [isAnimated]="true">
+    <div class="item-list-wrapper my-2">
+      <accordion [isAnimated]="true" >
         @for (item of items; track item; let i = $index; let first = $first) {
           <!--          <accordion-group >-->
             <!--            <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
             <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
-          <app-item-list-unit [item]="item" (toItemDetail)="goToItemDetail(item._id)"></app-item-list-unit>
+                                     <div class="my-1">
+          <app-item-list-unit [item]="item" (toItemDetail)="goToItemDetail(item._id)" ></app-item-list-unit>
+        </div>
           <!--            </div>-->
             <!--          </accordion-group>-->
         }

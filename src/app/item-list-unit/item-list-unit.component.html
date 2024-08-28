@@ -44,19 +44,19 @@
             </span>
                 @if(item.placeItem?.ratingInfo?.taste){<span class="ms-1 card-text"
                 ><span class="">{{ item.placeItem.ratingInfo.taste | number: '1.1-1' }}</span
-                ><span class="fs-small">/5</span></span>} @else {<span class="fs-small">Not yet reviewed</span>}
+                ><span class="fs-small">/5</span></span>} @else {<span class="fs-smaller">NA</span>}
               </div>
               <div class="presentation-wrapper d-flex justify-content-between align-items-center">
             <span class="fs-smaller card-text "
             >Presentation:&nbsp;</span>
             @if(item.placeItem?.ratingInfo?.taste){<span class="ms-1 card-text  "
                 ><span class="">{{ item.placeItem?.ratingInfo?.presentation | number: '1.1-1' }}</span
-                ><span class="fs-small">/5</span></span>} @else {<span class="fs-small">Not yet reviewed</span>}
+                ><span class="fs-small">/5</span></span>} @else {<span class="fs-smaller">NA</span>}
               </div>
             </div>
 
             <div class="col-4 border-start ps-0 d-flex justify-content-center align-items-center">
-              <span class="card-text  ">${{ item.placeItem.price }}</span>
+              <span class="card-text  ">$ {{ item.placeItem.price | number: '1.2-2' }}</span>
             </div>
           </div>
         </div>
