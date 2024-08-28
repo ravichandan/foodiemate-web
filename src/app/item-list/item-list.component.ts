@@ -122,6 +122,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
       filter((x) => !!x),
       takeUntil(this.destroy$),
       tap((x) => (this.selectedPlaceName = x.name)),
+      tap((x) => console.log('item-list.component->onFilterChange, x:: ', x)),
       map((x) => this.allItems = x.items as Item[]),
       filter(x => !!x?.length),
       map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
