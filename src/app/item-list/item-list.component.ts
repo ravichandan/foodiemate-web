@@ -8,7 +8,7 @@ import { customerSelector, placeSelector } from '../selectors/foodie.selector';
 import * as FoodieActions from '../actions/foodie.actions';
 import { ItemListUnitComponent } from '../item-list-unit/item-list-unit.component';
 import { AsyncPipe, NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
-import { NgbScrollSpy, NgbScrollSpyFragment } from '@ng-bootstrap/ng-bootstrap';
+import { NgbScrollSpyModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlaceListUnitComponent } from '../place-list-unit/place-list-unit.component';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ListItem } from 'ng-multiselect-dropdown/multiselect.model';
@@ -26,11 +26,10 @@ import { ScrolledToDirective } from '../directives/scrolledTo.directive';
     NgIf,
     AsyncPipe,
     NgForOf,
-    NgbScrollSpy,
+    NgbScrollSpyModule,
     PlaceListUnitComponent,
     NgClass,
     NgStyle,
-    NgbScrollSpyFragment,
     NgMultiSelectDropDownModule,
     FormsModule,
     AccordionModule,
@@ -78,6 +77,17 @@ export class ItemListComponent implements OnInit, OnDestroy {
     this.innerWidth = window.innerWidth;
     console.log('this.innerWidth:: ',this.innerWidth);
   }
+
+  // activeChanged(arg0: any) {
+
+  //   const targetElement: any = document.querySelector('#'+arg0);
+  //   console.log('in activeChanged:: ', arg0);
+  //   console.log('in activeChanged, targetElement.data:: ', targetElement.data);
+  //   console.log('in activeChanged, targetElement:: ', targetElement);
+  //   targetElement?.click();
+  //   // document.querySelector(arg0).click();
+  // }
+
 
   constructor(
     private route: ActivatedRoute,
