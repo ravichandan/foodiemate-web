@@ -50,26 +50,69 @@
       </div>
     </div>
 
-    <div class="item-list-wrapper my-2">
-      <accordion [isAnimated]="true" >
-        @for (item of items; track item; let i = $index; let first = $first) {
-          <!--          <accordion-group >-->
-            <!--            <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
-            <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
-                                     <div class="my-1">
-          <app-item-list-unit [item]="item" (toItemDetail)="goToItemDetail(item._id)" ></app-item-list-unit>
-        </div>
-          <!--            </div>-->
-            <!--          </accordion-group>-->
+    <!-- item course navigation -->
+    <div class="course-navigation-container col-12  px-0 mx-0">
+      <ul class="nav nav-tabs nav-justified d-block mx-0 px-0 " [ngStyle]=
+      "{'max-width': this.innerWidth-10+'px'  }"
+      
+      >
+        @for(category of this.categories; track category; let index = $index;){
+          <li class="nav-item cursor-pointer mx-0">
+            <a
+              class="nav-link"
+              aria-current="page"
+              [class.fw-bolder]="category.focus"
+              scrollTo [target]="'#categoryIdx'+index" [class.active]="category.focus"
+            >
+              <span class="fs-6">{{category.label}}</span>
+            </a>
+          </li>
         }
-      </accordion>
+      </ul>
 
-      <!--      <ng-container *ngFor="let item of items; trackBy: trackByItemId; index as i; first as first">-->
-      <!--        <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
-      <!--          &lt;!&ndash;                         [ngbScrollSpyFragment]="i+','+items.length">&ndash;&gt;-->
-      <!--          <app-item-list-unit [item]="item"></app-item-list-unit>-->
-      <!--        </div>-->
-      <!--      </ng-container>-->
+      <!-- <div class="row gap-2">
+        @for(category of this.categories; track category; let index = $index;){
+        }
+        <section scrolledTo #menuItems="scrolledTo" id="menuItems" class="col-12">
+          <app-item-list></app-item-list>
+        </section>
+        <section scrolledTo #reviews="scrolledTo" id="reviews" class="col-12">
+          <app-place-reviews [place]="place"></app-place-reviews>
+        </section>
+      </div> -->
+
+    </div>
+    <div class="item-category-wrapper my-2">
+      @for(category of Object.keys(this.filteredItems); track category; let index = $index){
+
+        <section scrolledTo #menuItems="scrolledTo" [id]="'categoryIdx'+index" class="col-12">
+          <div class="fw-bold fs-5"> <span>{{category}}</span></div>
+        </section>
+        
+     
+        <div class="item-list-wrapper my-2">
+        
+          <accordion [isAnimated]="true" >
+            @for (item of this.filteredItems[category]; track item; let i = $index; let first = $first) {
+              <!--          <accordion-group >-->
+                <!--            <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
+                <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
+                                        <div class="my-1">
+              <app-item-list-unit [item]="item" (toItemDetail)="goToItemDetail(item._id)" ></app-item-list-unit>
+            </div>
+              <!--            </div>-->
+                <!--          </accordion-group>-->
+            }
+          </accordion>
+
+          <!--      <ng-container *ngFor="let item of items; trackBy: trackByItemId; index as i; first as first">-->
+          <!--        <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
+          <!--          &lt;!&ndash;                         [ngbScrollSpyFragment]="i+','+items.length">&ndash;&gt;-->
+          <!--          <app-item-list-unit [item]="item"></app-item-list-unit>-->
+          <!--        </div>-->
+          <!--      </ng-container>-->
+        </div>
+      }
     </div>
   </div>
 } @else {

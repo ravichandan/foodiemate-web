@@ -220,7 +220,7 @@
               class="nav-link"
               aria-current="page"
               [class.fw-bolder]="menuItems.focus"
-              scrollTo target="#menuItems" [class.active]="menuItems.focus"
+              scrollTo target="#menu" [class.active]="menuItems.focus"
             >
               <span class="fs-6">Our Menu</span>
             </a>
@@ -236,11 +236,11 @@
           </li>
         </ul>
 
-        <div class="row gap-2">
-          <section scrolledTo #menuItems="scrolledTo" id="menuItems" class="col-12">
+        <div class="row gap-2 mx-0">
+          <section scrolledTo id="menu" #menuItems="scrolledTo" id="menuItems" class="col-12 px-0 mx-0">
             <app-item-list></app-item-list>
           </section>
-          <section scrolledTo #reviews="scrolledTo" id="reviews" class="col-12">
+          <section scrolledTo #reviews="scrolledTo" id="reviews" class="col-12 px-0 mx-0">
             <app-place-reviews [place]="place"></app-place-reviews>
           </section>
         </div>

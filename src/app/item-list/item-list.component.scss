@@ -4,3 +4,23 @@
 .items-filter-wrapper {
   width: 10em;
 }
+
+.item-category-wrapper{
+  height: 30rem;
+  overflow-y: scroll;
+}
+
+ul.nav {
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 25rem;
+}
+
+ul.nav::-webkit-scrollbar {
+  display: none;
+}
+
+ul.nav li {
+  display: inline-block;
+  float: none;
+}
