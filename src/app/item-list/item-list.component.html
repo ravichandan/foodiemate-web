@@ -5,7 +5,7 @@
              <span class="fs-5">Menu:</span>
            </div>-->
       <div class="filter-container d-flex justify-content-between">
-        <div class="items-filter-wrapper col-12 col-lg-5 me-md-2 my-2">
+        <div class="items-filter-wrapper  me-md-2 my-2">
           <ng-multiselect-dropdown
             class=""
             [placeholder]="'Filter Allergens'"
@@ -16,7 +16,7 @@
           </ng-multiselect-dropdown>
         </div>
 
-        <div class="sort-wrapper d-flex mx-2 align-items-center col-12 col-lg-5 justify-content-center">
+        <div class="sort-wrapper d-flex mx-2 align-items-center justify-content-center">
           <div class="new-check-v16">
             <label class="control control--checkbox">{{ config.general.sortByTaste }}
               <input type="checkbox" checked="checked" [(ngModel)]="isSortByTaste"
