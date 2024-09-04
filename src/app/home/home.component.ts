@@ -41,8 +41,10 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   dishFlag: boolean = false;
   errorMessage: string | undefined = undefined;
   searchKey: string | null;
+  dietaries: any[] = [];
   selectedCuisines: any[] = [];
   selectedSuburbs: any[] = [];
+  selectedDiets: any[] = [];
   suburbDropdownSettings: IDropdownSettings = {
     singleSelection: false,
     idField: 'name',
@@ -52,6 +54,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     itemsShowLimit: 1,
     allowSearchFilter: true,
   };
+  
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
     idField: 'name',
@@ -90,7 +93,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.destroy$ = new Subject<any>();
     this.cuisines$ = this.store.select(cuisinesSelector()).pipe(takeUntil(this.destroy$));
     this.suburbs$ = this.store.select(suburbsSelector()).pipe(takeUntil(this.destroy$), filter(Boolean), map((suburbsResponse?: SuburbsResponse) => suburbsResponse?.suburbs), tap(suburbs => this.selectedSuburbs.push(suburbs?.[0])));
-
+    this.dietaries = this.config.dietaries;
     this.placesResponse.places = [];
     this.searchKey = null;
     this.suburbs$

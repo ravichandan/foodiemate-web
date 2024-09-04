@@ -3,86 +3,121 @@
 </button>
 <hr>-->
 
-
-<div class="search-container row m-0 gap-4 py-2 py-md-5 my-md-4 ">
-
+<div class="search-container row m-0 gap-4 py-2 py-md-5 my-md-4">
   <div class="col-12 py-2 d-flex justify-content-center">
-  <form class="row gap-3 m-0 col-12 col-md-10  p-0 " #homeSearchForm
-        (ngSubmit)="search(searchStr)">
-    <div class=" d-flex justify-content-end text-secondary px-0">
-      @if (suburbs$ | async; as suburbs) {
-        <ng-multiselect-dropdown
-          class="align-self-end  m-1 m-md-2"
-          [placeholder]="'Select suburb'"
-          [settings]="suburbDropdownSettings"
-          [data]="suburbs"
-          [(ngModel)]="selectedSuburbs"
-          [ngModelOptions]="{standalone: true}">
-
-          <!--              (onSelect)="onItemSelect($event)"-->
-          <!--              (onSelectAll)="onSelectAll($event)">-->
-        </ng-multiselect-dropdown>
-      }
-
-    </div>
-    <div class=" d-flex justify-content-between text-secondary px-0">
-      <span class="fs-6 fw-bold">{{ config.search_main_label }}</span>
-      <!--          <span class="fs-smaller ">{{ config.search_sub_label }}</span>-->
-    </div>
-    <div class=" d-flex gap-3  px-0">
-      <div class="col-auto flex-grow-1 ">
-        <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
-        <input type="text" class="form-control d-inline border-dark focus-ring" id="homeSearch"
-               placeholder="Search a dish or restaurant" #searchStr />
+    <form class="row gap-3 m-0 col-12 col-md-10 p-0" #homeSearchForm (ngSubmit)="search(searchStr)">
+      <div class="d-flex justify-content-end text-secondary px-0">
+        @if (suburbs$ | async; as suburbs) {
+          <ng-multiselect-dropdown
+            class="align-self-end m-1 m-md-2"
+            [placeholder]="'Select suburb'"
+            [settings]="suburbDropdownSettings"
+            [data]="suburbs"
+            [(ngModel)]="selectedSuburbs"
+            [ngModelOptions]="{ standalone: true }">
+            <!--              (onSelect)="onItemSelect($event)"-->
+            <!--              (onSelectAll)="onSelectAll($event)">-->
+          </ng-multiselect-dropdown>
+        }
       </div>
-      <span class=" col-auto filter-icon d-flex align-items-center" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
-            aria-controls="collapseBasic"><span class="fx-icon fx-icon-filter"></span></span>
-    </div>
+      <div class="d-flex justify-content-between text-secondary px-0">
+        <span class="fs-6 fw-bold">{{ config.search_main_label }}</span>
+        <!--          <span class="fs-smaller ">{{ config.search_sub_label }}</span>-->
+      </div>
+      <div class="d-flex gap-3 px-0">
+        <div class="col-auto flex-grow-1">
+          <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
+          <input
+            type="text"
+            class="form-control d-inline border-dark focus-ring"
+            id="homeSearch"
+            placeholder="Search a dish or restaurant"
+            #searchStr />
+        </div>
+        <span
+          class="col-auto filter-icon d-flex align-items-center"
+          (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapseBasic"
+          ><span class="fx-icon fx-icon-filter"></span
+        ></span>
+      </div>
 
-    <div class="filter-container d-flex flex-column p-0">
-
-      <div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true" class="border border-light-subtle border-1 rounded-1 p-2 my-2">
-<!--        <span class="text-secondary">Filters:</span>-->
-        <div class="row gap-2 m-0 my-3">
-          @if (cuisines$ | async; as cuisines) {
-            <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center m-1 m-md-2 p-0">
-              <span class="text-secondary ">Choose cuisines</span>
-            <ng-multiselect-dropdown
-              class="text-secondary"
-              [placeholder]="'----'"
-              [settings]="dropdownSettings"
-              [data]="cuisines"
-              [(ngModel)]="selectedCuisines"
-              [ngModelOptions]="{standalone: true}">
-              <!--              (onSelect)="onItemSelect($event)"-->
-              <!--              (onSelectAll)="onSelectAll($event)">-->
-            </ng-multiselect-dropdown>
+      <div class="filter-container d-flex flex-column p-0">
+        <div
+          id="collapseBasic"
+          [collapse]="isCollapsed"
+          [isAnimated]="true"
+          class="border border-light-subtle border-1 rounded-1 p-2 my-2">
+          <!--        <span class="text-secondary">Filters:</span>-->
+          <div class="row gap-2 m-0 my-3">
+            @if (cuisines$ | async; as cuisines) {
+              <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center m-1 m-md-2 p-0">
+                <span class="text-secondary">Choose cuisines</span>
+                <ng-multiselect-dropdown
+                  class="text-secondary"
+                  [placeholder]="'----'"
+                  [settings]="dropdownSettings"
+                  [data]="cuisines"
+                  [(ngModel)]="selectedCuisines"
+                  [ngModelOptions]="{ standalone: true }">
+                  <!--              (onSelect)="onItemSelect($event)"-->
+                  <!--              (onSelectAll)="onSelectAll($event)">-->
+                </ng-multiselect-dropdown>
+              </div>
+            }
+            @if (dietaries) {
+              <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center m-1 m-md-2 p-0">
+                <span class="text-secondary">Dietary requirements</span>
+                <ng-multiselect-dropdown
+                  class="flex-grow-1 m-1 m-md-2 text-secondary"
+                  [placeholder]="'----'"
+                  [settings]="dropdownSettings"
+                  [data]="dietaries"
+                  [(ngModel)]="selectedDiets"
+                  [ngModelOptions]="{ standalone: true }">
+                  <ng-template #optionsTemplate let-item let-option="option" >
+                    Hello
+                    <div style="padding: 1px 10px; margin-right: 10px; right: 2px; top: -2px">
+                      <label style="color: #333; min-width: 130px; font-weight: normal">getItems[id].item_text</label>
+                    </div>
+                    <div style="padding: 1px 10px; margin-right: 10px; right: 2px; top: -2px">
+                      <img src="https://sdfs" style="width: 18px; margin: 0 20px" />
+                      <label style="color: #333; min-width: 130px; font-weight: normal">getItems[id].item_tex</label>
+                    </div>
+                  </ng-template>
+                </ng-multiselect-dropdown>
+              </div>
+            }
+            <!--          <div class="surrounding-suburbs-toggle d-flex " >-->
+            <div class="fx-toggle d-flex align-items-center col-12 col-md-auto p-1">
+              <input
+                type="checkbox"
+                id="switch"
+                checked="checked"
+                [(ngModel)]="includeSurroundingSuburbs"
+                (change)="includeSurroundingSuburbs = false"
+                [ngModelOptions]="{ standalone: true }"
+                class="d-inline" />
+              <label for="switch">{{ config.general.includeSurroundingSuburbs }}</label>
+              <span class="ps-2 text-secondary">{{ config.general.includeSurroundingSuburbs }}</span>
             </div>
-          }
-          <!--          <div class="surrounding-suburbs-toggle d-flex " >-->
-          <div class="fx-toggle d-flex align-items-center col-12 col-md-auto p-1"><input type="checkbox" id="switch" checked="checked"
-                                               [(ngModel)]="includeSurroundingSuburbs"
-                                               (change)="includeSurroundingSuburbs=false"
-                                               [ngModelOptions]="{standalone: true}" class="d-inline" />
-            <label for="switch">{{ config.general.includeSurroundingSuburbs }}</label>
-            <span class="ps-2 text-secondary">{{ config.general.includeSurroundingSuburbs }}</span>
+            <!--          </div>-->
+            <!--          <div class="new-check-v16">-->
+            <!--            <label class="control control&#45;&#45;checkbox">{{ config.general.includeSurroundingSuburbs }}-->
+            <!--              <input type="checkbox" checked="checked" [(ngModel)]="includeSurroundingSuburbs"-->
+            <!--                     (change)="includeSurroundingSuburbs=false">-->
+            <!--              <div class="control__indicator"></div>-->
+            <!--            </label>-->
+            <!--          </div>-->
           </div>
-          <!--          </div>-->
-          <!--          <div class="new-check-v16">-->
-          <!--            <label class="control control&#45;&#45;checkbox">{{ config.general.includeSurroundingSuburbs }}-->
-          <!--              <input type="checkbox" checked="checked" [(ngModel)]="includeSurroundingSuburbs"-->
-          <!--                     (change)="includeSurroundingSuburbs=false">-->
-          <!--              <div class="control__indicator"></div>-->
-          <!--            </label>-->
-          <!--          </div>-->
+        </div>
+
+        <div class="col-12 col-md p-0">
+          <button type="submit" class="col-12 btn btn-teal focus-ring" #searchBox>Search</button>
         </div>
       </div>
-
-      <div class="col-12 col-md p-0">
-        <button type="submit" class="col-12 btn btn-teal focus-ring" #searchBox>Search</button>
-      </div>
-    </div>
-  </form>
+    </form>
   </div>
   @if (errorMessage) {
     <div>
@@ -97,26 +132,16 @@
   <!--    </div>-->
   <!--  </div>-->
 
-
   @if (!!searchKey) {
-    <div class="col-12 d-flex justify-content-center ">
+    <div class="col-12 d-flex justify-content-center">
       <ul class="nav nav-tabs nav-justified col-12 col-md-10">
-        <li class="nav-item cursor-pointer" (click)="dishFlag=false">
-          <a
-            class="nav-link"
-            aria-current="page"
-            [class.fw-bolder]="!dishFlag"
-            [class.active]="!dishFlag"
-          >
+        <li class="nav-item cursor-pointer" (click)="dishFlag = false">
+          <a class="nav-link" aria-current="page" [class.fw-bolder]="!dishFlag" [class.active]="!dishFlag">
             <span class="fs-6">Places</span>
           </a>
         </li>
-        <li class="nav-item cursor-pointer" (click)="dishFlag=true">
-          <a
-            class="nav-link"
-            aria-current="page"
-            [class.fw-bolder]="dishFlag"
-            [class.active]="dishFlag">
+        <li class="nav-item cursor-pointer" (click)="dishFlag = true">
+          <a class="nav-link" aria-current="page" [class.fw-bolder]="dishFlag" [class.active]="dishFlag">
             <span class="fs-6">Dishes</span>
           </a>
         </li>
@@ -124,15 +149,29 @@
     </div>
 
     <div class="btn-group d-none" role="group" aria-label="select dishes ior restaurants to search for">
-      <input type="radio" class="btn-check" name="btnradio" id="dishesradio1" autocomplete="off" [checked]="dishFlag"
-             (change)="dishFlag=true; searchBox.click()">
-      <label class="btn btn-outline-secondary  " [ngClass]="{'text-darker-bg-theme': dishFlag}"
-             for="dishesradio1">Dishes</label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio"
+        id="dishesradio1"
+        autocomplete="off"
+        [checked]="dishFlag"
+        (change)="dishFlag = true; searchBox.click()" />
+      <label class="btn btn-outline-secondary" [ngClass]="{ 'text-darker-bg-theme': dishFlag }" for="dishesradio1"
+        >Dishes</label
+      >
 
-      <input type="radio" class="btn-check" name="btnradio" id="placesradio2" autocomplete="off" [checked]="!dishFlag"
-             (change)="dishFlag=false; searchBox.click()">
-      <label class="btn btn-outline-secondary" for="placesradio2"
-             [ngClass]="{'text-darker-bg-theme': !dishFlag}">Places</label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio"
+        id="placesradio2"
+        autocomplete="off"
+        [checked]="!dishFlag"
+        (change)="dishFlag = false; searchBox.click()" />
+      <label class="btn btn-outline-secondary" for="placesradio2" [ngClass]="{ 'text-darker-bg-theme': !dishFlag }"
+        >Places</label
+      >
     </div>
 
     <div class="results-wrapper d-flex justify-content-center col-12">
@@ -164,28 +203,32 @@
       @if (!dishFlag) {
         @if (placesResponse?.places?.length) {
           <div class="results-container m-1 col-12 col-md-10">
-            <div class=" text-secondary-emphasis">
-              <span class="">Found <span class=" fw-bold">{{ placesResponse?.places?.length }}</span> restaurants matching the criteria.</span><span
-              class="fw-bold d-none"> '{{ searchStr.value }}'</span>
+            <div class="text-secondary-emphasis">
+              <span class=""
+                >Found <span class="fw-bold">{{ placesResponse?.places?.length }}</span> restaurants matching the
+                criteria.</span
+              ><span class="fw-bold d-none"> '{{ searchStr.value }}'</span>
             </div>
             @for (place of placesResponse.places; track place; let idx = $index) {
               @if (!!place) {
-                <div class="card my-2 border-secondary cursor-pointer places-response-card" (click)="onViewPlace(place)">
+                <div
+                  class="card my-2 border-secondary cursor-pointer places-response-card"
+                  (click)="onViewPlace(place)">
                   <div class="row g-0">
-                    <div class=" text-darker-bg-theme">
-                      <div class="card-body d-flex ">
+                    <div class="text-darker-bg-theme">
+                      <div class="card-body d-flex">
                         <div class="d-flex flex-column align-items-start align-content-start flex-grow-1">
                           <div class="d-flex flex-column align-items-start align-content-start card-title flex-grow-1">
-                            <span class=" fw-bold">{{ idx + 1 }}. {{ place.placeName }}</span>
+                            <span class="fw-bold">{{ idx + 1 }}. {{ place.placeName }}</span>
                           </div>
-                          <div class="d-flex  align-items-start align-content-start  justify-content-between w-100">
-                            <p class="card-text d-flex fs-smaller col-7 ">&commat;{{ place.address?.suburb }}</p>
-                            <div class="service-container col-4 d-flex flex-column ">
-                              <div class="card-text  d-flex justify-content-end">
+                          <div class="d-flex align-items-start align-content-start justify-content-between w-100">
+                            <p class="card-text d-flex fs-smaller col-7">&commat;{{ place.address?.suburb }}</p>
+                            <div class="service-container col-4 d-flex flex-column">
+                              <div class="card-text d-flex justify-content-end">
                                 <span class="fs-smaller">Ambience:</span>
                                 <span class="mx-2 fw-bolder">{{ place.ratingInfo?.ambience | number: '1.1-1' }}</span>
                               </div>
-                              <div class="card-text  d-flex justify-content-end">
+                              <div class="card-text d-flex justify-content-end">
                                 <span class="fs-smaller">Service:</span>
                                 <span class="mx-2 fw-bolder">{{ place.ratingInfo?.service | number: '1.1-1' }}</span>
                               </div>
@@ -204,64 +247,67 @@
                     <!--              </div>-->
 
                     <div class="card-body p-0">
-                      @if (Object.values(place.items); as items; ) {
-                        @for (number of [0, 1, 2]; track number; ) {
+                      @if (Object.values(place.items); as items) {
+                        @for (number of [0, 1, 2]; track number) {
                           @if (!!items[number]) {
-                            <div class=" result-item-container d-flex justify-content-center flex-column">
+                            <div class="result-item-container d-flex justify-content-center flex-column">
                               <div class="d-flex align-items-center">
                                 <div
-                                  class=" result-place-img-wrapper d-flex align-items-center px-2 justify-content-center">
-                                  @if ((items[number]?.placeItem?.medias?.[0]?.key ?? items[number]?.media?.key); as key) {
-                                    <img [src]="config.bucketAccessEndpoint+'/'+key"
-                                         class="result-place-img bg-no-img rounded-2" />
+                                  class="result-place-img-wrapper d-flex align-items-center px-2 justify-content-center">
+                                  @if (
+                                    items[number]?.placeItem?.medias?.[0]?.key ?? items[number]?.media?.key;
+                                    as key
+                                  ) {
+                                    <img
+                                      [src]="config.bucketAccessEndpoint + '/' + key"
+                                      class="result-place-img bg-no-img rounded-2" />
                                   } @else {
-
                                     <span
                                       class="text-secondary-emphasis px-2 result-place-img fx-icon fx-icon-no-image">
-<!--                          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"-->
+                                      <!--                          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"-->
                                       <!--                               fill="#999999"><path-->
                                       <!--                            d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>-->
-                        </span>
+                                    </span>
                                   }
                                 </div>
                                 <div class="result-item-detail flex-grow-1 px-1 flex-column align-items-center">
                                   @if (items[number]) {
-                                    <span
-                                      class=" card-text text-secondary-emphasis fw-bolder">{{ items[number]?.placeItem?.name ?? items[number]?.name ?? 'No more matching items' }}</span>
+                                    <span class="card-text text-secondary-emphasis fw-bolder">{{
+                                      items[number]?.placeItem?.name ?? items[number]?.name ?? 'No more matching items'
+                                    }}</span>
                                   } @else {
                                     <!--                          <span-->
-                                      <!--                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>-->
-                                      <!--                          <hr class="dropdown-divider text-secondary" />-->
-                                    <hr class="border-bottom border-1 border-dark">
-
-
+                                    <!--                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>-->
+                                    <!--                          <hr class="dropdown-divider text-secondary" />-->
+                                    <hr class="border-bottom border-1 border-dark" />
                                   }
                                   <!--                        {{items[number]?.ratingInfo}}-->
                                   @if (items[number]?.placeItem; as pi) {
-                                    <span class=" card-text text-body-secondary fs-smaller ">
-                              <span
-                                class="row gap-0 g-0">
-                                  <span class="col-5">Taste: </span>@if (pi.ratingInfo?.taste) {
-                                <span
-                                  class="col-7">{{ pi.ratingInfo.taste }}
-                                  ({{ pi.ratingInfo.noOfReviews }} reviews)</span>
-                              } @else {
-                                <span
-                                  class="col-7 fst-italic"> Not reviewed yet</span>
-                              }
-                              </span>
-                              <span
-                                class="row gap-0 g-0">
-                                  <span class="col-5">Presentation: </span>@if (pi.ratingInfo?.presentation) {
-                                <span
-                                  class="col-7">{{ pi.ratingInfo?.presentation }} ({{ pi.ratingInfo?.noOfReviews }}
-                                  reviews)</span>
-                              } @else {
-                                <span
-                                  class="col-7 fst-italic"> Not reviewed yet</span>
-                              }
-                              </span>
-                            </span>
+                                    <span class="card-text text-body-secondary fs-smaller">
+                                      <span class="row gap-0 g-0">
+                                        <span class="col-5">Taste: </span>
+                                        @if (pi.ratingInfo?.taste) {
+                                          <span class="col-7"
+                                            >{{ pi.ratingInfo.taste }} ({{ pi.ratingInfo.noOfReviews }} reviews)</span
+                                          >
+                                        } @else {
+                                          <span class="col-7 fst-italic"> Not reviewed yet</span>
+                                        }
+                                      </span>
+                                      <span class="row gap-0 g-0">
+                                        <span class="col-5">Presentation: </span>
+                                        @if (pi.ratingInfo?.presentation) {
+                                          <span class="col-7"
+                                            >{{ pi.ratingInfo?.presentation }} ({{
+                                              pi.ratingInfo?.noOfReviews
+                                            }}
+                                            reviews)</span
+                                          >
+                                        } @else {
+                                          <span class="col-7 fst-italic"> Not reviewed yet</span>
+                                        }
+                                      </span>
+                                    </span>
                                   }
                                 </div>
                               </div>
@@ -269,7 +315,6 @@
                           }
                         }
                       }
-
                     </div>
 
                     <!--              <div class="card-body presentation-container">-->
@@ -289,14 +334,15 @@
                     <!--                </div>-->
                     <!--              </div>-->
                     <!--        dont display this in mobile view-->
-                    <div class="card-body view-photos-container d-none ">
+                    <div class="card-body view-photos-container d-none">
                       @if (config.allReviewPhotosLabel) {
-                        <a href="#"
-                           class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
-                            config.allReviewPhotosLabel
-                          }}</a>
+                        <a
+                          href="#"
+                          class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                          >{{ config.allReviewPhotosLabel }}</a
+                        >
                       } @else {
-                        <span class=" w-100 fst-italic">Not reviewed yet</span>
+                        <span class="w-100 fst-italic">Not reviewed yet</span>
                       }
                     </div>
                   </div>
@@ -304,8 +350,7 @@
                 <div class="row g-0">
                   <hr class="dropdown-divider bg-secondary-subtle" />
                   <div class="col">
-                    <div class="card-body text-truncate-container">
-                    </div>
+                    <div class="card-body text-truncate-container"></div>
                   </div>
                 </div>
               }
@@ -313,39 +358,41 @@
           </div>
         } @else {
           <div class="p-3">
-            <span class=" fw-medium">{{ config.general.noMatchingPlaces }}: <span class="fw-bold">{{ searchKey }}</span></span>
+            <span class="fw-medium"
+              >{{ config.general.noMatchingPlaces }}: <span class="fw-bold">{{ searchKey }}</span></span
+            >
           </div>
         }
       } @else {
         @if (itemsResponse?.items?.length) {
           <div class="p-3">
             <div class="results-container m-1 col-12 col-md-10">
-              <div class=" text-secondary-emphasis">
-                <span class="fs-5 fw-bold">{{ config.general.foundFollowingItems }}:</span><span
-                class="fw-bold"> '{{ searchStr.value }}'</span>
+              <div class="text-secondary-emphasis">
+                <span class="fs-5 fw-bold">{{ config.general.foundFollowingItems }}:</span
+                ><span class="fw-bold"> '{{ searchStr.value }}'</span>
               </div>
               <div
                 class="results-container text-center row gap-3 row-cols-auto justify-content-center justify-content-sm-start">
-
                 @for (item of itemsResponse.items.concat(itemsResponse.items); track item; let idx = $index) {
                   @if (!!item) {
                     <div class="col p-0 -5 ccol-sm">
-
                       <div class="card border-secondary result-card-container">
                         <div class="card-img result-item-img-wrapper col-3 d-flex align-items-center">
                           @if (item.medias?.[0]?.key) {
-                            <img [src]="config.bucketAccessEndpoint+'/'+item?.medias?.[0]?.key"
-                                 class="result-item-img bg-no-img" alt="No image available" />
+                            <img
+                              [src]="config.bucketAccessEndpoint + '/' + item?.medias?.[0]?.key"
+                              class="result-item-img bg-no-img"
+                              alt="No image available" />
                           } @else {
-
                             <!--                  <span class="fx-icon fx-icon-no-image bg-dark-subtle result-item-img"></span>-->
-                            <object type="image/svg+xml" data="assets/images/svgs/No_image_available.svg"
-                                    class="result-item-img">
-                            </object>
+                            <object
+                              type="image/svg+xml"
+                              data="assets/images/svgs/No_image_available.svg"
+                              class="result-item-img"></object>
                             <!--  <span class="result-item-img"></span>-->
-                              <!--                  <span class="text-secondary-emphasis ">-->
-                              <!--                           -->
-                              <!--                          </span>-->
+                            <!--                  <span class="text-secondary-emphasis ">-->
+                            <!--                           -->
+                            <!--                          </span>-->
                           }
                           <!--          </div>-->
                         </div>
@@ -361,7 +408,8 @@
                               </div>
                             }
                             <div class="flex-grow-1 p-0 pt-3 align-content-end">
-                              <button class="btn btn-outline-dark w-100" (click)="onViewPlaces(item)">View places
+                              <button class="btn btn-outline-dark w-100" (click)="onViewPlaces(item)">
+                                View places
                               </button>
                             </div>
                           </div>
@@ -369,12 +417,12 @@
                       </div>
                     </div>
                     <!--        <div class="row g-0">-->
-                      <!--          <hr class="dropdown-divider bg-secondary-subtle" />-->
-                      <!--          <div class="col">-->
-                      <!--            <div class="card-body text-truncate-container">-->
-                      <!--            </div>-->
-                      <!--          </div>-->
-                      <!--        </div>-->
+                    <!--          <hr class="dropdown-divider bg-secondary-subtle" />-->
+                    <!--          <div class="col">-->
+                    <!--            <div class="card-body text-truncate-container">-->
+                    <!--            </div>-->
+                    <!--          </div>-->
+                    <!--        </div>-->
                   }
                 }
               </div>
@@ -382,12 +430,12 @@
           </div>
         } @else {
           <div class="p-3">
-            <span class="fst-italic fw-medium">{{ config.general.noMatchingItems }}: <span
-              class="fw-bold">{{ searchKey }}</span></span>
+            <span class="fst-italic fw-medium"
+              >{{ config.general.noMatchingItems }}: <span class="fw-bold">{{ searchKey }}</span></span
+            >
           </div>
         }
       }
     </div>
   }
 </div>
-
