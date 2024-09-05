@@ -175,10 +175,10 @@
     </div>
 
     <div class="results-wrapper d-flex justify-content-center col-12">
-      <!-- commenting popular results container for now
+      <!-- commenting popular results container for now-->
       <div class="pop-container m-1 m-md-5 col-md-10 d-none">
         <div class="pop-title lead text-body-secondary">{{ config.popular_title }}</div>
-        <div class="pop-wrapper" *ngIf="popularSearches$ | async as resp">
+        <div class="pop-wrapper" *ngIf=" popularSearches$ | async as resp">
           <div class="pop-items row">
             <div class="pop-item-wrapper col-6 col-md-4 col-lg-3  px-0" *ngFor="let element of resp">
               <div class="pop-item card m-1 m-lg-2" hover-classes="text-bg-dark" (click)="popularItemSelected(element)">
@@ -199,7 +199,7 @@
           </div>
         </div>
       </div>
-      -->
+      
       @if (!dishFlag) {
         @if (placesResponse?.places?.length) {
           <div class="results-container m-1 col-12 col-md-10">
@@ -365,18 +365,18 @@
         }
       } @else {
         @if (itemsResponse?.items?.length) {
-          <div class="p-3">
+          <div class="p-0">
             <div class="results-container m-1 col-12 col-md-10">
               <div class="text-secondary-emphasis">
                 <span class="fs-5 fw-bold">{{ config.general.foundFollowingItems }}:</span
                 ><span class="fw-bold"> '{{ searchStr.value }}'</span>
               </div>
               <div
-                class="results-container text-center row gap-3 row-cols-auto justify-content-center justify-content-sm-start">
+                class="results-container text-center row m-0 gap-3 row-cols-auto justify-content-center justify-content-sm-start">
                 @for (item of itemsResponse.items.concat(itemsResponse.items); track item; let idx = $index) {
                   @if (!!item) {
-                    <div class="col p-0 -5 ccol-sm">
-                      <div class="card border-secondary result-card-container">
+                    <div class="col-6 p-0 -5 ccol-sm result-card-container">
+                      <div class="card border-secondary ">
                         <div class="card-img result-item-img-wrapper col-3 d-flex align-items-center">
                           @if (item.medias?.[0]?.key) {
                             <img

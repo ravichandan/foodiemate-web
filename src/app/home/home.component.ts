@@ -35,6 +35,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   @ViewChild('searchStr')
   searchInput: ElementRef | undefined;
   placesResponse$: Observable<PlacesResponse | undefined> | undefined;
+  popularSearches$: Observable<any | undefined> | undefined;
   // randomSuggestions: any[] | undefined;
   placesResponse: PlacesResponse = {} as PlacesResponse;
   itemsResponse: ItemResponse = {} as ItemResponse;
@@ -92,7 +93,9 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.config = this.appService.getConfig();
     this.destroy$ = new Subject<any>();
     this.cuisines$ = this.store.select(cuisinesSelector()).pipe(takeUntil(this.destroy$));
-    this.suburbs$ = this.store.select(suburbsSelector()).pipe(takeUntil(this.destroy$), filter(Boolean), map((suburbsResponse?: SuburbsResponse) => suburbsResponse?.suburbs), tap(suburbs => this.selectedSuburbs.push(suburbs?.[0])));
+    this.suburbs$ = this.store.select(suburbsSelector()).pipe(takeUntil(this.destroy$), filter(Boolean), map((suburbsResponse?: SuburbsResponse) => suburbsResponse?.suburbs), 
+        // tap(suburbs => this.selectedSuburbs.push(suburbs?.[0]))
+    );
     this.dietaries = this.config.dietaries;
     this.placesResponse.places = [];
     this.searchKey = null;
