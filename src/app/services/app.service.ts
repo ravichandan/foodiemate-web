@@ -73,15 +73,18 @@ export class AppService implements OnDestroy{
     );
   }
 
-  public getItem(params: { id: string; pageSize?: number; pageNum?: number }) {
-    if (!params.id) return of(undefined);
+  public getItem(args: { id: string; city?: string; suburb?: string; postcode?: string; pageSize?: number; pageNum?: number }) {
+    if (!args.id) return of(undefined);
+    console.log('in app.service->getItem, args:: ', args);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    const url = join(this.getConfig().host, this.getConfig().itemEndpoint.replace(':itemId', params.id));
+    const url = join(this.getConfig().host, this.getConfig().itemEndpoint.replace(':itemId', args.id));
     let httpParams = new HttpParams();
-    httpParams = httpParams.append('pageSize', params.pageSize || 1);
-    httpParams = httpParams.append('pageNum', params.pageNum || 1);
-    httpParams = httpParams.append('postcode', 2153);
+    httpParams = httpParams.append('pageSize', args.pageSize || 1);
+    httpParams = httpParams.append('pageNum', args.pageNum || 1);
+    httpParams = args.city ? httpParams.append('city', args.city): httpParams;
+    httpParams = args.suburb ? httpParams.append('suburb', args.suburb): httpParams;
+    httpParams = args.postcode ? httpParams.append('postcode', args.postcode): httpParams;
 
     return this.http.get(url, { headers, params: httpParams }).pipe(
       // map((item: any) => ({data: items})),

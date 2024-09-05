@@ -105,6 +105,7 @@ export const itemDataReducer = createReducer(
   initialState.itemsData,
   on(FoodieActions.fetchPlacesOfItemSuccess, (oldState: { [_: string]: [Item] }, { itemResponse }) => {
     const newObj = { ...oldState };
+    console.log('in index.ts->itemDataReducer, itemResponse:: ', itemResponse);
     for(const item of itemResponse.items) {
       console.log('in newObj', item);
       const existingItem = newObj[item._id];

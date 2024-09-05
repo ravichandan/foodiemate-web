@@ -89,7 +89,7 @@ export class PlaceListComponent implements OnInit, OnDestroy {
         tap((params: ParamMap) => {
           // console.log('in paramMap, params:: ', params)
           this.selectedItemId = params.get('itemId');
-          this.store.dispatch(FoodieActions.fetchPlacesOfItem({ id: this.selectedItemId, pageSize: 1, pageNum: 1 }));
+          this.store.dispatch(FoodieActions.fetchPlacesOfItem({ id: this.selectedItemId, city: 'Sydney', pageSize: 1, pageNum: 1 }));
         }),
       )
       .subscribe();
@@ -105,6 +105,7 @@ export class PlaceListComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         FoodieActions.fetchPlacesOfItem({
           id: this.selectedItemId,
+          city: 'Sydney',
           pageSize: this.pageSize,
           pageNum: this.currentPageNum + 1,
         }),

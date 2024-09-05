@@ -108,7 +108,7 @@ export const fetchPlacesWithNameSuccess = createAction(
 
 export const fetchPlacesOfItem = createAction(
   ACTION_FETCH_PLACES_OF_ITEM,
-  props<{ id: string; pageSize?: number; pageNum?: number }>(),
+  props<{ id: string; city: string; suburb?: string; postcode?:string; pageSize?: number; pageNum?: number }>(),
 );
 
 export const fetchPlacesOfItemSuccess = createAction(ACTION_FETCH_PLACES_OF_ITEM_SUCCESS, props<{ itemResponse: ItemResponse }>());

@@ -111,7 +111,7 @@ export class FoodieEffects {
       ofType(FoodieActions.fetchPlacesOfItem),
       tap((x) => console.log('in fetchPlacesOfItem$ effect', x)),
       mergeMap((action) =>
-        this.appService.getItem({ id: action.id, pageSize: action.pageSize, pageNum: action.pageNum }).pipe(
+        this.appService.getItem({ id: action.id, city: action.city, suburb: action.suburb, postcode: action.postcode, pageSize: action.pageSize, pageNum: action.pageNum }).pipe(
           map((itemResponse: ItemResponse) => FoodieActions.fetchPlacesOfItemSuccess({ itemResponse })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
