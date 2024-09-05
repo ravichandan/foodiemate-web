@@ -401,7 +401,7 @@
                           <div class="d-flex flex-column flex-grow-1">
                             <div class="item-name align-self-start">
                               <span class="fw-bold text-secondary-emphasis" 
-                              [ngClass]="{'fs-smaller': item.description.length>15, 'text-truncate-2': item.description.length>15}"
+                              [ngClass]="{'fs-smaller': (item.description?.length ?? 0)>15, 'text-truncate-2': (item.description?.length ?? 0)>15}"
                               >{{ item.name }}</span>
                             </div>
                             @if (item.description) {
