@@ -242,6 +242,14 @@ h1 {
   overflow: hidden;
 }
 
+
+.text-truncate-4 {
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .progress-container {
   height: 1.5em;
 }

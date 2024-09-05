@@ -368,11 +368,11 @@
           <div class="p-0">
             <div class="results-container m-1 col-12 col-md-10">
               <div class="text-secondary-emphasis">
-                <span class="fs-5 fw-bold">{{ config.general.foundFollowingItems }}:</span
-                ><span class="fw-bold"> '{{ searchStr.value }}'</span>
+                <span class=" fw-medium">{{ config.general.foundFollowingItems }}:</span
+                ><span class="fs-5 fw-bold"> '{{ searchStr.value }}'</span>
               </div>
               <div
-                class="results-container text-center row m-0 gap-3 row-cols-auto justify-content-center justify-content-sm-start">
+                class=" text-center row m-0 gap-3 row-cols-auto justify-content-center justify-content-sm-start">
                 @for (item of itemsResponse.items.concat(itemsResponse.items); track item; let idx = $index) {
                   @if (!!item) {
                     <div class="col-6 p-0 -5 ccol-sm result-card-container">
@@ -400,11 +400,14 @@
                         <div class="card-body pb-2 d-flex justify-content-between">
                           <div class="d-flex flex-column flex-grow-1">
                             <div class="item-name align-self-start">
-                              <span class="fw-bold text-secondary-emphasis">{{ item.name }}</span>
+                              <span class="fw-bold text-secondary-emphasis" 
+                              [ngClass]="{['fs-smaller', 'text-truncate-2']: item.description.length>15}"
+                              >{{ item.name }}</span>
                             </div>
                             @if (item.description) {
                               <div class="item-description align-self-start">
-                                <span class="text-secondary fst-italic">{{ item.description }}</span>
+                                <span class="text-secondary fst-italic text-truncate-3"
+                                >{{ item.description }}</span>
                               </div>
                             }
                             <div class="flex-grow-1 p-0 pt-3 align-content-end">
