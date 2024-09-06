@@ -265,6 +265,7 @@ export const preloadPostReviewReducer = createReducer(
           medias: [].concat(form[group].mediaCtrl) as Media[],
         } as Review);
     });
+    console.log('put a break point here, copy:: ', copy);
     return copy;
   }),
   on(FoodieActions.newPostReviewSuccess, (oldState: NewReview | undefined, { review }) => {

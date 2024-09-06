@@ -229,6 +229,7 @@ export class PostReviewItemUnitComponent implements OnInit, OnDestroy {
                 correlationId: this.correlationId,
                 customerId: event.body?.[0]?.customerId,
                 url: event.body?.[0]?.url,
+                key: event.body?.[0]?.key,
               },
             ].concat(...this.itemGroup?.value.mediaCtrl),
           );
@@ -672,7 +673,7 @@ export class PostReviewComponent implements OnInit, OnDestroy, AfterViewInit, Af
   }
 
   ngAfterViewInit(): void {
-    console.log('3. ngAfterViewInit');
+    console.log('3. ngAfterViewInit, this.postReview.:: ', this.postReview);
     if(this.postReview.place){
       this.reviewFormGroup?.controls?.['placeCtrl']?.setValue(this.postReview.place);
     }
