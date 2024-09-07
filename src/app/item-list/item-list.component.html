@@ -4,7 +4,7 @@
       <!--     <div class="d-flex align-items-center">
              <span class="fs-5">Menu:</span>
            </div>-->
-      <div class="filter-container d-flex flex-column flex-grow-1">
+      <div class="filter-container d-flex flex-column flex-grow-1 my-2 ">
         <div class="d-flex justify-content-between">
           <div class="items-filter-wrapper me-md-2 my-2">
             <ng-multiselect-dropdown
@@ -53,12 +53,14 @@
           </div>
         </div>
         <div class="item-list-search-container">
-          <form class="row gap-3 col-12 col-md-10 col-xl-8 col-xxl-7">
-            <div class="col-12 col-md-8">
-              <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
-              <input type="text" class="form-control border-dark focus-ring" id="homeSearch" placeholder="Search" />
+          <form class="row gap-3 m-0 p-0 col-12 col-md-10 col-xl-8 col-xxl-7">
+            <div class="col-12 col-md-8 p-0">
+              <label for="itemListSearch" class="visually-hidden">{{ config.search_main_label }}</label>
+              <input type="text" class="form-control border-dark focus-ring"
+               id="itemListSearch" [(ngModel)]="itemSearchStr" (keyup)="onReviewFilterChange()" placeholder="Search" 
+               [ngModelOptions]="{standalone: true}"/>
             </div>
-            <div class="col-12 col-md d-flex justify-content-center">
+            <div class="col-12 col-md d-flex justify-content-center p-0">
               <button type="submit" class="col-12 col-md-11 btn btn-dark focus-ring">Search</button>
             </div>
           </form>
@@ -96,33 +98,35 @@
 
     <div class="item-category-wrapper my-2" ngbScrollSpy #spy="ngbScrollSpy">
       @for (category of categories; track category; let index = $index) {
-        <section scrolledTo [id]="'categoryIdx' + index" class="col-12" [ngbScrollSpyFragment]="category.label">
-          <div class="fw-bold fs-5">
-            <span>{{ category.label }}</span>
+        @if(this.filteredItems[category.label]?.length) {
+          <section scrolledTo [id]="'categoryIdx' + index" class="col-12" [ngbScrollSpyFragment]="category.label">
+            <div class="fw-bold fs-5">
+              <span>{{ category.label }}</span>
+            </div>
+          </section>
+
+          <div class="item-list-wrapper my-2">
+            <accordion [isAnimated]="true">
+              @for (item of this.filteredItems[category.label]; track item; let i = $index; let first = $first) {
+                <!--          <accordion-group >-->
+                <!--            <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
+                <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
+                <div class="my-1">
+                  <app-item-list-unit [item]="item" (toItemDetail)="goToItemDetail(item._id)"></app-item-list-unit>
+                </div>
+                <!--            </div>-->
+                <!--          </accordion-group>-->
+              }
+            </accordion>
+
+            <!--      <ng-container *ngFor="let item of items; trackBy: trackByItemId; index as i; first as first">-->
+            <!--        <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
+            <!--          &lt;!&ndash;                         [ngbScrollSpyFragment]="i+','+items.length">&ndash;&gt;-->
+            <!--          <app-item-list-unit [item]="item"></app-item-list-unit>-->
+            <!--        </div>-->
+            <!--      </ng-container>-->
           </div>
-        </section>
-
-        <div class="item-list-wrapper my-2">
-          <accordion [isAnimated]="true">
-            @for (item of this.filteredItems[category.label]; track item; let i = $index; let first = $first) {
-              <!--          <accordion-group >-->
-              <!--            <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
-              <!--                         [ngbScrollSpyFragment]="i+','+items.length">-->
-              <div class="my-1">
-                <app-item-list-unit [item]="item" (toItemDetail)="goToItemDetail(item._id)"></app-item-list-unit>
-              </div>
-              <!--            </div>-->
-              <!--          </accordion-group>-->
-            }
-          </accordion>
-
-          <!--      <ng-container *ngFor="let item of items; trackBy: trackByItemId; index as i; first as first">-->
-          <!--        <div class="app-item-list-unit-container" [ngClass]="{ 'mt-1': first }" (click)="openItemDetail(item)">-->
-          <!--          &lt;!&ndash;                         [ngbScrollSpyFragment]="i+','+items.length">&ndash;&gt;-->
-          <!--          <app-item-list-unit [item]="item"></app-item-list-unit>-->
-          <!--        </div>-->
-          <!--      </ng-container>-->
-        </div>
+        }
       }
     </div>
   </div>

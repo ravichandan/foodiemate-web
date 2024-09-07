@@ -1,5 +1,5 @@
 import { Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
-import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { filter, map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import { Item } from '../models/Item';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -62,7 +62,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   filtered: Item[] | undefined = undefined;
   // categories = new SetWithContentEquality<any>( category => category.label); 
   categories: any[] = []; 
-
+  itemSearchStr: string = '';
 
   filteredItems: {[category: string]: Item[]} = {} as any;
   
@@ -111,8 +111,51 @@ export class ItemListComponent implements OnInit, OnDestroy {
       )
       .subscribe((c) => (this.selectedAllergensFilter = c?.allergens));
 
+      console.log('this.all.len', this.allItems?.length);
     // Fetch an item, and it will have the list of places with ratings and reviews
-    this.onFilterChange();
+    this.store.select(placeSelector(this.selectedPlaceId)).pipe(
+      filter((x) => !!x),
+      tap((x) => (this.selectedPlaceName = x.name)),
+      map((x) => this.allItems = x.items as Item[]),
+      filter(x => !!x?.length),
+      take(1),
+      map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
+      map((items: Item[]) => this.filtered = items.filter((item) => this.itemSearchStr ? !item?.name?.includes(this.itemSearchStr): true)),
+      map((items: Item[]) => this.filtered = this.isSortByTaste ? items.sort((a, b) => (a.ratingInfo?.taste ?? 0) - (b.ratingInfo?.taste ?? 0)) : items),
+      tap((items: Item[]) => this.filtered?.forEach((it:Item) => {
+        if(it.placeItem?.category){
+          if(!this.filteredItems[it.placeItem.category as string]){
+            this.filteredItems[it.placeItem.category as string]= [] as any[];
+          }
+          this.filteredItems[it.placeItem.category as string].push(it)
+        }
+      }
+      )),
+      tap((items: Item[]) => this.categories = Array.from(Object.keys(this.filteredItems)?.map((cat) => ({label: cat, active: false, selected: false, focus: false})))),
+    ).subscribe();
+
+      // Fetch an item, and it will have the list of places with ratings and reviews
+    // this.store.select(placeSelector(this.selectedPlaceId)).pipe(
+    //   filter((x) => !!x),
+    //   tap(x=> console.log('1:: ',x)),
+    //   tap((x) => (this.selectedPlaceName = x.name)),
+    //   map((x) => this.allItems = x.items as Item[]),
+    //   tap(x=> console.log('2:: ',x)),
+    //   filter(x => !!x?.length),
+    //   tap(x=> console.log('3:: ',x)),
+    //   take(1),
+      
+    //   map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
+    //   map((items: Item[]) => this.filtered = items.filter((item) => this.itemSearchStr ? !item?.name?.includes(this.itemSearchStr): true)),
+    //   tap((items: Item[]) => this.categories = Array.from(items.map((item) => item?.placeItem.category)).map((cat) => ({label: cat, active: false, selected: false, focus: false}))),
+    //   tap((items: Item[]) => this.categories.forEach((cat: any)=> this.filteredItems[cat.label]=[])),
+    //   map((items: Item[]) => this.filtered = this.isSortByTaste ? items.sort((a, b) => (a.ratingInfo?.taste ?? 0) - (b.ratingInfo?.taste ?? 0)) : items),
+    //   tap((items: Item[]) => this.filtered?.forEach((it:Item) => (it.placeItem?.category &&
+    //     this.filteredItems[it.placeItem.category as string].push(it))
+    //   )),
+    //   tap(_=>console.log('this.filtered.len', this.filtered?.length)),
+    //   tap(_=>console.log('this.filtered.len', this.filtered?.length)),
+    // ).subscribe();
 
     this.route.paramMap
       .pipe(
@@ -134,7 +177,8 @@ export class ItemListComponent implements OnInit, OnDestroy {
     return i._id;
   }
 
-  onReviewFilterChange($event: ListItem) {
+  onReviewFilterChange($event?: ListItem) {
+    console.log('on onReviewFilterChange');
     this.onFilterChange();
   }
 
@@ -150,22 +194,48 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   private onFilterChange() {
-    const tempCats = new Set<string>();
-    this.store.select(placeSelector(this.selectedPlaceId)).pipe(
-      filter((x) => !!x),
-      takeUntil(this.destroy$),
-      tap((x) => (this.selectedPlaceName = x.name)),
-      map((x) => this.allItems = x.items as Item[]),
-      filter(x => !!x?.length),
-      map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
-      tap((items: Item[]) => items.forEach((item) => tempCats.add(item?.placeItem.category))),      
-      tap((items: Item[]) => this.categories = Array.from(tempCats).map((cat) => ({label: cat, active: false, selected: false, focus: false}))),
-      tap((items: Item[]) => this.categories.forEach((cat: any)=> this.filteredItems[cat.label]=[])),
-      map((items: Item[]) => this.filtered = this.isSortByTaste ? items.sort((a, b) => (a.ratingInfo?.taste ?? 0) - (b.ratingInfo?.taste ?? 0)) : items),
-      tap((items: Item[]) => this.filtered?.forEach((it:Item) => (it.placeItem?.category &&
-        this.filteredItems[it.placeItem.category as string].push(it))
-      )),
-    ).subscribe();
+    // const tempCats = new Set<string>();
+    // this.filtered = this.allItems?.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))
+    
+    this.filtered=this.allItems?.filter((item) => {
+      // console.log('itemSearchStr:: ', this.itemSearchStr);
+      // console.log('item?.name?.includes(this.itemSearchStr):: ', item?.name?.includes(this.itemSearchStr));
+      let bol = !item?.allergens?.includes(this.selectedAllergensFilter);
+      bol = this.itemSearchStr ? item?.name?.toLowerCase().includes(this.itemSearchStr.trim().toLowerCase()): true;
+      return bol;
+    });
+    if(this.isSortByTaste){
+      this.filtered = this.filtered?.sort((a, b) => (a.ratingInfo?.taste ?? 0) - (b.ratingInfo?.taste ?? 0));
+    }
+
+    this.filteredItems ={};
+    this.filtered?.forEach(it=>
+      {
+        if(it.placeItem?.category){
+          if(!this.filteredItems[it.placeItem.category as string]){
+             this.filteredItems[it.placeItem.category as string]= [] as any[];
+          }
+          this.filteredItems[it.placeItem.category as string].push(it)
+        }
+      }
+    )
+    
+    // this.store.select(placeSelector(this.selectedPlaceId)).pipe(
+    //   filter((x) => !!x),
+    //   takeUntil(this.destroy$),
+    //   tap((x) => (this.selectedPlaceName = x.name)),
+    //   map((x) => this.allItems = x.items as Item[]),
+    //   filter(x => !!x?.length),
+    //   map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
+    //   map((items: Item[]) => this.filtered = items.filter((item) => this.itemSearchStr ? !item?.name?.includes(this.itemSearchStr): true)),
+    //   tap((items: Item[]) => items.forEach((item) => tempCats.add(item?.placeItem.category))),      
+    //   tap((items: Item[]) => this.categories = Array.from(tempCats).map((cat) => ({label: cat, active: false, selected: false, focus: false}))),
+    //   tap((items: Item[]) => this.categories.forEach((cat: any)=> this.filteredItems[cat.label]=[])),
+    //   map((items: Item[]) => this.filtered = this.isSortByTaste ? items.sort((a, b) => (a.ratingInfo?.taste ?? 0) - (b.ratingInfo?.taste ?? 0)) : items),
+    //   tap((items: Item[]) => this.filtered?.forEach((it:Item) => (it.placeItem?.category &&
+    //     this.filteredItems[it.placeItem.category as string].push(it))
+    //   )),
+    // ).subscribe();
   }
 
 
