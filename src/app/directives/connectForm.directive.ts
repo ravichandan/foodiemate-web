@@ -69,7 +69,7 @@ export class ConnectFormDirective implements OnDestroy, OnInit {
         tap((x) => console.log('in connectForm formChange, x:: ', x)),
       )
       .subscribe((form) => {
-        console.log('storing in state from connectForm.directive, form:: ', form);
+        // console.log('storing in state from connectForm.directive, form:: ', form);
         this.store.dispatch(FoodieActions.updateNewPostReviewState({ form }))
       });
 
