@@ -78,17 +78,6 @@ export class ItemListComponent implements OnInit, OnDestroy {
     console.log('this.innerWidth:: ',this.innerWidth);
   }
 
-  // activeChanged(arg0: any) {
-
-  //   const targetElement: any = document.querySelector('#'+arg0);
-  //   console.log('in activeChanged:: ', arg0);
-  //   console.log('in activeChanged, targetElement.data:: ', targetElement.data);
-  //   console.log('in activeChanged, targetElement:: ', targetElement);
-  //   targetElement?.click();
-  //   // document.querySelector(arg0).click();
-  // }
-
-
   constructor(
     private route: ActivatedRoute,
     private store: Store<State>,
@@ -111,7 +100,6 @@ export class ItemListComponent implements OnInit, OnDestroy {
       )
       .subscribe((c) => (this.selectedAllergensFilter = c?.allergens));
 
-      console.log('this.all.len', this.allItems?.length);
     // Fetch an item, and it will have the list of places with ratings and reviews
     this.store.select(placeSelector(this.selectedPlaceId)).pipe(
       filter((x) => !!x),
@@ -178,7 +166,6 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   onReviewFilterChange($event?: ListItem) {
-    console.log('on onReviewFilterChange');
     this.onFilterChange();
   }
 
@@ -196,16 +183,15 @@ export class ItemListComponent implements OnInit, OnDestroy {
   private onFilterChange() {
     // const tempCats = new Set<string>();
     // this.filtered = this.allItems?.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))
-    
+    console.log('in onfilterChange');
     this.filtered=this.allItems?.filter((item) => {
-      // console.log('itemSearchStr:: ', this.itemSearchStr);
-      // console.log('item?.name?.includes(this.itemSearchStr):: ', item?.name?.includes(this.itemSearchStr));
+      
       let bol = !item?.allergens?.includes(this.selectedAllergensFilter);
       bol = this.itemSearchStr ? item?.name?.toLowerCase().includes(this.itemSearchStr.trim().toLowerCase()): true;
       return bol;
     });
     if(this.isSortByTaste){
-      this.filtered = this.filtered?.sort((a, b) => (a.ratingInfo?.taste ?? 0) - (b.ratingInfo?.taste ?? 0));
+      this.filtered = this.filtered?.sort((a, b) => (b.placeItem?.ratingInfo?.taste ?? 0) - (a.placeItem?.ratingInfo?.taste ?? 0));
     }
 
     this.filteredItems ={};
