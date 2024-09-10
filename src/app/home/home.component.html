@@ -76,7 +76,7 @@
                   [data]="dietaries"
                   [(ngModel)]="selectedDiets"
                   [ngModelOptions]="{ standalone: true }">
-                  <ng-template #optionsTemplate let-item let-option="option" >
+                  <ng-template #optionsTemplate let-item let-option="option">
                     Hello
                     <div style="padding: 1px 10px; margin-right: 10px; right: 2px; top: -2px">
                       <label style="color: #333; min-width: 130px; font-weight: normal">getItems[id].item_text</label>
@@ -178,12 +178,14 @@
       <!-- commenting popular results container for now-->
       <div class="pop-container m-1 m-md-5 col-md-10 d-none">
         <div class="pop-title lead text-body-secondary">{{ config.popular_title }}</div>
-        <div class="pop-wrapper" *ngIf=" popularSearches$ | async as resp">
+        <div class="pop-wrapper" *ngIf="popularSearches$ | async as resp">
           <div class="pop-items row">
-            <div class="pop-item-wrapper col-6 col-md-4 col-lg-3  px-0" *ngFor="let element of resp">
+            <div class="pop-item-wrapper col-6 col-md-4 col-lg-3 px-0" *ngFor="let element of resp">
               <div class="pop-item card m-1 m-lg-2" hover-classes="text-bg-dark" (click)="popularItemSelected(element)">
-                <img [src]="config.bucketAccessEndpoint+'/'+element.medias[0]?.key" class="card-img-top pop-img-top"
-                     [alt]="element.name" />
+                <img
+                  [src]="config.bucketAccessEndpoint + '/' + element.medias[0]?.key"
+                  class="card-img-top pop-img-top"
+                  [alt]="element.name" />
                 <div class="card-body text-center d-flex justify-content-center p-sm-1 p-lg-1">
                   <p
                     class="card-title fw-medium d-flex align-items-center my-sm-1"
@@ -199,7 +201,7 @@
           </div>
         </div>
       </div>
-      
+
       @if (!dishFlag) {
         @if (placesResponse?.places?.length) {
           <div class="results-container m-1 col-12 col-md-10">
@@ -348,7 +350,7 @@
                   </div>
                 </div>
                 <div class="row g-0">
-                  <hr class="dropdown-divider bg-secondary-subtle" />
+                  <hr class="dropdown-divider bg-light-subtle" />
                   <div class="col">
                     <div class="card-body text-truncate-container"></div>
                   </div>
@@ -365,17 +367,159 @@
         }
       } @else {
         @if (itemsResponse?.items?.length) {
-          <div class="p-0">
             <div class="results-container m-1 col-12 col-md-10">
               <div class="text-secondary-emphasis">
-                <span class=" fw-medium">{{ config.general.foundFollowingItems }}:</span
+                <span class="fw-medium">{{ config.general.foundFollowingItems }}:</span
                 ><span class="fs-5 fw-bold"> '{{ searchStr.value }}'</span>
               </div>
-              <div
-                class=" text-center row m-0 gap-3 row-cols-auto justify-content-center justify-content-sm-start">
-                @for (item of itemsResponse.items.concat(itemsResponse.items); track item; let idx = $index) {
+                @for (item of itemsResponse.items; track item; let idx = $index) {
                   @if (!!item) {
-                    <div class="col-6 p-0 -5 ccol-sm result-card-container">
+                    <div
+                      class="card my-2 border-secondary cursor-pointer items-response-card"
+                      >
+                      <div class="row g-0">
+                        <div class="text-darker-bg-theme">
+                          <div class="card-body d-flex">
+                            <!-- <div class="d-flex flex-column align-items-start align-content-start flex-grow-1"> -->
+                              <div
+                                class="row gap-2 align-items-start align-content-start card-title flex-grow-1">
+                                <span class="col-12 fw-bold">{{ idx + 1 }}. {{ item.name }}</span>
+                                <span class="col-12 fst-italic">{{ item.description }}</span>
+                              </div>
+                            <!-- </div> -->
+                          </div>
+                        </div>
+
+                        <!--        View all review photos link for mobile container-->
+                        <!--              <div class="card-body view-photos-container d-block d-lg-none pt-0 ">-->
+                        <!--                <a href="#"-->
+                        <!--                   class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{-->
+                        <!--                    config.allReviewPhotosLabel-->
+                        <!--                  }}</a>-->
+                        <!--              </div>-->
+
+                        <div class="card-body p-0">
+                          @if (Object.values(item.places); as places) {
+                            @for (number of [0, 1, 2]; track number) {
+                              @if (!!places[number]) {
+                                <div class="result-item-container d-flex justify-content-center flex-column" (click)="onViewPlace(places[number])">
+                                  <div class="d-flex align-items-center">
+                                    <div
+                                      class="result-place-img-wrapper d-flex align-items-center px-2 justify-content-center">
+                                      @if (
+                                        places[number]?.placeItem?.medias?.[0]?.key;
+                                        as key
+                                      ) {
+                                        <img
+                                          [src]="config.bucketAccessEndpoint + '/' + key"
+                                          class="result-place-img bg-no-img rounded-2" />
+                                      } @else {
+                                        <span
+                                          class="text-secondary-emphasis px-2 result-place-img fx-icon fx-icon-no-image">
+                                          <!--                          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"-->
+                                          <!--                               fill="#999999"><path-->
+                                          <!--                            d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>-->
+                                        </span>
+                                      }
+                                    </div>
+                                    <div class="result-item-detail flex-grow-1 px-1 flex-column align-items-center">
+                                      @if (places[number]) {
+                                        <span class="card-text text-secondary-emphasis fw-bolder">{{
+                                          places[number]?.placeName ??
+                                            'No more matching items'
+                                        }}</span>
+                                      } @else {
+                                        <!--                          <span-->
+                                        <!--                            class=" pt-2 text-secondary fst-italic">{{ config.general.noMatchingItems }}</span>-->
+                                        <!--                          <hr class="dropdown-divider text-secondary" />-->
+                                        <hr class="border-bottom border-1 border-dark" />
+                                      }
+                                      <!--                        {{items[number]?.ratingInfo}}-->
+                                      @if (places[number]?.placeItem; as pi) {
+                                        <span class="card-text text-body-secondary fs-smaller">
+                                          <span class="row gap-0 g-0">
+                                            <span class="col-5">Taste: </span>
+                                            @if (pi.ratingInfo?.taste) {
+                                              <span class="col-7"
+                                                >{{ pi.ratingInfo.taste }} ({{
+                                                  pi.ratingInfo.noOfReviews
+                                                }}
+                                                reviews)</span
+                                              >
+                                            } @else {
+                                              <span class="col-7 fst-italic"> Not reviewed yet</span>
+                                            }
+                                          </span>
+                                          <span class="row gap-0 g-0">
+                                            <span class="col-5">Presentation: </span>
+                                            @if (pi.ratingInfo?.presentation) {
+                                              <span class="col-7"
+                                                >{{ pi.ratingInfo?.presentation }} ({{
+                                                  pi.ratingInfo?.noOfReviews
+                                                }}
+                                                reviews)</span
+                                              >
+                                            } @else {
+                                              <span class="col-7 fst-italic"> Not reviewed yet</span>
+                                            }
+                                          </span>
+                                        </span>
+                                      }
+                                    </div>
+                                  </div>
+                                </div>
+                              }
+                            }
+                            @if(places.length>=1) {
+                              <div class="more-places-link" (click)="onViewPlaces(item)">
+                                <span
+                                class="text-secondary-emphasis px-2 text-decoration-underline cursor-pointer">
+                                More places
+                                </span>
+                              </div>
+                            }
+                          }
+                        </div>
+
+                        <!--              <div class="card-body presentation-container">-->
+                        <!--                <span class="d-flex flex-row card-text text-body-secondary">Presentation</span>-->
+                        <!--                <div class="d-flex flex-row align-items-center justify-content-between progress-container">-->
+                        <!--                  <div-->
+                        <!--                    class="progress rounded-0 w-100 h-100 me-1"-->
+                        <!--                    role="progressbar"-->
+                        <!--                    [attr.aria-label]="'Presentation is rated at ' + (place.items?.[0]?.presentation | number: '1.1')"-->
+                        <!--                    aria-valuemin="0"-->
+                        <!--                    aria-valuemax="100">-->
+                        <!--                    <div class="progress-bar" [style]="'width: ' + (place.items?.[0]?.presentation ?? 0) * 20 + '%'"></div>-->
+                        <!--                  </div>-->
+                        <!--                  <span class="ms-1 card-text text-body-secondary text-dark fw-bolder">{{-->
+                        <!--                      place.items?.[0]?.presentation | number: '1.1-1'-->
+                        <!--                    }}</span>-->
+                        <!--                </div>-->
+                        <!--              </div>-->
+                        <!--        dont display this in mobile view-->
+                        <div class="card-body view-photos-container d-none">
+                          @if (config.allReviewPhotosLabel) {
+                            <a
+                              href="#"
+                              class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                              >{{ config.allReviewPhotosLabel }}</a
+                            >
+                          } @else {
+                            <span class="w-100 fst-italic">Not reviewed yet</span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row g-0">
+                      <hr class="dropdown-divider bg-light-subtle" />
+                      <div class="col">
+                        <div class="card-body text-truncate-container"></div>
+                      </div>
+                    </div>
+
+                    <!--                 
+                <div class="col-6 p-0 -5 ccol-sm result-card-container">
                       <div class="card border-secondary ">
                         <div class="card-img result-item-img-wrapper col-3 d-flex align-items-center">
                           @if (item.medias?.[0]?.key) {
@@ -384,17 +528,11 @@
                               class="result-item-img bg-no-img"
                               alt="No image available" />
                           } @else {
-                            <!--                  <span class="fx-icon fx-icon-no-image bg-dark-subtle result-item-img"></span>-->
                             <object
                               type="image/svg+xml"
                               data="assets/images/svgs/No_image_available.svg"
                               class="result-item-img"></object>
-                            <!--  <span class="result-item-img"></span>-->
-                            <!--                  <span class="text-secondary-emphasis ">-->
-                            <!--                           -->
-                            <!--                          </span>-->
                           }
-                          <!--          </div>-->
                         </div>
 
                         <div class="card-body pb-2 d-flex justify-content-between">
@@ -418,19 +556,10 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <!--        <div class="row g-0">-->
-                    <!--          <hr class="dropdown-divider bg-secondary-subtle" />-->
-                    <!--          <div class="col">-->
-                    <!--            <div class="card-body text-truncate-container">-->
-                    <!--            </div>-->
-                    <!--          </div>-->
-                    <!--        </div>-->
+                    </div> -->
                   }
                 }
-              </div>
             </div>
-          </div>
         } @else {
           <div class="p-3">
             <span class="fst-italic fw-medium"
