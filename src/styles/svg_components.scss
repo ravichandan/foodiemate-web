@@ -24,6 +24,18 @@
   width: 24px;
   height: 24px;
 }
+.fx-icon-location {
+  mask: url(../assets/images/svgs/location.svg) no-repeat;
+  width: 24px;
+  height: 24px;
+  mask-size: contain;
+}
+.fx-icon-shop {
+  mask: url(../assets/images/svgs/shop.svg) no-repeat;
+  width: 24px;
+  height: 24px;
+  mask-size: contain;
+}
 .fx-icon-no-image {
   mask: url(../assets/images/svgs/no-image.svg) no-repeat;
   // width: 24px;

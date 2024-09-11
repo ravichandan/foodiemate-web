@@ -3,12 +3,13 @@
 
 
     <!--      item title and ambience ratings-->
-    <div class=" card-body text-bg-dark rounded-top-1 ">
+    <div class=" card-body  text-theme-background rounded-top-1 ">
       <div class="col-12 card-title ">
         <div class="  d-flex flex-column justify-content-between">
-          <span class=" col-12 card-text fs-5 fw-bolder">{{ item.places?.[0].placeName }}</span>
+          <span class="item-name fw-bolder fs-5 h5">{{ item.name }}</span>
+          <span class=" col-12 card-text d-flex align-items-center"><span class="fx-icon fx-icon-shop bg-light"></span>&nbsp;{{ item.places?.[0].placeName }}</span>
           <div class="row gap-2 justify-content-between">
-            <p class="col-5 card-text">&commat;{{ item.places?.[0].address?.suburb }}</p>
+            <p class="col-5 card-text d-flex align-items-center"><span class="fx-icon fx-icon-location bg-light"></span>&nbsp;{{ item.places?.[0].address?.suburb }}</p>
             <div class="service-container col-5 d-flex flex-column align-self-start">
 
               <div class="card-text  d-flex justify-content-end">
@@ -121,11 +122,11 @@
 
           <!--      item/dish name-->
           <!--      <div class="col-12 ">-->
-          <div class="bg-body-secondary w-100 p-3 rounded-bottom-3 text-theme-background cursor-pointer" (click)="goToItemDetail()">
+          <div class=" w-100  rounded-bottom-3  cursor-pointer" (click)="goToItemDetail()">
             <div class="d-flex flex-column gap-3">
 
               <div class="col-12 d-flex justify-content-between">
-                <span class="item-name fw-bolder fs-5">{{ item.name }}</span>
+                <!-- <span class="item-name fw-bolder fs-5">{{ item.name }}</span> -->
                 <span class="fs-5 fw-bolder">${{ item.price }}</span>
               </div>
               <!--            <div class="col-12">-->
