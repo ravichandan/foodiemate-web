@@ -83,7 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<any>;
   private isBrowser: boolean = false;
 
-  showScrollPrompt = true;
+  showScrollPrompt;
   showScrollToTop = true;
 
   constructor(
@@ -104,6 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     this.config = this.appService.getConfig();
 
+    this.showScrollPrompt = this.config.showScrollPrompt ?? false;
     this.destroy$ = new Subject<any>();
     this.store
       .select(loggedInSelector())

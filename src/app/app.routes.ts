@@ -39,7 +39,7 @@ export const routes: Routes = [
   {
     path: 'new_review',
     component: PostReviewComponent,
-    // canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
   },
   {
     path: 'contact-us',

@@ -36,6 +36,7 @@
   "placeReviewPhotosWrapperLabel": "Pics of the place overall: ",
   "giveAReviewLabel": "Review this place",
   "giveAItemReviewLabel": "Review this item",
+  "showScrollPrompt": false,
   "postReviewLabels": {
     "place": {
       "label": "Where did you have food?",
