@@ -28,7 +28,7 @@
 }
 
 .pop-item .card-title {
-  height: 2rem;
+  height: 2.125rem;
   @media screen and (max-width: 566px) {
     height: 1rem;
   }
@@ -82,4 +82,10 @@ max-width: fit-content;
 }
 .result-place-img-wrapper{
 
+}
+
+.single-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

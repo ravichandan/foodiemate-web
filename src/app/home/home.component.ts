@@ -96,7 +96,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.suburbs$ = this.store.select(suburbsSelector()).pipe(takeUntil(this.destroy$), filter(Boolean), map((suburbsResponse?: SuburbsResponse) => suburbsResponse?.suburbs), 
         // tap(suburbs => this.selectedSuburbs.push(suburbs?.[0]))
     );
-    this.popularSearches$ = this.store.select(popularsSelector()).pipe(takeUntil(this.destroy$), tap(x=> console.log('in popsss:: x:: ',x)));
+    this.popularSearches$ = this.store.select(popularsSelector()).pipe(takeUntil(this.destroy$));
     this.dietaries = this.config.dietaries;
     this.placesResponse.places = [];
     this.searchKey = null;
@@ -113,7 +113,6 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     //   .subscribe(( params) => {
         this.searchKey = params!['search'];
 
-        console.log('params[suburbs]:: ',params['suburbs']);
         this.selectedCuisines = !!params['cuisines'] ? params['cuisines'].split(',') : this.selectedCuisines;
         this.selectedSuburbs = !!params['suburbs'] ? params['suburbs'].split(',').map((sub: string) => suburbs!.find(s=> s?.name == sub)) : this.selectedSuburbs;
 
@@ -134,7 +133,6 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
             .subscribe({
                 next: res => {
                   // this.placesResponse = {
-                  console.log('this.res:: ', res);
                   this.placesResponse.places.push(...res.places);
                   this.placesResponse.size = res.size /*+ this.placesResponse.size*/;
                   this.placesResponse.page = res.page;

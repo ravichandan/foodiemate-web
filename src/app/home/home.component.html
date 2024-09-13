@@ -173,67 +173,8 @@
         >Places</label
       >
     </div>
-  }
 
     <div class="results-wrapper d-flex justify-content-center col-12">
-      <!-- commenting popular results container for now-->
-      <div class="pop-container m-1 m-md-5 col-md-10 ">
-        <div class="pop-title lead text-body-secondary">{{ config.popular_title }}</div>
-        <div class="pop-wrapper" *ngIf="popularSearches$ | async as resp">
-          
-          <div class="pop-items row">
-
-            @for(element of resp; track element;){
-              <div class="pop-item-wrapper col-6 col-md-4 col-lg-3 px-0" >
-                <div class="pop-item card m-1 m-lg-2 align-items-center" hover-classes="text-bg-dark" (click)="popularItemSelected(element)">
-                  @if (element?.medias?.[0]?.key; as key) {
-                      <img
-                        [src]="config.bucketAccessEndpoint + '/' + key"
-                        class="card-img-top pop-img-top bg-no-img rounded-2" 
-                        [alt]="element.name" />
-                    } @else {
-                      <span
-                        class="text-secondary-emphasis px-2 result-place-img fx-icon fx-icon-no-image">
-                      </span>
-                    }
-                  <!-- <img
-                  [src]="config.bucketAccessEndpoint + '/' + element.medias?.[0]?.key"
-                  class="card-img-top pop-img-top"
-                  [alt]="element.name" /> -->
-                <div class="card-body text-center d-flex justify-content-center p-sm-1 p-lg-1">
-                  <p
-                    class="card-title fw-medium d-flex align-items-center my-sm-1"
-                    [ngClass]="{ 'fs-smaller': element.name.length > 16 }">
-                    {{ element.name }}
-                  </p>
-                </div>
-                </div>
-              </div>
-            }
-            <div class="pop-item-wrapper d-none col-6 col-md-4 col-lg-3 px-0" *ngFor="let element of resp">
-
-              <br/><br/><br/><br/>
-              <div class="pop-item card m-1 m-lg-2 justify-content-center align-items-center" hover-classes="text-bg-dark" (click)="popularItemSelected(element)">`
-                <img
-                  [src]="config.bucketAccessEndpoint + '/' + element.medias?.[0]?.key"
-                  class="card-img-top pop-img-top"
-                  [alt]="element.name" />1
-                <div class="card-body text-center d-flex justify-content-center p-sm-1 p-lg-1">2
-                  <p
-                    class="card-title fw-medium d-flex align-items-center my-sm-1"
-                    [ngClass]="{ 'fs-smaller': element.name.length > 16 }">
-                    {{ element.name }}3
-                  </p>4
-                </div>5
-                <!-- <div class="card-icon text-bg-dark" *ngIf="element.type === 'place'">
-                  <i class="bi bi-shop fw-bolder fs-2 fs-md-3"></i>
-                </div> -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       @if (!dishFlag) {
         @if (placesResponse?.places?.length) {
           <div class="results-container m-1 col-12 col-md-10">
@@ -601,5 +542,68 @@
         }
       }
     </div>
+  } @else{
 
+      <div class="results-wrapper d-flex justify-content-center col-12">
+        <!-- commenting popular results container for now-->
+        <div class="pop-container m-1 m-md-5 col-md-10 ">
+          <div class="pop-title lead text-body-secondary">{{ config.popular_title }}</div>
+          <div class="pop-wrapper" *ngIf="popularSearches$ | async as resp">
+            
+            <div class="pop-items row">
+
+              @for(element of resp; track element;){
+                <div class="pop-item-wrapper col-6 col-md-4 col-lg-3 px-0" >
+                  <div class="pop-item card m-1 m-lg-2 " hover-classes="text-bg-dark" (click)="popularItemSelected(element)">
+                    <div class="card-body text-center d-flex ">
+                      <p
+                        class="card-title fw-bold text-truncate-2 d-flex align-items-center "
+                        [ngClass]="{ 'fs-smaller': element.name.length > 16 }">
+                        {{ element.name }}
+                      </p>
+                    </div>
+                    <div class="d-flex justify-content-center border-top border-bottom w-100 h-100 border-1  border-secondary">
+                      @if (element?.medias?.[0]?.key; as key) {
+                        <img
+                          [src]="config.bucketAccessEndpoint + '/' + key"
+                          class="card-img-top pop-img-top bg-no-img rounded-2" 
+                          [alt]="element.name" />
+                      } @else {
+                        <span
+                          class="text-secondary-emphasis px-2 result-place-img fx-icon fx-icon-no-image">
+                        </span>
+                      }
+                    </div>
+                    <!-- <img
+                    [src]="config.bucketAccessEndpoint + '/' + element.medias?.[0]?.key"
+                    class="card-img-top pop-img-top"
+                    [alt]="element.name" /> -->
+                    <div class="card-body ">
+                      <p
+                        class="fw-medium "
+                        >
+                        Rated at <span class=""
+                        ><span class="fs-5 fw-bold">{{ element.ratingInfo?.taste | number: '1.0-1' }}</span
+                        ><span class="fs-5">/</span><span class="fw-normal">5</span></span
+                        >
+                      </p>
+                    <!-- </div>
+                    <div class="card-body "> -->
+                      <p
+                        class=" fw-bold d-flex align-items-center m-0"
+                        >
+                        <span class="fx-icon fx-icon-shop bg-dark fw-medium py-2"></span>
+                        <span class="py-2">&nbsp;{{ element.place.placeName }}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        
+      </div>
+  }
 </div>
