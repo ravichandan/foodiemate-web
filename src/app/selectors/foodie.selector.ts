@@ -8,7 +8,7 @@ import { Address } from '../models/Address';
  * Selector that selects the popular items&places
  *
  */
-export const popularsSelector = createSelector(
+export const popularsSelectorOld = createSelector(
   (state: State) => state.popularItems,
   (state: State) => state.popularPlaces,
   (items: Array<Item> | undefined, places: Place[] | undefined) => {
@@ -22,6 +22,12 @@ export const popularsSelector = createSelector(
     return all.sort(() => 0.5 - Math.random());
   },
 );
+
+export const popularsSelector = () =>
+  createSelector(
+    (state: State) => state.popularPlaces,
+    (places) => places,
+  );
 
 export const cuisinesSelector = () =>
   createSelector(

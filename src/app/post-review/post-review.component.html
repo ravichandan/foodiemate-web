@@ -184,7 +184,8 @@
 
       <div class="col-12">
         <button
-          class="btn btn-primary"
+          class="btn btn-teal"
+          [ngClass]="{'opacity-75': customer?.status !== 'verified' || postingReview}"
           id="reviewSubmitButton"
           type="submit"
           [disabled]="customer?.status !== 'verified' || postingReview">

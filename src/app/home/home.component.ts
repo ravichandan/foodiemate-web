@@ -17,7 +17,7 @@ import { ItemResponse } from '../models/ItemResponse';
 import { ScrollToDirective } from '../directives/scrollTo.directive';
 import { ReplacePipe } from '../directives/replace.pipe';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { cuisinesSelector, suburbsSelector } from '../selectors/foodie.selector';
+import { cuisinesSelector, popularsSelector, suburbsSelector } from '../selectors/foodie.selector';
 import { SuburbsResponse } from '../models/SuburbsResponse';
 import { Suburb } from '../models/Suburb';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -96,6 +96,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.suburbs$ = this.store.select(suburbsSelector()).pipe(takeUntil(this.destroy$), filter(Boolean), map((suburbsResponse?: SuburbsResponse) => suburbsResponse?.suburbs), 
         // tap(suburbs => this.selectedSuburbs.push(suburbs?.[0]))
     );
+    this.popularSearches$ = this.store.select(popularsSelector()).pipe(takeUntil(this.destroy$), tap(x=> console.log('in popsss:: x:: ',x)));
     this.dietaries = this.config.dietaries;
     this.placesResponse.places = [];
     this.searchKey = null;
