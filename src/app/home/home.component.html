@@ -47,9 +47,10 @@
         <div
           id="collapseBasic"
           [collapse]="isCollapsed"
-          [isAnimated]="true"
+          [isAnimated]="false"
           class="border border-light-subtle border-1 rounded-1 p-2 my-2">
           <!--        <span class="text-secondary">Filters:</span>-->
+
           <div class="row gap-2 m-0 my-3">
             @if (cuisines$ | async; as cuisines) {
               <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center m-1 m-md-2 p-0">

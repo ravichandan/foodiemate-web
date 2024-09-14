@@ -8,9 +8,10 @@
         <!--      image-->
         <div class="col-3 pe-0 d-flex h-100">
           <div class="picsum-img-wrapper flex-grow-1 d-flex flex-grow-1">
-            @if(item?.media?.key){
+            
+            @if(item?.placeItem?.media?.key){
             <img
-              [src]="config.bucketAccessEndpoint+'/'+item?.media?.key"
+              [src]="config.bucketAccessEndpoint+'/'+item?.placeItem?.media?.key"
               alt="loading picture of the dish"
               class="card-img-top item-list-img img-fluid rounded-1 flex-grow-1" />
               } @else {

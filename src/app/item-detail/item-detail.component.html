@@ -85,10 +85,10 @@
                         </ng-template>
                     }
                   </ngb-carousel>
-                } @else if (item.media) {
+                } @else if (item?.placeItem?.media) {
                   <div class="picsum-img-wrapper">
                     <img
-                      [src]="config.bucketAccessEndpoint+'/'+item.media.key"
+                      [src]="config.bucketAccessEndpoint+'/'+item.placeItem?.media.key"
                       alt="loading picture of the dish"
                       class="card-img-top detail-img place-list-img w-100 img-fluid rounded-0" />
                   </div>
