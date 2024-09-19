@@ -29,6 +29,19 @@ export const popularsSelector = () =>
     (places) => places,
   );
 
+
+export const searchFilterSelector = () =>
+  createSelector(
+    (state: State) => state.address,
+    (state: State) => state.cuisinesFilter,
+    (state: State) => state.dietsFilter,
+    (state: State) => state.includeSuburbsFilter,
+    (address, cuisines, diets, includeSurroundingSuburbs) => {
+      return {address, cuisines, diets, includeSurroundingSuburbs};
+    },
+  );
+
+  
 export const cuisinesSelector = () =>
   createSelector(
     (state: State) => state.cuisines,

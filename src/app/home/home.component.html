@@ -76,7 +76,11 @@
                   [settings]="dropdownSettings"
                   [data]="dietaries"
                   [(ngModel)]="selectedDiets"
-                  [ngModelOptions]="{ standalone: true }">
+                  [ngModelOptions]="{ standalone: true }"
+                  (onSelect)="onDietSelectionChange($event)"
+                  (onSelectAll)="onDietSelectionChange($event)"
+                  (onDeSelect)="onDietSelectionChange($event)"
+                  >
                   <ng-template #optionsTemplate let-item let-option="option">
                     Hello
                     <div style="padding: 1px 10px; margin-right: 10px; right: 2px; top: -2px">

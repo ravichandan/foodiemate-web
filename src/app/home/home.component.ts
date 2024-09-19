@@ -58,7 +58,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
-    idField: 'name',
+    idField: 'value',
     textField: 'name',
     selectAllText: 'Select All',
     unSelectAllText: 'UnSelect All',
@@ -72,16 +72,6 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   protected readonly Object = Object;
   protected readonly JSON = JSON;
   private readonly destroy$: Subject<any>;
-
-  // Removing showing random suggestions in badges
-  // public setRandomSuggestions() {
-  //   const suggestions = this.config.suggestions;
-  //   // Shuffle array
-  //   const shuffled = suggestions.sort(() => 0.5 - Math.random());
-  //
-  //   // Get sub-array of first n elements after shuffled
-  //   let selected = shuffled.slice(0, this.config.noOfSuggestions);
-  //   this.randomSuggestions = selected;
 
   constructor(
     private appService: AppService,
@@ -106,11 +96,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
         filter(({ suburbs, params }) => !!suburbs && !!params),
       )
       .subscribe(( { suburbs, params }) => {
-    //   console.log('2222params[suburbs]:: ',suburbs);
-    //   console.log('2222params[params]:: ',params);
-    // });
-    // this.route.queryParams
-    //   .subscribe(( params) => {
+
         this.searchKey = params!['search'];
 
         this.selectedCuisines = !!params['cuisines'] ? params['cuisines'].split(',') : this.selectedCuisines;
@@ -171,7 +157,6 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.store.dispatch(FoodieActions.fetchPopular());
     this.store.dispatch(FoodieActions.fetchSuburbs({ city: 'Sydney' }));
 
-    // if()
   }
 
   // }
@@ -189,7 +174,6 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   search(element: HTMLInputElement) {
-    console.log('in home.component, search(), this.selectedSuburbs:: ',this.selectedSuburbs);
     const searchKey = element.value;
     const cuisinesStr = this.selectedCuisines?.join(',');
     this.router.navigateByUrl('/', { skipLocationChange: true })
@@ -197,7 +181,6 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
         ['home'],
         { queryParams: { search: searchKey, cuisines: cuisinesStr, suburbs: this.selectedSuburbs?.map((x: Suburb) => x?.name).join(',') } },
       ));
-
   }
 
   onViewPlaces(item: Item) {
@@ -214,9 +197,10 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
       this.searchInput.nativeElement.value = this.searchKey ?? null;
     }
     this.cdRef.detectChanges();
-    //   this.childrenComponent.changes.subscribe((comps: QueryList<MyComponent>) =>
-    //   {
-    //     // Now you can access the child component
-    //   });
+  }
+
+  onDietSelectionChange(item: any) {
+    this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
   }
 }

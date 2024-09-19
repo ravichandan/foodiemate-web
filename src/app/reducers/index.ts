@@ -14,6 +14,9 @@ import { SuburbsResponse } from '../models/SuburbsResponse';
 
 export interface State {
   address: Address;
+  cuisinesFilter: any[]|undefined;
+  dietsFilter: any[]|undefined;
+  includeSuburbsFilter: boolean|undefined;
   customer: CustomerInfo | undefined;
   popularItems: Item[] | undefined;
   popularPlaces: Place[] | undefined;
@@ -34,6 +37,9 @@ export const initialState: State = {
     city: 'Sydney'
   } as Address,
   customer: undefined,
+  cuisinesFilter: undefined,
+  dietsFilter: undefined,
+  includeSuburbsFilter: undefined,
   popularItems: undefined,
   popularPlaces: undefined,
   cuisines: undefined,
@@ -287,6 +293,21 @@ export const loginReducer = createReducer(
   on(FoodieActions.logoutCustomerSuccess, (_: boolean) => false),
 );
 
+export const cuisinesFilterReducer = createReducer(
+  initialState.cuisinesFilter,
+  on(FoodieActions.cuisinesFilterChange, (cuisines: any[]|undefined) => cuisines),
+);
+
+export const dietsFilterReducer = createReducer(
+  initialState.dietsFilter,
+  on(FoodieActions.dietsFilterChange, (oldState, newState) => newState.diets),
+);
+
+export const surroundingSuburbsFilterReducer = createReducer(
+  initialState.includeSuburbsFilter,
+  on(FoodieActions.includeSurroundingSuburbsFilterChange, (include: boolean|undefined) => include),
+);
+
 export const userInfoReducer = createReducer(
   initialState.userInfo,
   on(FoodieActions.loginOidcCustomer, (oldState, newState) => {
@@ -322,6 +343,9 @@ export const reducers: ActionReducerMap<State> = {
   customer: customerReducer,
   popularItems: popularItemsReducer,
   popularPlaces: popularPlacesReducer,
+  cuisinesFilter: cuisinesFilterReducer,
+  dietsFilter: dietsFilterReducer,
+  includeSuburbsFilter: surroundingSuburbsFilterReducer,
   cuisines: cuisinesReducer,
   suburbs: suburbsReducer,
   cuisinesItems: cuisinesItemsReducer,

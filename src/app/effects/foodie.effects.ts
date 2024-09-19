@@ -11,30 +11,29 @@ import { CuisinesResponse } from '../models/CuisinesResponse';
 import { CuisinesItemsResponse } from '../models/CuisinesItemsResponse';
 import { Item } from '../models/Item';
 import { Place } from '../models/Place';
-import { addressSelector, customerSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
-import { CustomerInfo } from '../models/CustomerInfo';
-import { Address } from '../models/Address';
-import { add } from 'lodash';
+import { customerSelector, searchFilterSelector } from '../selectors/foodie.selector';
 import { ItemResponse } from '../models/ItemResponse';
-import { PlacesResponse } from '../models/PlacesResponse';
 import { SuburbsResponse } from '../models/SuburbsResponse';
 
 @Injectable({ providedIn: 'root' })
 export class FoodieEffects {
+
   private actions$: Actions<any> = inject(Actions);
+
   // Effect mediates the 'fetching the popular searches'
   loadPopulars$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FoodieActions.fetchPopular),
-      switchMap((_) => this.store.select(addressSelector()).pipe(filter(Boolean), take(1))),
-      mergeMap((address: Address) =>
-        this.appService.getPopularSearches({city: address.city, suburb: address.suburb, postcode: address.postcode}).pipe(
+      switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean), take(1))),
+      mergeMap((filters: any) =>
+          this.appService.getPopularSearches({city: filters.address.city, suburb: filters.suburb, postcode: filters.address.postcode, diets: filters.diets }).pipe(
           map((popular: PopularResponse) => FoodieActions.fetchPopularSuccess({ popular })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
       ),
     ),
   );
+
   // Effect mediates the 'fetching the all cuisines'
   loadCuisines$ = createEffect(() =>
     this.actions$.pipe(
@@ -91,6 +90,7 @@ export class FoodieEffects {
       ),
     ),
   );
+
   // Effect mediates the 'fetching the asked item by id'
   loadAPlace$ = createEffect(() =>
     this.actions$.pipe(

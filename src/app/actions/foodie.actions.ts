@@ -47,6 +47,10 @@ export const ACTION_NEW_POST_REVIEW = '[FoodieMate] NEW POST REVIEW';
 export const ACTION_NEW_POST_REVIEW_SUCCESS = '[FoodieMate] NEW POST REVIEW SUCCESS';
 export const ACTION_PRELOAD_POST_REVIEW = '[FoodieMate] PRELOAD POST REVIEW';
 
+export const ACTION_CUISINES_FILTER_CHANGE = '[FoodieMate] CUISINES FILTER CHANGE';
+export const ACTION_DIETS_FILTER_CHANGE = '[FoodieMate] DIETS FILTER CHANGE';
+export const ACTION_SURROUNDING_SUBURBS_FILTER_CHANGE = '[FoodieMate] SURROUNDING SUBURBS FILTER CHANGE';
+
 export const ACTION_LOGIN_OIDC_CUSTOMER = '[FoodieMate] LOGIN OIDC CUSTOMER';
 export const ACTION_LOGIN_OIDC_CUSTOMER_SUCCESS = '[FoodieMate] LOGIN OIDC CUSTOMER SUCCESS';
 export const ACTION_OIDC_TOKEN_FETCHED_SUCCESS = '[FoodieMate] OIDC TOKEN FETCHED SUCCESS';
@@ -70,6 +74,16 @@ export const ACTION_PAGE_DESTROYED = '[FoodieMate] Page Destroyed';
 export const fetchPopular = createAction(ACTION_FETCH_POPULAR);
 
 export const fetchPopularSuccess = createAction(ACTION_FETCH_POPULAR_SUCCESS, props<{ popular: PopularResponse }>());
+
+export const cuisinesFilterChange = createAction(ACTION_CUISINES_FILTER_CHANGE,
+  props<{ cuisines: any[] }>(),
+);
+export const dietsFilterChange = createAction(ACTION_DIETS_FILTER_CHANGE,
+  props<{ diets: any[] }>(),
+);
+export const includeSurroundingSuburbsFilterChange = createAction(ACTION_SURROUNDING_SUBURBS_FILTER_CHANGE,
+  props<{ include: boolean }>(),
+);
 
 export const fetchCuisines = createAction(ACTION_FETCH_CUISINES);
 export const fetchSuburbs = createAction(ACTION_FETCH_SUBURBS, props<{ city: string }>());

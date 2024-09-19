@@ -30,14 +30,19 @@ export class AppService implements OnDestroy{
     return environment;
   }
 
-  public getPopularSearches(args: { city?: string; postcode?: string; suburb?: string }) {
+  public getPopularSearches(args: { city?: string; postcode?: string; suburb?: string; diets?: any[]; }) {
+    console.log('in app.service, getPopularSearches() -> args', args);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     const url = join(this.getConfig().host, this.getConfig().popularSearchesEndpoint);
     let params = new HttpParams();
     !!args?.city && (params =  params.append('city', args.city));
     !!args?.postcode && (params =  params.append('postcode', args.postcode));
     !!args?.suburb && (params =  params.append('suburb', args.suburb));
-    console.log('in app.service, getPopularSearches() -> params',params);
+    if(args?.diets){
+      const diets: string = args.diets.map(d=> d.value).filter(Boolean).join(',');
+      !!diets && (params =  params.append('diets', diets));
+    }
+    console.log('in app.service, getPopularSearches() -> params', params);
     return this.http
       .get(url , { headers , params})
       .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));

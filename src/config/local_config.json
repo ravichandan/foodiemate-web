@@ -7,7 +7,7 @@
   "popular_title": "Popular Searches:",
   "oauthRedirectUrl": "http://localhost:4300/index.html",
   "do-host": "https://sea-lion-app-zmkac.ondigitalocean.app/foodie-service2",
-  "host": "http://localhost:3000",
+  "host": "http://localhost:3002",
   "urlPrefix": "/api",
   "bucketAccessEndpoint": "https://img.foodiex.com.au",
   "popularSearchesEndpoint": "/popular-searches",
@@ -91,27 +91,43 @@
   "dietaries": [
     {
       "id": 1,
-      "name": "Vegan"
+      "name": "Vegan",
+      "value": 1
     },
     {
       "id": 2,
-      "name": "Vegetarian"
+      "name": "Vegetarian",
+      "value" :2
     },
     {
       "id": 3,
-      "name": "Eggitarian (only egg)"
+      "name": "Eggitarian (only egg)",
+      "value": 3
     },
     {
       "id": 4,
-      "name": "Pollotarian (only chicken)"
+      "name": "Pescatarian (incl seafood)",
+      "value": 4
     },
     {
       "id": 5,
-      "name": "Pescatarian (only seafood)"
+      "name": "Pollotarian (incl chicken)",
+      "value": 5
     },
     {
       "id": 6,
-      "name": "All meats"
+      "name": "Lambitarian (incl lamb or goat)",
+      "value": 6
+    },
+    {
+      "id": 7,
+      "name": "Halal",
+      "value": 7
+    },
+    {
+      "id": 8,
+      "name": "All meats",
+      "value": 10
     }
   ],
   "filters": [
@@ -433,12 +449,5 @@
     "includeSurroundingSuburbs": "Include surrounding suburbs"
   },
   "hideCuisineMenu": true,
-  "hideLeftNavigationMenu": true,
-  "temp": {
-    "label": "All",
-    "route": "/all",
-    "image": "assets/images/general food bowl.jpg",
-    "items": [
-    ]
-  }
+  "hideLeftNavigationMenu": true
 }
