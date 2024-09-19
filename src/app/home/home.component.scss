@@ -27,11 +27,13 @@
   }
 }
 
-.pop-item .card-title {
-  height: 2.125rem;
-  @media screen and (max-width: 566px) {
-    height: 1rem;
-  }
+.pop-item .pop-title {
+  // height: 2.125rem;
+  // @media screen and (max-width: 566px) {
+    height: 3.5rem;
+    max-height: 3.5rem;
+    min-height: 3.5rem;
+  // }
 }
 
 .pop-item {
@@ -72,8 +74,10 @@
   object-fit: none;
 }
 
-.result-item-img-wrapper{
-max-width: fit-content;
+.popular-item-img-wrapper{
+  // max-width: fit-content;
+  height: 7rem !important;
+  min-height: 7rem !important;
 }
 
 .result-place-img {
