@@ -7,7 +7,7 @@
   "popular_title": "Popular Searches:",
   "oauthRedirectUrl": "http://localhost:4300/index.html",
   "do-host": "https://sea-lion-app-zmkac.ondigitalocean.app/foodie-service2",
-  "host": "http://localhost:3002",
+  "host": "http://localhost:3000",
   "urlPrefix": "/api",
   "bucketAccessEndpoint": "https://img.foodiex.com.au",
   "popularSearchesEndpoint": "/popular-searches",
