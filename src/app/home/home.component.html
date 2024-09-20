@@ -560,7 +560,7 @@
               @for(element of resp; track element;){
                 <div class="pop-item-wrapper col-6 col-md-4 col-lg-3 px-0" >
                   <div class="pop-item card m-1 m-lg-2 " hover-classes="text-bg-dark" (click)="popularItemSelected(element)">
-                    <div class="card-body pop-title text-darker-bg-theme justify-content-center text-center d-flex py-0 px-2">
+                    <div class="card-img-top pop-title text-darker-bg-theme justify-content-center text-center d-flex py-0 px-2">
                       <p
                         class="card-title fw-bold text-truncate-2 d-flex align-items-center m-0"
                         [ngClass]="{ 'fs-smaller': element.name.length > 16 }">
@@ -583,22 +583,25 @@
                     [src]="config.bucketAccessEndpoint + '/' + element.medias?.[0]?.key"
                     class="card-img-top pop-img-top"
                     [alt]="element.name" /> -->
-                    <div class="card-body pe-2">
+                    <div class="card-body pe-2 pb-2">
                       <p
-                        class=" "
+                        class=" mb-2"
                         >
-                        Rated at <span class=""
-                        ><span class="fs- fw-bold">{{ element.ratingInfo?.taste | number: '1.0-1' }}</span
-                        ><span class="fs-6 fw-bol">/</span><span class="fw-normal">5</span></span
+                        Taste: <span class=""
+                        ><span class=" fw-bold">{{ element.ratingInfo?.taste | number: '1.0-1' }}</span
+                        ><span class="fs-6 ">/</span><span class="fw-normal">5</span></span
                         ><span >&nbsp;({{element.ratingInfo.noOfRatings}})</span>
                       </p>
                     <!-- </div>
                     <div class="card-body "> -->
                       <p
-                        class="  d-flex align-items-center m-0"
+                        class="  d-flex align-items-center  m-0"
                         >
-                        <span class="fx-icon fx-icon-shop bg-dark  py-2"></span>
-                        <span class="py-2">&nbsp;{{ element.place.placeName }}</span>
+                        <span class="popular-place-icon">
+                          <span class="fx-icon fx-icon-shop bg-dark  "></span>
+                        </span>
+                        &nbsp;
+                        <span class="text-truncate-3 ps-1">{{ element.place.placeName }}</span>
                       </p>
                     </div>
                   </div>
