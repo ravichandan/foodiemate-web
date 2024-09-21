@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HoverClassDirective } from '../directives/hover-class.directive';
 import { AppService } from '../services/app.service';
@@ -26,7 +26,7 @@ import { ScrollPromptComponent } from '../cutil/scroll-prompt.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AsyncPipe, FormsModule, HoverClassDirective, NgForOf, NgIf, NgMultiSelectDropDownModule, CollapseModule, ReactiveFormsModule, NgClass, DecimalPipe, NgbCarousel, NgbSlide, FaIconComponent, ScrollPromptComponent, ScrollToDirective, ReplacePipe, NgTemplateOutlet, NgMultiSelectDropDownModule],
+  imports: [AsyncPipe, FormsModule,NgStyle, HoverClassDirective, NgForOf, NgIf, NgMultiSelectDropDownModule, CollapseModule, ReactiveFormsModule, NgClass, DecimalPipe, NgbCarousel, NgbSlide, FaIconComponent, ScrollPromptComponent, ScrollToDirective, ReplacePipe, NgTemplateOutlet, NgMultiSelectDropDownModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
