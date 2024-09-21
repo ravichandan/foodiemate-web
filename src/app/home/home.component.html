@@ -593,7 +593,7 @@
                         <!-- </div>
                         <div class="card-body "> -->
                           <p
-                            class="  d-flex align-items-center  m-0"
+                            class="  d-flex align-items-start  m-0"
                             >
                             <span class="popular-place-icon">
                               <span class="fx-icon fx-icon-shop bg-dark  "></span>
@@ -641,7 +641,7 @@
                         }
                       <!-- </div>
                       <div class="card-body "> -->
-                        <p class="  d-flex align-items-center  m-0">
+                        <p class="  d-flex align-items-start  m-0">
                           <span class="popular-place-icon">
                             <span class="fx-icon fx-icon-shop bg-dark  "></span>
                           </span>
@@ -676,19 +676,19 @@
                             </span>
                           }
                         </div>
-                        <div class="card-body pe-2 pb-2">
+                        <div class="card-body ps-2 pe-1 pb-2">
                           @if(element.ratingInfo){
-                            <p class=" mb-2" >
+                            <p class=" mb-2" style="font-size: 15px">
                               Ambience: <span class=""
                               ><span class=" fw-bold">{{ element.ratingInfo?.ambience | number: '1.0-1' }}</span
                               ><span class="fs-5 ">/</span><span class="fw-normal">5</span></span
-                              >@if((element.ratingInfo.noOfRatings || element.ratingInfo.noOfReviews); as no){<span >&nbsp;({{no}})</span>}
+                              >@if((element.ratingInfo.noOfRatings || element.ratingInfo.noOfReviews); as no){<span  style="font-size: 14px">&nbsp;({{no}}22)</span>}
                             </p>
                           }
                         <!-- </div>
                         <div class="card-body "> -->
                           <p
-                            class="  d-flex align-items-center  m-0"
+                            class="  d-flex align-items-start  m-0"
                             >
                             <span class="popular-place-icon">
                               <span class="fx-icon fx-icon-shop bg-dark  "></span>
