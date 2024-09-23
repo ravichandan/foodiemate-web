@@ -191,6 +191,12 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.router.navigate(['places/' + place._id]).then();
   }
 
+  onViewItem(place: Place, item: Item) {
+    if(place && item) {
+      this.router.navigate(['places/' + place._id+'/items/'+item._id]).then();
+    }
+  }
+
   public ngAfterViewInit(): void {
     console.log('in home.component.ts -> ngAfterViewInit()');
     if (this.searchInput) {
