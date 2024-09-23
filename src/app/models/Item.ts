@@ -41,6 +41,7 @@ export interface Item {
   medias: Media[];
   media: Media;
   places: Place[];
+  place: Place;
   reviews: Review[];
   ratingInfo: Rating;
   placeItem: any;

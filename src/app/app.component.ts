@@ -118,7 +118,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('environment.production::', environment.production);
+
     if (this.isBrowser) {
       // console.log('in app.component.ts ngOnInit, window.location.href:: ', window.location.href);
       const x = new URLSearchParams(window.location.search);

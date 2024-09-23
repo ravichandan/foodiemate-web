@@ -4,9 +4,9 @@
       class="btn btn-outline-secondary w-100 rounded-2 border-light-subtle shadow-none card item-list-unit-container "
       accordion-heading type="button">
       <!--    <div class= "">-->
-      <div class="row h-100 w-100">
+      <div class="row h-100 w-100 m-0">
         <!--      image-->
-        <div class="col-3 pe-0 d-flex h-100">
+        <div class="col-3 p-0 d-flex h-100">
           <div class="picsum-img-wrapper flex-grow-1 d-flex flex-grow-1">
             
             @if(item?.placeItem?.media?.key){
@@ -29,7 +29,7 @@
         <div class="item-summary-wrapper col-9 ">
           <div class="d-flex flex-column align-items-center align-content-center ">
             <span class="card-title mb-0 mt-1">
-              <span class="fw-bold">{{ item.placeItem.name }}</span>
+              <span class="fw-bold text-truncate-1" [ngClass]="{ 'fs-small': item.placeItem?.name?.length > 25 }">{{ item.placeItem.name }}</span>
               <span class="fw-light">
               <span class=""> {{ item.placeItem?.calorieInfo?.count }}</span>
                       <span class="fs-smaller"> {{ item.placeItem?.calorieInfo?.unit }}</span>

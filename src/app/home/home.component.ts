@@ -165,11 +165,11 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.store.dispatch(FoodieActions.pageDestroyed());
   }
 
-  popularItemSelected(element: Item | Place) {
+  popularItemSelected(element: Item) {
     if (element.type === 'item') {
       this.router.navigate(['items/' + element._id]);
     } else {
-      this.router.navigate(['places/' + element._id]);
+      this.router.navigate(['places/' + element.place._id]);
     }
   }
 
