@@ -449,5 +449,10 @@
     "includeSurroundingSuburbs": "Include surrounding suburbs"
   },
   "hideCuisineMenu": true,
-  "hideLeftNavigationMenu": true
+  "hideLeftNavigationMenu": true,
+  "foodCourseCategories":[{
+    "name": "Drinks"
+  },{
+    "name": "Popular"
+  }]
 }

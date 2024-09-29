@@ -45,6 +45,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   dietaries: any[] = [];
   selectedCuisines: any[] = [];
   selectedSuburbs: any[] = [];
+  suburbsLength: number = 0;
   selectedDiets: any[] = [];
   suburbDropdownSettings: IDropdownSettings = {
     singleSelection: false,
@@ -84,7 +85,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.destroy$ = new Subject<any>();
     this.cuisines$ = this.store.select(cuisinesSelector()).pipe(takeUntil(this.destroy$));
     this.suburbs$ = this.store.select(suburbsSelector()).pipe(takeUntil(this.destroy$), filter(Boolean), map((suburbsResponse?: SuburbsResponse) => suburbsResponse?.suburbs), 
-        // tap(suburbs => this.selectedSuburbs.push(suburbs?.[0]))
+        tap(suburbs => this.suburbsLength = suburbs?.length ?? 0)
     );
     this.popularSearches$ = this.store.select(popularsSelector()).pipe(takeUntil(this.destroy$));
     this.dietaries = this.config.dietaries;
@@ -107,12 +108,12 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
         this.errorMessage = undefined;
 
         if (!!this.searchKey) {
-          // console.log('sending for search with key:: ',this.searchKey);
+          console.log('sending for search with key:: ',this.searchKey);
           // if(!this.dishFlag) {
           this.appService.searchPlaceWithName({
             placeName: this.searchKey,
             itemName: this.searchKey,
-            suburbs: this.selectedSuburbs.map((x: Suburb) => x?.name),
+            suburbs: this.suburbsLength == this.selectedSuburbs.length ? undefined : this.selectedSuburbs.map((x: Suburb) => x?.name),
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
           })
             .pipe(filter(Boolean), take(1))
@@ -130,7 +131,10 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
               },
             );
 
-          this.appService.searchItemsWithName({ itemName: this.searchKey })
+          this.appService.searchItemsWithName({ itemName: this.searchKey,
+            suburbs: this.suburbsLength == this.selectedSuburbs.length ? undefined : this.selectedSuburbs.map((x: Suburb) => x?.name),
+            includeSurroundingSuburbs: this.includeSurroundingSuburbs,
+          })
             .pipe(filter(Boolean), take(1))
             .subscribe({
                 next: res => {

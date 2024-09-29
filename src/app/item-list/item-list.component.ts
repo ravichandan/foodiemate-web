@@ -65,6 +65,9 @@ export class ItemListComponent implements OnInit, OnDestroy {
   itemSearchStr: string = '';
 
   filteredItems: {[category: string]: Item[]} = {} as any;
+
+  // popularCategory = 'Popular';
+  // popularItems: {'Popular': Item[]} = {} as any;
   
 
   private readonly destroy$: Subject<any>;
@@ -86,9 +89,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
     this.destroy$ = new Subject<any>();
     this.config = this.appService.getConfig();
     this.innerWidth = window.innerWidth;
-
   }
-
 
   ngOnInit() {
     this.selectedPlaceId = this.route.snapshot.paramMap.get('placeId');
@@ -100,6 +101,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
       )
       .subscribe((c) => (this.selectedAllergensFilter = c?.allergens));
 
+
     // Fetch an item, and it will have the list of places with ratings and reviews
     this.store.select(placeSelector(this.selectedPlaceId)).pipe(
       filter((x) => !!x),
@@ -107,11 +109,13 @@ export class ItemListComponent implements OnInit, OnDestroy {
       map((x) => this.allItems = x.items as Item[]),
       filter(x => !!x?.length),
       take(1),
+      // tap(_=> this.popularItems['Popular'] = [] as Item[]),
       map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
       map((items: Item[]) => this.filtered = items.filter((item) => this.itemSearchStr ? !item?.name?.includes(this.itemSearchStr): true)),
+      // tap((items: Item[]) => this.filtered && this.popularItems['Popular'].push(this.filtered?.reduce((prev, current) => (prev?.placeItem?.ratingInfo?.taste ?? 0 > current?.placeItem?.ratingInfo?.taste ?? 0) ? prev : current)?? this.filtered[0])),//filter((item) => this.itemSearchStr ? !item?.name?.includes(this.itemSearchStr): true)),
       map((items: Item[]) => this.filtered = this.isSortByTaste ? items.sort((a, b) => (a.ratingInfo?.taste ?? 0) - (b.ratingInfo?.taste ?? 0)) : items),
       tap((items: Item[]) => this.filtered?.forEach((it:Item) => {
-        if(it.placeItem?.category){
+        if(it.placeItem?.category){ 
           if(!this.filteredItems[it.placeItem.category as string]){
             this.filteredItems[it.placeItem.category as string]= [] as any[];
           }
@@ -120,30 +124,9 @@ export class ItemListComponent implements OnInit, OnDestroy {
       }
       )),
       tap((items: Item[]) => this.categories = Array.from(Object.keys(this.filteredItems)?.map((cat) => ({label: cat, active: false, selected: false, focus: false})))),
-    ).subscribe();
-
-      // Fetch an item, and it will have the list of places with ratings and reviews
-    // this.store.select(placeSelector(this.selectedPlaceId)).pipe(
-    //   filter((x) => !!x),
-    //   tap(x=> console.log('1:: ',x)),
-    //   tap((x) => (this.selectedPlaceName = x.name)),
-    //   map((x) => this.allItems = x.items as Item[]),
-    //   tap(x=> console.log('2:: ',x)),
-    //   filter(x => !!x?.length),
-    //   tap(x=> console.log('3:: ',x)),
-    //   take(1),
-      
-    //   map((items: Item[]) => this.filtered = items.filter((item) => !item?.allergens?.includes(this.selectedAllergensFilter))),
-    //   map((items: Item[]) => this.filtered = items.filter((item) => this.itemSearchStr ? !item?.name?.includes(this.itemSearchStr): true)),
-    //   tap((items: Item[]) => this.categories = Array.from(items.map((item) => item?.placeItem.category)).map((cat) => ({label: cat, active: false, selected: false, focus: false}))),
-    //   tap((items: Item[]) => this.categories.forEach((cat: any)=> this.filteredItems[cat.label]=[])),
-    //   map((items: Item[]) => this.filtered = this.isSortByTaste ? items.sort((a, b) => (a.ratingInfo?.taste ?? 0) - (b.ratingInfo?.taste ?? 0)) : items),
-    //   tap((items: Item[]) => this.filtered?.forEach((it:Item) => (it.placeItem?.category &&
-    //     this.filteredItems[it.placeItem.category as string].push(it))
-    //   )),
-    //   tap(_=>console.log('this.filtered.len', this.filtered?.length)),
-    //   tap(_=>console.log('this.filtered.len', this.filtered?.length)),
-    // ).subscribe();
+    ).subscribe(
+      // _=> console.log('popular:: ', this.popularItems)
+    );
 
     this.route.paramMap
       .pipe(
