@@ -12,7 +12,7 @@
           <div class="">
             <span class="text-secondary">Distance (kms)</span>
             <ng-select [items]="config.distances" [(ngModel)]="selectedDistance" [ngModelOptions]="{standalone: true}"
-              bindLabel="text" bindValue="id"  (change)="onDistanceSelectionChange($event)"
+              (change)="onDistanceSelectionChange($event)"
               [searchable]="false" [clearable]="false">
             </ng-select>
 <!-- 
