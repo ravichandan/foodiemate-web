@@ -237,14 +237,13 @@ export class AppService implements OnDestroy{
       params = params.append('suburbs', args.suburbs.join(','));
       params = params.append('includeSurroundingSuburbs', !!args.includeSurroundingSuburbs);
     }
-    
-    if(args.distance){
-      params = params.append('distance', args.distance);
-    }
-    if(this.location){
-      params = params.append('latitude', !!this.location.latitude);
-      params = params.append('longitude', !!this.location.longitude);
-    }
+
+    !!args?.distance && (params =  params.append('distance', args.distance));
+
+    // location query params
+    !!this.location && (params =  params.append('latitude', this.location.latitude));
+    !!this.location && (params =  params.append('longitude', this.location.longitude));
+
     params = params.append('city', 'sydney');
     return this.http.get<PlacesResponse>(url, { params });//.pipe(tap(x =>
     // console.log('app.service -> searchPlaceWithName, response:: ', x)));
