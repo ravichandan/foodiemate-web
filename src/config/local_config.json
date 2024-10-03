@@ -37,9 +37,11 @@
   "giveAReviewLabel": "Review this place",
   "giveAItemReviewLabel": "Review this item",
   "showScrollPrompt": false,
-  "distances": [10,20,30,40,50],
+  "distances": [1,2,3,10,20,30,40,50],
   "distanceOptions":[{
-      "id": 10,
+    "id": 1,
+    "text": "<= 1"
+  },{ "id": 10,
       "text": "<= 10"
     },{
       "id": 20,

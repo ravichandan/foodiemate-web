@@ -34,7 +34,9 @@
               "node_modules/ngx-sharebuttons/themes/circles.scss",
               "node_modules/ngx-sharebuttons/themes/modern.scss",
               "src/styles.scss",
-              "src/styles/icomoon.css"
+              "src/styles/icomoon.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
+
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

@@ -11,6 +11,11 @@
         @if (!!config.distanceOptions?.length) {
           <div class="">
             <span class="text-secondary">Distance (kms)</span>
+            <ng-select [items]="config.distances" [(ngModel)]="selectedDistance" [ngModelOptions]="{standalone: true}"
+              bindLabel="text" bindValue="id"  (change)="onDistanceSelectionChange($event)"
+              [searchable]="false" [clearable]="false">
+            </ng-select>
+<!-- 
             <ng-multiselect-dropdown
               class="align-self-end m-1 m-md-2"
               [settings]="distanceDropdownSettings"
@@ -18,10 +23,7 @@
               [(ngModel)]="selectedDistance"
               [ngModelOptions]="{ standalone: true }"
               (onSelect)="onDistanceSelectionChange($event)">
-              <!-- (onSelectAll)="onSelectAll($event)"> -->
-              <!--              (onSelect)="onItemSelect($event)"-->
-                          <!-- (onSelectAll)="onSelectAll($event)"> -->
-            </ng-multiselect-dropdown>
+            </ng-multiselect-dropdown> -->
           </div>
         }
       </div>
