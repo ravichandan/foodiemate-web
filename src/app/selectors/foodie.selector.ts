@@ -3,6 +3,7 @@ import { State } from '../reducers';
 import { Item } from '../models/Item';
 import { Place } from '../models/Place';
 import { Address } from '../models/Address';
+import { add } from 'lodash';
 
 /**
  * Selector that selects the popular items&places
@@ -35,9 +36,10 @@ export const searchFilterSelector = () =>
     (state: State) => state.address,
     (state: State) => state.cuisinesFilter,
     (state: State) => state.dietsFilter,
+    (state: State) => state.distanceFilter,
     (state: State) => state.includeSuburbsFilter,
-    (address, cuisines, diets, includeSurroundingSuburbs) => {
-      return {address, cuisines, diets, includeSurroundingSuburbs};
+    (address, cuisines, diets, distance, includeSurroundingSuburbs) => {
+      return {address, cuisines, diets, distance, includeSurroundingSuburbs};
     },
   );
 
@@ -113,6 +115,12 @@ export const customerSelector = () =>
     (customer) => customer,
   );
 
+export const locationSelector = () =>
+  createSelector(
+    (state: State) => state.address,
+    (address) => address.location,
+  );
+  
 export const loggedInSelector = () =>
   createSelector(
     (state: State) => state.loggedIn,

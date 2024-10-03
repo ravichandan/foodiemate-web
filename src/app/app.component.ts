@@ -25,6 +25,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { InViewportAction, InViewportModule } from 'ng-in-viewport';
 import { ScrollPromptComponent } from './cutil/scroll-prompt.component';
 import { ScrollToTopComponent } from './cutil/scroll-to-top.component';
+import {GeolocationService} from '@ng-web-apis/geolocation';
 
 @Component({
   selector: 'app-root',
@@ -88,10 +89,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private appService: AppService,
-    private authService: AppService,
+    // private authService: AppService,
     private store: Store<State>,
     @Inject(PLATFORM_ID) platformId: Object,
+    private readonly geolocation$: GeolocationService,
     private router: Router) {
+      geolocation$.subscribe(position => {
+        console.log('JSON.string(position):: ', JSON.stringify(position));
+        this.store.dispatch(FoodieActions.updateLocation({location:{latitude: position.coords?.latitude, longitude: position.coords?.longitude}} ))}
+      );
+      // this.handlePermission();
     this.router.events.subscribe((val) => {
       // see also
       if (val instanceof NavigationEnd) {
@@ -195,4 +202,37 @@ export class AppComponent implements OnInit, OnDestroy {
   startOutOfSight({ target, visible }: { target: Element; visible: boolean }) {
     this.showScrollToTop=!visible;
   }
+
+ /* handlePermission() {
+    navigator.permissions.query({ name: "geolocation" }).then((result) => {
+      if (result.state === "granted") {
+        this.report(result.state);
+        // geoBtn.style.display = "none";
+      } else if (result.state === "prompt") {
+        this.report(result.state);
+        // geoBtn.style.display = "none";
+        // navigator.geolocation.getCurrentPosition(
+        //   revealPosition,
+        //   positionDenied,
+        //   geoSettings,
+        // );
+      } else if (result.state === "denied") {
+       this.report(result.state);
+        // geoBtn.style.display = "inline";
+      }
+      result.addEventListener("change", () => {
+        this.report(result.state);
+      });
+    });
+  }
+
+  report(state: any) {
+    console.log(`Permission ${state}`);
+  }*/
 }
+
+
+
+
+
+

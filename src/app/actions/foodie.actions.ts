@@ -9,6 +9,7 @@ import { PlacesResponse } from '../models/PlacesResponse';
 import { CustomerInfo } from '../models/CustomerInfo';
 import { ItemResponse } from '../models/ItemResponse';
 import { SuburbsResponse } from '../models/SuburbsResponse';
+import { Location } from '../models/Location';
 
 export const ACTION_FETCH_POPULAR_REQUESTED = '[FoodieMate] Fetch Popular Requested';
 export const ACTION_FETCH_POPULAR = '[FoodieMate] Fetch Popular';
@@ -49,6 +50,7 @@ export const ACTION_PRELOAD_POST_REVIEW = '[FoodieMate] PRELOAD POST REVIEW';
 
 export const ACTION_CUISINES_FILTER_CHANGE = '[FoodieMate] CUISINES FILTER CHANGE';
 export const ACTION_DIETS_FILTER_CHANGE = '[FoodieMate] DIETS FILTER CHANGE';
+export const ACTION_DISTANCE_FILTER_CHANGE = '[FoodieMate] DISTANCE FILTER CHANGE';
 export const ACTION_SURROUNDING_SUBURBS_FILTER_CHANGE = '[FoodieMate] SURROUNDING SUBURBS FILTER CHANGE';
 
 export const ACTION_LOGIN_OIDC_CUSTOMER = '[FoodieMate] LOGIN OIDC CUSTOMER';
@@ -64,6 +66,8 @@ export const ACTION_UPDATE_CUSTOMER_SUCCESS = '[FoodieMate] UPDATE CUSTOMER SUCC
 export const ACTION_CUSTOMER_LOGOUT = '[FoodieMate] CUSTOMER LOGOUT';
 export const ACTION_CUSTOMER_LOGOUT_SUCCESS = '[FoodieMate] CUSTOMER LOGOUT SUCCESS';
 export const ACTION_ASK_FOR_VERIFICATION = '[FoodieMate] ASK CUSTOMER FOR VERIFICATION';
+
+// export const ACTION_CHANGE_LOCATION = '[FoodieMate] CHANGE LOCATION';
 
 export const ACTION_UPDATE_ADDRESS = '[FoodieMate] UPDATE ADDRESS';
 export const ACTION_CLEAR_ERROR = '[FoodieMate] CLEAR ERROR';
@@ -81,12 +85,17 @@ export const cuisinesFilterChange = createAction(ACTION_CUISINES_FILTER_CHANGE,
 export const dietsFilterChange = createAction(ACTION_DIETS_FILTER_CHANGE,
   props<{ diets: any[] }>(),
 );
+export const distanceFilterChange = createAction(ACTION_DISTANCE_FILTER_CHANGE,
+  props<{ distance: number }>(),
+);
 export const includeSurroundingSuburbsFilterChange = createAction(ACTION_SURROUNDING_SUBURBS_FILTER_CHANGE,
   props<{ include: boolean }>(),
 );
 
 export const fetchCuisines = createAction(ACTION_FETCH_CUISINES);
 export const fetchSuburbs = createAction(ACTION_FETCH_SUBURBS, props<{ city: string }>());
+
+// export const changeLocation = createAction(ACTION_CHANGE_LOCATION, props<{ latitude: number, longitude: number }>());
 
 export const fetchCuisinesSuccess = createAction(
   ACTION_FETCH_CUISINES_SUCCESS,
@@ -198,7 +207,7 @@ export const preloadPostReviewData = createAction(
 
 export const clearError = createAction(ACTION_CLEAR_ERROR);
 
-export const updateLocation = createAction(ACTION_UPDATE_ADDRESS, props<{ suburb?: string; postcode?: string }>());
+export const updateLocation = createAction(ACTION_UPDATE_ADDRESS, props<{ suburb?: string; postcode?: string; location?: Location;  }>());
 
 export const storeCorrelationId = createAction(ACTION_STORE_CORRELATION_ID, props<{ correlationId: string }>());
 export const failed = createAction(ACTION_FAILED, props<{ error: any }>());

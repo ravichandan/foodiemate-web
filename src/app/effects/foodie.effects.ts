@@ -26,7 +26,7 @@ export class FoodieEffects {
       ofType(FoodieActions.fetchPopular),
       switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean), take(1))),
       mergeMap((filters: any) =>
-          this.appService.getPopularSearches({city: filters.address.city, suburb: filters.suburb, postcode: filters.address.postcode, diets: filters.diets }).pipe(
+          this.appService.getPopularSearches({city: filters.address.city, suburb: filters.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance }).pipe(
           map((popular: PopularResponse) => FoodieActions.fetchPopularSuccess({ popular })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),

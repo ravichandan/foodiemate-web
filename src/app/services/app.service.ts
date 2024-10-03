@@ -8,10 +8,12 @@ import { join } from '@fireflysemantics/join';
 import { StaticDataService } from './static-data.service';
 import { environment } from '../../environments/environment';
 import { Store } from '@ngrx/store';
-import { customerSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
+import { customerSelector, locationSelector, preloadReviewDataSelector } from '../selectors/foodie.selector';
 import { State } from '../reducers';
 import { PlacesResponse } from '../models/PlacesResponse';
 import { ItemResponse } from '../models/ItemResponse';
+import { Location } from '../models/Location';
+import { PopularResponse } from '../models/PopularResponse';
 
 @Injectable({ providedIn: 'root' })
 export class AppService implements OnDestroy{
@@ -20,17 +22,21 @@ export class AppService implements OnDestroy{
   sds=inject(StaticDataService);
   private correlationId: string | undefined;
   private customer: CustomerInfo | undefined;
+  private location: Location|undefined;
   constructor(private http: HttpClient, private store: Store< State>) {
     this.destroy$ = new Subject<any>();
     this.store.select(customerSelector()).pipe(
-      takeUntil(this.destroy$)).subscribe( cust => this.customer = cust)
+      takeUntil(this.destroy$)).subscribe( cust => this.customer = cust);
+
+    this.store.select(locationSelector()).pipe(
+      takeUntil(this.destroy$)).subscribe( loc => this.location = loc);
   }
 
   public getConfig() {
     return environment;
   }
 
-  public getPopularSearches(args: { city?: string; postcode?: string; suburb?: string; diets?: any[]; }) {
+  public getPopularSearches(args: { city?: string; postcode?: string; suburb?: string; diets?: any[]; distance: number; }) {
     console.log('in app.service, getPopularSearches() -> args', args);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     const url = join(this.getConfig().host, this.getConfig().popularSearchesEndpoint);
@@ -38,14 +44,20 @@ export class AppService implements OnDestroy{
     !!args?.city && (params =  params.append('city', args.city));
     !!args?.postcode && (params =  params.append('postcode', args.postcode));
     !!args?.suburb && (params =  params.append('suburb', args.suburb));
+    !!args?.distance && (params =  params.append('distance', args.distance));
+
+    // location query params
+    !!this.location && (params =  params.append('latitude', this.location.latitude));
+    !!this.location && (params =  params.append('longitude', this.location.longitude));
+
     if(args?.diets){
       const diets: string = args.diets.map(d=> d.value).filter(Boolean).join(',');
       !!diets && (params =  params.append('diets', diets));
     }
     console.log('in app.service, getPopularSearches() -> params', params);
     return this.http
-      .get(url , { headers , params})
-      .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));
+      .get<PopularResponse>(url , { headers , params});//
+      // .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));
   }
 
   public getAllSuburbs(city: string) {
@@ -207,7 +219,7 @@ export class AppService implements OnDestroy{
     );
   }
 
-  public searchPlaceWithName(args: { placeName: string,itemName?: string, suburbs?: string[],  includeSurroundingSuburbs?: boolean }): Observable<PlacesResponse| undefined> {
+  public searchPlaceWithName(args: { placeName: string,itemName?: string, suburbs?: string[],  includeSurroundingSuburbs?: boolean, distance?: number }): Observable<PlacesResponse| undefined> {
     console.log(
       'in app.service->searchPlaceWithName args:: ',args
     )
@@ -225,13 +237,21 @@ export class AppService implements OnDestroy{
       params = params.append('suburbs', args.suburbs.join(','));
       params = params.append('includeSurroundingSuburbs', !!args.includeSurroundingSuburbs);
     }
+    
+    if(args.distance){
+      params = params.append('distance', args.distance);
+    }
+    if(this.location){
+      params = params.append('latitude', !!this.location.latitude);
+      params = params.append('longitude', !!this.location.longitude);
+    }
     params = params.append('city', 'sydney');
-    return this.http.get<PlacesResponse>(url, { params }).pipe(tap(x =>
-    console.log('app.service -> searchPlaceWithName, response:: ', x)));
+    return this.http.get<PlacesResponse>(url, { params });//.pipe(tap(x =>
+    // console.log('app.service -> searchPlaceWithName, response:: ', x)));
   }
 
 
-  public searchItemsWithName(args: { itemName?: string, postcode?: string, suburbs?: string[],  includeSurroundingSuburbs?: boolean }): Observable<ItemResponse| undefined> {
+  public searchItemsWithName(args: { itemName?: string, postcode?: string, suburbs?: string[],  includeSurroundingSuburbs?: boolean, distance?: number }): Observable<ItemResponse| undefined> {
     if (!args.itemName) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
@@ -243,9 +263,16 @@ export class AppService implements OnDestroy{
       params = params.append('suburbs', args.suburbs.join(','));
       params = params.append('includeSurroundingSuburbs', !!args.includeSurroundingSuburbs);
     }
+    if(args.distance){
+      params = params.append('distance', args.distance);
+    }
+    if(this.location){
+      params = params.append('latitude', !!this.location.latitude);
+      params = params.append('longitude', !!this.location.longitude);
+    }
     params = params.append('city', 'Sydney');
-    return this.http.get<ItemResponse>(url, { params }).pipe(tap(x =>
-    console.log('app.service -> searchItemsWithName, response:: ', x)));
+    return this.http.get<ItemResponse>(url, { params });//.pipe(tap(x =>
+    // console.log('app.service -> searchItemsWithName, response:: ', x)));
   }
 
   public uploadMedia(data: {

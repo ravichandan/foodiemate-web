@@ -20,6 +20,6 @@ export class AuthService {
 
     return this.http
       .get(this.getConfig().popularSearchesEndpoint, { headers })
-      .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));
+      .pipe(tap((t: any) => console.log('2. popular-searches response:: ', t)));
   }
 }

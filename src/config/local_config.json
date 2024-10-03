@@ -37,6 +37,24 @@
   "giveAReviewLabel": "Review this place",
   "giveAItemReviewLabel": "Review this item",
   "showScrollPrompt": false,
+  "distances": [10,20,30,40,50],
+  "distanceOptions":[{
+      "id": 10,
+      "text": "<= 10"
+    },{
+      "id": 20,
+      "text": "<= 20"
+    },{
+      "id": 30,
+      "text": "<= 30"
+    },{
+      "id": 40,
+      "text": "<= 40"
+    },{
+      "id": 50,
+      "text": "<= 50"
+    }
+  ],
   "postReviewLabels": {
     "place": {
       "label": "Where did you have food?",

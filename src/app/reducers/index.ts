@@ -11,11 +11,13 @@ import { Media } from '../models/Media';
 import { CustomerInfo } from '../models/CustomerInfo';
 import { Address } from '../models/Address';
 import { SuburbsResponse } from '../models/SuburbsResponse';
+import { Location } from '../models/Location';
 
 export interface State {
   address: Address;
   cuisinesFilter: any[]|undefined;
   dietsFilter: any[]|undefined;
+  distanceFilter: number|undefined;
   includeSuburbsFilter: boolean|undefined;
   customer: CustomerInfo | undefined;
   popularItems: Item[] | undefined;
@@ -39,6 +41,7 @@ export const initialState: State = {
   customer: undefined,
   cuisinesFilter: undefined,
   dietsFilter: undefined,
+  distanceFilter: undefined,
   includeSuburbsFilter: undefined,
   popularItems: undefined,
   popularPlaces: undefined,
@@ -303,6 +306,11 @@ export const dietsFilterReducer = createReducer(
   on(FoodieActions.dietsFilterChange, (oldState, newState) => newState.diets),
 );
 
+export const distanceFilterReducer = createReducer(
+  initialState.distanceFilter,
+  on(FoodieActions.distanceFilterChange, (oldState, newState) => newState.distance),
+);
+
 export const surroundingSuburbsFilterReducer = createReducer(
   initialState.includeSuburbsFilter,
   on(FoodieActions.includeSurroundingSuburbsFilterChange, (include: boolean|undefined) => include),
@@ -332,9 +340,9 @@ export const errorReducer = createReducer(
 export const locationReducer = createReducer(
   initialState.address,
   // on(FoodieActions.updateLocation,
-  on(FoodieActions.updateLocation, (props: {   suburb?: string | undefined;   postcode?: string | undefined; } ) => ({
-    suburb: props.suburb,
-    postcode: props.postcode
+  on(FoodieActions.updateLocation, (oldState, newState) => ({
+    ...oldState,
+    ...newState
   } as Address)),
 );
 
@@ -345,6 +353,7 @@ export const reducers: ActionReducerMap<State> = {
   popularPlaces: popularPlacesReducer,
   cuisinesFilter: cuisinesFilterReducer,
   dietsFilter: dietsFilterReducer,
+  distanceFilter: distanceFilterReducer,
   includeSuburbsFilter: surroundingSuburbsFilterReducer,
   cuisines: cuisinesReducer,
   suburbs: suburbsReducer,

@@ -47,6 +47,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   selectedSuburbs: any[] = [];
   suburbsLength: number = 0;
   selectedDiets: any[] = [];
+  selectedDistance: any;
   suburbDropdownSettings: IDropdownSettings = {
     singleSelection: false,
     idField: 'name',
@@ -65,6 +66,16 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 1,
     allowSearchFilter: true,
+  };
+  distanceDropdownSettings: IDropdownSettings = {
+    singleSelection: true,
+    itemsShowLimit: 1,
+    allowSearchFilter: false,
+    // idField: 'id',
+    // textField: 'text',
+    limitSelection: 1,
+    closeDropDownOnSelection: true
+
   };
   cuisines$: Observable<any> | undefined;
   suburbs$: Observable<Suburb[] | undefined> | undefined;
@@ -101,6 +112,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
         this.searchKey = params!['search'];
 
         this.selectedCuisines = !!params['cuisines'] ? params['cuisines'].split(',') : this.selectedCuisines;
+        this.selectedDistance = !!params['distance'] ? params['distance'] : this.selectedDistance;
         this.selectedSuburbs = !!params['suburbs'] ? params['suburbs'].split(',').map((sub: string) => suburbs!.find(s=> s?.name == sub)) : this.selectedSuburbs;
 
         this.placesResponse.places = [];
@@ -115,6 +127,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
             itemName: this.searchKey,
             suburbs: this.suburbsLength == this.selectedSuburbs.length ? undefined : this.selectedSuburbs.map((x: Suburb) => x?.name),
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
+            distance: this.selectedDistance,
           })
             .pipe(filter(Boolean), take(1))
             .subscribe({
@@ -134,6 +147,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
           this.appService.searchItemsWithName({ itemName: this.searchKey,
             suburbs: this.suburbsLength == this.selectedSuburbs.length ? undefined : this.selectedSuburbs.map((x: Suburb) => x?.name),
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
+            distance: this.selectedDistance
           })
             .pipe(filter(Boolean), take(1))
             .subscribe({
@@ -153,6 +167,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
           this.searchInput.nativeElement.value = this.searchKey ?? null;
         }
       });
+    this.selectedDistance = this.config.distances[0];
   }
 
   ngOnInit() {
@@ -183,7 +198,12 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.router.navigateByUrl('/', { skipLocationChange: true })
       .then(() => this.router.navigate(
         ['home'],
-        { queryParams: { search: searchKey, cuisines: cuisinesStr, suburbs: this.selectedSuburbs?.map((x: Suburb) => x?.name).join(',') } },
+        { queryParams: { 
+          search: searchKey, 
+          cuisines: cuisinesStr, 
+          suburbs: this.selectedSuburbs?.map((x: Suburb) => x?.name).join(','), 
+          distance: this.selectedDistance
+        } },
       ));
   }
 
@@ -211,6 +231,13 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
 
   onDietSelectionChange(item: any) {
     this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
+  }
+
+
+  onDistanceSelectionChange(item: any) {
+    console.log('in onDistanceSelectionChange, item:: ', item);
+    this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
   }
 }
