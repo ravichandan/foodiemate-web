@@ -265,10 +265,10 @@ export class AppService implements OnDestroy{
     if(args.distance){
       params = params.append('distance', args.distance);
     }
-    if(this.location){
-      params = params.append('latitude', !!this.location.latitude);
-      params = params.append('longitude', !!this.location.longitude);
-    }
+    // location query params
+    !!this.location && (params =  params.append('latitude', this.location.latitude));
+    !!this.location && (params =  params.append('longitude', this.location.longitude));
+    
     params = params.append('city', 'Sydney');
     return this.http.get<ItemResponse>(url, { params });//.pipe(tap(x =>
     // console.log('app.service -> searchItemsWithName, response:: ', x)));

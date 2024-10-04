@@ -37,7 +37,7 @@
   "giveAReviewLabel": "Review this place",
   "giveAItemReviewLabel": "Review this item",
   "showScrollPrompt": false,
-  "distances": [1,2,3,5,10,20,30,40,50],
+  "distances": [1,5,10,20,30,40,50],
   "distanceOptions":[{
     "id": 1,
     "text": "<= 1"
