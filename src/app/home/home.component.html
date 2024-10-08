@@ -8,22 +8,15 @@
     <form class="row gap-3 m-0 col-12 col-md-10 p-0" #homeSearchForm (ngSubmit)="search(searchStr)">
       <div class="d-flex justify-content-end text-secondary px-0">
         
-        @if (!!config.distanceOptions?.length) {
-          <div class="">
-            <span class="text-secondary">Distance (kms)</span>
-            <ng-select [items]="config.distances" [(ngModel)]="selectedDistance" [ngModelOptions]="{standalone: true}"
-              (change)="onDistanceSelectionChange($event)"
-              [searchable]="false" [clearable]="false">
-            </ng-select>
-<!-- 
-            <ng-multiselect-dropdown
-              class="align-self-end m-1 m-md-2"
-              [settings]="distanceDropdownSettings"
-              [data]="config.distances"
-              [(ngModel)]="selectedDistance"
-              [ngModelOptions]="{ standalone: true }"
-              (onSelect)="onDistanceSelectionChange($event)">
-            </ng-multiselect-dropdown> -->
+        @if (suburbs$ | async; as suburbs) {
+          <div class=""> 
+            <!-- <button type="button" class="btn btn-primary" >Open modal</button> -->
+
+            <a  class="cursor-pointer link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-medium d-flex justify-content-center "  (click)="openModal(template, suburbs)">
+              <span class="text-secondary">{{this.selectedSuburbs?.[0]?.name ?? 'Select suburb'}}</span>
+              <span class="fx-icon fx-icon-down-arrow"></span>
+            </a>
+
           </div>
         }
       </div>
@@ -103,20 +96,15 @@
               </div>
             }
             
-            @if (suburbs$ | async; as suburbs) {
+
+            @if (!!config.distanceOptions?.length) {
               <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center m-1 m-md-2 p-0">
-                <span class="text-secondary">Select suburb</span>
-                <ng-multiselect-dropdown
-                  class="align-self-end m-1 m-md-2"
-                  [placeholder]="'Select suburb'"
-                  [settings]="suburbDropdownSettings"
-                  [data]="suburbs"
-                  [(ngModel)]="selectedSuburbs"
-                  [ngModelOptions]="{ standalone: true }">
-                  <!-- (onSelectAll)="onSelectAll($event)"> -->
-                  <!--              (onSelect)="onItemSelect($event)"-->
-                              <!-- (onSelectAll)="onSelectAll($event)"> -->
-                </ng-multiselect-dropdown>
+                <span class="text-secondary">Distance (kms)</span>
+                <ng-select [items]="config.distances" [(ngModel)]="selectedDistance" [ngModelOptions]="{standalone: true}"
+                  (change)="onDistanceSelectionChange($event)"
+                  [searchable]="false" [clearable]="false">
+                </ng-select>
+    
               </div>
             }
             <!--          <div class="surrounding-suburbs-toggle d-flex " >-->
@@ -740,3 +728,21 @@
       </div>
   }
 </div>
+
+<ng-template #template >
+  @if(modalService.config.initialState?.['suburbs']; as suburbs;){
+  <div class="modal-body text-center">
+    <span class="">Select a suburb or location: </span>
+    <div class=" w-100">
+      <ng-multiselect-dropdown
+        class="align-self-end m-1 m-md-2"
+        [placeholder]="'Select suburb'"
+        [settings]="suburbDropdownSettings"
+        [data]="getAsArray(suburbs)" 
+        [(ngModel)]="selectedSuburbs"
+        [ngModelOptions]="{ standalone: true }">
+      </ng-multiselect-dropdown>
+    </div>
+  </div>
+}
+</ng-template>

@@ -16,6 +16,7 @@ import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from '../environments/environment';
 import { TokenStorageService } from './services/token-storage.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 export function initializeMockData(mockService: MockDataService) {
   if(!environment.production) {
@@ -44,6 +45,7 @@ export const appConfig: ApplicationConfig = {
         sendAccessToken: true,
       },
     }),
+    importProvidersFrom(ModalModule.forRoot()),
     // withFetch()
     // importProvidersFrom(    NgMultiSelectDropDownModule.forRoot()),
     // MockDataService,

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, importProvidersFrom, inject, OnDestroy, OnInit, Provider, Renderer2, RendererFactory2, TemplateRef, ViewChild } from '@angular/core';
 import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HoverClassDirective } from '../directives/hover-class.directive';
@@ -23,13 +23,15 @@ import { Suburb } from '../models/Suburb';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ScrollPromptComponent } from '../cutil/scroll-prompt.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { BsModalRef, BsModalService, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [AsyncPipe, FormsModule,NgStyle, HoverClassDirective, NgForOf, NgIf, NgMultiSelectDropDownModule,
     CollapseModule, ReactiveFormsModule, NgClass, DecimalPipe, NgbCarousel, NgbSlide, FaIconComponent, ScrollPromptComponent,
-    ScrollToDirective, ReplacePipe, NgTemplateOutlet, NgMultiSelectDropDownModule, NgSelectModule],
+    ScrollToDirective, ReplacePipe, NgTemplateOutlet, NgMultiSelectDropDownModule, NgSelectModule,ModalModule],
+    
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -37,6 +39,9 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   config: any;
   @ViewChild('searchStr')
   searchInput: ElementRef | undefined;
+  modalRef?: BsModalRef;
+  modalService: BsModalService = inject(BsModalService);
+
   placesResponse$: Observable<PlacesResponse | undefined> | undefined;
   popularSearches$: Observable<any | undefined> | undefined;
   // randomSuggestions: any[] | undefined;
@@ -187,6 +192,18 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.store.dispatch(FoodieActions.pageDestroyed());
   }
 
+  openModal(template: TemplateRef<void>, suburbs: any[]) {
+    const initialState: ModalOptions = {
+      initialState: {
+        suburbs: suburbs as any[],//['Open a modal with component', 'Pass your data', 'Do something else', '...'],
+        name: 'Chandan'
+      },
+      class: 'modal-md '
+    };
+
+    this.modalRef = this.modalService.show(template, initialState);
+  }
+
   popularItemSelected(element: Item) {
     if (element.type === 'item') {
       this.router.navigate(['items/' + element._id]);
@@ -243,4 +260,6 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
   }
+
+  getAsArray = (suburbs: any): any[] => suburbs as any[]
 }

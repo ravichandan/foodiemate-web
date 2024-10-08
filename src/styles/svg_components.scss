@@ -53,6 +53,15 @@
 }
 
 
+.fx-icon-down-arrow {
+  mask: url(../assets/images/svgs/keyboard_arrow_down.svg) no-repeat;
+  width: 24px;
+  height: 24px;
+  mask-size: contain;
+  opacity: 0.8;
+}
+
+
 .fx-icon:hover,
 .fx-icon:focus {
   background-color: $teal-dark-color;
