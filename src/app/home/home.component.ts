@@ -301,7 +301,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
     setTimeout(()=>{
       const cuisinesStr = this.selectedCuisines?.join(',');
-      this.router.navigateByUrl('/', { skipLocationChange: true })
+      this.router.navigateByUrl('/', { skipLocationChange: false })
         .then(() => this.router.navigate(
           ['home'],
           { queryParams: { 
