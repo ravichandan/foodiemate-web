@@ -153,6 +153,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
         // const token = "eyJ0eXAiO.../// jwt token";
         const act = this.cookieService.get('id_token');
+        if(!act) return;
         // console.log('Access token: ', act);
         const decoded: any = jwtDecode(act);
         // console.log('Decoded Access token: ', decoded);

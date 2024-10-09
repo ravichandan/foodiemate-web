@@ -61,7 +61,7 @@
         </div>
 
         <!-- photos carousels etc-->
-        <div class="col-12">
+        <div class="col-12 px-1">
           <div class="card border-secondary">
 <!--            <div class="row mx-0">-->
               <div class="col-12 col-lg-7 image-container px-0">
@@ -76,7 +76,7 @@
                     @for (rev of item.placeItem?.reviewMedias; track rev.media) {
 
                         <ng-template ngbSlide>
-                          <div class="picsum-img-wrapper">
+                          <div class="picsum-img-wrapper card-body">
                             <img
                               [src]="config.bucketAccessEndpoint+'/'+rev.media.key"
                               alt="loading review photos"
@@ -86,7 +86,7 @@
                     }
                   </ngb-carousel>
                 } @else if (item?.placeItem?.media) {
-                  <div class="picsum-img-wrapper">
+                  <div class="picsum-img-wrapper card-body">
                     <img
                       [src]="config.bucketAccessEndpoint+'/'+item.placeItem?.media.key"
                       alt="loading picture of the dish"
@@ -163,7 +163,7 @@
         </div>
 
         <!-- review container-->
-        <div class="col-12">
+        <div class="col-12 px-1">
           <!--                <app-item-detail [item]="item" [item]="item"></app-item-detail>-->
           <ng-container *ngIf="reviews$ | async as reviews">
             <div class="review-container row gap-3 g-0">

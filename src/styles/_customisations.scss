@@ -3,3 +3,10 @@
     height: 100%;
   }
 // }
+
+
+typeahead-container {
+  .dropdown-item.active, .dropdown-item:active {
+    background-color: $teal-light-color;
+  }
+}
