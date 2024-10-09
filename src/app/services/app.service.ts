@@ -268,7 +268,7 @@ export class AppService implements OnDestroy{
     // location query params
     !!this.location && (params =  params.append('latitude', this.location.latitude));
     !!this.location && (params =  params.append('longitude', this.location.longitude));
-    
+
     params = params.append('city', 'Sydney');
     return this.http.get<ItemResponse>(url, { params });//.pipe(tap(x =>
     // console.log('app.service -> searchItemsWithName, response:: ', x)));
@@ -359,6 +359,25 @@ export class AppService implements OnDestroy{
 
     console.log('in logoutCustomer url: ', url);
     return this.http.post(url, {});
+  }
+
+  getSuburbNameFromLocation(latitude: string | undefined, longitude: string| undefined): Observable<any> {
+    if (!latitude || !longitude) return of(undefined);
+    console.log('in getSuburbNameFromLocation, latitude ', latitude, 'longitude: ', longitude);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Access-Control-Allow-Origin': '*',
+      'ngsw-bypass': '',
+    });
+
+    let params = new HttpParams();
+    params = params.append('latitude', latitude);
+    params = params.append('longitude', longitude);
+
+    const url = join(this.getConfig().host, this.getConfig().suburbNameFromLocationEndpoint);
+
+    console.log('in getSuburbNameFromLocation url: ', url);
+    return this.http.get(url, {headers, params});
   }
 
   ngOnDestroy(): void {

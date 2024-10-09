@@ -8,7 +8,7 @@ import { AppService } from './services/app.service';
 import { LeftNavigationComponent } from './left-navigation/left-navigation.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HoverClassDirective } from './directives/hover-class.directive';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import { State } from './reducers';
 import { Store } from '@ngrx/store';
 import * as FoodieActions from './actions/foodie.actions';
@@ -96,11 +96,19 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router) {
       geolocation$.subscribe(position => {
         console.log('JSON.string(position):: ', JSON.stringify(position));
-        this.store.dispatch(FoodieActions.updateLocation({location:{latitude: position.coords?.latitude, longitude: position.coords?.longitude}} ))}
-      );
-      // this.handlePermission();
-    this.router.events.subscribe((val) => {
-      // see also
+        this.store.dispatch(FoodieActions.updateLocation({location:{latitude: position.coords?.latitude, longitude: position.coords?.longitude}} ))
+        this.appService.getSuburbNameFromLocation(position.coords?.latitude.toString(), position.coords?.longitude.toString()).pipe(
+          take(1),
+          tap(response => {
+            this.store.dispatch(FoodieActions.updateLocation({
+              location:{latitude: position.coords?.latitude, longitude: position.coords?.longitude},
+              suburb: response.name
+            } ));
+          })
+        ).subscribe();
+      });
+
+      this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.store.dispatch(FoodieActions.clearError());
       }

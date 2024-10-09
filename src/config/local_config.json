@@ -23,6 +23,7 @@
   "postAReviewEndpoint": "/reviews/",
   "searchForPlaceEndpoint": "/places/",
   "searchForItemsEndpoint": "/items/",
+  "suburbNameFromLocationEndpoint": "/suburbName/",
   "uploadMediaEndpoint": "/medias/upload",
   "loginOidcCustomerEndpoint": "/customers/oidc-login",
   "logoutCustomerEndpoint": "/customers/:customerId/logout",

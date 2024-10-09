@@ -25,13 +25,13 @@ export class FoodieEffects {
     this.actions$.pipe(
       ofType(FoodieActions.fetchPopular),
       switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean), take(1))),
+      tap(x=> console.log('loadPopulars:: ', x)),
       mergeMap((filters: any) =>
-          this.appService.getPopularSearches({city: filters.address.city, suburb: filters.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance }).pipe(
+          this.appService.getPopularSearches({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance }).pipe(
           map((popular: PopularResponse) => FoodieActions.fetchPopularSuccess({ popular })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
-      ),
-    ),
+      ),)
   );
 
   // Effect mediates the 'fetching the all cuisines'
@@ -77,6 +77,22 @@ export class FoodieEffects {
       ),
     ),
   );
+
+  // // Effect mediates the 'fetching the popular searches'
+  // loadSuburbName$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(FoodieActions.updateLocation),
+  //     tap(x=> console.log('updateLocation:: ', x)),
+  //     mergeMap((action: any) =>
+  //         this.appService.getSuburbNameFromLocation(action.latitude, action.longitude).pipe(
+  //         map((popular: PopularResponse) => FoodieActions.fetchPopularSuccess({ popular })),
+  //         catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
+  //       ),
+  //     ),
+  //   ),
+  //   {dispatch: false}
+  // );
+
   // Effect mediates the 'fetching the asked item by id'
   loadItems$ = createEffect(() =>
     this.actions$.pipe(

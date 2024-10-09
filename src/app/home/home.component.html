@@ -9,14 +9,11 @@
       <div class="d-flex justify-content-end text-secondary px-0">
         
         @if (suburbs$ | async; as suburbs) {
-          <div class=""> 
-            <!-- <button type="button" class="btn btn-primary" >Open modal</button> -->
-
+          <div class="d-flex"> 
             <a  class="cursor-pointer link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-medium d-flex justify-content-center "  (click)="openModal(template, suburbs)">
-              <span class="text-secondary">{{this.selectedSuburbs?.[0]?.name ?? 'Select suburb'}}</span>
+              <span class="text-secondary">{{this.selectedSuburb ?? 'Select suburb'}}</span>
               <span class="fx-icon fx-icon-down-arrow"></span>
             </a>
-
           </div>
         }
       </div>
@@ -730,18 +727,42 @@
 </div>
 
 <ng-template #template >
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Select location</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
   @if(modalService.config.initialState?.['suburbs']; as suburbs;){
-  <div class="modal-body text-center">
+  <div class="modal-body text-center my-3">
     <span class="">Select a suburb or location: </span>
-    <div class=" w-100">
-      <ng-multiselect-dropdown
+    <div class="my-2 w-100">
+      <div class="">
+        <!-- typeaheadGroupField="state" -->
+        <input [(ngModel)]="selectedSuburb"
+               [typeahead]="getAsArray(suburbs)"
+               typeaheadOptionField="name"
+               (typeaheadOnSelect)="onSuburbSelectionChange($event)"
+               [typeaheadItemTemplate]="customItemTemplate"
+               [typeaheadOrderBy]="suburbTypeAheadConfig"
+               [typeaheadSelectFirstItem]="true"
+               [typeaheadMinLength]="1"
+               class="form-control"
+               [ngModelOptions]="{ standalone: true }">
+      
+        <ng-template #customItemTemplate let-model="item">
+          <span><strong>{{model.name}}</strong> {{model.postcode}}</span>
+        </ng-template>
+      </div>
+      
+      <!-- <ng-multiselect-dropdown
         class="align-self-end m-1 m-md-2"
         [placeholder]="'Select suburb'"
         [settings]="suburbDropdownSettings"
         [data]="getAsArray(suburbs)" 
         [(ngModel)]="selectedSuburbs"
         [ngModelOptions]="{ standalone: true }">
-      </ng-multiselect-dropdown>
+      </ng-multiselect-dropdown> -->
     </div>
   </div>
 }

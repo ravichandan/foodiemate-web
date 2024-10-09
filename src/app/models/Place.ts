@@ -15,6 +15,7 @@ export interface Place {
   noOfReviews: number;
   // items: { [k: string]: Item };
   items: Item[];
+  item: Item;
   tags: { id: string; label: string }[];
   openingTimes: OpeningTimes;
   reviews: Review[];

@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, importProvidersFrom, inject, OnDestroy, OnInit, Provider, Renderer2, RendererFactory2, TemplateRef, ViewChild } from '@angular/core';
-import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, DecimalPipe, JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HoverClassDirective } from '../directives/hover-class.directive';
 import { AppService } from '../services/app.service';
@@ -24,13 +24,14 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ScrollPromptComponent } from '../cutil/scroll-prompt.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsModalRef, BsModalService, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
+import { TypeaheadModule, TypeaheadOrder } from 'ngx-bootstrap/typeahead';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [AsyncPipe, FormsModule,NgStyle, HoverClassDirective, NgForOf, NgIf, NgMultiSelectDropDownModule,
-    CollapseModule, ReactiveFormsModule, NgClass, DecimalPipe, NgbCarousel, NgbSlide, FaIconComponent, ScrollPromptComponent,
-    ScrollToDirective, ReplacePipe, NgTemplateOutlet, NgMultiSelectDropDownModule, NgSelectModule,ModalModule],
+    CollapseModule, ReactiveFormsModule, NgClass, DecimalPipe, JsonPipe, NgbCarousel, NgbSlide, FaIconComponent, ScrollPromptComponent,
+    ScrollToDirective, ReplacePipe, NgTemplateOutlet, NgMultiSelectDropDownModule, NgSelectModule,ModalModule, TypeaheadModule],
     
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -52,7 +53,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   searchKey: string | null;
   dietaries: any[] = [];
   selectedCuisines: any[] = [];
-  selectedSuburbs: any[] = [];
+  selectedSuburb: any;
   suburbsLength: number = 0;
   selectedDiets: any[] = [];
   selectedDistance: any;
@@ -64,6 +65,11 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 1,
     allowSearchFilter: true,
+  };
+  suburbTypeAheadConfig: TypeaheadOrder = {
+    direction: 'asc',
+    
+    field: 'name'
   };
   
   dropdownSettings: IDropdownSettings = {
@@ -121,7 +127,8 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
 
         this.selectedCuisines = !!params['cuisines'] ? params['cuisines'].split(',') : this.selectedCuisines;
         this.selectedDistance = !!params['distance'] ? params['distance'] : this.selectedDistance;
-        this.selectedSuburbs = !!params['suburbs'] ? params['suburbs'].split(',').map((sub: string) => suburbs!.find(s=> s?.name == sub)) : this.selectedSuburbs;
+        // this.selectedSuburb = !!params['suburbs'] ? params['suburbs'].split(',').map((sub: string) => suburbs!.find(s=> s?.name == sub)) : this.selectedSuburb;
+        this.selectedSuburb = params['suburbs'] ?? this.selectedSuburb;
 
         this.placesResponse.places = [];
         this.itemsResponse.items = [];
@@ -133,7 +140,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
           this.appService.searchPlaceWithName({
             placeName: this.searchKey,
             itemName: this.searchKey,
-            suburbs: this.suburbsLength == this.selectedSuburbs.length ? undefined : this.selectedSuburbs.map((x: Suburb) => x?.name),
+            suburbs: this.suburbsLength == this.selectedSuburb.length ? undefined : this.selectedSuburb.map((x: Suburb) => x?.name),
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
             distance: this.selectedDistance,
           })
@@ -153,7 +160,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
             );
 
           this.appService.searchItemsWithName({ itemName: this.searchKey,
-            suburbs: this.suburbsLength == this.selectedSuburbs.length ? undefined : this.selectedSuburbs.map((x: Suburb) => x?.name),
+            suburbs: this.suburbsLength == this.selectedSuburb.length ? undefined : this.selectedSuburb.map((x: Suburb) => x?.name),
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
             distance: this.selectedDistance
           })
@@ -195,20 +202,20 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   openModal(template: TemplateRef<void>, suburbs: any[]) {
     const initialState: ModalOptions = {
       initialState: {
-        suburbs: suburbs as any[],//['Open a modal with component', 'Pass your data', 'Do something else', '...'],
-        name: 'Chandan'
+        suburbs: suburbs as any[],
       },
-      class: 'modal-md '
+      class: 'modal-md h-75 mt-5',
+      animated: true
     };
 
     this.modalRef = this.modalService.show(template, initialState);
   }
 
-  popularItemSelected(element: Item) {
-    if (element.type === 'item') {
-      this.router.navigate(['items/' + element._id]);
+  popularItemSelected(element: Item|Place) {
+    if ((element.type === 'item') || (element as Place)['item'] !== undefined) {
+      this.router.navigate(['items/' + (element as Place).item]);
     } else {
-      this.router.navigate(['places/' + element.place._id]);
+      this.router.navigate(['places/' + element._id]);
     }
   }
 
@@ -221,7 +228,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
         { queryParams: { 
           search: searchKey, 
           cuisines: cuisinesStr, 
-          suburbs: this.selectedSuburbs?.map((x: Suburb) => x?.name).join(','), 
+          suburbs: this.selectedSuburb,
           distance: this.selectedDistance
         } },
       ));
@@ -252,6 +259,18 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   onDietSelectionChange(item: any) {
     this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
+    setTimeout(()=>{
+      const cuisinesStr = this.selectedCuisines?.join(',');
+      this.router.navigateByUrl('/', { skipLocationChange: true })
+        .then(() => this.router.navigate(
+          ['home'],
+          { queryParams: { 
+            cuisines: cuisinesStr, 
+            suburbs: this.selectedSuburb,
+            distance: this.selectedDistance
+          } },
+        ));
+    }, 0);
   }
 
 
@@ -259,6 +278,36 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     console.log('in onDistanceSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
+    setTimeout(()=>{
+      const cuisinesStr = this.selectedCuisines?.join(',');
+      this.router.navigateByUrl('/', { skipLocationChange: true })
+        .then(() => this.router.navigate(
+          ['home'],
+          { queryParams: { 
+            cuisines: cuisinesStr, 
+            suburbs: this.selectedSuburb,
+            distance: this.selectedDistance
+          } },
+        ));
+    }, 0);
+    
+  }
+
+  onSuburbSelectionChange($event: any) {
+    this.store.dispatch(FoodieActions.updateLocation({suburb: $event.item.name, postcode: $event.item.postcode}));
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
+    setTimeout(()=>{
+      const cuisinesStr = this.selectedCuisines?.join(',');
+      this.router.navigateByUrl('/', { skipLocationChange: true })
+        .then(() => this.router.navigate(
+          ['home'],
+          { queryParams: { 
+            cuisines: cuisinesStr, 
+            suburbs: this.selectedSuburb,
+            distance: this.selectedDistance
+          } },
+        ));
+    }, 0);
   }
 
   getAsArray = (suburbs: any): any[] => suburbs as any[]
