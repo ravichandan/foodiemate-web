@@ -294,6 +294,9 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   onSuburbSelectionChange($event: any) {
+    if(!$event.item?.name){
+      return ;
+    }
     this.store.dispatch(FoodieActions.updateLocation({suburb: $event.item.name, postcode: $event.item.postcode}));
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
     setTimeout(()=>{

@@ -746,7 +746,7 @@
                [typeaheadItemTemplate]="customItemTemplate"
                [typeaheadOrderBy]="suburbTypeAheadConfig"
                [typeaheadSelectFirstItem]="true"
-               [typeaheadMinLength]="1"
+               [typeaheadMinLength]="0"
                class="form-control"
                [ngModelOptions]="{ standalone: true }">
       
@@ -766,4 +766,7 @@
     </div>
   </div>
 }
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="modalRef?.hide()">Close</button>
+</div>
 </ng-template>
