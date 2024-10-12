@@ -3,13 +3,13 @@
 
 
     <!--      item title and ambience ratings-->
-    <div class=" card-body  text-theme-background rounded-top-1 ">
+    <div class=" card-body  text-theme-background rounded-top-1 cursor-pointer" (click)="goToPlaceDetail()">
       <div class="col-12 card-title ">
         <div class="  d-flex flex-column justify-content-between">
-          <span class="item-name fw-bolder fs-5 h5">{{ item.name }}</span>
-          <span class=" col-12 card-text d-flex align-items-center"><span class="fx-icon fx-icon-shop bg-light"></span>&nbsp;{{ item.places?.[0].placeName }}</span>
+          <span class="item-name fw-bolder fs-5 d-flex align-items-center" ><span class="fx-icon fx-icon-shop bg-light"></span>&nbsp;{{ item.places?.[0].placeName }}</span>
+          <!-- <span class=" col-12 card-text d-flex align-items-center"><span class="fx-icon fx-icon-shop bg-light"></span>&nbsp;{{ item.places?.[0].placeName }}</span> -->
           <div class="row gap-2 justify-content-between">
-            <p class="col-5 card-text d-flex align-items-center"><span class="fx-icon fx-icon-location bg-light"></span>&nbsp;{{ item.places?.[0].address?.suburb }}</p>
+            <p class="col-auto card-text d-flex align-items-center"><span class="fx-icon fx-icon-location bg-light"></span>&nbsp;{{ item.places?.[0].address?.suburb }}</p>
             <div class="service-container col-5 d-flex flex-column align-self-start">
 
               <div class="card-text  d-flex justify-content-end">
@@ -43,8 +43,8 @@
           <div class="vr"></div>
         </div>
         &nbsp;&nbsp;&nbsp;
-        <a href="#" class="cursor-pointer link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
-            config.allReviewPhotosLabel | replace : 'xxx' : (item.noOfReviewPhotos ?? '0')
+        <a (click)="openReviewMediasModal(template)" class="cursor-pointer link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{
+            config.allReviewPhotosLabel | replace : 'xxx' : item.noOfReviewPhotos ? item.noOfReviewPhotos : '0'
           }}</a>
       </div>
       <!--      }-->
@@ -127,7 +127,7 @@
 
               <div class="col-12 d-flex justify-content-between">
                 <!-- <span class="item-name fw-bolder fs-5">{{ item.name }}</span> -->
-                <span class="fs-5 fw-bolder">${{ item.price }}</span>
+                <span class="fs-5 fw-bolder">$&nbsp;{{ item.price }}</span>
               </div>
               <!--            <div class="col-12">-->
               <div class="col-11 col-sm-8 col-md-7 flex-column">
@@ -317,3 +317,35 @@
 <ng-container *ngIf="item">
   <ng-container *ngTemplateOutlet="itemListing; context: { $implicit: item }"></ng-container>
 </ng-container>
+
+
+
+<ng-template #template >
+  <div class="modal-wrapper h-100 bg-dark">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">All review photos/videos</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    @if(reviewMedias$ | async; as medias;){
+      {{medias.length}}
+      <div class="modal-body text-center my-3">
+        <carousel [isAnimated]="true">
+          <slide>
+            <img src="assets/images/nature/1.jpg" alt="first slide" style="display: block; width: 100%;">
+          </slide>
+          <slide>
+            <img src="assets/images/nature/2.jpg" alt="second slide" style="display: block; width: 100%;">
+          </slide>
+          <slide>
+            <img src="assets/images/nature/3.jpg" alt="third slide" style="display: block; width: 100%;">
+          </slide>
+        </carousel>
+      </div>
+    }
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="modalRef?.hide()">Close</button>
+    </div>
+  </div>
+</ng-template>

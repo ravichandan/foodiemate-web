@@ -147,6 +147,30 @@ export class AppService implements OnDestroy{
     );
   }
 
+
+  public getReviewMediasOfItem(args: { placeId: string; itemId: string;  pageSize?: number; pageNum?: number  }) {
+    console.log('in app.service, getReviewMediasOfItem, args:: ', args);
+    if (!args.itemId || !args.placeId) return of(undefined);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+
+    
+    
+    let params = new HttpParams();
+    params = params.append('pageSize', args.pageSize || 1);
+    params = params.append('pageNum', args.pageNum || 1);
+    
+    let url ;
+
+    url = join(this.getConfig().host, this.getConfig()
+      .reviewMediasOfItemEndpoint.replace(':itemId', args.itemId)
+      .replace(':placeId', args.placeId));
+
+    return this.http.get(url, { headers, params }).pipe(
+      // map((item: any) => ({data: items})),
+      tap((t: any) => console.log('getReviewMediasOfItem response:: ', t)),
+    );
+  }
+
   public fetchReviewsOfItemInAPlace(params: { placeId: string; itemId: string; pageSize?: number; pageNum?: number }) {
     if (!params.itemId || !params.placeId) return of(undefined);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });

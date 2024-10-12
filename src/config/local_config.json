@@ -19,6 +19,7 @@
   "itemOfAPlaceEndpoint": "/places/:placeId/items/:itemId",
   "reviewAnItemOfAPlaceEndpoint": "/places/:placeId/items/:itemId/reviews",
   "reviewAPlaceEndpoint": "/places/:placeId/reviews",
+  "reviewMediasOfItemEndpoint": "/places/:placeId/items/:itemId/review-medias",
   "feedbackAReviewEndpoint": "/reviews/:reviewId",
   "postAReviewEndpoint": "/reviews/",
   "searchForPlaceEndpoint": "/places/",

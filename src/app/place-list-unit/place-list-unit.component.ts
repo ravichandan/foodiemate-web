@@ -6,23 +6,27 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { DecimalPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe } from '@angular/common';
+import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe } from '@angular/common';
 import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../models/Place';
-import { Subject } from 'rxjs';
+import { Observable, Subject, take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { AppService } from '../services/app.service';
 import { Item } from '../models/Item';
 import { ReplacePipe } from '../directives/replace.pipe';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { Review } from '../models/Review';
 
 @Component({
   selector: 'app-place-list-unit',
   standalone: true,
-  imports: [DecimalPipe, NgForOf, NgbCarousel, NgbSlide, NgTemplateOutlet, NgIf, NgClass, SlicePipe, ReplacePipe, RouterLink],
+  imports: [DecimalPipe, AsyncPipe, NgForOf, NgbCarousel, CarouselModule, NgbSlide, NgTemplateOutlet, NgIf, NgClass, SlicePipe, ReplacePipe, RouterLink],
   templateUrl: './place-list-unit.component.html',
   styleUrl: './place-list-unit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -36,9 +40,16 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
   item: Item | undefined;
 
   appService= inject(AppService);
+  modalService: BsModalService = inject(BsModalService);
 
   @ViewChild('reviewTextCarousel') carousel: NgbCarousel | undefined;
   @ViewChild('reviewImgCarousel') reviewImgCarousel: NgbCarousel | undefined;
+
+  modalRef?: BsModalRef;
+  itemId: string ='';
+  placeId: string='';
+
+  reviewMedias$: Observable<Review[]|undefined> | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,9 +59,14 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
   ) {
     this.destroy$ = new Subject<any>();
     this.config = this.appService.getConfig();
+    
+    
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.placeId = this.item?.places?.[0]?._id ?? '';
+    this.itemId = this.item?._id ?? '';
+  }
 
   ngOnDestroy() {
     this.destroy$.next(true);
@@ -99,11 +115,10 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
 
     console.log('in place-list-unit.component-> goToItemDetail', this.item);
     let r = 'places/:placeId/items/:itemId';
-    if (this.item?.places?.[0]?._id)
-      r=r.replace(':placeId', this.item?.places?.[0]?._id);
-    if(this.item) {
-      r = r.replace(':itemId', this.item._id);
-    }
+    
+    r = r.replace(':placeId', this.placeId)
+    r = r.replace(':itemId', this.itemId);
+    
     this.router.navigate([r]).then();
 
 
@@ -113,8 +128,24 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
 
     console.log('in place-list-unit.component-> goToPlaceDetail', this.item);
     let r = 'places/:placeId';
-    if (this.item?.places?.[0]?._id)
-      r=r.replace(':placeId', this.item?.places?.[0]?._id);
+    r = r.replace(':placeId', this.placeId)
+    console.log('in place-list-unit.component-> going to: ', r);
+
     this.router.navigate([r]).then();
+  }
+
+  openReviewMediasModal(template: TemplateRef<void>, suburbs?: any[]) {
+    // this.reviewMedias$ = undefined;
+    this.reviewMedias$ = this.appService.getReviewMediasOfItem({placeId: this.placeId, itemId: this.itemId }).pipe(take(1));
+
+    const initialState: ModalOptions = {
+      initialState: {
+        suburbs: suburbs as any[],
+      },
+      class: 'modal-md modal-dialog-centered h-75',
+      animated: true
+    };
+
+    this.modalRef = this.modalService.show(template, initialState);
   }
 }
