@@ -328,19 +328,22 @@
         <span aria-hidden="true" class="visually-hidden">&times;</span>
       </button>
     </div>
-    @if(reviewMedias$ | async; as medias;){
-      {{medias.length}}
+    @if(reviewMedias$ | async; as reviews;){
+      {{reviews.length}}
       <div class="modal-body text-center my-3">
         <carousel [isAnimated]="true">
-          <slide>
-            <img src="assets/images/nature/1.jpg" alt="first slide" style="display: block; width: 100%;">
-          </slide>
-          <slide>
+          @for(review of reviews; track review;){
+            <slide>
+              <img [src]="config.bucketAccessEndpoint+'/'+review.medias[0].key" alt="Item image" class="rounded-circle d-block w-100" />
+            </slide>  
+          }
+          
+          <!-- <slide>
             <img src="assets/images/nature/2.jpg" alt="second slide" style="display: block; width: 100%;">
           </slide>
           <slide>
             <img src="assets/images/nature/3.jpg" alt="third slide" style="display: block; width: 100%;">
-          </slide>
+          </slide> -->
         </carousel>
       </div>
     }

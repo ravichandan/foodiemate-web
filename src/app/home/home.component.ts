@@ -140,7 +140,8 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
           this.appService.searchPlaceWithName({
             placeName: this.searchKey,
             itemName: this.searchKey,
-            suburbs: this.suburbsLength == this.selectedSuburb.length ? undefined : this.selectedSuburb.map((x: Suburb) => x?.name),
+            // suburbs: this.suburbsLength == this.selectedSuburb?.length ? undefined : this.selectedSuburb.map((x: Suburb) => x?.name),
+            suburbs: this.selectedSuburb?.name ?? undefined,
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
             distance: this.selectedDistance,
           })
@@ -160,7 +161,8 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
             );
 
           this.appService.searchItemsWithName({ itemName: this.searchKey,
-            suburbs: this.suburbsLength == this.selectedSuburb.length ? undefined : this.selectedSuburb.map((x: Suburb) => x?.name),
+            // suburbs: this.suburbsLength == this.selectedSuburb.length ? undefined : this.selectedSuburb.map((x: Suburb) => x?.name),
+            suburbs: this.selectedSuburb?.name ?? undefined,
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
             distance: this.selectedDistance
           })
