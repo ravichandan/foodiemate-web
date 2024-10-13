@@ -64,6 +64,7 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('in place-list-unit.component, item:: ', this.item);
     this.placeId = this.item?.places?.[0]?._id ?? '';
     this.itemId = this.item?._id ?? '';
   }
