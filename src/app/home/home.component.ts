@@ -165,8 +165,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
             suburbs: this.selectedSuburb?.name ?? undefined,
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
             distance: this.selectedDistance
-          })
-            .pipe(filter(Boolean), take(1))
+          }).pipe(filter(Boolean), take(1))
             .subscribe({
                 next: res => {
                   this.itemsResponse.items.push(...res.items);
@@ -244,9 +243,16 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.router.navigate(['places/' + place._id]).then();
   }
 
-  onViewItem(place: Place, item: Item) {
+  onViewItemInPlace(place: Place, item: Item) {
     if(place && item) {
       this.router.navigate(['places/' + place._id+'/items/'+item._id]).then();
+    }
+  }
+
+
+  onViewItem(item: Item) {
+    if(item) {
+      this.router.navigate(['items/'+item._id]).then();
     }
   }
 

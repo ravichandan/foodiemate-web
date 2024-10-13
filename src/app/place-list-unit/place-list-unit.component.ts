@@ -9,7 +9,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe } from '@angular/common';
+import { AsyncPipe, DecimalPipe, JsonPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe } from '@angular/common';
 import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../models/Place';
 import { Observable, Subject, take } from 'rxjs';
@@ -26,7 +26,7 @@ import { Review } from '../models/Review';
 @Component({
   selector: 'app-place-list-unit',
   standalone: true,
-  imports: [DecimalPipe, AsyncPipe, NgForOf, NgbCarousel, CarouselModule, NgbSlide, NgTemplateOutlet, NgIf, NgClass, SlicePipe, ReplacePipe, RouterLink],
+  imports: [DecimalPipe, AsyncPipe, JsonPipe, NgForOf, NgbCarousel, CarouselModule, NgbSlide, NgTemplateOutlet, NgIf, NgClass, SlicePipe, ReplacePipe, RouterLink],
   templateUrl: './place-list-unit.component.html',
   styleUrl: './place-list-unit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -135,17 +135,19 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
   }
 
   openReviewMediasModal(template: TemplateRef<void>, suburbs?: any[]) {
-    // this.reviewMedias$ = undefined;
-    this.reviewMedias$ = this.appService.getReviewMediasOfItem({placeId: this.placeId, itemId: this.itemId }).pipe(take(1));
+    if(this.item?.noOfReviewPhotos && this.item.noOfReviewPhotos > 0) {
+      
+      this.reviewMedias$ = this.appService.getReviewMediasOfItem({placeId: this.placeId, itemId: this.itemId }).pipe(take(1));
 
-    const initialState: ModalOptions = {
-      initialState: {
-        suburbs: suburbs as any[],
-      },
-      class: 'modal-md modal-dialog-centered h-75',
-      animated: true
-    };
+      const initialState: ModalOptions = {
+        initialState: {
+          suburbs: suburbs as any[],
+        },
+        class: 'modal-xl modal-dialog-centered h-75',
+        animated: true
+      };
 
-    this.modalRef = this.modalService.show(template, initialState);
+      this.modalRef = this.modalService.show(template, initialState);
+    }
   }
 }

@@ -156,7 +156,7 @@ export class AppService implements OnDestroy{
     
     
     let params = new HttpParams();
-    params = params.append('pageSize', args.pageSize || 1);
+    params = params.append('pageSize', args.pageSize || 30);
     params = params.append('pageNum', args.pageNum || 1);
     
     let url ;

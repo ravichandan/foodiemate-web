@@ -242,7 +242,7 @@
                         @for (number of [0, 1, 2]; track number) {
                           @if (!!items[number]) {
                             <div class="result-item-container d-flex justify-content-center flex-column"
-                              (click)="onViewItem(place, items[number])">
+                              (click)="onViewItemInPlace(place, items[number])">
                               <div class="d-flex align-items-center">
                                 <div
                                   class="result-place-img-wrapper d-flex align-items-center px-2 justify-content-center">
@@ -365,16 +365,16 @@
                 @for (item of itemsResponse.items; track item; let idx = $index) {
                   @if (!!item) {
                     <div
-                      class="card my-2 border-secondary cursor-pointer items-response-card"
+                      class="card my-2 border-secondary items-response-card"
                       >
                       <div class="row g-0">
                         <div class="text-darker-bg-theme">
                           <div class="card-body d-flex">
                             <!-- <div class="d-flex flex-column align-items-start align-content-start flex-grow-1"> -->
                               <div
-                                class="row gap-2 align-items-start align-content-start card-title flex-grow-1">
-                                <span class="col-12 fw-bold">{{ item.name }}</span>
-                                <span class="col-12 fst-italic">{{ item.description }}</span>
+                                class="row gap-2 align-items-start align-content-start card-title flex-grow-1 cursor-pointer  link-underline-light link-underline-opacity-75-hover" (click)="onViewItem(item)">
+                                <span class="col-12 fw-bold " >{{ item.name }}</span>
+                                <span class="col-12 fst-italic user-select-none">{{ item.description }}</span>
                               </div>
                             <!-- </div> -->
                           </div>

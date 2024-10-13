@@ -321,34 +321,40 @@
 
 
 <ng-template #template >
-  <div class="modal-wrapper h-100 bg-dark">
-    <div class="modal-header">
+  <div class="modal-wrapper h-100 text-bg-dark">
+    <div class="modal-header" data-bs-theme="dark">
       <h4 class="modal-title pull-left">All review photos/videos</h4>
-      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <button type="button" class="btn-close close pull-right text-light" aria-label="Close" (click)="modalRef?.hide()">
         <span aria-hidden="true" class="visually-hidden">&times;</span>
       </button>
     </div>
     @if(reviewMedias$ | async; as reviews;){
-      {{reviews.length}}
-      <div class="modal-body text-center my-3">
-        <carousel [isAnimated]="true">
+      <div class="modal-body text-center">
+        <carousel [isAnimated]="true" [interval]="0">
           @for(review of reviews; track review;){
             <slide>
-              <img [src]="config.bucketAccessEndpoint+'/'+review.medias[0].key" alt="Item image" class="rounded-circle d-block w-100" />
-            </slide>  
+              <img [src]="config.bucketAccessEndpoint+'/'+review.medias?.[0]?.key" alt="Item image" class="medias-modal-image d-block w-100">
+              <div class="carousel-caption d-block text-bg-dark opacity-75" >
+                <span class="d-flex flex-column">
+                  <h5 class="">&commat;{{review.customer.name?.split(' ')?.[0] | slice:0:11}} &nbsp;:</h5>
+                  <div class="d-flex flex-column">
+                    <span class="d-flex flex-row justify-content-center">
+                      <span><span class="fst-italic">Taste:&nbsp;</span> <span>{{review.taste | number: '1.1-1'}}<span class="fs-5">/</span>5</span> </span>
+                      <!-- <div class="dropdown-divider border-start"></div> -->
+                      <div class="vr mx-3"></div>
+
+                      <span><span class="fst-italic">Presentation:&nbsp; </span><span>{{review.presentation | number: '1.1-1'}}<span class="fs-5">/</span>5</span></span>
+                    </span>
+                  </div>
+                </span>
+                @if(review.description){
+                  <p>{{review.description}}</p>
+                }
+              </div>
+            </slide>
           }
-          
-          <!-- <slide>
-            <img src="assets/images/nature/2.jpg" alt="second slide" style="display: block; width: 100%;">
-          </slide>
-          <slide>
-            <img src="assets/images/nature/3.jpg" alt="third slide" style="display: block; width: 100%;">
-          </slide> -->
         </carousel>
       </div>
     }
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" (click)="modalRef?.hide()">Close</button>
-    </div>
   </div>
 </ng-template>
