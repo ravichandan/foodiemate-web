@@ -17,7 +17,7 @@ import { ItemResponse } from '../models/ItemResponse';
 import { ScrollToDirective } from '../directives/scrollTo.directive';
 import { ReplacePipe } from '../directives/replace.pipe';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { cuisinesSelector, popularsSelector, suburbsSelector } from '../selectors/foodie.selector';
+import { cuisinesSelector, currentSuburbSelector, popularsSelector, suburbsSelector } from '../selectors/foodie.selector';
 import { SuburbsResponse } from '../models/SuburbsResponse';
 import { Suburb } from '../models/Suburb';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -161,7 +161,6 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
             );
 
           this.appService.searchItemsWithName({ itemName: this.searchKey,
-            // suburbs: this.suburbsLength == this.selectedSuburb.length ? undefined : this.selectedSuburb.map((x: Suburb) => x?.name),
             suburbs: this.selectedSuburb?.name ?? undefined,
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
             distance: this.selectedDistance
@@ -187,14 +186,24 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log('in home.component ngOnInit:: ', this.searchInput);
+    console.log('In home.component ngOnInit(), this.searchInput:: ', this.searchInput);
 
     this.store.dispatch(FoodieActions.fetchPopular());
     this.store.dispatch(FoodieActions.fetchSuburbs({ city: 'Sydney' }));
-
+    this.suburbs$?.pipe(
+      filter(x => (!!x && !!x.length)),
+      switchMap(suburbs =>
+        this.store.select(currentSuburbSelector())
+          .pipe(
+            takeUntil(this.destroy$),
+            filter(Boolean),
+            tap(currSuburb => this.selectedSuburb = suburbs!.find(s=> s?.name === currSuburb)?.name),
+            filter(_=> !!this.selectedSuburb),
+            take(1)
+      )
+    )).subscribe();
   }
 
-  // }
   ngOnDestroy() {
     this.destroy$.next(true);
     this.store.dispatch(FoodieActions.pageDestroyed());
@@ -265,6 +274,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   onDietSelectionChange(item: any) {
+    console.log('in onDietSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
     setTimeout(()=>{
@@ -302,6 +312,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   onSuburbSelectionChange($event: any) {
+    console.log('in onSuburbSelectionChange, event:: ', $event);
     if(!$event.item?.name){
       return ;
     }

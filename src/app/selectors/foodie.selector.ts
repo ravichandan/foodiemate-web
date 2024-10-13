@@ -93,6 +93,13 @@ export const addressSelector = () =>
     },
   );
 
+
+export const currentSuburbSelector = () =>
+  createSelector(
+    (state: State) => state.address,
+    (address: Address) => address.suburb
+  );
+
 export const preloadReviewDataSelector = () =>
   createSelector(
     (state: State) => state,
