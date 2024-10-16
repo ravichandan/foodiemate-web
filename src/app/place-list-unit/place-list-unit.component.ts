@@ -151,4 +151,17 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
       this.modalRef = this.modalService.show(template, initialState);
     }
   }
+  getReviewMedias(item: any) {
+    const medias: any[] = [];
+    for (const review of item.reviews){
+      if(review.medias?.length){
+        for(const media of review.medias){
+          if(media.key){
+            medias.push(media);
+          }
+        }
+      }
+    }
+    return medias?.length ? medias: undefined;
+  }
 }
