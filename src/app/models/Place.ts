@@ -20,6 +20,7 @@ export interface Place {
   openingTimes: OpeningTimes;
   reviews: Review[];
   medias: Media[];
+  media: Media;
   address: Address;
   placeItem: any;
   placeItems: any;
