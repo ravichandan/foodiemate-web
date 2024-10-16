@@ -156,7 +156,7 @@ export class PlaceListUnitComponent implements OnInit, OnDestroy {
     for (const review of item.reviews){
       if(review.medias?.length){
         for(const media of review.medias){
-          if(media.key){
+          if(media?.key){
             medias.push(media);
           }
         }

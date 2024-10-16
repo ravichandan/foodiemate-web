@@ -73,7 +73,7 @@
                   @for '(media of review.medias; track media; ) { -->
                   <ng-template ngbSlide>
                     <div class="picsum-img-wrapper d-flex justify-content-center align-content-center text-bg-dark">
-                      @if (media.key) {
+                      @if (media?.key) {
                         <img
                           [src]="config.bucketAccessEndpoint+'/'+media.key"
                           alt="loading picture of the dish"
@@ -91,19 +91,20 @@
                 <!-- } -->
               } 
             </ngb-carousel>
-          } @else if (item?.media.key) {
+          } @else if (item?.media?.key) {
             <img
               [src]="config.bucketAccessEndpoint+'/'+item.media.key"
               alt="loading picture of the dish"
               class="card-img-top place-list-img w-100 img-fluid rounded-0" />
           }  @else {
-            <div class="picsum-img-wrapper d-flex justify-content-center">
-                <span class="text-secondary-emphasis ">
-                              <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
+            <div class="d-flex picsum-img-wrapper justify-content-center align-items-center  w-100 border-1  border-secondary">
+
+                <span                               class="text-secondary-emphasis px-2 result-place-img fx-icon fx-icon-no-image"                  >
+                              <!-- <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
                                    width="15rem"
                                    fill="#999999"><path
                                 d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h600v-600H180v600Zm56-97h489L578-473 446-302l-93-127-117 152Zm-56 97v-600 600Z" /></svg>
-                            </span>
+                            --></span> 
 
             </div>
           }
