@@ -10,7 +10,7 @@ import { NgClass } from '@angular/common';
     TooltipModule,
   ],
   template: `
-    <div class="to-top bg-light rounded-5" (click)="scrollToTop()" [ngClass]="{ 'show-scrollTop': windowScrolled }"
+    <div class="to-top bg-light rounded-5 z-2" (click)="scrollToTop()" [ngClass]="{ 'show-scrollTop': windowScrolled }"
          tooltip="Scroll to the top">
       <svg xmlns="http://www.w3.org/2000/svg" height="56px" viewBox="0 -960 960 960" width="56px" fill="currentcolor">
         <path
