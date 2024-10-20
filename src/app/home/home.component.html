@@ -739,7 +739,10 @@
     <div class="my-2 w-100">
       <div class="">
         <!-- typeaheadGroupField="state" -->
-        <input [(ngModel)]="selectedSuburb"
+        <!-- (typeaheadNoResults)="typeaheadNoResults($event)" -->
+
+        <input #suburbInput
+               [(ngModel)]="searchableSuburbInput"
                [typeahead]="getAsArray(suburbs)"
                typeaheadOptionField="name"
                (typeaheadOnSelect)="onSuburbSelectionChange($event)"
@@ -755,6 +758,7 @@
         <ng-template #customItemTemplate let-model="item">
           <span><strong>{{model.name}}</strong> {{model.postcode}}</span>
         </ng-template>
+        <span aria-label="Clear input" class="clear-input text-secondary fs-4" (click)="suburbInput.value=''">&times;</span>
       </div>
       
       <!-- <ng-multiselect-dropdown
@@ -767,8 +771,9 @@
       </ng-multiselect-dropdown> -->
     </div>
   </div>
-}
+} 
 <div class="modal-footer">
   <button type="button" class="btn btn-default" (click)="modalRef?.hide()">Close</button>
 </div>
+
 </ng-template>

@@ -37,9 +37,13 @@ import { TypeaheadModule, TypeaheadOrder } from 'ngx-bootstrap/typeahead';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
+buttonClicked(ele: any) {
+console.log('element:: ', ele)
+}
   config: any;
   @ViewChild('searchStr')
   searchInput: ElementRef | undefined;
+  searchableSuburbInput?: string;
   modalRef?: BsModalRef;
   modalService: BsModalService = inject(BsModalService);
 
@@ -128,6 +132,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
         this.selectedCuisines = !!params['cuisines'] ? params['cuisines'].split(',') : this.selectedCuisines;
         this.selectedDistance = !!params['distance'] ? params['distance'] : this.selectedDistance;
         // this.selectedSuburb = !!params['suburbs'] ? params['suburbs'].split(',').map((sub: string) => suburbs!.find(s=> s?.name == sub)) : this.selectedSuburb;
+        console.log('in route.queryparams, this.selectedSuburb:: ', this.selectedSuburb);
         this.selectedSuburb = params['suburbs'] ?? this.selectedSuburb;
 
         this.placesResponse.places = [];
@@ -210,6 +215,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   openModal(template: TemplateRef<void>, suburbs: any[]) {
+    console.log('in home.component, openModal');
     const initialState: ModalOptions = {
       initialState: {
         suburbs: suburbs as any[],
@@ -317,18 +323,18 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
       return ;
     }
     this.store.dispatch(FoodieActions.updateLocation({suburb: $event.item.name, postcode: $event.item.postcode}));
+    this.modalRef?.hide();
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
     setTimeout(()=>{
       const cuisinesStr = this.selectedCuisines?.join(',');
-      this.router.navigateByUrl('/', { skipLocationChange: false })
-        .then(() => this.router.navigate(
-          ['home'],
-          { queryParams: { 
-            cuisines: cuisinesStr, 
-            suburbs: this.selectedSuburb,
-            distance: this.selectedDistance
-          } },
-        ));
+        this.router.navigate(
+        ['home'],
+        { queryParams: { 
+          cuisines: cuisinesStr, 
+          suburbs: $event.value,
+          distance: this.selectedDistance
+        } },
+      );
     }, 0);
   }
 
