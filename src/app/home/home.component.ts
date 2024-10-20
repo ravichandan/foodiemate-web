@@ -182,7 +182,7 @@ export class HomeComponent implements OnDestroy, OnInit, AfterViewInit {
           this.searchInput.nativeElement.value = this.searchKey ?? null;
         }
       });
-    this.selectedDistance = this.config.distances[0];
+    this.selectedDistance = this.config.distances[this.config.distances.length-1];
   }
 
   ngOnInit() {
