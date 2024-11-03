@@ -66,13 +66,13 @@ export const customerReducer = createReducer(
 
 export const popularItemsReducer = createReducer(
   initialState.popularItems,
-  on(FoodieActions.fetchPopularSuccess, (oldState, { popular }) =>
+  on(FoodieActions.fetchPopularItemsSuccess, (oldState, { popular }) =>
     popular?.items?.map((item: Item) => ({ ...item, type: 'item' }) as Item),
   ),
 );
 export const popularPlacesReducer = createReducer(
   initialState.popularPlaces,
-  on(FoodieActions.fetchPopularSuccess, (oldState, { popular }) =>
+  on(FoodieActions.fetchPopularPlacesSuccess, (oldState, { popular }) =>
     popular?.places?.map(
       (place: Place) =>
         ({

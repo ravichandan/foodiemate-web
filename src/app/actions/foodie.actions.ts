@@ -12,8 +12,10 @@ import { SuburbsResponse } from '../models/SuburbsResponse';
 import { Location } from '../models/Location';
 
 export const ACTION_FETCH_POPULAR_REQUESTED = '[FoodieMate] Fetch Popular Requested';
-export const ACTION_FETCH_POPULAR = '[FoodieMate] Fetch Popular';
-export const ACTION_FETCH_POPULAR_SUCCESS = '[FoodieMate] Fetch Popular Success';
+export const ACTION_FETCH_POPULAR_ITEMS = '[FoodieMate] Fetch Popular Items';
+export const ACTION_FETCH_POPULAR_PLACES = '[FoodieMate] Fetch Popular Places';
+export const ACTION_FETCH_POPULAR_ITEMS_SUCCESS = '[FoodieMate] Fetch Popular Items Success';
+export const ACTION_FETCH_POPULAR_PLACES_SUCCESS = '[FoodieMate] Fetch Popular Places Success';
 export const ACTION_FETCH_CUISINES = '[FoodieMate] Fetch CUISINES';
 export const ACTION_FETCH_CUISINES_SUCCESS = '[FoodieMate] Fetch CUISINES Success';
 export const ACTION_FETCH_SUBURBS = '[FoodieMate] Fetch SUBURBS';
@@ -75,9 +77,11 @@ export const ACTION_CLEAR_ERROR = '[FoodieMate] CLEAR ERROR';
 export const ACTION_FAILED = '[FoodieMate] Failed';
 export const ACTION_PAGE_DESTROYED = '[FoodieMate] Page Destroyed';
 
-export const fetchPopular = createAction(ACTION_FETCH_POPULAR);
+export const fetchPopularItems = createAction(ACTION_FETCH_POPULAR_ITEMS);
+export const fetchPopularPlaces = createAction(ACTION_FETCH_POPULAR_PLACES);
 
-export const fetchPopularSuccess = createAction(ACTION_FETCH_POPULAR_SUCCESS, props<{ popular: PopularResponse }>());
+export const fetchPopularItemsSuccess = createAction(ACTION_FETCH_POPULAR_ITEMS_SUCCESS, props<{ popular: PopularResponse }>());
+export const fetchPopularPlacesSuccess = createAction(ACTION_FETCH_POPULAR_PLACES_SUCCESS, props<{ popular: PopularResponse }>());
 
 export const cuisinesFilterChange = createAction(ACTION_CUISINES_FILTER_CHANGE,
   props<{ cuisines: any[] }>(),

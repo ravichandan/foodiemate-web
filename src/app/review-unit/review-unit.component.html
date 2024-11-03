@@ -112,9 +112,7 @@
           <div class="review-photos-wrapper-holder">
             @for (media of review.medias; track media) {
               <img [src]="config.bucketAccessEndpoint+'/'+media.key" class="img-thumbnail" alt="Image" />
-              <!--          TODO remove the following two lines of img tag in prod-->
-              <img [src]="config.bucketAccessEndpoint+'/'+media.key" class="img-thumbnail" alt="Image" />
-              <img [src]="config.bucketAccessEndpoint+'/'+media.key" class="img-thumbnail" alt="Image" />
+
             }
           </div>
         </div>

@@ -36,10 +36,10 @@ export class AppService implements OnDestroy{
     return environment;
   }
 
-  public getPopularSearches(args: { city?: string; postcode?: string; suburb?: string; diets?: any[]; distance: number; }) {
-    console.log('in app.service, getPopularSearches() -> args', args);
+  public getPopularItems(args: { city?: string; postcode?: string; suburb?: string; diets?: any[]; distance: number; }) {
+    console.log('in app.service, getPopularItems() -> args', args);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    const url = join(this.getConfig().host, this.getConfig().popularSearchesEndpoint);
+    const url = join(this.getConfig().host, this.getConfig().popularItemsEndpoint);
     let params = new HttpParams();
     !!args?.city && (params =  params.append('city', args.city));
     !!args?.postcode && (params =  params.append('postcode', args.postcode));
@@ -54,7 +54,31 @@ export class AppService implements OnDestroy{
       const diets: string = args.diets.map(d=> d.value).filter(Boolean).join(',');
       !!diets && (params =  params.append('diets', diets));
     }
-    console.log('in app.service, getPopularSearches() -> params', params);
+    console.log('in app.service, getPopularItems() -> params', params);
+    return this.http
+      .get<PopularResponse>(url , { headers , params});//
+      // .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));
+  }
+
+  public getPopularPlaces(args: { city?: string; postcode?: string; suburb?: string; diets?: any[]; distance: number; }) {
+    console.log('in app.service, getPopularPlaces() -> args', args);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    const url = join(this.getConfig().host, this.getConfig().popularPlacesEndpoint);
+    let params = new HttpParams();
+    !!args?.city && (params =  params.append('city', args.city));
+    !!args?.postcode && (params =  params.append('postcode', args.postcode));
+    !!args?.suburb && (params =  params.append('suburb', args.suburb));
+    !!args?.distance && (params =  params.append('distance', args.distance));
+
+    // location query params
+    !!this.location && (params =  params.append('latitude', this.location.latitude));
+    !!this.location && (params =  params.append('longitude', this.location.longitude));
+
+    if(args?.diets){
+      const diets: string = args.diets.map(d=> d.value).filter(Boolean).join(',');
+      !!diets && (params =  params.append('diets', diets));
+    }
+    console.log('in app.service, getPopularPlaces() -> params', params);
     return this.http
       .get<PopularResponse>(url , { headers , params});//
       // .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));

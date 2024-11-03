@@ -21,14 +21,28 @@ export class FoodieEffects {
   private actions$: Actions<any> = inject(Actions);
 
   // Effect mediates the 'fetching the popular searches'
-  loadPopulars$ = createEffect(() =>
+  loadPopularItems$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(FoodieActions.fetchPopular),
+      ofType(FoodieActions.fetchPopularItems),
+      tap(x=> console.log('0000loadPopularItems:: ', x)),
       switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean), take(1))),
-      tap(x=> console.log('loadPopulars:: ', x)),
+      tap(x=> console.log('loadPopularItems:: ', x)),
       mergeMap((filters: any) =>
-          this.appService.getPopularSearches({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance }).pipe(
-          map((popular: PopularResponse) => FoodieActions.fetchPopularSuccess({ popular })),
+          this.appService.getPopularItems({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance }).pipe(
+          map((popular: PopularResponse) => FoodieActions.fetchPopularItemsSuccess({ popular })),
+          catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
+        ),
+      ),)
+  );
+
+  loadPopularPlaces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FoodieActions.fetchPopularPlaces),
+      switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean), take(1))),
+      tap(x=> console.log('loadPopularPlaces:: ', x)),
+      mergeMap((filters: any) =>
+          this.appService.getPopularPlaces({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance }).pipe(
+          map((popular: PopularResponse) => FoodieActions.fetchPopularPlacesSuccess({ popular })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
       ),)

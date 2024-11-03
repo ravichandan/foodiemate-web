@@ -17,7 +17,7 @@ import { ItemResponse } from '../models/ItemResponse';
 import { ScrollToDirective } from '../directives/scrollTo.directive';
 import { ReplacePipe } from '../directives/replace.pipe';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { cuisinesSelector, currentSuburbSelector, popularsSelector, suburbsSelector } from '../selectors/foodie.selector';
+import { cuisinesSelector, currentSuburbSelector, popularItemsSelector, popularPlacesSelector, suburbsSelector } from '../selectors/foodie.selector';
 import { SuburbsResponse } from '../models/SuburbsResponse';
 import { Suburb } from '../models/Suburb';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -48,7 +48,8 @@ console.log('element:: ', ele)
   modalService: BsModalService = inject(BsModalService);
 
   placesResponse$: Observable<PlacesResponse | undefined> | undefined;
-  popularSearches$: Observable<any | undefined> | undefined;
+  popularPlaces$: Observable<any | undefined> | undefined;
+  popularItems$: Observable<any | undefined> | undefined;
   // randomSuggestions: any[] | undefined;
   placesResponse: PlacesResponse = {} as PlacesResponse;
   itemsResponse: ItemResponse = {} as ItemResponse;
@@ -116,7 +117,8 @@ console.log('element:: ', ele)
     this.suburbs$ = this.store.select(suburbsSelector()).pipe(takeUntil(this.destroy$), filter(Boolean), map((suburbsResponse?: SuburbsResponse) => suburbsResponse?.suburbs), 
         tap(suburbs => this.suburbsLength = suburbs?.length ?? 0)
     );
-    this.popularSearches$ = this.store.select(popularsSelector()).pipe(takeUntil(this.destroy$));
+    this.popularItems$ = this.store.select(popularItemsSelector()).pipe(takeUntil(this.destroy$));
+    this.popularPlaces$ = this.store.select(popularPlacesSelector()).pipe(takeUntil(this.destroy$));
     this.dietaries = this.config.dietaries;
     this.placesResponse.places = [];
     this.searchKey = null;
@@ -193,7 +195,8 @@ console.log('element:: ', ele)
   ngOnInit() {
     console.log('In home.component ngOnInit(), this.searchInput:: ', this.searchInput);
 
-    this.store.dispatch(FoodieActions.fetchPopular());
+    this.store.dispatch(FoodieActions.fetchPopularItems());
+    this.store.dispatch(FoodieActions.fetchPopularPlaces());
     this.store.dispatch(FoodieActions.fetchSuburbs({ city: 'Sydney' }));
     this.suburbs$?.pipe(
       filter(x => (!!x && !!x.length)),
@@ -282,7 +285,8 @@ console.log('element:: ', ele)
   onDietSelectionChange(item: any) {
     console.log('in onDietSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
-    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems()), 0);
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularPlaces()), 0);
     setTimeout(()=>{
       const cuisinesStr = this.selectedCuisines?.join(',');
       this.router.navigateByUrl('/', { skipLocationChange: true })
@@ -301,7 +305,8 @@ console.log('element:: ', ele)
   onDistanceSelectionChange(item: any) {
     console.log('in onDistanceSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
-    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems()), 0);
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularPlaces()), 0);
     setTimeout(()=>{
       const cuisinesStr = this.selectedCuisines?.join(',');
       this.router.navigateByUrl('/', { skipLocationChange: true })
@@ -324,7 +329,8 @@ console.log('element:: ', ele)
     }
     this.store.dispatch(FoodieActions.updateLocation({suburb: $event.item.name, postcode: $event.item.postcode}));
     this.modalRef?.hide();
-    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopular()), 0);
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems()), 0);
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularPlaces()), 0);
     setTimeout(()=>{
       const cuisinesStr = this.selectedCuisines?.join(',');
         this.router.navigate(

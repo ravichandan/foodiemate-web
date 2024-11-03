@@ -4,7 +4,7 @@ import { HoverClassDirective } from '../directives/hover-class.directive';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import { customerSelector, popularsSelector } from '../selectors/foodie.selector';
+import { customerSelector } from '../selectors/foodie.selector';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { CustomerInfo } from '../models/CustomerInfo';
 import * as FoodieActions from '../actions/foodie.actions';

@@ -6,7 +6,7 @@ import { State } from '../reducers';
 import { AsyncPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, TitleCasePipe } from '@angular/common';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule } from '@angular/forms';
-import { cuisinesItemsSelector, cuisinesSelector, popularsSelector } from '../selectors/foodie.selector';
+import { cuisinesItemsSelector, cuisinesSelector } from '../selectors/foodie.selector';
 import * as FoodieActions from '../actions/foodie.actions';
 import { HoverClassDirective } from '../directives/hover-class.directive';
 import { CuisinesItems } from '../models/CuisinesItemsResponse';

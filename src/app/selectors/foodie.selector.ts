@@ -3,7 +3,7 @@ import { State } from '../reducers';
 import { Item } from '../models/Item';
 import { Place } from '../models/Place';
 import { Address } from '../models/Address';
-import { add } from 'lodash';
+// import { add } from 'lodash';
 
 /**
  * Selector that selects the popular items&places
@@ -24,12 +24,18 @@ export const popularsSelectorOld = createSelector(
   },
 );
 
-export const popularsSelector = () =>
+export const popularItemsSelector = () =>
+  createSelector(
+    (state: State) => state.popularItems,
+    (items) => items,
+  );
+
+  export const popularPlacesSelector = () =>
   createSelector(
     (state: State) => state.popularPlaces,
     (places) => places,
   );
-
+  
 
 export const searchFilterSelector = () =>
   createSelector(

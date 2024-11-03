@@ -563,13 +563,13 @@
 
       <div class="results-wrapper d-flex justify-content-center col-12 p-0">
         <!-- commenting popular results container for now-->
-        <div class="pop-container m-1 m-md-5 col-md-10 ">
-          <div class="pop-title fw-medium lead text-body-secondary">{{ config.popular_title }}</div>
-          <div class="pop-wrapper" *ngIf="popularSearches$ | async as resp">
+        <div class="pop-items-container m-1 m-md-5 col-md-10 ">
+          <div class="pop-title fw-medium lead text-body-secondary">{{ config.popular_items_title }}</div>
+          <div class="pop-wrapper" *ngIf="popularItems$ | async as resp">
             
             <div class="pop-items row">
 
-              @for(element of resp.slice(0,resp.length-2); track element;) {
+              @for(element of resp; track element;) {
                 @if(element) { 
                   <div class=" d-flex col-6 col-md-4 col-lg-3 px-0" >
                     <div class=" pop-item-wrapper w-100  m-2 ">
@@ -619,9 +619,18 @@
                   </div>
                 }
               }
-              <!-- Row entries for places -->
-              @if(resp.slice(resp.length-2,resp.length-1)[0]; as element; ){
-                @if(element.placeName){
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="pop-places-container m-1 m-md-5 col-md-10 ">
+          <div class="pop-title fw-medium lead text-body-secondary">{{ config.popular_places_title }}</div>
+          <div class="pop-wrapper" *ngIf="popularPlaces$ | async as resp">
+            
+            <div class="pop-items row">
+
+              @for(element of resp; track element;) {
+                @if(element) { 
                   <div class=" d-flex col-6 col-md-4 col-lg-3 px-0" >
                     <div class=" pop-item-wrapper   m-2 ">
                       <div class="pop-item card focus-ring " hover-classes="text-bg-light" (click)="popularItemSelected(element)">
@@ -652,8 +661,7 @@
                               >@if((element.ratingInfo.noOfRatings || element.ratingInfo.noOfReviews); as no){<span >&nbsp;({{no}})</span>}
                             </p>
                           }
-                        <!-- </div>
-                        <div class="card-body "> -->
+                       
                           <p class="  d-flex align-items-start  m-0">
                             <span class="popular-place-icon">
                               <span class="fx-icon fx-icon-shop bg-dark  "></span>
@@ -667,58 +675,7 @@
                   </div>
                 }
               }
-              @if(resp.slice(resp.length-1, resp.length)[0]; as element){
-                @if(element.placeName){
-                  <!-- {{JSON.stringify(element)}} -->
-                  <div class=" d-flex col-6 col-md-4 col-lg-3 px-0" >
-                    <div class=" pop-item-wrapper   m-2 ">
-                      <div class="pop-item card focus-ring " hover-classes="text-bg-light" (click)="popularItemSelected(element)">
-                        <div class="card-header pop-title text-darker-bg-theme justify-content-center text-center d-flex py-0 px-2">
-                          <p
-                            class="fw-bold text-truncate-2 d-flex align-items-center m-0">
-                            Best Ambience
-                          </p>
-                        </div>
-                        <div class="d-flex popular-item-img-wrapper justify-content-center align-items-center border-top border-bottom w-100 h-100 border-1  border-secondary">
-                          @if (element?.medias?.[0]?.key; as key) {
-                            <img
-                              [src]="config.bucketAccessEndpoint + '/' + key"
-                              class=" pop-img-top bg-no-img " 
-                              [alt]="element.placeName" />
-                          } @else {
-                            <span
-                              class="text-secondary-emphasis px-2 result-place-img fx-icon fx-icon-no-image">
-                            </span>
-                          }
-                        </div>
-                        <div class="card-body ps-2 pe-1 pb-2">
-                          @if(element.ratingInfo){
-                            <p class=" mb-2" style="font-size: 15px">
-                              Ambience: <span class=""
-                              ><span class=" fw-bold">{{ element.ratingInfo?.ambience | number: '1.0-1' }}</span
-                              ><span class="fs-5 ">/</span><span class="fw-normal">5</span></span
-                              >@if((element.ratingInfo.noOfRatings || element.ratingInfo.noOfReviews); as no){ <span 
-                                [ngStyle]="{'font-size': +no<100? '15px' : '14px'}">&nbsp;({{no}})</span>}
-                            </p>
-                          }
-                        <!-- </div>
-                        <div class="card-body "> -->
-                          <p
-                            class="  d-flex align-items-start  m-0"
-                            >
-                            <span class="popular-place-icon">
-                              <span class="fx-icon fx-icon-shop bg-dark "></span>
-                            </span>
-                            &nbsp;
-                            <span class="text-truncate-3 ps-1">{{ element.placeName }}</span>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                }
-              }
-              <!-- </div> -->
+
             </div>
           </div>
         </div>
