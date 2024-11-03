@@ -5,29 +5,10 @@ import { Place } from '../models/Place';
 import { Address } from '../models/Address';
 // import { add } from 'lodash';
 
-/**
- * Selector that selects the popular items&places
- *
- */
-export const popularsSelectorOld = createSelector(
-  (state: State) => state.popularItems,
-  (state: State) => state.popularPlaces,
-  (items: Array<Item> | undefined, places: Place[] | undefined) => {
-    let all: any[] = [];
-    if (!!items) {
-      all = all.concat(items);
-    }
-    if (!!places) {
-      all = all.concat(places);
-    }
-    return all.sort(() => 0.5 - Math.random());
-  },
-);
-
 export const popularItemsSelector = () =>
   createSelector(
     (state: State) => state.popularItems,
-    (items) => items,
+    (places) => places,
   );
 
   export const popularPlacesSelector = () =>
@@ -110,7 +91,7 @@ export const preloadReviewDataSelector = () =>
   createSelector(
     (state: State) => state,
     (state) => {
-      return { postReview: state.postReview, token: state.userInfo?.token } ?? {};
+      return { postReview: state.postReview, token: state.userInfo?.token };
     },
   );
 

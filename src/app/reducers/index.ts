@@ -20,7 +20,7 @@ export interface State {
   distanceFilter: number|undefined;
   includeSuburbsFilter: boolean|undefined;
   customer: CustomerInfo | undefined;
-  popularItems: Item[] | undefined;
+  popularItems: Place[] | undefined;
   popularPlaces: Place[] | undefined;
   cuisines: Cuisine[] | undefined;
   suburbs: SuburbsResponse | undefined;
@@ -67,7 +67,7 @@ export const customerReducer = createReducer(
 export const popularItemsReducer = createReducer(
   initialState.popularItems,
   on(FoodieActions.fetchPopularItemsSuccess, (oldState, { popular }) =>
-    popular?.items?.map((item: Item) => ({ ...item, type: 'item' }) as Item),
+    popular?.places?.map((item: Place) => ({ ...item }) as Place),
   ),
 );
 export const popularPlacesReducer = createReducer(
