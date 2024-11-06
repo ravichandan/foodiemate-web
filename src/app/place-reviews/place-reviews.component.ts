@@ -78,7 +78,7 @@ export class PlaceReviewsComponent implements OnInit, OnDestroy {
       map((x) => x?.reviews),
     );
 
-    this.route.paramMap
+    /* this.route.paramMap
       .pipe(
         // tap(x => console.log('in paramMap, params:: ')),
         takeUntil(this.destroy$),
@@ -89,9 +89,7 @@ export class PlaceReviewsComponent implements OnInit, OnDestroy {
         }),
       )
       .subscribe();
-
-    // this.reviews$ = selected$.pipe(
-    //     map(p => p?.reviews));
+    */
 
     console.log('in place-reviews.component, ngOninit');
     this.selectedReviewFilter = [this.config?.itemDetailFilterBy?.[0]];

@@ -100,7 +100,7 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
           console.log('in paramMap, params:: ', params);
           // this.selectedItemId = params.get('itemId');
           this.selectedPlaceId = params.get('placeId');
-          this.store.dispatch(FoodieActions.fetchPlace({ id: this.selectedPlaceId }));
+          this.store.dispatch(FoodieActions.fetchPlace({ id: this.selectedPlaceId, fetchMenu: true }));
         }),
       )
       .subscribe();

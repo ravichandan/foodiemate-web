@@ -128,16 +128,16 @@ export class ItemListComponent implements OnInit, OnDestroy {
       // _=> console.log('popular:: ', this.popularItems)
     );
 
-    this.route.paramMap
+    /*this.route.paramMap
       .pipe(
-        // tap(x => console.log('in paramMap, params:: ')),
+        tap(x => console.log('in paramMap, params:: ')),
         takeUntil(this.destroy$),
         tap((params: ParamMap) => {
           this.selectedPlaceId = params.get('placeId');
           this.store.dispatch(FoodieActions.fetchPlace({ id: this.selectedPlaceId, fetchMenu: true }));
         }),
       )
-      .subscribe();
+      .subscribe();*/
   }
 
   ngOnDestroy() {
