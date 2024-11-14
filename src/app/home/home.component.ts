@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, importProvidersFrom, inject, OnDestroy, OnInit, Provider, Renderer2, RendererFactory2, TemplateRef, ViewChild } from '@angular/core';
-import { AsyncPipe, DecimalPipe, JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, DecimalPipe, JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet, TitleCasePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HoverClassDirective } from '../directives/hover-class.directive';
 import { AppService } from '../services/app.service';
@@ -25,12 +25,13 @@ import { ScrollPromptComponent } from '../cutil/scroll-prompt.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsModalRef, BsModalService, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule, TypeaheadOrder } from 'ngx-bootstrap/typeahead';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AsyncPipe, FormsModule,NgStyle, HoverClassDirective, NgForOf, NgIf, NgMultiSelectDropDownModule,
-    CollapseModule, ReactiveFormsModule, NgClass, DecimalPipe, JsonPipe, NgbCarousel, NgbSlide, FaIconComponent, ScrollPromptComponent,
+  imports: [AsyncPipe, FormsModule,NgStyle, HoverClassDirective, NgForOf, NgIf, NgMultiSelectDropDownModule, NgxSpinnerModule,
+    CollapseModule, ReactiveFormsModule, NgClass, DecimalPipe, TitleCasePipe, NgbCarousel, NgbSlide, FaIconComponent, ScrollPromptComponent,
     ScrollToDirective, ReplacePipe, NgTemplateOutlet, NgMultiSelectDropDownModule, NgSelectModule,ModalModule, TypeaheadModule],
     
   templateUrl: './home.component.html',
@@ -110,6 +111,7 @@ console.log('element:: ', ele)
     private router: Router,
     private route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
+    private spinner: NgxSpinnerService
   ) {
     this.config = this.appService.getConfig();
     this.destroy$ = new Subject<any>();
@@ -137,12 +139,15 @@ console.log('element:: ', ele)
         console.log('in route.queryparams, this.selectedSuburb:: ', this.selectedSuburb);
         this.selectedSuburb = params['suburbs'] ?? this.selectedSuburb;
 
-        this.placesResponse.places = [];
-        this.itemsResponse.items = [];
+        // this.placesResponse.places = [];
+        // this.itemsResponse.items = [];
         this.errorMessage = undefined;
 
         if (!!this.searchKey) {
+          this.placesResponse = {} as PlacesResponse;
+          this.itemsResponse = {} as ItemResponse;
           console.log('sending for search with key:: ',this.searchKey);
+          this.spinner.show();
           // if(!this.dishFlag) {
           this.appService.searchPlaceWithName({
             placeName: this.searchKey,
@@ -155,13 +160,18 @@ console.log('element:: ', ele)
             .pipe(filter(Boolean), take(1))
             .subscribe({
                 next: res => {
-                  // this.placesResponse = {
+                  if(!this.placesResponse?.places) {
+                    this.placesResponse.places = [];
+                  }
+                  
                   this.placesResponse.places.push(...res.places);
                   this.placesResponse.size = res.size /*+ this.placesResponse.size*/;
                   this.placesResponse.page = res.page;
+                  this.spinner.hide();
                 },
                 error: err => {
                   console.log('Error while fetching places with given name:: ', err);
+                  this.spinner.hide();
                   this.errorMessage = err.error ?? err.message;
                 },
               },
@@ -174,6 +184,9 @@ console.log('element:: ', ele)
           }).pipe(filter(Boolean), take(1))
             .subscribe({
                 next: res => {
+                  if(!this.itemsResponse?.items) {
+                    this.itemsResponse.items = [];
+                  }
                   this.itemsResponse.items.push(...res.items);
                   this.itemsResponse.size = res.size /*+ this.placesResponse.size*/;
                   this.itemsResponse.page = res.page;

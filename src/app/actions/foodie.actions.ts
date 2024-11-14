@@ -69,6 +69,10 @@ export const ACTION_CUSTOMER_LOGOUT = '[FoodieMate] CUSTOMER LOGOUT';
 export const ACTION_CUSTOMER_LOGOUT_SUCCESS = '[FoodieMate] CUSTOMER LOGOUT SUCCESS';
 export const ACTION_ASK_FOR_VERIFICATION = '[FoodieMate] ASK CUSTOMER FOR VERIFICATION';
 
+export const ACTION_PROCESSING = '[FoodieMate] PROCESSING';
+export const ACTION_PROCESSING_DONE = '[FoodieMate] PROCESSING DONE';
+
+
 // export const ACTION_CHANGE_LOCATION = '[FoodieMate] CHANGE LOCATION';
 
 export const ACTION_UPDATE_ADDRESS = '[FoodieMate] UPDATE ADDRESS';
@@ -82,6 +86,11 @@ export const fetchPopularPlaces = createAction(ACTION_FETCH_POPULAR_PLACES);
 
 export const fetchPopularItemsSuccess = createAction(ACTION_FETCH_POPULAR_ITEMS_SUCCESS, props<{ popular: PopularResponse }>());
 export const fetchPopularPlacesSuccess = createAction(ACTION_FETCH_POPULAR_PLACES_SUCCESS, props<{ popular: PopularResponse }>());
+
+export const processing = createAction(ACTION_PROCESSING);
+
+export const processingDone = createAction(ACTION_PROCESSING_DONE);
+
 
 export const cuisinesFilterChange = createAction(ACTION_CUISINES_FILTER_CHANGE,
   props<{ cuisines: any[] }>(),

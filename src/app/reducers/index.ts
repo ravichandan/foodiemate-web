@@ -31,6 +31,7 @@ export interface State {
   correlationId: string | undefined;
   loggedIn: boolean;
   userInfo: any;
+  processing: boolean;
   error: any;
 }
 
@@ -54,6 +55,7 @@ export const initialState: State = {
   correlationId: undefined,
   loggedIn: false,
   userInfo: undefined,
+  processing: false,
   error: undefined,
 };
 
@@ -323,6 +325,17 @@ export const userInfoReducer = createReducer(
     return newState.userInfo;
   }),
 );
+export const processingReducer = createReducer(
+  initialState.processing,
+  on(FoodieActions.fetchPlacesOfItem, (oldState, {  }) =>  true ),
+  on(FoodieActions.fetchPopularItems, (oldState, {  }) =>  true ),
+  on(FoodieActions.fetchPopularPlaces, (oldState, {  }) =>  true ),
+
+  on(FoodieActions.fetchPlacesOfItemSuccess, (oldState, {  }) =>  false ),
+  on(FoodieActions.fetchPopularItemsSuccess, (oldState, {  }) =>  false ),
+  on(FoodieActions.fetchPopularPlacesSuccess, (oldState, {  }) =>  false ),
+  
+);
 
 export const errorReducer = createReducer(
   initialState.error,
@@ -364,6 +377,7 @@ export const reducers: ActionReducerMap<State> = {
   correlationId: correlationIdReducer,
   loggedIn: loginReducer,
   userInfo: userInfoReducer,
+  processing: processingReducer,
   error: errorReducer,
 };
 
