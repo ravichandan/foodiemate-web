@@ -350,7 +350,7 @@
             }
           </div>
         } @else {
-          @if(errorMessage){
+          @if(errorMessage || (placesResponse && placesResponse.places)){
             <div class="p-3">
               <span class="fw-medium"
                 >{{ config.general.noMatchingPlaces }}: <span class="fw-bold">{{ searchKey }}</span></span
@@ -363,7 +363,7 @@
                 color = "#000" 
                 type = "ball-spin-clockwise-fade" 
                 [fullScreen] = "false">
-                <p class="my-2"> Fetching... </p>
+                <!-- <p class="my-2"> Fetching... </p> --> 
               </ngx-spinner>
             </div>
           }  
@@ -564,7 +564,7 @@
                 }
             </div>
         } @else {
-          @if(errorMessage){
+          @if(errorMessage || (itemsResponse && itemsResponse.items)){
             <div class="p-3">
               <span class="fst-italic fw-medium"
                 >{{ config.general.noMatchingItems }}: <span class="fw-bold">{{ searchKey }}</span></span
@@ -577,7 +577,7 @@
                 color = "#000" 
                 type = "ball-spin-clockwise-fade" 
                 [fullScreen] = "false">
-                <p class="my-2" > Fetching... </p>
+                <!-- <p class="my-2" > Fetching... </p> -->
               </ngx-spinner>
             </div>
           }
