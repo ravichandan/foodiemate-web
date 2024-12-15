@@ -123,6 +123,7 @@ console.log('element:: ', ele)
     this.popularPlaces$ = this.store.select(popularPlacesSelector()).pipe(takeUntil(this.destroy$));
     this.dietaries = this.config.dietaries;
     this.placesResponse.places = [];
+    this.route.queryParams.pipe(tap(x=> console.log('raw query params:: ', x))).subscribe();
     this.searchKey = null;
     this.suburbs$
       .pipe(takeUntil(this.destroy$),
@@ -131,6 +132,7 @@ console.log('element:: ', ele)
       )
       .subscribe(( { suburbs, params }) => {
 
+        console.log('In routeZZZ  C    .queryparams, params:: ', params);
         this.searchKey = params!['search'];
 
         this.selectedCuisines = !!params['cuisines'] ? params['cuisines'].split(',') : this.selectedCuisines;
@@ -259,6 +261,7 @@ console.log('element:: ', ele)
         ['home'],
         { queryParams: { 
           search: searchKey, 
+          key: searchKey, 
           cuisines: cuisinesStr, 
           suburbs: this.selectedSuburb,
           distance: this.selectedDistance
@@ -295,44 +298,44 @@ console.log('element:: ', ele)
     this.cdRef.detectChanges();
   }
 
-  onDietSelectionChange(item: any) {
-    console.log('in onDietSelectionChange, item:: ', item);
-    this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
+  onSelectionChange() {
+    console.log('onselection change', this.searchKey);
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems()), 0);
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularPlaces()), 0);
     setTimeout(()=>{
+      const dietsStr = this.selectedDiets?.map(d=>d?.name)?.join(',');
       const cuisinesStr = this.selectedCuisines?.join(',');
+      const key = this.searchKey;
       this.router.navigateByUrl('/', { skipLocationChange: true })
         .then(() => this.router.navigate(
           ['home'],
           { queryParams: { 
-            cuisines: cuisinesStr, 
+            cuisines: cuisinesStr,
+            diets: dietsStr,
+            search: key,
             suburbs: this.selectedSuburb,
             distance: this.selectedDistance
           } },
         ));
     }, 0);
   }
+  onDietSelectionChange(item: any) {
+    console.log('in onDietSelectionChange, item:: ', item);
+    this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
+    this.onSelectionChange();
+  }
+
+  onCuisineSelectionChange(item: any) {
+    console.log('in onDietSelectionChange, item:: ', item);
+    this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
+    this.onSelectionChange();
+  }
 
 
   onDistanceSelectionChange(item: any) {
     console.log('in onDistanceSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
-    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems()), 0);
-    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularPlaces()), 0);
-    setTimeout(()=>{
-      const cuisinesStr = this.selectedCuisines?.join(',');
-      this.router.navigateByUrl('/', { skipLocationChange: true })
-        .then(() => this.router.navigate(
-          ['home'],
-          { queryParams: { 
-            cuisines: cuisinesStr, 
-            suburbs: this.selectedSuburb,
-            distance: this.selectedDistance
-          } },
-        ));
-    }, 0);
-    
+    this.onSelectionChange();
   }
 
   onSuburbSelectionChange($event: any) {
@@ -342,19 +345,7 @@ console.log('element:: ', ele)
     }
     this.store.dispatch(FoodieActions.updateLocation({suburb: $event.item.name, postcode: $event.item.postcode}));
     this.modalRef?.hide();
-    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems()), 0);
-    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularPlaces()), 0);
-    setTimeout(()=>{
-      const cuisinesStr = this.selectedCuisines?.join(',');
-        this.router.navigate(
-        ['home'],
-        { queryParams: { 
-          cuisines: cuisinesStr, 
-          suburbs: $event.value,
-          distance: this.selectedDistance
-        } },
-      );
-    }, 0);
+    this.onSelectionChange();
   }
 
   getAsArray = (suburbs: any): any[] => suburbs as any[]
