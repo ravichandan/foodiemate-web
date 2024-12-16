@@ -154,6 +154,8 @@ console.log('element:: ', ele)
           this.appService.searchPlaceWithName({
             placeName: this.searchKey,
             itemName: this.searchKey,
+            dietaries: this.selectedDiets,
+            cuisines: this.selectedCuisines,
             // suburbs: this.suburbsLength == this.selectedSuburb?.length ? undefined : this.selectedSuburb.map((x: Suburb) => x?.name),
             suburbs: this.selectedSuburb?.name ?? undefined,
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
@@ -181,6 +183,8 @@ console.log('element:: ', ele)
 
           this.appService.searchItemsWithName({ itemName: this.searchKey,
             suburbs: this.selectedSuburb?.name ?? undefined,
+            dietaries: this.selectedDiets,
+            cuisines: this.selectedCuisines,
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
             distance: this.selectedDistance
           }).pipe(filter(Boolean), take(1))
