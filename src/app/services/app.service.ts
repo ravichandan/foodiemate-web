@@ -320,7 +320,7 @@ export class AppService implements OnDestroy{
     }
 
     if(args.dietaries?.length) {
-      params = params.append('dietaries', args.dietaries.join(','));
+      params = params.append('dietaries', args.dietaries.map(x=> x.value).join(','));
     }
 
     if(args.cuisines?.length) {
