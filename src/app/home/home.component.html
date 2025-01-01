@@ -607,7 +607,9 @@
                           <p
                             class="fw-bold text-truncate-2 d-flex align-items-center m-0"
                             [ngClass]="{ 'fs-smaller': element.name?.length > 20 }">
-                            @if(element.name){{{ element.name | titlecase }}} @else{Best service: }
+                            @if(element.name){{{ element.name | titlecase }}} @else{
+                              
+                             }
                           </p>
                         </div>
                         <div class="d-flex popular-item-img-wrapper justify-content-center align-items-center border-top border-bottom w-100 h-100 border-1  border-secondary">
@@ -666,7 +668,10 @@
                         <div class="card-header pop-title text-darker-bg-theme justify-content-center text-center d-flex py-0 px-2">
                           <p
                             class="fw-bold text-truncate-2 d-flex align-items-center m-0">
-                            Best service
+                            <span class="popular-place-icon">
+                              <span class="fx-icon fx-icon-shop bg-light  "></span>
+                            </span>
+                            &nbsp; {{element.placeName}} 
                           </p>
                         </div>
                         <div class="d-flex popular-item-img-wrapper justify-content-center align-items-center border-top border-bottom w-100 h-100 border-1  border-secondary">
@@ -691,13 +696,13 @@
                             </p>
                           }
                        
-                          <p class="  d-flex align-items-start  m-0">
+                          <!-- <p class="  d-flex align-items-start  m-0">
                             <span class="popular-place-icon">
                               <span class="fx-icon fx-icon-shop bg-dark  "></span>
                             </span>
                             &nbsp;
                             <span class="text-truncate-3 ps-1">{{ element.placeName }}</span>
-                          </p>
+                          </p> -->
                         </div>
                       </div>
                     </div>
