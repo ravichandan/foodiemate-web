@@ -695,7 +695,7 @@
                   <div class=" d-flex col-6 col-md-4 col-lg-3 px-0" >
                     <div class=" pop-item-wrapper w-100 m-2 ">
                       <div class="pop-item card focus-ring " hover-classes="text-bg-light" (click)="popularItemSelected(element)">
-                        <div class="card-header pop-title text-darker-bg-theme justify-content-center text-center d-flex py-0 px-2">
+                        <div class="card-header pop-title text-bg-dark  justify-content-center text-center d-flex py-0 px-2">
                           <p
                             class="fw-bold text-truncate-2 d-flex align-items-center m-0">
                             <span class="popular-place-icon">
@@ -717,14 +717,20 @@
                           }
                         </div>
                         <div class="card-body pe-2 pb-2">
-                          @if(element.ratingInfo){
-                            <p class=" mb-2" >
+                          <!-- @if(element.ratingInfo){ -->
+                            <p class=" mb-0" >
                               Service: <span class=""
-                              ><span class=" fw-bold">{{ element.ratingInfo?.service | number: '1.0-1' }}</span
+                              ><span class=" fw-bold">{{ element.ratingInfo?.service ?? 0 | number: '1.0-1' }}</span
                               ><span class="fs-5 ">/</span><span class="fw-normal">5</span></span
-                              >@if((element.ratingInfo.noOfRatings || element.ratingInfo.noOfReviews); as no){<span >&nbsp;({{no}})</span>}
+                              >@if((element.ratingInfo?.noOfRatings || element.ratingInfo?.noOfReviews); as no){<span >&nbsp;({{no ?? 0}})</span>}
                             </p>
-                          }
+                            <p class=" mb-2" >
+                              Ambience: <span class=""
+                              ><span class=" fw-bold">{{ element.ratingInfo?.ambience ?? 0 | number: '1.0-1' }}</span
+                              ><span class="fs-5 ">/</span><span class="fw-normal">5</span></span
+                              >@if((element.ratingInfo?.noOfRatings || element.ratingInfo?.noOfReviews); as no){<span >&nbsp;({{no ?? 0}})</span>}
+                            </p>
+                          <!-- } -->
                        
                           <!-- <p class="  d-flex align-items-start  m-0">
                             <span class="popular-place-icon">
