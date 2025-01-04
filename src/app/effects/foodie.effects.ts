@@ -24,16 +24,18 @@ export class FoodieEffects {
   loadPopularItems$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FoodieActions.fetchPopularItems),
-      tap(x=> console.log('0000loadPopularItems:: ', x)),
-      switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean), take(1))),
-      tap(x=> console.log('loadPopularItems:: ', x)),
-      mergeMap((filters: any) =>
-          this.appService.getPopularItems({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance }).pipe(
+      switchMap((action) =>
+       this.store.select(searchFilterSelector()).pipe(
+        filter(Boolean), take(1),
+        tap(x=> console.log('loadPopularItems:: ', x)),
+        mergeMap((filters: any) =>
+          this.appService.getPopularItems({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance, pageNum: action.pageNum, pageSize: action.pageSize }).pipe(
           tap((popular: PopularResponse) => console.log('popular items response:: ,', popular)),
           map((popular: PopularResponse) => FoodieActions.fetchPopularItemsSuccess({ popular })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
-      ),)
+      ))
+    ))
   );
 
   loadPopularPlaces$ = createEffect(() =>

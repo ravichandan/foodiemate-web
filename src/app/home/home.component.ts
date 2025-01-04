@@ -17,7 +17,7 @@ import { ItemResponse } from '../models/ItemResponse';
 import { ScrollToDirective } from '../directives/scrollTo.directive';
 import { ReplacePipe } from '../directives/replace.pipe';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { cuisinesSelector, currentSuburbSelector, popularItemsSelector, popularPlacesSelector, suburbsSelector } from '../selectors/foodie.selector';
+import { addressSelector, cuisinesSelector, currentSuburbSelector, popularItemsSelector, popularPlacesSelector, suburbsSelector } from '../selectors/foodie.selector';
 import { SuburbsResponse } from '../models/SuburbsResponse';
 import { Suburb } from '../models/Suburb';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -61,6 +61,11 @@ console.log('element:: ', ele)
   selectedCuisines: any[] = [];
   selectedSuburb: any;
   suburbsLength: number = 0;
+  popularItemsPageNum = 1;
+  popularItemsPageSize = 8;
+  popularPlacesPageNum = 1;
+  popularPlacesPageSize = 8;
+  morePopularItemsInProgress = false;
   selectedDiets: any[] = [];
   selectedDistance: any;
   suburbDropdownSettings: IDropdownSettings = {
@@ -98,6 +103,7 @@ console.log('element:: ', ele)
 
   };
   cuisines$: Observable<any> | undefined;
+  addressInState$: Observable<any> | undefined;
   suburbs$: Observable<Suburb[] | undefined> | undefined;
   isCollapsed = true;
   includeSurroundingSuburbs = true;
@@ -116,14 +122,15 @@ console.log('element:: ', ele)
     this.config = this.appService.getConfig();
     this.destroy$ = new Subject<any>();
     this.cuisines$ = this.store.select(cuisinesSelector()).pipe(takeUntil(this.destroy$));
+    this.addressInState$ = this.store.select(addressSelector()).pipe(takeUntil(this.destroy$));
     this.suburbs$ = this.store.select(suburbsSelector()).pipe(takeUntil(this.destroy$), filter(Boolean), map((suburbsResponse?: SuburbsResponse) => suburbsResponse?.suburbs), 
         tap(suburbs => this.suburbsLength = suburbs?.length ?? 0)
     );
-    this.popularItems$ = this.store.select(popularItemsSelector()).pipe(takeUntil(this.destroy$));
+    this.popularItems$ = this.store.select(popularItemsSelector()).pipe(takeUntil(this.destroy$), tap(_ => this.morePopularItemsInProgress = false));
     this.popularPlaces$ = this.store.select(popularPlacesSelector()).pipe(takeUntil(this.destroy$));
     this.dietaries = this.config.dietaries;
     this.placesResponse.places = [];
-    this.route.queryParams.pipe(tap(x=> console.log('raw query params:: ', x))).subscribe();
+    this.route.queryParams.pipe(tap(x => console.log('raw query params:: ', x))).subscribe();
     this.searchKey = null;
     this.suburbs$
       .pipe(takeUntil(this.destroy$),
@@ -132,7 +139,7 @@ console.log('element:: ', ele)
       )
       .subscribe(( { suburbs, params }) => {
 
-        console.log('In routeZZZ  C    .queryparams, params:: ', params);
+        console.log('In route.queryparams, params:: ', params);
         this.searchKey = params!['search'];
 
         this.selectedCuisines = !!params['cuisines'] ? params['cuisines'].split(',') : this.selectedCuisines;
@@ -194,7 +201,7 @@ console.log('element:: ', ele)
                     this.itemsResponse.items = [];
                   }
                   this.itemsResponse.items.push(...res.items);
-                  this.itemsResponse.size = res.size /*+ this.placesResponse.size*/;
+                  this.itemsResponse.size = res.size;
                   this.itemsResponse.page = res.page;
                 },
                 error: err => {
@@ -214,7 +221,7 @@ console.log('element:: ', ele)
   ngOnInit() {
     console.log('In home.component ngOnInit(), this.searchInput:: ', this.searchInput);
 
-    this.store.dispatch(FoodieActions.fetchPopularItems());
+    this.store.dispatch(FoodieActions.fetchPopularItems({})); 
     this.store.dispatch(FoodieActions.fetchPopularPlaces());
     this.store.dispatch(FoodieActions.fetchSuburbs({ city: 'Sydney' }));
     this.suburbs$?.pipe(
@@ -304,7 +311,7 @@ console.log('element:: ', ele)
 
   onSelectionChange() {
     console.log('onselection change', this.searchKey);
-    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems()), 0);
+    // setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularPlaces()), 0);
     setTimeout(()=>{
       const dietsStr = this.selectedDiets?.map(d=>d?.name)?.join(',');
@@ -323,15 +330,41 @@ console.log('element:: ', ele)
         ));
     }, 0);
   }
+
+  onMorePopularItems(hasModal?: boolean, template?: any, suburbs?: any): void {
+    if(hasModal && template&& suburbs){
+      this.openModal(template, suburbs);
+      this.modalRef?.onHide?.subscribe(_ => {
+        this.morePopularItemsInProgress = true;
+        this.cdRef.detectChanges();
+        ++this.popularItemsPageNum;
+        // setTimeout(()=> {
+        this.store.dispatch(FoodieActions.fetchPopularItems({pageNum: this.popularItemsPageNum, pageSize: this.popularItemsPageSize}));
+          // }, 0); 
+      });
+    } else {
+      this.morePopularItemsInProgress = true;
+      this.cdRef.detectChanges();
+      ++this.popularItemsPageNum;
+      setTimeout(()=> {
+          this.store.dispatch(FoodieActions.fetchPopularItems({pageNum: this.popularItemsPageNum, pageSize: this.popularItemsPageSize}));
+        }, 0);
+    } 
+  }
+
+
+
   onDietSelectionChange(item: any) {
     console.log('in onDietSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.onSelectionChange();
   }
 
   onCuisineSelectionChange(item: any) {
     console.log('in onDietSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.onSelectionChange();
   }
 
@@ -339,6 +372,7 @@ console.log('element:: ', ele)
   onDistanceSelectionChange(item: any) {
     console.log('in onDistanceSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.onSelectionChange();
   }
 
@@ -348,6 +382,7 @@ console.log('element:: ', ele)
       return ;
     }
     this.store.dispatch(FoodieActions.updateLocation({suburb: $event.item.name, postcode: $event.item.postcode}));
+    setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.modalRef?.hide();
     this.onSelectionChange();
   }

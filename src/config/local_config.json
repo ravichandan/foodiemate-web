@@ -470,7 +470,8 @@
     "viewFullMenu": "View full menu",
     "moreDetails": "More Details",
     "sortByTaste": "Sort by taste",
-    "includeSurroundingSuburbs": "Include surrounding suburbs"
+    "includeSurroundingSuburbs": "Include surrounding suburbs",
+    "morePopularItemsLabel": "More items"
   },
   "hideCuisineMenu": true,
   "hideLeftNavigationMenu": true,

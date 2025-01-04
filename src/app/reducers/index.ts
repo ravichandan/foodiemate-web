@@ -44,7 +44,7 @@ export const initialState: State = {
   dietsFilter: undefined,
   distanceFilter: undefined,
   includeSuburbsFilter: undefined,
-  popularItems: undefined,
+  popularItems: [],
   popularPlaces: undefined,
   cuisines: undefined,
   suburbs: undefined,
@@ -69,7 +69,7 @@ export const customerReducer = createReducer(
 export const popularItemsReducer = createReducer(
   initialState.popularItems,
   on(FoodieActions.fetchPopularItemsSuccess, (oldState, { popular }) =>
-    popular?.items?.map((item: Item) => ({ ...item }) as Item),
+    oldState?.concat(popular?.items?.map((item: Item) => ({ ...item }) as Item)),
   ),
 );
 export const popularPlacesReducer = createReducer(

@@ -36,7 +36,7 @@ export class AppService implements OnDestroy{
     return environment;
   }
 
-  public getPopularItems(args: { city?: string; postcode?: string; suburb?: string; diets?: any[]; distance: number; }) {
+  public getPopularItems(args: { city?: string; postcode?: string; suburb?: string; diets?: any[]; distance: number; pageSize?: number; pageNum?: number }) {
     console.log('in app.service, getPopularItems() -> args', args);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     const url = join(this.getConfig().host, this.getConfig().popularItemsEndpoint);
@@ -51,9 +51,13 @@ export class AppService implements OnDestroy{
     !!this.location && (params =  params.append('longitude', this.location.longitude));
 
     if(args?.diets){
-      const diets: string = args.diets.map(d=> d.value).filter(Boolean).join(',');
+      const diets: string = args.diets.map(d => d.value).filter(Boolean).join(',');
       !!diets && (params =  params.append('diets', diets));
     }
+
+    params = params.append('pageSize', args.pageSize || 8);
+    params = params.append('pageNum', args.pageNum || 1);
+
     console.log('in app.service, getPopularItems() -> params', params);
     return this.http
       .get<PopularResponse>(url , { headers , params});//
