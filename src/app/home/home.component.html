@@ -6,14 +6,26 @@
 <div class="search-container row m-0 gap-4 py-2 py-md-5 my-md-4">
   <div class="col-12 py-2 px-0 d-flex justify-content-center">
     <form class="row gap-3 m-0 col-12 col-md-10 p-0" #homeSearchForm (ngSubmit)="search(searchStr)">
-      <div class="d-flex justify-content-end text-secondary px-0">
+      <div class="d-flex justify-content-between text-secondary px-0">
         
         @if (suburbs$ | async; as suburbs) {
           <div class="d-flex"> 
             <a  class="cursor-pointer link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-medium d-flex justify-content-center "  (click)="openModal(template, suburbs)">
-              <span class="text-secondary">{{this.selectedSuburb ?? 'Select suburb'}}</span>
+              <span class="text-secondary">{{this.selectedSuburb ?? 'Select suburb' | titlecase}}</span>
               <span class="fx-icon fx-icon-down-arrow"></span>
             </a>
+          </div>
+        }
+
+
+        @if (!!config.distanceOptions?.length) {
+          <div class=" d-flex gap-3 align-items-center">
+            <span class="text-secondary">Distance (kms)</span>
+            <ng-select [items]="config.distances" [(ngModel)]="selectedDistance" [ngModelOptions]="{standalone: true}"
+              (change)="onDistanceSelectionChange($event)"
+              [searchable]="false" [clearable]="false">
+            </ng-select>
+
           </div>
         }
       </div>
@@ -94,18 +106,7 @@
                 </ng-multiselect-dropdown>
               </div>
             }
-            
 
-            @if (!!config.distanceOptions?.length) {
-              <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center m-1 m-md-2 p-0">
-                <span class="text-secondary">Distance (kms)</span>
-                <ng-select [items]="config.distances" [(ngModel)]="selectedDistance" [ngModelOptions]="{standalone: true}"
-                  (change)="onDistanceSelectionChange($event)"
-                  [searchable]="false" [clearable]="false">
-                </ng-select>
-    
-              </div>
-            }
             <!--          <div class="surrounding-suburbs-toggle d-flex " >-->
             <div class="fx-toggle d-flex align-items-center col-12 col-md-auto p-1">
               <input
@@ -119,14 +120,6 @@
               <label for="switch">{{ config.general.includeSurroundingSuburbs }}</label>
               <span class="ps-2 text-secondary">{{ config.general.includeSurroundingSuburbs }}</span>
             </div>
-            <!--          </div>-->
-            <!--          <div class="new-check-v16">-->
-            <!--            <label class="control control&#45;&#45;checkbox">{{ config.general.includeSurroundingSuburbs }}-->
-            <!--              <input type="checkbox" checked="checked" [(ngModel)]="includeSurroundingSuburbs"-->
-            <!--                     (change)="includeSurroundingSuburbs=false">-->
-            <!--              <div class="control__indicator"></div>-->
-            <!--            </label>-->
-            <!--          </div>-->
           </div>
         </div>
 
@@ -667,7 +660,7 @@
                     @if (suburbs$ | async; as suburbs) {
                       <!-- <div class="d-flex">  -->
                         <a  class="cursor-pointer link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-medium d-flex justify-content-start " (click)="onMorePopularItems(true, template, suburbs)">
-                          <span class="text-secondary">{{config.general.morePopularItemsLabel}}</span>
+                          <span class="text-secondary ">{{config.general.morePopularItemsLabel}}</span>
                         </a>
                       <!-- </div> -->
                     }
@@ -769,6 +762,7 @@
         <!-- (typeaheadNoResults)="typeaheadNoResults($event)" -->
 
         <input #suburbInput
+               id="suburbInput"
                [(ngModel)]="searchableSuburbInput"
                [typeahead]="getAsArray(suburbs)"
                typeaheadOptionField="name"
@@ -780,12 +774,13 @@
                [typeaheadOptionsInScrollableView]="11"
                [typeaheadMinLength]="0"
                class="form-control"
-               [ngModelOptions]="{ standalone: true }">
+               [ngModelOptions]="{ standalone: true }"
+               autofocus>
       
         <ng-template #customItemTemplate let-model="item">
-          <span><strong>{{model.name}}</strong> {{model.postcode}}</span>
+          <span><strong>{{model.name | titlecase}}</strong> {{model.postcode}}</span>
         </ng-template>
-        <span aria-label="Clear input" class="clear-input text-secondary fs-4" (click)="suburbInput.value=''">&times;</span>
+        <span aria-label="Clear input" class="clear-input text-secondary cursor-pointer fs-4" (click)="suburbInput.value=''">&times;</span>
       </div>
       
       <!-- <ng-multiselect-dropdown

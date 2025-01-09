@@ -6,10 +6,10 @@
     <div class=" card-body  text-theme-background rounded-top-1 cursor-pointer" (click)="goToPlaceDetail()">
       <div class="flex-grow-1 card-title ">
         <div class="  d-flex flex-column justify-content-between">
-          <span class="item-name fw-bolder  d-flex align-items-center" ><span class="fx-icon fx-icon-shop bg-light"></span>&nbsp;{{ item.places?.[0].placeName }}</span>
+          <span class="item-name fw-bolder  d-flex align-items-center" ><span class="fx-icon fx-icon-shop bg-light"></span>&nbsp;{{ item.places?.[0].placeName | titlecase }}</span>
           <!-- <span class=" col-12 card-text d-flex align-items-center"><span class="fx-icon fx-icon-shop bg-light"></span>&nbsp;{{ item.places?.[0].placeName }}</span> -->
           <div class="row gap-2 justify-content-between">
-            <p class="col-auto card-text d-flex align-items-center"><span class="fx-icon fx-icon-location bg-light"></span>&nbsp;{{ item.places?.[0].address?.suburb }}</p>
+            <p class="col-auto card-text d-flex align-items-center"><span class="fx-icon fx-icon-location bg-light"></span>&nbsp;{{ item.places?.[0].address?.suburb | titlecase }}</p>
             <div class="service-container col-5 d-flex flex-column align-self-start">
 
               <div class="card-text  d-flex justify-content-end">

@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { itemSelector } from '../selectors/foodie.selector';
 import * as FoodieActions from '../actions/foodie.actions';
-import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, DecimalPipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, TitleCasePipe } from '@angular/common';
 import { NgbCarouselModule, NgbScrollSpyModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlaceListUnitComponent } from '../place-list-unit/place-list-unit.component';
 import { ReplacePipe } from '../directives/replace.pipe';
@@ -23,6 +23,7 @@ import { Item } from '../models/Item';
   imports: [
     NgIf,
     AsyncPipe,
+    TitleCasePipe,
     NgTemplateOutlet,
     DecimalPipe,
     NgForOf,

@@ -164,7 +164,7 @@ console.log('element:: ', ele)
             dietaries: this.selectedDiets,
             cuisines: this.selectedCuisines,
             // suburbs: this.suburbsLength == this.selectedSuburb?.length ? undefined : this.selectedSuburb.map((x: Suburb) => x?.name),
-            suburbs: this.selectedSuburb?.name ?? undefined,
+            suburbs: this.selectedSuburb ?? undefined,
             includeSurroundingSuburbs: this.includeSurroundingSuburbs,
             distance: this.selectedDistance,
           })
@@ -224,18 +224,15 @@ console.log('element:: ', ele)
     this.store.dispatch(FoodieActions.fetchPopularItems({})); 
     this.store.dispatch(FoodieActions.fetchPopularPlaces());
     this.store.dispatch(FoodieActions.fetchSuburbs({ city: 'Sydney' }));
-    this.suburbs$?.pipe(
-      filter(x => (!!x && !!x.length)),
-      switchMap(suburbs =>
         this.store.select(currentSuburbSelector())
           .pipe(
             takeUntil(this.destroy$),
             filter(Boolean),
-            tap(currSuburb => this.selectedSuburb = suburbs!.find(s=> s?.name === currSuburb)?.name),
+            tap(currSuburb => this.selectedSuburb = currSuburb),
+            tap(_=> this.onSelectionChange()),
             filter(_=> !!this.selectedSuburb),
             take(1)
-      )
-    )).subscribe();
+    ).subscribe();
   }
 
   ngOnDestroy() {
@@ -254,6 +251,7 @@ console.log('element:: ', ele)
     };
 
     this.modalRef = this.modalService.show(template, initialState);
+    setTimeout(()=> document.getElementById("suburbInput")?.focus(), 10); // focus on suburb input in the modal 
   }
 
   popularItemSelected(element: Item|Place) {
@@ -381,6 +379,7 @@ console.log('element:: ', ele)
     if(!$event.item?.name){
       return ;
     }
+    this.selectedSuburb = $event.item?.name;
     this.store.dispatch(FoodieActions.updateLocation({suburb: $event.item.name, postcode: $event.item.postcode}));
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.modalRef?.hide();
