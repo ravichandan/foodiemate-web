@@ -19,7 +19,7 @@
 
 
         @if (!!config.distanceOptions?.length) {
-          <div class=" d-flex gap-3 align-items-center">
+          <div class=" d-flex gap-2 align-items-center distance-dropdown-block">
             <span class="text-secondary">Distance (kms)</span>
             <ng-select [items]="config.distances" [(ngModel)]="selectedDistance" [ngModelOptions]="{standalone: true}"
               (change)="onDistanceSelectionChange($event)"
@@ -107,8 +107,9 @@
               </div>
             }
 
-            <!--          <div class="surrounding-suburbs-toggle d-flex " >-->
-            <div class="fx-toggle d-flex align-items-center col-12 col-md-auto p-1">
+            <!-- commenting out the below 'include surrounding suburbs' checkbox
+            as, as of 13-jan, we have decided to use only distance. -->
+            <!-- <div class="fx-toggle d-flex align-items-center col-12 col-md-auto p-1">
               <input
                 type="checkbox"
                 id="switch"
@@ -119,7 +120,7 @@
                 class="d-inline" />
               <label for="switch">{{ config.general.includeSurroundingSuburbs }}</label>
               <span class="ps-2 text-secondary">{{ config.general.includeSurroundingSuburbs }}</span>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -583,8 +584,7 @@
     </div>
   } @else{
 
-      <div class="results-wrapper d-flex flex-column justify-content-center col-12 p-0">
-        <!-- commenting popular results container for now-->
+      <div class="results-wrapper d-flex flex-column justify-content-center col-12 gap-3 p-0">
         <div class="pop-items-container m-1 m-md-5 col-md-10 ">
           <div class="pop-title fw-medium lead text-body-secondary">{{ config.popular_items_title }}</div>
           <div class="pop-wrapper" *ngIf="popularItems$ | async as resp">
@@ -636,6 +636,14 @@
                             </span>
                             &nbsp;
                             <span class="text-truncate-3 ps-1">{{ element.place.placeName }}</span>
+                          </p>
+                          <p
+                          class="  d-flex align-items-start align-content-start m-0"
+                          >
+                            @if(element?.place?.distance) {
+                              <span class="fx-icon fx-icon-location " style="max-width: 20px; max-height: 20px; position: relative; left: -1px; top: 1px;"></span>
+                              <span>{{(+element.place.distance/1000) | number : '1.1-1'}} kms</span>
+                            }
                           </p>
                         </div>
                       </div>

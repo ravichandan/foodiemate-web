@@ -68,10 +68,14 @@ export const customerReducer = createReducer(
 
 export const popularItemsReducer = createReducer(
   initialState.popularItems,
-  on(FoodieActions.fetchPopularItemsSuccess, (oldState, { popular }) =>
-    oldState?.concat(popular?.items?.map((item: Item) => ({ ...item }) as Item)),
+  on(FoodieActions.fetchPopularItemsSuccess, (oldState, { popular, replace }) =>
+    replace 
+      ? popular?.items?.map((item: Item) => ({ ...item }) as Item)
+      : oldState?.concat(popular?.items?.map((item: Item) => ({ ...item }) as Item))
+    ,
   ),
 );
+
 export const popularPlacesReducer = createReducer(
   initialState.popularPlaces,
   on(FoodieActions.fetchPopularPlacesSuccess, (oldState, { popular }) =>

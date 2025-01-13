@@ -31,7 +31,7 @@ export class FoodieEffects {
         mergeMap((filters: any) =>
           this.appService.getPopularItems({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance, pageNum: action.pageNum, pageSize: action.pageSize }).pipe(
           tap((popular: PopularResponse) => console.log('popular items response:: ,', popular)),
-          map((popular: PopularResponse) => FoodieActions.fetchPopularItemsSuccess({ popular })),
+          map((popular: PopularResponse) => FoodieActions.fetchPopularItemsSuccess({ popular: popular, replace: !action?.pageNum })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),
       ))

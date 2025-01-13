@@ -144,6 +144,11 @@ console.log('element:: ', ele)
 
         this.selectedCuisines = !!params['cuisines'] ? params['cuisines'].split(',') : this.selectedCuisines;
         this.selectedDistance = !!params['distance'] ? params['distance'] : this.selectedDistance;
+        if(this.selectedDistance) {
+          this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
+          setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
+        }
+        // ssss
         // this.selectedSuburb = !!params['suburbs'] ? params['suburbs'].split(',').map((sub: string) => suburbs!.find(s=> s?.name == sub)) : this.selectedSuburb;
         console.log('in route.queryparams, this.selectedSuburb:: ', this.selectedSuburb);
         this.selectedSuburb = params['suburbs'] ?? this.selectedSuburb;
@@ -216,6 +221,9 @@ console.log('element:: ', ele)
         }
       });
     this.selectedDistance = this.config.distances[this.config.distances.length-1];
+    if(!!this.selectedDistance) {
+      // this.onDistanceSelectionChange();
+    }
   }
 
   ngOnInit() {
@@ -224,21 +232,21 @@ console.log('element:: ', ele)
     this.store.dispatch(FoodieActions.fetchPopularItems({})); 
     this.store.dispatch(FoodieActions.fetchPopularPlaces());
     this.store.dispatch(FoodieActions.fetchSuburbs({ city: 'Sydney' }));
-        this.store.select(currentSuburbSelector())
-          .pipe(
-            takeUntil(this.destroy$),
-            filter(Boolean),
-            tap(currSuburb => this.selectedSuburb = currSuburb),
-            tap(_=> this.onSelectionChange()),
-            filter(_=> !!this.selectedSuburb),
-            take(1)
+    this.store.select(currentSuburbSelector())
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(Boolean),
+        tap(currSuburb => !this.selectedSuburb ? this.selectedSuburb = currSuburb : null),
+        tap(_=> this.onSelectionChange()),
+        filter(_=> !!this.selectedSuburb),
+        take(1)
     ).subscribe();
   }
 
   ngOnDestroy() {
     this.destroy$.next(true);
     this.store.dispatch(FoodieActions.pageDestroyed());
-  }
+  } 
 
   openModal(template: TemplateRef<void>, suburbs: any[]) {
     console.log('in home.component, openModal');
@@ -335,7 +343,7 @@ console.log('element:: ', ele)
       this.modalRef?.onHide?.subscribe(_ => {
         this.morePopularItemsInProgress = true;
         this.cdRef.detectChanges();
-        ++this.popularItemsPageNum;
+        // ++this.popularItemsPageNum;
         // setTimeout(()=> {
         this.store.dispatch(FoodieActions.fetchPopularItems({pageNum: this.popularItemsPageNum, pageSize: this.popularItemsPageSize}));
           // }, 0); 
@@ -367,8 +375,8 @@ console.log('element:: ', ele)
   }
 
 
-  onDistanceSelectionChange(item: any) {
-    console.log('in onDistanceSelectionChange, item:: ', item);
+  onDistanceSelectionChange(item?: any) {
+    // console.log('in onDistanceSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.onSelectionChange();

@@ -45,6 +45,7 @@ export class AppService implements OnDestroy{
     !!args?.postcode && (params =  params.append('postcode', args.postcode));
     !!args?.suburb && (params =  params.append('suburb', args.suburb));
     !!args?.distance && (params =  params.append('distance', args.distance));
+    params =  params.append('state', 'nsw');
 
     // location query params
     !!this.location && (params =  params.append('latitude', this.location.latitude));
@@ -73,7 +74,7 @@ export class AppService implements OnDestroy{
     !!args?.postcode && (params =  params.append('postcode', args.postcode));
     !!args?.suburb && (params =  params.append('suburb', args.suburb));
     !!args?.distance && (params =  params.append('distance', args.distance));
-
+    params =  params.append('state', 'nsw');
     // location query params
     !!this.location && (params =  params.append('latitude', this.location.latitude));
     !!this.location && (params =  params.append('longitude', this.location.longitude));

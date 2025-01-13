@@ -84,7 +84,7 @@ export const ACTION_PAGE_DESTROYED = '[FoodieMate] Page Destroyed';
 export const fetchPopularItems = createAction(ACTION_FETCH_POPULAR_ITEMS, props<{pageNum?: number, pageSize?: number}>());
 export const fetchPopularPlaces = createAction(ACTION_FETCH_POPULAR_PLACES);
 
-export const fetchPopularItemsSuccess = createAction(ACTION_FETCH_POPULAR_ITEMS_SUCCESS, props<{ popular: PopularResponse }>());
+export const fetchPopularItemsSuccess = createAction(ACTION_FETCH_POPULAR_ITEMS_SUCCESS, props<{ popular: PopularResponse, replace: boolean }>());
 export const fetchPopularPlacesSuccess = createAction(ACTION_FETCH_POPULAR_PLACES_SUCCESS, props<{ popular: PopularResponse }>());
 
 export const processing = createAction(ACTION_PROCESSING);
