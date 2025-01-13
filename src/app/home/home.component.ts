@@ -146,7 +146,10 @@ console.log('element:: ', ele)
         this.selectedDistance = !!params['distance'] ? params['distance'] : this.selectedDistance;
         if(this.selectedDistance) {
           this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
-          setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
+          setTimeout(()=> {
+            this.store.dispatch(FoodieActions.fetchPopularItems({}));
+            this.store.dispatch(FoodieActions.fetchPopularPlaces());
+          }, 0);
         }
         // ssss
         // this.selectedSuburb = !!params['suburbs'] ? params['suburbs'].split(',').map((sub: string) => suburbs!.find(s=> s?.name == sub)) : this.selectedSuburb;
