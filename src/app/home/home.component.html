@@ -9,7 +9,7 @@
       <div class="d-flex justify-content-between text-secondary px-0">
         
         @if (suburbs$ | async; as suburbs) {
-          <div class="d-flex"> 
+          <div class="d-flex align-items-center"> 
             <a  class="cursor-pointer link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover fw-medium d-flex justify-content-center "  (click)="openModal(template, suburbs)">
               <span class="text-secondary">{{this.selectedSuburb ?? 'Select suburb' | titlecase}}</span>
               <span class="fx-icon fx-icon-down-arrow"></span>
@@ -63,9 +63,9 @@
           class="border border-light-subtle border-1 rounded-1 p-2 my-2">
           <!--        <span class="text-secondary">Filters:</span>-->
 
-          <div class="row gap-2 m-0 my-3">
+          <div class="row gap-3 m-0 my-2">
             @if (cuisines$ | async; as cuisines) {
-              <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center m-1 m-md-2 p-0">
+              <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center justify-content-between m-0 p-0">
                 <span class="text-secondary">Choose cuisines</span>
                 <ng-multiselect-dropdown
                   class="text-secondary"
@@ -80,10 +80,10 @@
               </div>
             }
             @if (dietaries) {
-              <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center m-1 m-md-2 p-0">
-                <span class="text-secondary">Dietary requirements</span>
+              <div class="flex-grow-1 col-12 col-md-auto d-flex gap-3 align-items-center justify-content-between m-0 p-0">
+                <span class="text-secondary">Dietaries</span>
                 <ng-multiselect-dropdown
-                  class="flex-grow-1 m-1 m-md-2 text-secondary"
+                  class="fflex-grow-1 mm-1 mm-md-2 remove-useless-classes text-secondary"
                   [placeholder]="'----'"
                   [settings]="dropdownSettings"
                   [data]="dietaries"
