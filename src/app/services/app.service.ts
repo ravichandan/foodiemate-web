@@ -272,7 +272,7 @@ export class AppService implements OnDestroy{
     );
   }
 
-  public searchPlaceWithName(args: { placeName: string,itemName?: string, suburbs?: string[], dietaries? : any[], cuisines?: string[], includeSurroundingSuburbs?: boolean, distance?: number }): Observable<PlacesResponse| undefined> {
+  public searchPlaceWithName(args: { placeName: string,itemName?: string, suburbs?: string, dietaries? : any[], cuisines?: string[], includeSurroundingSuburbs?: boolean, distance?: number }): Observable<PlacesResponse| undefined> {
     console.log(
       'in app.service->searchPlaceWithName args:: ',args
     )
@@ -287,7 +287,7 @@ export class AppService implements OnDestroy{
       params = params.append('itemName', args.itemName);
     }
     if(args.suburbs?.length) {
-      params = params.append('suburbs', args.suburbs.join(','));
+      params = params.append('suburbs', args.suburbs);//.join(','));
       params = params.append('includeSurroundingSuburbs', !!args.includeSurroundingSuburbs);
     }
 
