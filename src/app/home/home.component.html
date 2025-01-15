@@ -584,8 +584,8 @@
     </div>
   } @else{
 
-      <div class="results-wrapper d-flex flex-column justify-content-center col-12 gap-3 p-0">
-        <div class="pop-items-container m-1 m-md-5 col-md-10 ">
+      <div class="results-wrapper d-flex flex-column justify-content-center col-12 gap-3 p-0 align-items-center">
+        <div class="pop-items-container col-md-10 ">
           <div class="pop-title fw-medium lead text-body-secondary">{{ config.popular_items_title }}</div>
           <div class="pop-wrapper" *ngIf="popularItems$ | async as resp">
             
@@ -692,7 +692,7 @@
             
           </div>
         </div>
-        <div class="pop-places-container m-1 m-md-5 col-md-10 ">
+        <div class="pop-places-container col-md-10 ">
           <div class="pop-title fw-medium lead text-body-secondary">{{ config.popular_places_title }}</div>
           <div class="pop-wrapper" *ngIf="popularPlaces$ | async as resp">
             
@@ -709,7 +709,7 @@
                             <span class="popular-place-icon">
                               <span class="fx-icon fx-icon-shop bg-light  "></span>
                             </span>
-                            &nbsp; {{element.placeName}} 
+                            &nbsp; {{element.placeName | replace : 'Restaurant' : ''}} 
                           </p>
                         </div>
                         <div class="d-flex popular-item-img-wrapper justify-content-center align-items-center border-top border-bottom w-100 h-100 border-1  border-secondary">

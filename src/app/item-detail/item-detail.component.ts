@@ -7,7 +7,7 @@ import { Item } from '../models/Item';
 import * as FoodieActions from '../actions/foodie.actions';
 import { itemDetailOfAPlaceSelector, placeItemFromItemDataSelector } from '../selectors/foodie.selector';
 import { Place } from '../models/Place';
-import { AsyncPipe, DecimalPipe, LowerCasePipe, NgForOf, NgIf, TitleCasePipe } from '@angular/common';
+import { AsyncPipe, DecimalPipe, JsonPipe, LowerCasePipe, NgForOf, NgIf, TitleCasePipe } from '@angular/common';
 import { Review } from '../models/Review';
 import { NgbCarousel, NgbSlide, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +32,7 @@ import { AppService } from '../services/app.service';
     NgbTooltipModule,
     LowerCasePipe,
     TitleCasePipe,
+    JsonPipe
   ],
   templateUrl: './item-detail.component.html',
   styleUrl: './item-detail.component.scss',

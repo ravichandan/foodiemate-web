@@ -7,22 +7,22 @@
           <div class="row gap-2 align-items-start ">
 
             <!-- item, place name-->
-            <div class="col-7 col-md-9">
+            <div class="col-12 col-md-9">
               <div class="col-12 my-1">
                 <span class="place-name-text d-flex align-items-center fw-bolder "><span
-                  class="material-symbols-outlined fs-3 me-2">local_dining</span>{{ item.name }}</span>
+                  class="material-symbols-outlined fs-3 me-2">local_dining</span>{{ item.name | titlecase }}</span>
               </div>
               <div class="col-12 my-1">
-                <span class="place-suburb-text "><i
-                  class="bi bi-shop fs-6 me-3"
-                  placement="start"
-                  [ngbTooltip]="place.name + ', @' + place.address?.suburb"></i
-                >{{ place.placeName }}</span>
+                
+                <span class="place-suburb-text d-flex align-content-center"><span
+                   class="popular-place-icon">
+                  <span class="fx-icon fx-icon-shop bg-light  "></span>
+                  </span> &nbsp;&nbsp;{{ place.placeName | titlecase }}</span>
               </div>
-              <div class="col-12 my-1">
+              <div class="col-12 my-1"> 
                 <span class="place-suburb-text">
                   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg>
-                   {{ place.address?.suburb }}
+                   &nbsp;{{ place.address?.suburb | titlecase }}
                 </span>
 
               </div>
@@ -30,7 +30,7 @@
               <!--            class="bi bi-geo-alt fs-5 me-3"></i>{{ item.address?.suburb }}</span></div>-->
             </div>
             <!-- item overall rating-->
-            <div class="item-rating-container d-flex flex-column col-5 row gap-1 px-0">
+            <div class="item-rating-container d-none  d-md-flex flex-column col-5 row gap-1 px-0">
               <div class="ambience-container mobile-ambience-container col-12">
                 <div class="d-flex justify-content-between align-items-baseline">
                   <span class="taste-text me-2">Taste: </span
@@ -53,8 +53,8 @@
                 <!--                                            class="item-price-text fs-5">Price: </span><span-->
                 <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
               </div>
-              <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"
-              >(Out of {{ item.placeItem.ratingInfo?.noOfReviews }} reviews)</small
+              <small class="no-of-reviews-text col-12 fw-normal  fs-smaller" 
+              >(Out of {{ item.placeItem.ratingInfo?.noOfRatings }} reviews)</small
               >
             </div>
           </div>
@@ -113,13 +113,69 @@
                                     <div class="row my-1"><span class="item-suburb-text fs-5 fw-bolder text-secondary"><i
                                       class="bi bi-geo-alt fs-4 me-2"></i>{{ item.address?.suburb }}</span></div>
                                   </div>-->
-                  <div class="col-12">
-                  <span class="item-price-text fs-5"
-                  >Price: <span class="fw-bold ms-1">${{ item.placeItem.price }}</span></span
-                  >
+                  <div class="col-12 row">
+                    <span class="item-price-text fs-5 col-5"
+                    >Price: <span class="fw-bold ms-1">${{ item.placeItem.price }}</span></span
+                    >
+                    <div class="col-7  d-md-none d-flex justify-content-center">
+                      <div class="item-rating-container d-flex flex-column col-12 row gap-1 px-0">
+                        <div class="ambience-container mobile-ambience-container col-12">
+                          <div class="d-flex justify-content-between align-items-baseline">
+                            <span class="taste-text me-2">Taste: </span
+                            ><span class=""
+                              ><span class="fs-6">{{ item.placeItem.ratingInfo?.taste | number: '1.1-1' }}</span
+                              ><span class="text-secondary"><span class="fw-normal">&nbsp;/&nbsp;5</span><span> &nbsp;({{ item.placeItem.ratingInfo?.noOfRatings }})</span></span></span
+                              >
+                          </div>
+                        </div>
+                        <div class="presentation-container mobile-presentation-container col-12">
+                          <div class="d-flex justify-content-between align-items-baseline">
+                            <span class="presentation-text small">Presentation: </span>
+                            <span class=""
+                            ><span
+                              class="fs-6 ">{{ item.placeItem.ratingInfo?.presentation | number: '1.1-1' }}&nbsp;/</span
+                            ><span class="text-secondary"><span class="fw-normal">&nbsp;5</span><span> &nbsp;({{ item.placeItem.ratingInfo?.noOfRatings }})</span></span></span
+                            >
+                          </div>
+                          <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
+                          <!--                                            class="item-price-text fs-5">Price: </span><span-->
+                          <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
+                        </div>
+                        <!-- <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"
+                        >(Out of {{ item.placeItem.ratingInfo?.noOfRatings }} reviews)</small
+                        > -->
+                      </div>
+                    </div>
                   </div>
+                  <!-- <div class="col-12  d-md-none">
+                    <div class="item-rating-container d-flex flex-column col-12 row gap-1 px-0">
+                      <div class="ambience-container mobile-ambience-container col-12">
+                        <div class="d-flex justify-content-between align-items-baseline">
+                          <span class="taste-text me-2">Taste: </span
+                          ><span class=""
+                            ><span class="fs-6 fw-bold">{{ item.placeItem.ratingInfo?.taste | number: '1.1-1' }}&nbsp;/</span
+                            ><span class="fw-normal">&nbsp;5</span></span
+                            >
+                        </div>
+                      </div>
+                      <div class="presentation-container mobile-presentation-container col-12">
+                        <div class="d-flex justify-content-between align-items-baseline">
+                          <span class="presentation-text small">Presentation: </span>
+                          <span class=""
+                          ><span
+                            class="fs-6 fw-bold">{{ item.placeItem.ratingInfo?.presentation | number: '1.1-1' }}&nbsp;/</span
+                          ><span class="fw-normal">&nbsp;5</span></span
+                          >
+                        </div>
+       
+                      </div>
+                      <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"
+                      >(Out of {{ item.placeItem.ratingInfo?.noOfRatings }} reviews)</small
+                      >
+                    </div>
+                  </div> -->
                   <div class="col-12 ">
-                    <span class="item-description-text text-justify">{{ item.description }}</span>
+                    <span class="item-description-text text-justify fst-italic text-secondary">{{ item.description }}</span>
                   </div>
 
                   <div class="allergens-container col-12">

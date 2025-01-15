@@ -267,7 +267,7 @@ console.log('element:: ', ele)
 
   popularItemSelected(element: Item|Place) {
     if ((element.type === 'item') || (element as Place)['item'] !== undefined) {
-      this.router.navigate(['items/' + (element as Place).item]);
+      this.router.navigate(['places/' + (element as any).place._id + '/items/' + (element as Place).item]);
     } else {
       this.router.navigate(['places/' + element._id]);
     }
