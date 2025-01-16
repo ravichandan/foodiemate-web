@@ -62,9 +62,9 @@ console.log('element:: ', ele)
   selectedSuburb: any;
   suburbsLength: number = 0;
   popularItemsPageNum = 1;
-  popularItemsPageSize = 8;
+  popularItemsPageSize = 12;
   popularPlacesPageNum = 1;
-  popularPlacesPageSize = 8;
+  popularPlacesPageSize = 12;
   morePopularItemsInProgress = false;
   selectedDiets: any[] = [];
   selectedDistance: any;
@@ -84,7 +84,7 @@ console.log('element:: ', ele)
   };
   
   dropdownSettings: IDropdownSettings = {
-    singleSelection: false,
+    singleSelection: true,
     idField: 'value',
     textField: 'name',
     selectAllText: 'Select All',
@@ -371,8 +371,9 @@ console.log('element:: ', ele)
   }
 
   onCuisineSelectionChange(item: any) {
-    console.log('in onDietSelectionChange, item:: ', item);
-    this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
+    console.log('in onCuisineSelectionChange, item:: ', item);
+
+    this.store.dispatch(FoodieActions.cuisinesFilterChange({cuisines: this.selectedCuisines}));
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.onSelectionChange();
   }

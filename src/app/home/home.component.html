@@ -73,7 +73,11 @@
                   [settings]="dropdownSettings"
                   [data]="cuisines"
                   [(ngModel)]="selectedCuisines"
-                  [ngModelOptions]="{ standalone: true }">
+                  [ngModelOptions]="{ standalone: true }"
+                  (onSelect)="onCuisineSelectionChange($event)"
+                  (onSelectAll)="onCuisineSelectionChange($event)"
+                  (onDeSelect)="onCuisineSelectionChange($event)"
+                  >
                   <!--              (onSelect)="onItemSelect($event)"-->
                   <!--              (onSelectAll)="onSelectAll($event)">-->
                 </ng-multiselect-dropdown>
@@ -278,7 +282,7 @@
                                         <span class="col-5">Taste: </span>
                                         @if (pi.ratingInfo?.taste) {
                                           <span class="col-7"
-                                            >{{ pi.ratingInfo.taste }} ({{ pi.ratingInfo.noOfReviews }} reviews)</span
+                                            ><span class="fs-6">{{ pi.ratingInfo.taste }}&nbsp;/</span> <span class="text-secondary"><span class="fw-normal">&nbsp;5</span><span> &nbsp;({{ pi.ratingInfo.noOfRatings }})</span></span></span
                                           >
                                         } @else {
                                           <span class="col-7 fst-italic"> Not reviewed yet</span>
@@ -288,10 +292,7 @@
                                         <span class="col-5">Presentation: </span>
                                         @if (pi.ratingInfo?.presentation) {
                                           <span class="col-7"
-                                            >{{ pi.ratingInfo?.presentation }} ({{
-                                              pi.ratingInfo?.noOfReviews
-                                            }}
-                                            reviews)</span
+                                            ><span class="fs-6">{{ pi.ratingInfo?.presentation }}&nbsp;/</span>  <span class="text-secondary"><span class="fw-normal">&nbsp;5</span><span> &nbsp;({{ pi.ratingInfo.noOfRatings }})</span></span></span
                                           >
                                         } @else {
                                           <span class="col-7 fst-italic"> Not reviewed yet</span>
@@ -422,7 +423,7 @@
                                         </span>
                                       }
                                     </div>
-                                    <div class="result-item-detail flex-grow-1 px-1 flex-column align-items-center">
+                                    <div class="result-item-detail result-place-detail flex-grow-1 px-1 flex-column align-items-center">
                                       @if (places[number]) {
                                         <span class="card-text text-secondary-emphasis fw-bolder">{{
                                           places[number]?.placeName ??

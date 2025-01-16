@@ -304,7 +304,8 @@ export const loginReducer = createReducer(
 
 export const cuisinesFilterReducer = createReducer(
   initialState.cuisinesFilter,
-  on(FoodieActions.cuisinesFilterChange, (cuisines: any[]|undefined) => cuisines),
+  // on(FoodieActions.cuisinesFilterChange, (cuisines: any[]|undefined) => cuisines),
+  on(FoodieActions.cuisinesFilterChange, (oldState, newState) => newState.cuisines),
 );
 
 export const dietsFilterReducer = createReducer(
