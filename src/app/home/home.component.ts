@@ -66,6 +66,7 @@ console.log('element:: ', ele)
   popularPlacesPageNum = 1;
   popularPlacesPageSize = 12;
   morePopularItemsInProgress = false;
+  popularItemsInProgress = false;
   selectedDiets: any[] = [];
   selectedDistance: any;
   suburbDropdownSettings: IDropdownSettings = {
@@ -126,8 +127,8 @@ console.log('element:: ', ele)
     this.suburbs$ = this.store.select(suburbsSelector()).pipe(takeUntil(this.destroy$), filter(Boolean), map((suburbsResponse?: SuburbsResponse) => suburbsResponse?.suburbs), 
         tap(suburbs => this.suburbsLength = suburbs?.length ?? 0)
     );
-    this.popularItems$ = this.store.select(popularItemsSelector()).pipe(takeUntil(this.destroy$), tap(_ => this.morePopularItemsInProgress = false));
-    this.popularPlaces$ = this.store.select(popularPlacesSelector()).pipe(takeUntil(this.destroy$));
+    this.popularItems$ = this.store.select(popularItemsSelector()).pipe(takeUntil(this.destroy$), tap(_ => this.morePopularItemsInProgress = false), tap(_ => this.popularItemsInProgress = false));
+    this.popularPlaces$ = this.store.select(popularPlacesSelector()).pipe(takeUntil(this.destroy$), tap(_ => this.popularItemsInProgress = false));
     this.dietaries = this.config.dietaries;
     this.placesResponse.places = [];
     this.route.queryParams.pipe(tap(x => console.log('raw query params:: ', x))).subscribe();
@@ -321,6 +322,7 @@ console.log('element:: ', ele)
   onSelectionChange() {
     console.log('onselection change', this.searchKey);
     // setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
+    this.popularItemsInProgress = true;
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularPlaces()), 0);
     setTimeout(()=>{
       const dietsStr = this.selectedDiets?.map(d=>d?.name)?.join(',');
@@ -366,6 +368,7 @@ console.log('element:: ', ele)
   onDietSelectionChange(item: any) {
     console.log('in onDietSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.dietsFilterChange({diets: this.selectedDiets}));
+    this.popularItemsInProgress = true;
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.onSelectionChange();
   }
@@ -374,6 +377,7 @@ console.log('element:: ', ele)
     console.log('in onCuisineSelectionChange, item:: ', item);
 
     this.store.dispatch(FoodieActions.cuisinesFilterChange({cuisines: this.selectedCuisines}));
+    this.popularItemsInProgress = true;
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.onSelectionChange();
   }
@@ -382,6 +386,7 @@ console.log('element:: ', ele)
   onDistanceSelectionChange(item?: any) {
     // console.log('in onDistanceSelectionChange, item:: ', item);
     this.store.dispatch(FoodieActions.distanceFilterChange({distance: this.selectedDistance}));
+    this.popularItemsInProgress = true;
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.onSelectionChange();
   }
@@ -393,6 +398,7 @@ console.log('element:: ', ele)
     }
     this.selectedSuburb = $event.item?.name;
     this.store.dispatch(FoodieActions.updateLocation({suburb: $event.item.name, postcode: $event.item.postcode}));
+    this.popularItemsInProgress = true;
     setTimeout(()=>this.store.dispatch(FoodieActions.fetchPopularItems({})), 0);
     this.modalRef?.hide();
     this.onSelectionChange();
