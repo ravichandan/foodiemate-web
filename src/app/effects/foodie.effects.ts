@@ -44,7 +44,7 @@ export class FoodieEffects {
       switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean), take(1))),
       tap(x=> console.log('loadPopularPlaces:: ', x)),
       mergeMap((filters: any) =>
-          this.appService.getPopularPlaces({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, distance: filters.distance }).pipe(
+          this.appService.getPopularPlaces({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, cuisines: filters.cuisines, distance: filters.distance }).pipe(
           map((popular: PopularResponse) => FoodieActions.fetchPopularPlacesSuccess({ popular })),
           catchError((error: HttpErrorResponse) => of(FoodieActions.failed({ error }))),
         ),

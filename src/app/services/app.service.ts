@@ -70,7 +70,7 @@ export class AppService implements OnDestroy{
       // .pipe(tap((t: any) => console.log('popular-searches response:: ', t)));
   }
 
-  public getPopularPlaces(args: { city?: string; postcode?: string; suburb?: string; diets?: any[]; distance: number; }) {
+  public getPopularPlaces(args: { city?: string; postcode?: string; suburb?: string; cuisines?: any[]; diets?: any[]; distance: number; }) {
     console.log('in app.service, getPopularPlaces() -> args', args);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     const url = join(this.getConfig().host, this.getConfig().popularPlacesEndpoint);
@@ -80,6 +80,12 @@ export class AppService implements OnDestroy{
     !!args?.suburb && (params =  params.append('suburb', args.suburb));
     !!args?.distance && (params =  params.append('distance', args.distance));
     params =  params.append('state', 'nsw');
+    
+    if(args?.cuisines){
+      const cuisines: string = args.cuisines.filter(Boolean).join(',');
+      !!cuisines && (params =  params.append('cuisines', cuisines));
+    }
+  
     // location query params
     !!this.location && (params =  params.append('latitude', this.location.latitude));
     !!this.location && (params =  params.append('longitude', this.location.longitude));
