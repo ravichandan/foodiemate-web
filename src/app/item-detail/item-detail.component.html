@@ -76,7 +76,7 @@
                     @for (rev of item.placeItem?.reviewMedias; track rev.media) {
 
                         <ng-template ngbSlide>
-                          <div class="picsum-img-wrapper card-body">
+                          <div class="picsum-img-wrapper card-body p-0">
                             <img
                               [src]="config.bucketAccessEndpoint+'/'+rev.media.key"
                               alt="loading review photos"
@@ -86,14 +86,14 @@
                     }
                   </ngb-carousel>
                 } @else if (item?.placeItem?.media) {
-                  <div class="picsum-img-wrapper card-body">
+                  <div class="picsum-img-wrapper card-body p-0 k">
                     <img
                       [src]="config.bucketAccessEndpoint+'/'+item.placeItem?.media.key"
                       alt="loading picture of the dish"
                       class="card-img-top detail-img place-list-img w-100 img-fluid rounded-0" />
                   </div>
                 } @else {
-                  <div class="picsum-img-wrapper">
+                  <div class="picsum-img-wrapper p-0">
                   <span class="text-secondary-emphasis ">
                               <svg xmlns="http://www.w3.org/2000/svg" height="11rem" viewBox="0 -960 960 960"
                                    width="15rem"
@@ -113,28 +113,28 @@
                                     <div class="row my-1"><span class="item-suburb-text fs-5 fw-bolder text-secondary"><i
                                       class="bi bi-geo-alt fs-4 me-2"></i>{{ item.address?.suburb }}</span></div>
                                   </div>-->
-                  <div class="col-12 row">
-                    <span class="item-price-text fs-5 col-5"
+                  <div class="col-12 row m-0 p-0">
+                    <span class="item-price-text fs-5 col-6"
                     >Price: <span class="fw-bold ms-1">${{ item.placeItem.price }}</span></span
                     >
-                    <div class="col-7  d-md-none d-flex justify-content-center">
+                    <div class="col-6  d-md-none d-flex justify-content-center">
                       <div class="item-rating-mobile-container d-flex flex-column col-12 row gap-1 px-0">
-                        <div class="ambience-container mobile-ambience-container col-12">
+                        <div class="ambience-container mobile-ambience-container col-12 p-0">
                           <div class="d-flex justify-content-between align-items-baseline">
                             <span class="taste-text me-2">Taste: </span
                             ><span class=""
                               ><span class="fs-6">{{ item.placeItem.ratingInfo?.taste | number: '1.1-1' }}</span
-                              ><span class="text-secondary"><span class="fw-normal">&nbsp;/&nbsp;5</span><span> &nbsp;({{ item.placeItem.ratingInfo?.noOfRatings }})</span></span></span
+                              ><span class="text-secondary"><span class="fw-normal">&nbsp;/5</span><span>({{ item.placeItem.ratingInfo?.noOfRatings }})</span></span></span
                               >
                           </div>
                         </div>
-                        <div class="presentation-container mobile-presentation-container col-12">
+                        <div class="presentation-container mobile-presentation-container col-12 p-0">
                           <div class="d-flex justify-content-between align-items-baseline">
-                            <span class="presentation-text small">Presentation: </span>
+                            <span class="presentation-text small">Display: </span>
                             <span class=""
                             ><span
                               class="fs-6 ">{{ item.placeItem.ratingInfo?.presentation | number: '1.1-1' }}&nbsp;/</span
-                            ><span class="text-secondary"><span class="fw-normal">&nbsp;5</span><span> &nbsp;({{ item.placeItem.ratingInfo?.noOfRatings }})</span></span></span
+                            ><span class="text-secondary"><span class="fw-normal">5</span><span>({{ item.placeItem.ratingInfo?.noOfRatings }})</span></span></span
                             >
                           </div>
                           <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
@@ -225,13 +225,13 @@
             <div class="review-container row gap-3 g-0">
               <div class="review-title fs-5 fw-bold">Reviews</div>
               <div class="review-search-container">
-                <form class="row gap-3 w-100 col-sm-11 col-md-10 col-xl-8 col-xxl-7">
-                  <div class="col-12 col-md-8">
+                <form class="row gap-3 m-0 col-sm-11 col-md-10 col-xl-8 col-xxl-7">
+                  <div class="col-12 col-md-8 p-0">
                     <label for="homeSearch" class="visually-hidden">{{ config.search_main_label }}</label>
                     <input type="text" class="form-control border-dark focus-ring" id="homeSearch"
                            placeholder="Search" />
                   </div>
-                  <div class="col-12 col-md d-flex justify-content-center">
+                  <div class="col-12 col-md d-flex justify-content-center p-0">
                     <button type="submit" class="col-12 col-md-11 btn btn-dark focus-ring">Search</button>
                   </div>
                 </form>
