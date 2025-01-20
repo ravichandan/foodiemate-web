@@ -29,34 +29,66 @@
         <div class="item-summary-wrapper col-9 ">
           <div class="d-flex flex-column align-items-center align-content-center ">
             <span class="card-title mb-0 mt-1">
-              <span class="fw-bold text-truncate-1" [ngClass]="{ 'fs-small': item.placeItem?.name?.length > 25 }">{{ item.placeItem.name }}</span>
-              <span class="fw-light">
-              <span class=""> {{ item.placeItem?.calorieInfo?.count }}</span>
-                      <span class="fs-smaller"> {{ item.placeItem?.calorieInfo?.unit }}</span>
-                    </span>
+              <span class="fw-bold text-truncate-1" [ngClass]="{ 'fs-small': item.placeItem?.name?.length > 25 }">{{ item.placeItem.name | titlecase }}</span>
+              @if(item.placeItem?.calorieInfo?.count){
+                <span class="fw-light">
+                  <span class=""> {{ item.placeItem?.calorieInfo?.count }}</span>
+                  <span class="fs-smaller"> {{ item.placeItem?.calorieInfo?.unit }}</span>
+                </span>
+              }
             </span>
           </div>
           <div class="row">
-            <div class="col-8 d-flex flex-column justify-content-start remove-rating-block">
+            <div class="col-7 d-flex flex-column justify-content-start remove-rating-block">
               <div class="taste-wrapper d-flex justify-content-between align-items-center">
             <span class="d-flex flex-row justify-content-center"><span
               class="fs-smaller card-text  "
             >Taste:&nbsp;</span>
             </span>
-                @if(item.placeItem?.ratingInfo?.taste){<span class="ms-1 card-text"
+            <span class="fs-smaller"
+                        ><span
+                          class="">{{ item.placeItem?.ratingInfo?.taste ? (item.placeItem?.ratingInfo?.taste | number: '1.1-1') : '0' }}</span
+                        ><span class="fw-normal text-secondary"><!--<span class="">/</span>5 --> <span>({{ item.placeItem?.ratingInfo?.noOfReviews ?? 0 }})</span></span></span
+                        >
+                <!-- @if(item.placeItem?.ratingInfo?.taste){<span class="ms-1 card-text"
                 ><span class="">{{ item.placeItem.ratingInfo.taste | number: '1.1-1' }}</span
-                ><span class="fs-small">/5</span></span>} @else {<span class="fs-smaller">NA</span>}
+                ><span class="fs-small">/5</span></span>} @else {<span class="fs-smaller">NA</span>} -->
               </div>
+              <div class="d-sm-none">
+                @if(((item.placeItem?.name?.length ?? 0)+(item.placeItem?.calorieInfo?.count ? item.placeItem?.calorieInfo?.count?.toString()?.length + 3  : 0)) < 33) {
+                  <div class="presentation-wrapper d-flex justify-content-between align-items-center">
+                  <span class="fs-smaller card-text "
+                  >Display:&nbsp;</span>
+                  <span class="fs-smaller"
+                  ><span
+                    class="">{{ item.placeItem?.ratingInfo?.presentation ? (item.placeItem?.ratingInfo?.presentation | number: '1.1-1') : '0' }}</span
+                  ><span class="fw-normal text-secondary"><!--<span class="">/</span>5 --> <span>({{ item.placeItem?.ratingInfo?.noOfReviews ?? 0 }})</span></span></span
+                  >
+                  <!-- @if(item.placeItem?.ratingInfo?.taste){<span class="ms-1 card-text  "
+                  ><span class="">{{ item.placeItem?.ratingInfo?.presentation | number: '1.1-1' }}</span
+                  ><span class="fs-small">/5</span></span>} @else {<span class="fs-smaller">NA</span>} -->
+                </div>
+              }
+            </div>
+            <div class="d-none d-sm-block">
+              
               <div class="presentation-wrapper d-flex justify-content-between align-items-center">
-            <span class="fs-smaller card-text "
-            >Presentation:&nbsp;</span>
-            @if(item.placeItem?.ratingInfo?.taste){<span class="ms-1 card-text  "
+                <span class="fs-smaller card-text "
+                >Display:&nbsp;</span>
+                <span class="fs-smaller"
+                ><span
+                  class="">{{ item.placeItem?.ratingInfo?.presentation ? (item.placeItem?.ratingInfo?.presentation | number: '1.1-1') : '0' }}</span
+                ><span class="fw-normal text-secondary"><!--<span class="">/</span>5 --> <span>({{ item.placeItem?.ratingInfo?.noOfReviews ?? 0 }})</span></span></span
+                >
+                <!-- @if(item.placeItem?.ratingInfo?.taste){<span class="ms-1 card-text  "
                 ><span class="">{{ item.placeItem?.ratingInfo?.presentation | number: '1.1-1' }}</span
-                ><span class="fs-small">/5</span></span>} @else {<span class="fs-smaller">NA</span>}
+                ><span class="fs-small">/5</span></span>} @else {<span class="fs-smaller">NA</span>} -->
               </div>
+            
+          </div>
             </div>
 
-            <div class="col-4 border-start ps-0 d-flex justify-content-center align-items-center">
+            <div class="col-5 border-start ps-0 d-flex justify-content-center align-items-center">
               <span class="card-text  ">$ {{ item.placeItem.price | number: '1.2-2' }}</span>
             </div>
           </div>
@@ -133,9 +165,10 @@
                   ><span class="fw-medium">{{ item.placeItem?.ratingInfo?.taste | number: '1.1-1' }}</span
                   >/5</span>
                 </div>
+
                 <div class="presentation-wrapper d-flex justify-content-between">
-            <span class="fs-smaller card-text text-body-secondary"
-            >Presentation:&nbsp;</span>
+                  <span class="fs-smaller card-text text-body-secondary"
+                  >Presentation:&nbsp;</span>
                   <span class="ms-1 card-text text-body-secondary fs-smaller"
                   ><span class="fw-medium">{{ item.placeItem?.ratingInfo?.presentation | number: '1.1-1' }}</span
                   >/5</span>

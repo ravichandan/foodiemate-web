@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
-import { DecimalPipe, LowerCasePipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe } from '@angular/common';
+import { DecimalPipe, LowerCasePipe, NgClass, NgForOf, NgIf, NgTemplateOutlet, SlicePipe, TitleCasePipe } from '@angular/common';
 import { NgbCarousel, NgbSlide, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
   standalone: true,
   imports: [
     DecimalPipe,
+    TitleCasePipe,
     NgForOf,
     NgbCarousel,
     NgbSlide,

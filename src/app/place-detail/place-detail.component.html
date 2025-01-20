@@ -4,17 +4,19 @@
         <div class="row  align-items-start ">
 
           <!-- item, place name-->
-          <div class="col-12 my-1">
-            <span class="place-name-text d-flex align-items-center fw-bolder "><span
-              class="me-2"><svg xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true" focusable="false"
-                                fill="currentcolor" viewBox="0 0 448 512">
-              <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
-              d="M416 0C400 0 288 32 288 176l0 112c0 35.3 28.7 64 64 64l32 0 0 128c0 17.7 14.3 32 32 32s32-14.3 32-32l0-128 0-112 0-208c0-17.7-14.3-32-32-32zM64 16C64 7.8 57.9 1 49.7 .1S34.2 4.6 32.4 12.5L2.1 148.8C.7 155.1 0 161.5 0 167.9c0 45.9 35.1 83.6 80 87.7L80 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-224.4c44.9-4.1 80-41.8 80-87.7c0-6.4-.7-12.8-2.1-19.1L191.6 12.5c-1.8-8-9.3-13.3-17.4-12.4S160 7.8 160 16l0 134.2c0 5.4-4.4 9.8-9.8 9.8c-5.1 0-9.3-3.9-9.8-9L127.9 14.6C127.2 6.3 120.3 0 112 0s-15.2 6.3-15.9 14.6L83.7 151c-.5 5.1-4.7 9-9.8 9c-5.4 0-9.8-4.4-9.8-9.8L64 16zm48.3 152l-.3 0-.3 0 .3-.7 .3 .7z" /></svg>
-            </span>{{ place.placeName }}</span>
-          </div>
-          <div class="col-12 my-1 row">
+          <div class="col-12 my-1 d-flex justify-content-between">
+            <div>
+              <span class="place-name-text d-flex align-items-center fw-bolder "><span
+                class="me-2"><svg xmlns="http://www.w3.org/2000/svg" class="icon" aria-hidden="true" focusable="false"
+                                  fill="currentcolor" viewBox="0 0 448 512">
+                <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
+                d="M416 0C400 0 288 32 288 176l0 112c0 35.3 28.7 64 64 64l32 0 0 128c0 17.7 14.3 32 32 32s32-14.3 32-32l0-128 0-112 0-208c0-17.7-14.3-32-32-32zM64 16C64 7.8 57.9 1 49.7 .1S34.2 4.6 32.4 12.5L2.1 148.8C.7 155.1 0 161.5 0 167.9c0 45.9 35.1 83.6 80 87.7L80 480c0 17.7 14.3 32 32 32s32-14.3 32-32l0-224.4c44.9-4.1 80-41.8 80-87.7c0-6.4-.7-12.8-2.1-19.1L191.6 12.5c-1.8-8-9.3-13.3-17.4-12.4S160 7.8 160 16l0 134.2c0 5.4-4.4 9.8-9.8 9.8c-5.1 0-9.3-3.9-9.8-9L127.9 14.6C127.2 6.3 120.3 0 112 0s-15.2 6.3-15.9 14.6L83.7 151c-.5 5.1-4.7 9-9.8 9c-5.4 0-9.8-4.4-9.8-9.8L64 16zm48.3 152l-.3 0-.3 0 .3-.7 .3 .7z" /></svg>
+              </span>{{ place.placeName }}</span>
+            <!-- </div> -->
+          <!-- </div> -->
+          <!-- <div class="col-12 my-1 row"> -->
 
-            <div class="col-7 col-md-9">
+            <!-- <div class="col-7 col-md-9"> -->
                 <span class="place-suburb-text">
                   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                        fill="currentColor"><path
@@ -23,7 +25,7 @@
                 </span>
             </div>
                 <!-- item overall rating-->
-            <div class="place-rating-container d-flex flex-column col-5 col-md-4 row gap-1 px-0 m-0">
+            <div class="place-rating-container d-none d-sm-flex flex-column col-5 col-md-4 row gap-1 px-0 m-0">
             
               <div class="ambience-container mobile-ambience-container col-12">
                 <div class="d-flex justify-content-between align-items-baseline">
@@ -113,7 +115,7 @@
               <!--                                </ng-container>-->
               <!--                        </ngb-carousel>-->
             </div>
-            <div class="d-flex justify-content-center col-12 col-lg detail-container">
+            <div class="d-flex justify-content-center justify-content-md-start col-12 col-lg detail-container">
               <div class="row gap-2 mx-0 px-0 my-4 justify-content-center">
                 <!--
                   <div class="col-12 d-none d-lg-flex row gap-1 flex-column ">
@@ -124,9 +126,46 @@
                                   class="bi bi-geo-alt fs-4 me-2"></i>{{item.address?.suburb}}</span></div>
                       </div>
                     -->
-                --
+                <div class="place-rating-container mobile-place-rating-container d-sm-none d-flex flex-column col-12 row gap-1 p-0 m-0 pe-5">
+        
+                  <div class="ambience-container mobile-ambience-container col-12">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <span class="ambience-text me-2">Ambience: </span
+                        ><span class=""
+                        ><span
+                          class="fs-6">{{ place.ratingInfo?.ambience ? (place.ratingInfo?.ambience | number: '1.1-1') : '0' }}</span
+                        ><span class="fw-normal text-secondary"><span class="fs-5">/</span>5 <span>({{ place.ratingInfo?.noOfReviews ?? 0 }} reviews)</span></span></span
+                        >
+                    </div>
+                  </div>
+                  <div class="service-container mobile-service-container col-12">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <span class="service-text me-2">Service: </span>
+                      <span class=""
+                      ><span
+                        class="fs-6">{{ place.ratingInfo?.service ? (place.ratingInfo?.service | number: '1.1-1') : '0' }}</span
+                      ><span class="fw-normal text-secondary"><span class="fs-5">/</span>5 <span>({{ place.ratingInfo?.noOfReviews ?? 0 }} reviews)</span></span></span
+                      >
+                    </div>
+                    <!--                                    <div class="d-flex justify-content-between mt-auto"><span-->
+                    <!--                                            class="item-price-text fs-5">Price: </span><span-->
+                    <!--                                            class="fw-bold fs-5 ms-1">${{item.price}}</span></div>-->
+                  </div>
+                
+                  <a
+                    class="no-of-reviews-text fs-small cursor-pointer text-light"
+                    aria-current="page"
+                    [class.fw-bolder]="reviews.focus"
+                    scrollTo target="#reviews" [class.active]="reviews.focus">
+                    <span class="">{{ place.ratingInfo?.noOfReviews ?? 0 }} reviews</span>
+                  </a>
+                  <!--          <small class="no-of-reviews-text col-12 fw-normal  fs-smaller"-->
+                  <!--          >(Out of {{ place.ratingInfo?.noOfReviews }} reviews)</small-->
+                  <!--          >-->
+                </div>
+        
                 @if (place.tags?.length) {
-                  <div class="row mx-3 mx-lg-0">
+                  <div class="row mx-3 mx-lg-0 p-0">
                     <div class="d-flex col-12 col-md-4 col-lg-6 py-1 py-lg-0 text-secondary"
                          *ngFor="let tag of place.tags">
                   <span class="material-symbols-outlined d-inline">
@@ -137,7 +176,7 @@
                   </div>
                 }
 
-                <div class="row mx-3 mx-lg-0">
+                <div class="row mx-3 mx-lg-0 p-0">
                   <div class="opening-times-container row mx-0 px-0">
                     <!-- div Button triggers BusinessHours modal -->
                     <div
@@ -159,7 +198,7 @@
                 </div>
 
                 <div
-                  class="row gap-1 col-12 d-none d-lg-flex place-rating-container desktop-place-rating-container mt-2 fw-bold">
+                  class="row gap-1 col-12 d-none d-lg-flex place-rating-container desktop-place-rating-container m-0 p-0 fw-bold">
                   <!--                              ambience-->
                   <div class="d-flex flex-column j">
                     <span class="ambience-text">Ambience: </span>
@@ -283,7 +322,7 @@
             }
           </div>
         </div>
-        <div class="344">
+        <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
