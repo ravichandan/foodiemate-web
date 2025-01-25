@@ -88,12 +88,7 @@
                   <span class="review-items-item-index fs-6 fw-bold ">{{ index + 1 }}.</span>
                   &nbsp;
                   <span class="review-items-item-name fs-6 fw-bold ">{{
-
-                      ir?.placeItem?.name
-                      // place.items[ir.item._id].name
-
-
-
+                      ir?.placeItem?.name | titlecase
                     }}</span>
                 </div>
                 <div class="col-12 review-items-item-rating-wrapper row justify-content-end">
@@ -108,7 +103,7 @@
                   </span>
                       </div>
                       <div class="col d-flex justify-content-between align-items-center rating-element  fs-smaller">
-                        <span class="">Presentation: </span>
+                        <span class="">Display: </span>
                         <span class=" row gap-0">
                     <span class="col-auto mt-1 fw-bold">{{ ir.presentation|number: '1.1-1' }}</span>&nbsp;<span
                           class="col-auto p-0 "><ng-container

@@ -4,7 +4,7 @@ import { Review } from '../models/Review';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
-import { DatePipe, DecimalPipe, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { DatePipe, DecimalPipe, NgForOf, NgIf, NgTemplateOutlet, TitleCasePipe } from '@angular/common';
 import { NgbRating } from '@ng-bootstrap/ng-bootstrap';
 import { ReviewFeedbackComponent } from '../review-feedback/review-feedback.component';
 import { Place } from '../models/Place';
@@ -13,7 +13,7 @@ import { AppService } from '../services/app.service';
 @Component({
   selector: 'app-place-review-unit',
   standalone: true,
-  imports: [DatePipe, NgForOf, NgIf, NgbRating, ReviewFeedbackComponent, DecimalPipe, NgTemplateOutlet],
+  imports: [DatePipe, NgForOf, TitleCasePipe, NgIf, NgbRating, ReviewFeedbackComponent, DecimalPipe, NgTemplateOutlet],
   templateUrl: './place-review-unit.component.html',
   styleUrl: './place-review-unit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

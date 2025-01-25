@@ -14,7 +14,8 @@ import { Place } from '../models/Place';
 import { customerSelector, searchFilterSelector } from '../selectors/foodie.selector';
 import { ItemResponse } from '../models/ItemResponse';
 import { SuburbsResponse } from '../models/SuburbsResponse';
-
+import isEqual  from 'lodash/isEqual';
+ 
 @Injectable({ providedIn: 'root' })
 export class FoodieEffects {
 
@@ -24,11 +25,13 @@ export class FoodieEffects {
   loadPopularItems$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FoodieActions.fetchPopularItems),
-      distinctUntilChanged(),
+      
       debounceTime(200),
       switchMap((action) =>
        this.store.select(searchFilterSelector()).pipe(
-        filter(Boolean), take(1),
+        filter(Boolean),
+        distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
+        take(1),
         tap(x=> console.log('loadPopularItems:: ', x)),
         mergeMap((filters: any) =>
           this.appService.getPopularItems({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, cuisines: filters.cuisines, distance: filters.distance, pageNum: action.pageNum, pageSize: action.pageSize }).pipe(
@@ -43,9 +46,11 @@ export class FoodieEffects {
   loadPopularPlaces$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FoodieActions.fetchPopularPlaces),
-      distinctUntilChanged(),
+      
       debounceTime(200),
-      switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean), take(1))),
+      switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean),
+        distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
+        take(1))),
       tap(x=> console.log('loadPopularPlaces:: ', x)),
       mergeMap((filters: any) =>
           this.appService.getPopularPlaces({city: filters.address.city, suburb: filters.address.suburb, postcode: filters.address.postcode, diets: filters.diets, cuisines: filters.cuisines, distance: filters.distance }).pipe(

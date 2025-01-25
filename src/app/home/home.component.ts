@@ -132,7 +132,7 @@ console.log('element:: ', ele)
     this.popularPlaces$ = this.store.select(popularPlacesSelector()).pipe(takeUntil(this.destroy$), tap(_ => this.popularItemsInProgress = false));
     this.dietaries = this.config.dietaries;
     this.placesResponse.places = [];
-    this.route.queryParams.pipe(tap(x => console.log('raw query params:: ', x))).subscribe();
+    // this.route.queryParams.pipe(tap(x => console.log('raw query params:: ', x))).subscribe();
     this.searchKey = null;
     this.suburbs$
       .pipe(takeUntil(this.destroy$),
@@ -141,10 +141,10 @@ console.log('element:: ', ele)
     this.route.queryParams.pipe(
       takeUntil(this.destroy$),
       filter(Boolean),
-      filter(_=> !!this.suburbs?.length)
+      filter(_=> !!this.suburbs?.length),
+      filter(params=> Object.keys(params).length>0)
         // filter(({ suburbs, params }) => !!suburbs && !!params),
-      )
-      .subscribe((params) => {
+    ).subscribe((params) => {
 
         console.log('In route.queryparams, params:: ', params);
         this.searchKey = params!['search'];
@@ -298,7 +298,7 @@ console.log('element:: ', ele)
           suburbs: this.selectedSuburb,
           distance: this.selectedDistance
           },
-          skipLocationChange: true
+          // skipLocationChange: true
         },
       // )
     );
@@ -352,7 +352,9 @@ console.log('element:: ', ele)
             search: key,
             suburbs: this.selectedSuburb,
             distance: this.selectedDistance
-          }, skipLocationChange: true },
+          }, 
+          // skipLocationChange: true 
+        },
         // )
       );
     }, 0);

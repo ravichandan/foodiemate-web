@@ -287,15 +287,17 @@
         </div>
 
       </div>
-      <div class="col-12 d-none">
-        <!-- <router-outlet name="placeSpot"></router-outlet>-->
-        <ng-container *ngIf="showMenuItems">
-          <app-item-list></app-item-list>
-        </ng-container>
-        <ng-container *ngIf="!showMenuItems">
-          <app-place-reviews [place]="place"></app-place-reviews>
-        </ng-container>
-      </div>
+      @if (nextZone) {
+        <div class="col-12 d-none">
+          <!-- <router-outlet name="placeSpot"></router-outlet>-->
+          <ng-container *ngIf="showMenuItems">
+            <app-item-list></app-item-list>
+          </ng-container>
+          <ng-container *ngIf="!showMenuItems">
+            <app-place-reviews [place]="place"></app-place-reviews>
+          </ng-container>
+        </div>
+      }
     </div>
   <!-- Modal -->
   <div

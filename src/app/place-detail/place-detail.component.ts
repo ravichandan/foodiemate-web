@@ -51,6 +51,7 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
   place$: Observable<Place | undefined> | undefined;
   // selectedItemId: any;
   selectedPlaceId: any;
+  nextZone = false;
   selectedPlace: Place | undefined;
   // item: Item | undefined;
   reviews$: Observable<Review[] | undefined> | undefined;
@@ -87,6 +88,7 @@ export class PlaceDetailComponent implements OnInit, OnDestroy {
       filter((data) => !!data),
       tap((x) => (this.selectedPlace = x)),
       tap((x) => console.log('place received in place-detail.component:: ', x)),
+      tap(_=> setTimeout(_=>this.nextZone=true,10))
     );
 
     // this.place$ = selected$;//.pipe(
