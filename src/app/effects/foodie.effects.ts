@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { AppService } from '../services/app.service';
 import * as FoodieActions from '../actions/foodie.actions';
-import { catchError, filter, map, mergeMap, of, switchMap, take, tap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, mergeMap, of, switchMap, take, tap } from 'rxjs';
 import { PopularResponse } from '../models/PopularResponse';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CuisinesResponse } from '../models/CuisinesResponse';
@@ -24,6 +24,8 @@ export class FoodieEffects {
   loadPopularItems$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FoodieActions.fetchPopularItems),
+      distinctUntilChanged(),
+      debounceTime(200),
       switchMap((action) =>
        this.store.select(searchFilterSelector()).pipe(
         filter(Boolean), take(1),
@@ -41,6 +43,8 @@ export class FoodieEffects {
   loadPopularPlaces$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FoodieActions.fetchPopularPlaces),
+      distinctUntilChanged(),
+      debounceTime(200),
       switchMap((_) => this.store.select(searchFilterSelector()).pipe(filter(Boolean), take(1))),
       tap(x=> console.log('loadPopularPlaces:: ', x)),
       mergeMap((filters: any) =>
